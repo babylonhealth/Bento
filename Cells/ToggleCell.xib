@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12120" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="ToggleCell" rowHeight="60" id="boG-EV-PfM" customClass="ToggleCell" customModule="Babylon" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="60"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="boG-EV-PfM" id="aV6-ix-WUq">
+                <rect key="frame" x="0.0" y="0.0" width="375" height="59.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Have you previously been registered with a practice in the UK?" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="10" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eLl-fA-34h">
+                        <rect key="frame" x="16" y="0.0" width="279" height="59.5"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="59" id="9jh-y7-bNp"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" horizontalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="W6J-2e-zHC">
+                        <rect key="frame" x="310" y="14.5" width="51" height="31"/>
+                    </switch>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="W6J-2e-zHC" firstAttribute="leading" secondItem="eLl-fA-34h" secondAttribute="trailing" constant="15" id="3Dl-je-3ce"/>
+                    <constraint firstItem="eLl-fA-34h" firstAttribute="leading" secondItem="aV6-ix-WUq" secondAttribute="leadingMargin" constant="16" id="JUm-Ig-12U"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="eLl-fA-34h" secondAttribute="bottom" id="TGe-51-fXk"/>
+                    <constraint firstAttribute="topMargin" secondItem="eLl-fA-34h" secondAttribute="top" id="byU-VG-mon"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="W6J-2e-zHC" secondAttribute="trailing" constant="16" id="tB1-mL-Wx8"/>
+                    <constraint firstItem="W6J-2e-zHC" firstAttribute="centerY" secondItem="aV6-ix-WUq" secondAttribute="centerY" id="vk8-7D-0u5"/>
+                </constraints>
+                <edgeInsets key="layoutMargins" top="0.0" left="0.0" bottom="0.0" right="0.0"/>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="titleLabel" destination="eLl-fA-34h" id="cuh-Xp-h6k"/>
+                <outlet property="toggle" destination="W6J-2e-zHC" id="LhT-lj-VYX"/>
+            </connections>
+            <point key="canvasLocation" x="-170" y="-238"/>
+        </tableViewCell>
+    </objects>
+</document>
