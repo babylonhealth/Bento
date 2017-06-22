@@ -12,7 +12,7 @@ struct TextInputCellViewModel: Focusable, Interactable, TextEditable {
     let autocorrectionType: UITextAutocorrectionType
     let keyboardType: UIKeyboardType
     let visualDependencies: VisualDependenciesProtocol
-    let contentDependencies: ContentDependenciesProtocol?
+    let formContent: FormContentProtocol?
     let textFieldDelegate: TextFieldDelegate
     let isFocused = MutableProperty(false)
     let isInteractable = MutableProperty(true)
@@ -47,7 +47,7 @@ struct TextInputCellViewModel: Focusable, Interactable, TextEditable {
          keyboardType: UIKeyboardType = .`default`,
          keyboardReturnKeyType: UIReturnKeyType = .next,
          visualDependencies: VisualDependenciesProtocol,
-         contentDependencies: ContentDependenciesProtocol? = nil,
+         formContent: FormContentProtocol? = nil,
          textFieldDelegate: TextFieldDelegate = TextFieldDelegate()) {
         self._isSecure = MutableProperty(isSecure)
         let clearsOnBeginEditingValue = isSecure ? true : clearsOnBeginEditing
@@ -59,7 +59,7 @@ struct TextInputCellViewModel: Focusable, Interactable, TextEditable {
         self.keyboardType = keyboardType
         self.keyboardReturnKeyType = MutableProperty(keyboardReturnKeyType)
         self.visualDependencies = visualDependencies
-        self.contentDependencies = contentDependencies
+        self.formContent = formContent
         self.textFieldDelegate = textFieldDelegate
 
         self.isFocused <~ textFieldDelegate.isFocused
@@ -75,8 +75,8 @@ struct TextInputCellViewModel: Focusable, Interactable, TextEditable {
 
     func applyStyle(to button: UIButton) {
         button.tintColor = .clear
-        button.setImage(contentDependencies?.featureContent.formContent.peekImage, for: .normal)
-        button.setImage(contentDependencies?.featureContent.formContent.unPeekImage, for: .selected)
+        button.setImage(formContent?.peekImage, for: .normal)
+        button.setImage(formContent?.unPeekImage, for: .selected)
     }
 
     func applyBackgroundColor(to views: [UIView]) {

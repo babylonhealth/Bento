@@ -3,7 +3,7 @@ import enum Result.NoError
 
 struct FacebookCellViewModel: Interactable {
     let selectionStyle: UITableViewCellSelectionStyle = .none
-    let title: String = LocalizationOctopus.SignIn.signInWithFacebook
+    let title: String = LocalizationUI.SignIn.signInWithFacebook
     let visualDependencies: VisualDependenciesProtocol
     let isInteractable = MutableProperty(true)
     let action: Action<Void, Void, NoError>
