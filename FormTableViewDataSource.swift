@@ -68,9 +68,9 @@ public final class FormTableViewDataSource: NSObject, UITableViewDataSource {
             let cell: FacebookCell = tableView.dequeueReusableCell(for: indexPath)
             cell.setup(viewModel: viewModel)
             return cell
-        case .actionButton(let viewModel):
+        case .actionButton(let viewModel, let spec):
             let cell: ActionCell = tableView.dequeueReusableCell(for: indexPath)
-            cell.setup(viewModel: viewModel)
+            cell.setup(viewModel: viewModel, spec: spec)
             return cell
         case .actionInput(let viewModel):
             let cell: ActionInputCell = tableView.dequeueReusableCell(for: indexPath)

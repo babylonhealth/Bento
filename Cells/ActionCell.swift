@@ -13,13 +13,14 @@ final class ActionCell: UITableViewCell {
 
     var viewModel: ActionCellViewModel!
 
-    func setup(viewModel: ActionCellViewModel) {
+    func setup(viewModel: ActionCellViewModel, spec: ActionCellViewSpec) {
         self.viewModel = viewModel
-        self.selectionStyle = self.viewModel.selectionStyle
 
-        viewModel.applyStyle(to: button)
+        selectionStyle = spec.selectionStyle
+        spec.buttonStyle.apply(to: button)
+        button.setTitle(spec.title, for: .normal)
         
-        heightConstraint.isActive = !viewModel.hasDynamicHeight
+        heightConstraint.isActive = !spec.hasDynamicHeight
 
         button.reactive.pressed = CocoaAction(viewModel.action)
 

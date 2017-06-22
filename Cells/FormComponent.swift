@@ -2,7 +2,7 @@ public enum FormComponent {
     case textInput(TextInputCellViewModel)
     case titledTextInput(TitledTextInputCellViewModel)
     case phoneTextInput(PhoneInputCellViewModel)
-    case actionButton(ActionCellViewModel)
+    case actionButton(ActionCellViewModel, ActionCellViewSpec)
     case facebookButton(FacebookCellViewModel)
     case description(DescriptionCellViewModel)
     case separator(SeparatorCellViewModel)
@@ -21,7 +21,7 @@ public enum FormComponent {
             return viewModel
         case .phoneTextInput(let viewModel):
             return viewModel
-        case .actionButton(let viewModel):
+        case .actionButton(let viewModel, _):
             return viewModel
         case .facebookButton(let viewModel):
             return viewModel
@@ -73,8 +73,8 @@ extension FormComponent: Equatable {
         case let (.phoneTextInput(lhsViewModel), .phoneTextInput(rhsViewModel)):
             return lhsViewModel.placeholder.hash == rhsViewModel.placeholder.hash
                 && lhsViewModel.title.hash == rhsViewModel.title.hash
-        case let (.actionButton(lhsViewModel), .actionButton(rhsViewModel)):
-            return lhsViewModel.title == rhsViewModel.title
+        case let (.actionButton(lhsViewModel, _), .actionButton(rhsViewModel, _)):
+            return lhsViewModel.action === rhsViewModel.action
         case let (.facebookButton(lhsViewModel), .facebookButton(rhsViewModel)):
             return lhsViewModel.title == rhsViewModel.title
         case let (.description(lhsViewModel), .description(rhsViewModel)):
