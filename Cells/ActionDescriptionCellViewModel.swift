@@ -2,12 +2,12 @@ import ReactiveSwift
 import Result
 import TTTAttributedLabel
 
-struct ActionDescriptionCellViewModel {
+public struct ActionDescriptionCellViewModel {
     let visualDependencies: VisualDependenciesProtocol
     let title: NSAttributedString
     let action: Action<Void, Void, NoError>
 
-    init(visualDependencies: VisualDependenciesProtocol, title: NSAttributedString, action: Action<Void, Void, NoError>) {
+    public init(visualDependencies: VisualDependenciesProtocol, title: NSAttributedString, action: Action<Void, Void, NoError>) {
         self.visualDependencies = visualDependencies
         self.title = title
         self.action = action

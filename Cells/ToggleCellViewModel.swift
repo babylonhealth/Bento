@@ -1,12 +1,12 @@
 import ReactiveSwift
 
-struct ToggleCellViewModel {
+public struct ToggleCellViewModel {
 
     private let visualDependencies: VisualDependenciesProtocol
     let title: String
     let isOn: MutableProperty<Bool>
 
-    init(title: String,
+    public init(title: String,
          isOn: MutableProperty<Bool>,
          visualDependencies: VisualDependenciesProtocol) {
 

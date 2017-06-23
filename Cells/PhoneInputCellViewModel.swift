@@ -1,7 +1,7 @@
 import ReactiveSwift
 import enum Result.NoError
 
-struct PhoneInputCellViewModel: Focusable, Interactable, TextEditable {
+public struct PhoneInputCellViewModel: Focusable, Interactable, TextEditable {
 
     private let visualDependencies: VisualDependenciesProtocol
     let title: String

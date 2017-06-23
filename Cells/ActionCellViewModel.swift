@@ -1,7 +1,7 @@
 import ReactiveSwift
 import Result
 
-struct ActionCellViewModel: Interactable {
+public struct ActionCellViewModel: Interactable {
     private let style: UIViewStyle<UIButton>
     let visualDependencies: VisualDependenciesProtocol
     let title: String
@@ -11,7 +11,7 @@ struct ActionCellViewModel: Interactable {
     let isInteractable = MutableProperty(true)
     let isLoading: Property<Bool>?
 
-    init(visualDependencies: VisualDependenciesProtocol,
+    public init(visualDependencies: VisualDependenciesProtocol,
          style: UIViewStyle<UIButton>,
          title: String,
          hasDynamicHeight: Bool,

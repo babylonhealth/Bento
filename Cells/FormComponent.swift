@@ -1,4 +1,4 @@
-enum FormComponent {
+public enum FormComponent {
     case textInput(TextInputCellViewModel)
     case titledTextInput(TitledTextInputCellViewModel)
     case phoneTextInput(PhoneInputCellViewModel)
@@ -41,11 +41,11 @@ enum FormComponent {
     var focusable: Focusable? {
         return viewModel as? Focusable
     }
-    
+
     var interactable: Interactable? {
         return viewModel as? Interactable
     }
-    
+
     var selectable: Selectable? {
         return viewModel as? Selectable
     }
@@ -57,7 +57,7 @@ enum FormComponent {
 
 extension FormComponent: Equatable {
 
-    static func ==(lhs: FormComponent, rhs: FormComponent) -> Bool {
+    public static func ==(lhs: FormComponent, rhs: FormComponent) -> Bool {
         switch (lhs, rhs) {
         case let (.textInput(lhsViewModel), .textInput(rhsViewModel)):
             return lhsViewModel.placeholder.hash == rhsViewModel.placeholder.hash

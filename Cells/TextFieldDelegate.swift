@@ -2,7 +2,7 @@ import UIKit
 import ReactiveSwift
 import enum Result.NoError
 
-final class TextFieldDelegate: NSObject, UITextFieldDelegate {
+public final class TextFieldDelegate: NSObject, UITextFieldDelegate {
 
     private let _isFocused: MutableProperty<Bool> = MutableProperty(false)
 
@@ -17,18 +17,18 @@ final class TextFieldDelegate: NSObject, UITextFieldDelegate {
         return _lostFocusReason
     }
 
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+    public func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         _isFocused.value = false
         _lostFocusReasonObserver.send(value: .returnKey)
         return true
     }
 
-    func textFieldDidEndEditing(_ textField: UITextField) {
+    public func textFieldDidEndEditing(_ textField: UITextField) {
         _isFocused.value = false
         _lostFocusReasonObserver.send(value: .other)
     }
 
-    func textFieldDidBeginEditing(_ textField: UITextField) {
+    public func textFieldDidBeginEditing(_ textField: UITextField) {
         _isFocused.value = true
     }
 }

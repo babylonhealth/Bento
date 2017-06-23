@@ -11,11 +11,11 @@ infix operator |-* : ChainingPrecedence // Compose with another builder
 infix operator |-? : ChainingPrecedence // Compose components pending on a boolean condition
 infix operator |-| : ChainingPrecedence // Compose with an empty space using a specific height
 
-struct FormBuilder {
+public struct FormBuilder {
 
     let components: [Component]
 
-    static var empty: FormBuilder {
+    public static var empty: FormBuilder {
         return FormBuilder()
     }
 
@@ -23,37 +23,37 @@ struct FormBuilder {
         self.components = components
     }
 
-    func build(with visualDependencies: VisualDependenciesProtocol) -> [FormComponent] {
+    public func build(with visualDependencies: VisualDependenciesProtocol) -> [FormComponent] {
         return components
             .map { $0.formComponent(with: visualDependencies) }
             .flatMap { $0 }
     }
 
-    static func |-+(builder: FormBuilder, component: Component) -> FormBuilder {
+    public static func |-+(builder: FormBuilder, component: Component) -> FormBuilder {
         var components = builder.components
         components.append(component)
         return FormBuilder(components: components)
     }
 
-    static func |-* (builder: FormBuilder, generator: () -> FormBuilder) -> FormBuilder {
+    public static func |-* (builder: FormBuilder, generator: () -> FormBuilder) -> FormBuilder {
         var components = builder.components
         components.append(contentsOf: generator().components)
         return FormBuilder(components: components)
     }
 
-    static func |-+ (builder: FormBuilder, sectioner: Sectioner) -> FormBuilder {
+    public static func |-+ (builder: FormBuilder, sectioner: Sectioner) -> FormBuilder {
         return builder |-+ .section(sectioner.generator(.empty))
     }
 
-    static func |-? (builder: FormBuilder, validator: Validator<FormBuilder>) -> FormBuilder {
+    public static func |-? (builder: FormBuilder, validator: Validator<FormBuilder>) -> FormBuilder {
         return validator.generate(with: builder) ?? builder
     }
 
-    static func |-| (builder: FormBuilder, height: Float) -> FormBuilder {
+    public static func |-| (builder: FormBuilder, height: Float) -> FormBuilder {
         return builder |-+ .space(height: height)
     }
 
-    struct Sectioner {
+    public struct Sectioner {
 
         let generator: (FormSectionBuilder) -> FormSectionBuilder
 
@@ -65,7 +65,7 @@ struct FormBuilder {
 
 extension FormBuilder {
 
-    enum Component {
+    public enum Component {
         case space(height: Float)
         case header(text: String)
         case headline(text: String)
@@ -121,9 +121,9 @@ extension FormBuilder {
 
 // MARK: -
 
-struct FormSectionBuilder {
+public struct FormSectionBuilder {
 
-    enum Component {
+    public enum Component {
         case textField(placeholder: String, text: ValidatingProperty<String, InvalidInput>)
         case passwordField(placeholder: String, text: ValidatingProperty<String, InvalidInput>)
         case titledTextField(title: String, placeholder: String, text: ValidatingProperty<String, InvalidInput>)
@@ -132,7 +132,7 @@ struct FormSectionBuilder {
         case toggle(title: String, isOn: MutableProperty<Bool>)
         case custom(FormComponent)
 
-        func formComponent(with visualDependencies: VisualDependenciesProtocol) -> FormComponent {
+        public func formComponent(with visualDependencies: VisualDependenciesProtocol) -> FormComponent {
             switch self {
             case let .textField(placeholder, text):
                 return .textInput(
@@ -179,13 +179,13 @@ struct FormSectionBuilder {
         }
     }
 
-    static var empty: FormSectionBuilder {
+    public static var empty: FormSectionBuilder {
         return FormSectionBuilder()
     }
 
     fileprivate let components: [FormSectionBuilder.Component]
 
-    init(generator: (FormSectionBuilder) -> FormSectionBuilder) {
+    public init(generator: (FormSectionBuilder) -> FormSectionBuilder) {
         self.init()
         self = generator(self)
     }
@@ -202,19 +202,19 @@ struct FormSectionBuilder {
         return .separator(SeparatorCellViewModel(isFullCell: false, visualDependencies: visualDependencies))
     }
 
-    static func |-+(builder: FormSectionBuilder, component: FormSectionBuilder.Component) -> FormSectionBuilder {
+    public static func |-+(builder: FormSectionBuilder, component: FormSectionBuilder.Component) -> FormSectionBuilder {
         var components = builder.components
         components.append(component)
         return FormSectionBuilder(components: components)
     }
 
-    static func |-* (builder: FormSectionBuilder, generator: () -> FormSectionBuilder) -> FormSectionBuilder {
+    public static func |-* (builder: FormSectionBuilder, generator: () -> FormSectionBuilder) -> FormSectionBuilder {
         var components = builder.components
         components.append(contentsOf: generator().components)
         return FormSectionBuilder(components: components)
     }
 
-    static func |-? (builder: FormSectionBuilder, validator: Validator<FormSectionBuilder>) -> FormSectionBuilder {
+    public static func |-? (builder: FormSectionBuilder, validator: Validator<FormSectionBuilder>) -> FormSectionBuilder {
         return validator.generate(with: builder) ?? builder
     }
 
@@ -236,16 +236,16 @@ struct FormSectionBuilder {
 
 // MARK: - 
 
-struct Validator<T> {
+public struct Validator<T> {
 
     let condition: () -> Bool
     let generator: (T) -> T
 
-    func generate(with formBuilder: T) -> T? {
+    public func generate(with formBuilder: T) -> T? {
         return condition() ? generator(formBuilder) : nil
     }
 
-    static func iff(_ condition: @autoclosure @escaping () -> Bool, generator: @escaping (T) -> T) -> Validator {
+    public static func iff(_ condition: @autoclosure @escaping () -> Bool, generator: @escaping (T) -> T) -> Validator {
         return Validator(condition: condition, generator: generator)
     }
 }

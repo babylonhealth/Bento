@@ -1,7 +1,7 @@
 import ReactiveSwift
 import enum Result.NoError
 
-struct TitledTextInputCellViewModel: Focusable, Interactable, TextEditable {
+public struct TitledTextInputCellViewModel: Focusable, Interactable, TextEditable {
 
     private let visualDependencies: VisualDependenciesProtocol
     let title: String
@@ -21,7 +21,7 @@ struct TitledTextInputCellViewModel: Focusable, Interactable, TextEditable {
         return textFieldDelegate.lostFocusReason
     }
 
-    init(title: String,
+    public init(title: String,
          placeholder: String,
          text: ValidatingProperty<String, InvalidInput>,
          autocapitalizationType: UITextAutocapitalizationType = .sentences,

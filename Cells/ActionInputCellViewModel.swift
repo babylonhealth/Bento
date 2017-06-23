@@ -1,7 +1,7 @@
 import ReactiveSwift
 import Result
 
-struct ActionInputCellViewModel: Selectable {
+public struct ActionInputCellViewModel: Selectable {
     private let visualDependencies: VisualDependenciesProtocol
     let title: String
     let input: Property<String>
@@ -10,7 +10,7 @@ struct ActionInputCellViewModel: Selectable {
     let isSelected: Action<Void, Void, NoError>
     let accessory: UITableViewCellAccessoryType
 
-    init(visualDependencies: VisualDependenciesProtocol,
+    public init(visualDependencies: VisualDependenciesProtocol,
          title: String,
          input: Property<String>,
          inputTextAlignment: TextAlignment = .right,

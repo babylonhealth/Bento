@@ -1,10 +1,10 @@
 import UIKit
 
-final class FormTableViewDataSource: NSObject, UITableViewDataSource {
+public final class FormTableViewDataSource: NSObject, UITableViewDataSource {
 
-    var components: [FormComponent] = []
+    public var components: [FormComponent] = []
 
-    func setupTable(tableView: UITableView) {
+    public func setupTable(tableView: UITableView) {
         tableView.register(TextInputCell.self)
         tableView.register(TitledTextInputCell.self)
         tableView.register(PhoneInputCell.self)
@@ -20,16 +20,16 @@ final class FormTableViewDataSource: NSObject, UITableViewDataSource {
         tableView.estimatedRowHeight = 44
     }
 
-    func update(tableView: UITableView, with components: [FormComponent]) {
+    public func update(tableView: UITableView, with components: [FormComponent]) {
         self.components = components
         tableView.reloadData()
     }
 
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return components.count
     }
 
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         return mapViewModelToCell(fromTableView: tableView, atIndexPath: indexPath)
     }
 
@@ -85,7 +85,7 @@ final class FormTableViewDataSource: NSObject, UITableViewDataSource {
         }
     }
     
-    convenience init(tableView: UITableView, components: [FormComponent]) {
+    public convenience init(tableView: UITableView, components: [FormComponent]) {
         self.init()
         setupTable(tableView: tableView)
         update(tableView: tableView, with: components)

@@ -1,14 +1,14 @@
 import ReactiveSwift
 import enum Result.NoError
 
-struct FocusableController {
+public struct FocusableController {
     let focusableComponents: Property<[Focusable]>
 
     let focusedComponent: Property<FormComponent?>
 
     private let autoFocusDisposable: Atomic<Disposable?> = Atomic(nil)
 
-    init(components: Property<[FormComponent]>) {
+    public init(components: Property<[FormComponent]>) {
 
         focusableComponents = components.map { $0.flatMap { $0.focusable } }
 

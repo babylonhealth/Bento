@@ -1,7 +1,7 @@
 import ReactiveSwift
 import Result
 
-struct TextInputCellViewModel: Focusable, Interactable, TextEditable {
+public struct TextInputCellViewModel: Focusable, Interactable, TextEditable {
 
     private let _isSecure: MutableProperty<Bool>
     private let _clearsOnBeginEditing: MutableProperty<Bool>
@@ -38,7 +38,7 @@ struct TextInputCellViewModel: Focusable, Interactable, TextEditable {
         return Action { .run { self._isSecure.modify { isSecure in isSecure = !(isSecure) } } }
     }
 
-    init(placeholder: String,
+    public init(placeholder: String,
          text: ValidatingProperty<String, InvalidInput>,
          isSecure: Bool,
          clearsOnBeginEditing: Bool = false,

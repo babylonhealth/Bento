@@ -1,12 +1,20 @@
 import UIKit
 
-struct DescriptionCellViewModel {
-    let text: String
-    let type: DescriptionCellType
-    let visualDependencies: VisualDependenciesProtocol
-    let selectionStyle: UITableViewCellSelectionStyle = .none
+public struct DescriptionCellViewModel {
+    public let text: String
+    public let type: DescriptionCellType
+    public let visualDependencies: VisualDependenciesProtocol
+    public let selectionStyle: UITableViewCellSelectionStyle
 
-    func applyStyle(to label: UILabel) {
+    public init(text: String, type: DescriptionCellType, visualDependencies: VisualDependenciesProtocol, selectionStyle: UITableViewCellSelectionStyle = .none) {
+
+        self.text = text
+        self.type = type
+        self.visualDependencies = visualDependencies
+        self.selectionStyle = selectionStyle
+    }
+
+    public func applyStyle(to label: UILabel) {
         switch type {
         case .header:
             visualDependencies.styles.labelFormHeader.apply(to: label)
@@ -21,11 +29,11 @@ struct DescriptionCellViewModel {
         }
     }
 
-    func applyText(to label: UILabel) {
+    public func applyText(to label: UILabel) {
         label.text = self.text
     }
 
-    func applyBackgroundColor(to views: [UIView]) {
+    public func applyBackgroundColor(to views: [UIView]) {
         self.visualDependencies.styles.backgroundTransparentColor.apply(to: views)
     }
 }

@@ -1,7 +1,7 @@
 import ReactiveSwift
 import enum Result.NoError
 
-struct FacebookCellViewModel: Interactable {
+public struct FacebookCellViewModel: Interactable {
     let selectionStyle: UITableViewCellSelectionStyle = .none
     let title: String = LocalizationUI.SignIn.signInWithFacebook
     let visualDependencies: VisualDependenciesProtocol
@@ -9,7 +9,7 @@ struct FacebookCellViewModel: Interactable {
     let action: Action<Void, Void, NoError>
     let isLoading: Property<Bool>?
 
-    init(action: Action<Void, Void, NoError>, visualDependencies: VisualDependenciesProtocol, isLoading: Property<Bool>? = nil) {
+    public init(action: Action<Void, Void, NoError>, visualDependencies: VisualDependenciesProtocol, isLoading: Property<Bool>? = nil) {
         self.action = action
         self.visualDependencies = visualDependencies
         self.isLoading = isLoading

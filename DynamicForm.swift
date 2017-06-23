@@ -30,7 +30,7 @@ import ReactiveSwift
 import enum Result.NoError
 import Dwifft
 
-struct Patch<T: Equatable> {
+public struct Patch<T: Equatable> {
 
     enum Change<T> {
         case insert(index: Int, element: T)
@@ -51,7 +51,7 @@ struct Patch<T: Equatable> {
     }
 }
 
-struct FormRenderer<ViewState> {
+public struct FormRenderer<ViewState> {
 
     private class Cage {
 
@@ -59,7 +59,7 @@ struct FormRenderer<ViewState> {
             return Cage([])
         }
 
-        let components: [FormComponent]
+        public let components: [FormComponent]
 
         init(_ components: [FormComponent]) {
             self.components = components
@@ -68,11 +68,11 @@ struct FormRenderer<ViewState> {
 
     private let cage: Property<Cage>
 
-    var components: Property<[FormComponent]> {
+    public var components: Property<[FormComponent]> {
         return cage.map { $0.components }
     }
 
-    init(viewState: Property<ViewState>, render: @escaping (ViewState) -> [FormComponent]) {
+    public init(viewState: Property<ViewState>, render: @escaping (ViewState) -> [FormComponent]) {
 
         cage = Property(initial: .empty, then:
             viewState
@@ -84,13 +84,13 @@ struct FormRenderer<ViewState> {
     }
 }
 
-protocol DynamicForm: Form {
+public protocol DynamicForm: Form {
     var changes: Signal<(previous: [FormComponent], current: [FormComponent], patch: Patch<FormComponent>), NoError> { get }
 }
 
 extension DynamicForm {
 
-    var changes: Signal<(previous: [FormComponent], current: [FormComponent], patch: Patch<FormComponent>), NoError> {
+    public var changes: Signal<(previous: [FormComponent], current: [FormComponent], patch: Patch<FormComponent>), NoError> {
         // FIXME: Welp we need a `combinePrevious` that doesn't need an initial value.
         return components.signal
             .combinePrevious(components.value)

@@ -11,15 +11,15 @@ open class FormViewController: UIViewController {
     private lazy var formView: FormView = FormView(form: self.form)
 
     // TODO: 🔥 [David] Once again generics, you need to find a better way
-    var tableView: UITableView {
+    public var tableView: UITableView {
         return formView.tableView
     }
 
-    var tableDataSource: FormTableViewDataSource {
+    public var tableDataSource: FormTableViewDataSource {
         return formView.tableDataSource
     }
 
-    init<F: Form>(form: F, visualDependencies: VisualDependenciesProtocol) {
+public init<F: Form>(form: F, visualDependencies: VisualDependenciesProtocol) {
         self.form = form
         self.visualDependencies = visualDependencies
 
@@ -87,7 +87,7 @@ open class FormViewController: UIViewController {
         }
     }
 
-    func enableFormAutoFocus() {
+    public func enableFormAutoFocus() {
         if let focusableForm = form as? FocusableForm {
             reactive.signal(for: #selector(viewDidAppear(_:)))
                 .take(during: reactive.lifetime)

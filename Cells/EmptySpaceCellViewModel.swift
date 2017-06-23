@@ -1,11 +1,11 @@
 import UIKit
 
-struct EmptySpaceCellViewModel {
+public struct EmptySpaceCellViewModel {
     private let visualDependencies: VisualDependenciesProtocol
     let height: Float
     let selectionStyle: UITableViewCellSelectionStyle = .none
 
-    init(height: Float, visualDependencies: VisualDependenciesProtocol) {
+    public init(height: Float, visualDependencies: VisualDependenciesProtocol) {
         self.height = height
         self.visualDependencies = visualDependencies
     }

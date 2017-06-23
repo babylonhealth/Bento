@@ -1,6 +1,6 @@
 import UIKit
 
-enum DescriptionCellType {
+public enum DescriptionCellType {
     case header
     case headline
     case link
