@@ -74,7 +74,7 @@ extension FormBuilder {
         case secondaryButton(text: String, hasDynamicHeight: Bool, action: Action<Void, Void, NoError>)
         case custom(FormComponent)
 
-        func formComponent(with visualDependencies: VisualDependenciesProtocol) -> [FormComponent] {
+        public func formComponent(with visualDependencies: VisualDependenciesProtocol) -> [FormComponent] {
             switch self {
             case let .space(height):
                 return [
@@ -238,8 +238,8 @@ public struct FormSectionBuilder {
 
 public struct Validator<T> {
 
-    let condition: () -> Bool
-    let generator: (T) -> T
+    public let condition: () -> Bool
+    public let generator: (T) -> T
 
     public func generate(with formBuilder: T) -> T? {
         return condition() ? generator(formBuilder) : nil
