@@ -9,7 +9,7 @@ public struct TitledTextInputCellViewModel: Focusable, Interactable, TextEditabl
     let text: ValidatingProperty<String, InvalidInput>
     let textFieldDelegate: TextFieldDelegate
     let isFocused = MutableProperty(false)
-    let isInteractable = MutableProperty(true)
+    public let isInteractable = MutableProperty(true)
     let autocapitalizationType: UITextAutocapitalizationType
     let autocorrectionType: UITextAutocorrectionType
     let keyboardType: UIKeyboardType
