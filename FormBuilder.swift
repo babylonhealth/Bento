@@ -57,7 +57,7 @@ public struct FormBuilder {
 
         let generator: (FormSectionBuilder) -> FormSectionBuilder
 
-        static func section(_ generator: @escaping (FormSectionBuilder) -> FormSectionBuilder) -> Sectioner {
+        public static func section(_ generator: @escaping (FormSectionBuilder) -> FormSectionBuilder) -> Sectioner {
             return Sectioner(generator: generator)
         }
     }
