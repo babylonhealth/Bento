@@ -68,6 +68,7 @@ public struct TextInputCellViewModel: Focusable, Interactable, TextEditable {
 
     func applyStyle(to textField: UITextField) {
         visualDependencies.styles.textFieldForm.apply(to: textField)
+        visualDependencies.styles.tintBrandColor.apply(to: textField)
         textField.autocapitalizationType = autocapitalizationType
         textField.autocorrectionType = autocorrectionType
         textField.keyboardType = keyboardType
