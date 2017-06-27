@@ -22,6 +22,7 @@ public struct ActionInputCellViewModel: Selectable {
         self.input = input
         self.isSelected = selected
         self.accessory = accessory
+        
     }
 
     func applyTitleStyle(to label: UILabel) {

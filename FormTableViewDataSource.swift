@@ -13,6 +13,7 @@ public final class FormTableViewDataSource: NSObject, UITableViewDataSource {
         tableView.register(DescriptionCell.self)
         tableView.register(ActionCell.self)
         tableView.register(ActionInputCell.self)
+        tableView.register(ActionIconInputCell.self)
         tableView.register(ActionDescriptionCell.self)
         tableView.register(FacebookCell.self)
         tableView.register(ToggleCell.self)
@@ -72,6 +73,10 @@ public final class FormTableViewDataSource: NSObject, UITableViewDataSource {
             return cell
         case .actionInput(let viewModel):
             let cell: ActionInputCell = tableView.dequeueReusableCell(for: indexPath)
+            cell.setup(viewModel: viewModel)
+            return cell
+        case .actionIconInput(let viewModel):
+            let cell: ActionIconInputCell = tableView.dequeueReusableCell(for: indexPath)
             cell.setup(viewModel: viewModel)
             return cell
         case .actionDescription(let viewModel):
