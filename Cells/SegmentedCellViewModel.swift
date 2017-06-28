@@ -3,19 +3,13 @@ import enum Result.NoError
 
 public struct SegmentedCellViewModel {
 
-    public struct Option: Equatable {
+    public struct Option {
         let title: String
         let imageName: String
 
         public init(title: String, imageName: String) {
             self.title = title
             self.imageName = imageName
-        }
-
-        // MARK: Equatable
-
-        public static func ==(lhs: Option, rhs: Option) -> Bool {
-            return lhs.title == rhs.title && lhs.imageName == rhs.imageName
         }
     }
 
@@ -40,5 +34,12 @@ public struct SegmentedCellViewModel {
             selectedIndex.swap(index)
             return .empty
         }
+    }
+}
+
+extension SegmentedCellViewModel.Option: Equatable {
+
+    public static func ==(lhs: SegmentedCellViewModel.Option, rhs: SegmentedCellViewModel.Option) -> Bool {
+        return lhs.title == rhs.title && lhs.imageName == rhs.imageName
     }
 }
