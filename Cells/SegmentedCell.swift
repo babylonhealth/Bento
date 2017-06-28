@@ -1,4 +1,5 @@
 import UIKit
+import ReactiveSwift
 import ReactiveCocoa
 
 public final class SegmentedCell: UITableViewCell {
