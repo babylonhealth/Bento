@@ -28,7 +28,8 @@ public final class SegmentedCell: UITableViewCell {
             stackView.rightAnchor.constraint(equalTo: rightAnchor),
             ])
     }
-    
+
+    @available(*, unavailable)
     public required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
