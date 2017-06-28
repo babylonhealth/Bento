@@ -16,6 +16,7 @@ public final class FormTableViewDataSource: NSObject, UITableViewDataSource {
         tableView.register(ActionDescriptionCell.self)
         tableView.register(FacebookCell.self)
         tableView.register(ToggleCell.self)
+        tableView.register(SegmentedCell.self)
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 44
     }
@@ -80,6 +81,10 @@ public final class FormTableViewDataSource: NSObject, UITableViewDataSource {
             return cell
         case .toggle(let viewModel):
             let cell: ToggleCell = tableView.dequeueReusableCell(for: indexPath)
+            cell.setup(viewModel: viewModel)
+            return cell
+        case .segmentedInput(let viewModel):
+            let cell: SegmentedCell = tableView.dequeueReusableCell(for: indexPath)
             cell.setup(viewModel: viewModel)
             return cell
         }
