@@ -8,6 +8,7 @@ public enum FormComponent {
     case separator(SeparatorCellViewModel)
     case space(EmptySpaceCellViewModel)
     case actionInput(ActionInputCellViewModel)
+    case actionIconInput(ActionIconInputCellViewModel)
     case actionDescription(ActionDescriptionCellViewModel)
     case toggle(ToggleCellViewModel)
     case segmentedInput(SegmentedCellViewModel)
@@ -31,6 +32,8 @@ public enum FormComponent {
         case .space(let viewModel):
             return viewModel
         case .actionInput(let viewModel):
+            return viewModel
+        case .actionIconInput(let viewModel):
             return viewModel
         case .actionDescription(let viewModel):
             return viewModel
@@ -84,6 +87,8 @@ extension FormComponent: Equatable {
             return lhsViewModel.height == rhsViewModel.height
         case let (.actionInput(lhsViewModel), .actionInput(rhsViewModel)):
             return lhsViewModel.title == rhsViewModel.title
+        case let (.actionIconInput(lhsViewModel), .actionIconInput(rhsViewModel)):
+            return lhsViewModel.title == rhsViewModel.title
         case let (.actionDescription(lhsViewModel), .actionDescription(rhsViewModel)):
             return lhsViewModel.title == rhsViewModel.title
         case let (.toggle(lhsViewModel), .toggle(rhsViewModel)):
@@ -99,6 +104,7 @@ extension FormComponent: Equatable {
              (.separator, _),
              (.space, _),
              (.actionInput, _),
+             (.actionIconInput, _),
              (.actionDescription, _),
              (.toggle, _),
              (.segmentedInput, _):
