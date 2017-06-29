@@ -21,7 +21,7 @@ public final class SegmentedCell: UITableViewCell {
 
         addSubview(stackView)
 
-        addConstraints([
+        NSLayoutConstraint.activate([
             stackView.topAnchor.constraint(equalTo: topAnchor),
             stackView.leftAnchor.constraint(equalTo: leftAnchor),
             stackView.bottomAnchor.constraint(equalTo: bottomAnchor),

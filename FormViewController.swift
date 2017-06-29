@@ -119,7 +119,7 @@ private class FormView: UIView {
 
         addSubview(tableView)
 
-        addConstraints([
+        NSLayoutConstraint.activate([
             tableView.topAnchor.constraint(equalTo: topAnchor),
             tableView.leftAnchor.constraint(equalTo: leftAnchor),
             tableView.bottomAnchor.constraint(equalTo: bottomAnchor),
