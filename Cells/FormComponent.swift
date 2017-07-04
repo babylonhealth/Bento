@@ -12,6 +12,7 @@ public enum FormComponent {
     case actionDescription(ActionDescriptionCellViewModel)
     case toggle(ToggleCellViewModel)
     case segmentedInput(SegmentedCellViewModel)
+    case selection(SelectionCellViewModel, group: SelectionGroup, spec: SelectionCellViewSpec)
 
     private var viewModel: Any {
         switch self {
@@ -40,6 +41,8 @@ public enum FormComponent {
         case .toggle(let viewModel):
             return viewModel
         case .segmentedInput(let viewModel):
+            return viewModel
+        case .selection(let viewModel):
             return viewModel
         }
     }
@@ -95,19 +98,9 @@ extension FormComponent: Equatable {
             return lhsViewModel.title == rhsViewModel.title
         case let (.segmentedInput(lhsViewModel), .segmentedInput(rhsViewModel)):
             return lhsViewModel.options == rhsViewModel.options
-        case (.textInput, _),
-             (.titledTextInput, _),
-             (.phoneTextInput, _),
-             (.actionButton, _),
-             (.facebookButton, _),
-             (.description, _),
-             (.separator, _),
-             (.space, _),
-             (.actionInput, _),
-             (.actionIconInput, _),
-             (.actionDescription, _),
-             (.toggle, _),
-             (.segmentedInput, _):
+        case let (.selection(lhsViewModel, lhsGroup, _), .selection(rhsViewModel, rhsGroup, _)):
+            return lhsViewModel.title == rhsViewModel.title && lhsGroup === rhsGroup
+        default:
             return false
         }
     }

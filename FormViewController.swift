@@ -19,7 +19,7 @@ open class FormViewController: UIViewController {
         return formView.tableDataSource
     }
 
-public init<F: Form>(form: F, visualDependencies: VisualDependenciesProtocol) {
+    public init<F: Form>(form: F, visualDependencies: VisualDependenciesProtocol) {
         self.form = form
         self.visualDependencies = visualDependencies
 
