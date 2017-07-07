@@ -1,19 +1,19 @@
 import ReactiveSwift
 import Result
 
-public struct TextInputCellViewModel: Interactable, FocusableFormComponent {
+public struct TextInputCellViewModel: FocusableFormComponent {
 
     private let _isSecure: MutableProperty<Bool>
     private let _clearsOnBeginEditing: MutableProperty<Bool>
 
     let placeholder: String
     let text: ValidatingProperty<String, InvalidInput>
+    let isEnabled: Property<Bool>
     let autocapitalizationType: UITextAutocapitalizationType
     let autocorrectionType: UITextAutocorrectionType
     let keyboardType: UIKeyboardType
     let visualDependencies: VisualDependenciesProtocol
     let formContent: FormContentProtocol?
-    let isInteractable = MutableProperty(true)
     let selectionStyle: UITableViewCellSelectionStyle = .none
     let width: Float
 
@@ -31,6 +31,7 @@ public struct TextInputCellViewModel: Interactable, FocusableFormComponent {
 
     public init(placeholder: String,
          text: ValidatingProperty<String, InvalidInput>,
+         isEnabled: Property<Bool> = Property(value: true),
          isSecure: Bool,
          clearsOnBeginEditing: Bool = false,
          autocapitalizationType: UITextAutocapitalizationType = .sentences,
@@ -43,6 +44,7 @@ public struct TextInputCellViewModel: Interactable, FocusableFormComponent {
         self._clearsOnBeginEditing = MutableProperty(clearsOnBeginEditingValue)
         self.placeholder = placeholder
         self.text = text
+        self.isEnabled = isEnabled
         self.autocapitalizationType = autocapitalizationType
         self.autocorrectionType = autocorrectionType
         self.keyboardType = keyboardType

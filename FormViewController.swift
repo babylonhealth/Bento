@@ -4,13 +4,13 @@ import ReactiveCocoa
 import enum Result.NoError
 
 open class FormViewController: UIViewController {
-
-    private let form: Form
-    private let visualDependencies: VisualDependenciesProtocol
-    fileprivate var dataSource: FormTableViewDataSource!
-    private var keyboardChangeDisposable: Disposable?
-
     public let tableView: UITableView
+
+    fileprivate let form: Form
+    fileprivate var dataSource: FormTableViewDataSource!
+
+    private let visualDependencies: VisualDependenciesProtocol
+    private var keyboardChangeDisposable: Disposable?
 
     public init<F: Form>(form: F, visualDependencies: VisualDependenciesProtocol) {
         self.form = form
@@ -60,6 +60,11 @@ open class FormViewController: UIViewController {
                                animations: animate,
                                completion: nil)
             }
+    }
+
+    open override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        tableView.endEditing(true)
     }
 
     open override func viewDidDisappear(_ animated: Bool) {
@@ -119,6 +124,7 @@ open class FormViewController: UIViewController {
 
 extension FormViewController: FormCellConfigurator {
     public func configure<Cell : UITableViewCell>(_ cell: Cell) {
+        (cell as? FormCell)?.configure(form.submiting.negate())
         (cell as? FocusableCell)?.delegate = self
     }
 }

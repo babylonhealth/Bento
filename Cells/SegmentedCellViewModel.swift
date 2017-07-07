@@ -16,14 +16,16 @@ public struct SegmentedCellViewModel {
     let visualDependencies: VisualDependenciesProtocol
 
     let options: [Option]
+    let isEnabled: Property<Bool>
     let selectedIndex: Property<Int>
     let selection: Action<Int, Void, NoError>
 
-    public init(options: [Option], selectedIndex: Int = 0, visualDependencies: VisualDependenciesProtocol) {
+    public init(options: [Option], isEnabled: Property<Bool> = Property(value: true), selectedIndex: Int = 0, visualDependencies: VisualDependenciesProtocol) {
         precondition(options.isEmpty == false)
         precondition(options.indices.contains(selectedIndex))
 
         self.options = options
+        self.isEnabled = isEnabled
         self.visualDependencies = visualDependencies
 
         let selectedIndex = MutableProperty(selectedIndex)

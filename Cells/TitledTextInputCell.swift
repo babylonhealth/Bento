@@ -1,6 +1,6 @@
 import ReactiveSwift
 
-class TitledTextInputCell: UITableViewCell {
+class TitledTextInputCell: FormCell {
 
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var textField: UITextField!
@@ -21,20 +21,23 @@ class TitledTextInputCell: UITableViewCell {
         textField.placeholder = viewModel.placeholder
         viewModel.applyInputStyle(to: textField)
 
-        textField.reactive.text
-            <~ viewModel.text
-                .producer
-                .take(until: reactive.prepareForReuse)
+        textField.reactive.text <~ viewModel.text.producer
+            .take(until: reactive.prepareForReuse)
 
-        textField.reactive.isEnabled
-            <~ viewModel.isInteractable
-                .producer
-                .take(until: reactive.prepareForReuse)
+        let isEnabled = viewModel.isEnabled.and(isFormEnabled)
+        textField.reactive.isEnabled <~ isEnabled.producer
+            .take(until: reactive.prepareForReuse)
 
-        viewModel.text
-            <~ textField.reactive.continuousTextValues
-                .skipNil()
-                .take(until: reactive.prepareForReuse)
+        // `continuousTextValues` yields the current text for all text field control
+        // events. This may lead to deadlock if:
+        //
+        // 1. `isFormEnabled` is derived from `isExecuting` of an `Action`; and
+        // 2. `viewModel.text` feeds into the `Action` as its state.
+        //
+        // So we filter any value being yielded after the form is disabled.
+        viewModel.text <~ textField.reactive.continuousTextValues
+            .filterMap { isEnabled.value ? $0 : nil }
+            .take(until: reactive.prepareForReuse)
     }
 }
 

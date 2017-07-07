@@ -5,7 +5,7 @@ import Result
 
 extension TextInputCell: NibLoadableCell {}
 
-final class TextInputCell: UITableViewCell {
+final class TextInputCell: FormCell {
 
     @IBOutlet weak var textField: UITextField!
     @IBOutlet weak var peekButton: UIButton!
@@ -35,6 +35,26 @@ final class TextInputCell: UITableViewCell {
         self.viewModel = viewModel
         textField.placeholder = viewModel.placeholder
 
+        let isEnabled = viewModel.isEnabled.and(isFormEnabled)
+
+        isEnabled.producer
+            .take(until: reactive.prepareForReuse)
+            .startWithSignal { isEnabled, _ in
+                textField.reactive.isEnabled <~ isEnabled
+                peekButton.reactive.isEnabled <~ isEnabled
+            }
+
+        // `continuousTextValues` yields the current text for all text field control
+        // events. This may lead to deadlock if:
+        //
+        // 1. `isFormEnabled` is derived from `isExecuting` of an `Action`; and
+        // 2. `viewModel.text` feeds into the `Action` as its state.
+        //
+        // So we filter any value being yielded after the form is disabled.
+        viewModel.text <~ textField.reactive.continuousTextValues
+            .filterMap { isEnabled.value ? $0 : nil }
+            .take(until: reactive.prepareForReuse)
+
         textField.reactive.text
             <~ viewModel.text
                 .producer
@@ -48,16 +68,6 @@ final class TextInputCell: UITableViewCell {
         textField.reactive.clearsOnBeginEditing
             <~ clearsOnBeginEditing
                 .producer
-                .take(until: reactive.prepareForReuse)
-
-        textField.reactive.isEnabled
-            <~ viewModel.isInteractable
-                .producer
-                .take(until: reactive.prepareForReuse)
-
-        viewModel.text
-            <~ textField.reactive.continuousTextValues
-                .skipNil()
                 .take(until: reactive.prepareForReuse)
 
         peekButton.reactive.isSelected

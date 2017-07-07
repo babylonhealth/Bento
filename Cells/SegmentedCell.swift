@@ -2,7 +2,7 @@ import UIKit
 import ReactiveSwift
 import ReactiveCocoa
 
-public final class SegmentedCell: UITableViewCell {
+public final class SegmentedCell: FormCell {
 
     let stackView: UIStackView = {
         $0.translatesAutoresizingMaskIntoConstraints = false
@@ -26,7 +26,7 @@ public final class SegmentedCell: UITableViewCell {
             stackView.leftAnchor.constraint(equalTo: leftAnchor),
             stackView.bottomAnchor.constraint(equalTo: bottomAnchor),
             stackView.rightAnchor.constraint(equalTo: rightAnchor),
-            ])
+        ])
     }
 
     @available(*, unavailable)
@@ -37,6 +37,9 @@ public final class SegmentedCell: UITableViewCell {
     func setup(viewModel: SegmentedCellViewModel) {
         self.viewModel = viewModel
 
+        stackView.arrangedSubviews
+            .forEach(stackView.removeArrangedSubview)
+
         generateButtons()
             .map { [$0] }
             .joined(separator: [generateSeparator()])
@@ -44,6 +47,9 @@ public final class SegmentedCell: UITableViewCell {
     }
 
     private func generateButtons() -> [UIButton] {
+        let isEnabled = viewModel.isEnabled.and(isFormEnabled).producer
+            .take(until: reactive.prepareForReuse)
+
         return viewModel.options.enumerated().map { index, option in
             let button = UIButton(type: .custom)
             viewModel.visualDependencies.styles.segmentedCellButton.apply(to: button)
@@ -54,6 +60,7 @@ public final class SegmentedCell: UITableViewCell {
             button.setImage(UIImage(named: option.imageName)?.withRenderingMode(.alwaysTemplate), for: .selected)
             button.reactive.isSelected <~ viewModel.selectedIndex.map { $0 == index }
             button.reactive.pressed = CocoaAction(viewModel.selection, input: index)
+            button.reactive.isEnabled <~ isEnabled
             return button
         }
     }

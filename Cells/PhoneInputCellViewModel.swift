@@ -1,19 +1,20 @@
 import ReactiveSwift
 import enum Result.NoError
 
-public struct PhoneInputCellViewModel: Interactable, FocusableFormComponent {
+public struct PhoneInputCellViewModel: FocusableFormComponent {
 
     private let visualDependencies: VisualDependenciesProtocol
     let title: String
     let placeholder: String
     let countryCode: MutableProperty<String>
     let phoneNumber: MutableProperty<String>
-    let isInteractable = MutableProperty(true)
+    let isEnabled: Property<Bool>
 
     init(title: String,
          placeholder: String,
          countryCode: MutableProperty<String>,
          phoneNumber: MutableProperty<String>,
+         isEnabled: Property<Bool> = Property(value: true),
          visualDependencies: VisualDependenciesProtocol) {
 
         self.visualDependencies = visualDependencies
@@ -21,6 +22,7 @@ public struct PhoneInputCellViewModel: Interactable, FocusableFormComponent {
         self.placeholder = placeholder
         self.countryCode = countryCode
         self.phoneNumber = phoneNumber
+        self.isEnabled = isEnabled
     }
 
     func applyTitleStyle(to label: UILabel) {

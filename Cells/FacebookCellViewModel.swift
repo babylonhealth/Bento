@@ -1,18 +1,19 @@
 import ReactiveSwift
 import enum Result.NoError
 
-public struct FacebookCellViewModel: Interactable {
+public struct FacebookCellViewModel {
     let selectionStyle: UITableViewCellSelectionStyle = .none
     let title: String = LocalizationUI.SignIn.signInWithFacebook
     let visualDependencies: VisualDependenciesProtocol
-    let isInteractable = MutableProperty(true)
     let action: Action<Void, Void, NoError>
+    let isEnabled: Property<Bool>
     let isLoading: Property<Bool>?
 
-    public init(action: Action<Void, Void, NoError>, visualDependencies: VisualDependenciesProtocol, isLoading: Property<Bool>? = nil) {
+    public init(action: Action<Void, Void, NoError>, isEnabled: Property<Bool> = Property(value: true), visualDependencies: VisualDependenciesProtocol, isLoading: Property<Bool>? = nil) {
         self.action = action
         self.visualDependencies = visualDependencies
         self.isLoading = isLoading
+        self.isEnabled = isEnabled
     }
 
     func applyFacebookButtonStyle(to button: UIButton) {

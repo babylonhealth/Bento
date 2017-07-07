@@ -1,7 +1,7 @@
 import ReactiveSwift
 import Result
 
-public struct ActionInputCellViewModel: Selectable {
+public struct ActionInputCellViewModel {
     private let visualDependencies: VisualDependenciesProtocol
     let title: String
     let input: Property<String>

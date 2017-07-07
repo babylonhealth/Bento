@@ -46,14 +46,6 @@ public enum FormComponent {
             return viewModel
         }
     }
-
-    var interactable: Interactable? {
-        return viewModel as? Interactable
-    }
-
-    var selectable: Selectable? {
-        return viewModel as? Selectable
-    }
 }
 
 extension FormComponent: Equatable {

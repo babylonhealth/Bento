@@ -3,13 +3,17 @@ import ReactiveSwift
 
 extension ActionInputCell: NibLoadableCell {}
 
-final class ActionInputCell: UITableViewCell {
+final class ActionInputCell: FormCell {
 
     private var viewModel: ActionInputCellViewModel!
 
     @IBOutlet weak var title: UILabel!
     @IBOutlet weak var input: UILabel!
     @IBOutlet weak var inputTrailing: NSLayoutConstraint!
+
+    override var canBecomeFirstResponder: Bool {
+        return true
+    }
 
     func setup(viewModel: ActionInputCellViewModel) {
         self.viewModel = viewModel
@@ -20,20 +24,23 @@ final class ActionInputCell: UITableViewCell {
         accessoryType = viewModel.accessory
         inputTrailing.constant = accessoryType == .none ? 16 : 0
 
-        viewModel.input.producer
-            .observe(on: UIScheduler())
+        reactive.isUserInteractionEnabled <~ viewModel.isSelected.isEnabled.and(isFormEnabled).producer
             .take(until: reactive.prepareForReuse)
-            .startWithValues(handle)
-    }
 
-    private func handle(text: String) {
-        input.text = text
+        input.reactive.text <~ viewModel.input.producer
+            .take(until: reactive.prepareForReuse)
+
+        isUserInteractionEnabled = true
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
         if selected {
+            // Steal the first responder to dismiss the active input view.
+            becomeFirstResponder()
+            resignFirstResponder()
+
             viewModel.isSelected.apply().start()
         }
     }

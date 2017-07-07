@@ -18,9 +18,8 @@ public struct ActionCellViewSpec {
     }
 }
 
-public struct ActionCellViewModel: Interactable {
+public struct ActionCellViewModel {
     public let action: Action<Void, Void, NoError>
-    public let isInteractable = MutableProperty(true)
     public let isLoading: Property<Bool>?
 
     public init(action: Action<Void, Void, NoError>, isLoading: Property<Bool>? = nil) {

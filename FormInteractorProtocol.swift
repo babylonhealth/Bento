@@ -1,10 +1,6 @@
 import ReactiveSwift
 import enum Result.NoError
 
-protocol Interactable {
-	var isInteractable: MutableProperty<Bool> { get }
-}
-
 public protocol FocusableCellDelegate: class {
     /// Whether `cell` has a succeeding `FocusableCell`.
     ///
@@ -35,8 +31,4 @@ extension FocusableFormComponent {
     public var isPreferredForFocusing: Bool {
         return false
     }
-}
-
-protocol Selectable {
-	var isSelected: Action<Void, Void, NoError> { get }
 }
