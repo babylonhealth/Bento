@@ -106,6 +106,10 @@ private func passwordValidation() -> String {
     return "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).+$"
 }
 
+private func max12Characters() -> String {
+    return "^[\\da-zA-Z]{1,12}$"
+}
+
 private func nonEmptyValidation() -> String {
     return "^(?!\\s*$).+"
 }
@@ -143,6 +147,10 @@ public enum FormValidationRules {
 
     public static func passwordValidatingProperty(initialValue: String = "", invalidMessage: String = LocalizationUI.Error.passwordInvalidErrorMessage) -> ValidatingProperty<String, InvalidInput> {
         return makeValidatingProperty(regex: passwordValidation(), initialValue: initialValue, invalidMessage: invalidMessage)
+    }
+
+    public static func membershipValidatingProperty(initialValue: String = "", invalidMessage: String = LocalizationUI.Error.membershipInvalidErrorMessage) -> ValidatingProperty<String, InvalidInput> {
+        return makeValidatingProperty(regex: max12Characters(), initialValue: initialValue, invalidMessage: invalidMessage)
     }
 
     public static func nonEmptyValidatingProperty(initialValue: String = "", invalidMessage: String) -> ValidatingProperty<String, InvalidInput> {
