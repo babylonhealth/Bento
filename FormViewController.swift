@@ -7,6 +7,8 @@ open class FormViewController: UIViewController {
 
     private let form: Form
     private let visualDependencies: VisualDependenciesProtocol
+    fileprivate var dataSource: FormTableViewDataSource!
+    private var keyboardChangeDisposable: Disposable?
 
     public let tableView: UITableView
 
@@ -23,43 +25,7 @@ open class FormViewController: UIViewController {
         super.init(nibName: nil, bundle: nil)
 
         tableView.delegate = self
-        let dataSource = FormTableViewDataSource.bind(tableView, to: form.components)
-
-        if let focusableForm = form as? FocusableForm {
-            let focusedComponent = focusableForm.focusableController.focusedComponent.signal
-                .skipNil()
-                .skipRepeats()
-
-            NotificationCenter.default.reactive.keyboardChange
-                .skipRepeats { lhs, rhs in lhs.endFrame == rhs.endFrame }
-                .combineLatest(with: focusedComponent)
-                .take(duringLifetimeOf: self)
-                .observe(on: UIScheduler())
-                .observeValues { [weak tableView, dataSource] context, component in
-                    guard let tableView = tableView else { return }
-
-                    // TODO: [David] Use block-based animations
-                    UIView.beginAnimations(nil, context: nil)
-                    UIView.setAnimationDuration(context.animationDuration)
-//                    UIView.setAnimationCurve(context.animationCurve) // NOTE: This currently crashes, needs to be fixed in ReactiveCocoa
-
-                    let bottomInset = tableView.frame.height - context.endFrame.minY
-
-                    tableView.contentInset.bottom = bottomInset
-                    tableView.scrollIndicatorInsets.bottom = bottomInset
-
-                    if let index = dataSource.components.index(of: component) {
-                        tableView.scrollToRow(at: IndexPath(row: index, section: 0), at: .none, animated: true)
-                    }
-
-                    UIView.commitAnimations()
-                }
-
-            reactive.signal(for: #selector(viewDidAppear(_:)))
-                .take(during: reactive.lifetime)
-                .take(first: 1)
-                .observeValues { _ in focusableForm.focusableController.setupAutoFocus() }
-        }
+        dataSource = FormTableViewDataSource.bind(tableView, to: form.components, configurator: self)
     }
 
     @available(*, unavailable)
@@ -71,10 +37,40 @@ open class FormViewController: UIViewController {
         view = tableView
     }
 
+    open override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+
+        keyboardChangeDisposable = NotificationCenter.default.reactive
+            .keyboardChange
+            .skipRepeats { lhs, rhs in lhs.endFrame == rhs.endFrame }
+            .take(duringLifetimeOf: self)
+            .observe(on: UIScheduler())
+            .observeValues { [weak tableView] context in
+                guard let tableView = tableView else { return }
+
+                func animate() {
+                    let keyboardHeight = (tableView.window!.frame.height - context.endFrame.minY)
+                    tableView.contentInset.bottom = keyboardHeight
+                    tableView.scrollIndicatorInsets.bottom = keyboardHeight
+                }
+
+                UIView.animate(withDuration: context.animationDuration,
+                               delay: 0.0,
+                               options: UIViewAnimationOptions(context.animationCurve),
+                               animations: animate,
+                               completion: nil)
+            }
+    }
+
+    open override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        keyboardChangeDisposable?.dispose()
+    }
+
     open override func viewDidLoad() {
         super.viewDidLoad()
 
-        tableView.keyboardDismissMode = .onDrag
+        tableView.keyboardDismissMode = .interactive
 
         visualDependencies.styles.backgroundFormColor
             .apply(to: tableView)
@@ -85,13 +81,78 @@ open class FormViewController: UIViewController {
         }
     }
 
-    public func enableFormAutoFocus() {
-        if let focusableForm = form as? FocusableForm {
-            reactive.signal(for: #selector(viewDidAppear(_:)))
-                .take(during: reactive.lifetime)
-                .take(first: 1)
-                .observeValues { _ in focusableForm.enableAutoFocus() }
+    /// Focus the preferred focusable row in the form.
+    ///
+    /// If there are multiple preferred focusable row, the first preferred focusable row
+    /// would be picked. If there is no preferred focusable row, the first focusable row
+    /// would be picked. If there is no focusable row at all, no action would be
+    /// performed.
+    ///
+    /// - warning: `focus(animated:)` should not be called in `viewWillAppear(_:)`.
+    public func focus(animated: Bool = true) {
+        var indexOfPreferredRow: Int? {
+            if let startIndex = dataSource.components.index(where: { $0.viewModel is FocusableFormComponent }) {
+                let slice = dataSource.components[startIndex ..< dataSource.components.endIndex]
+                guard let preferred = slice.index(where: { ($0.viewModel as? FocusableFormComponent)?.isPreferredForFocusing ?? false }) else {
+                    return startIndex
+                }
+                return preferred
+            }
+            return nil
         }
+
+        if let row = indexOfPreferredRow {
+            CATransaction.begin()
+
+            tableView.scrollToRow(at: IndexPath(row: row, section: 0), at: .top, animated: animated)
+            CATransaction.setCompletionBlock { [weak tableView] in
+                if let cell = tableView?.cellForRow(at: IndexPath(row: row, section: 0)),
+                   let focusableCell = cell as? FocusableCell {
+                    focusableCell.focus()
+                }
+            }
+
+            CATransaction.commit()
+        }
+    }
+}
+
+extension FormViewController: FormCellConfigurator {
+    public func configure<Cell : UITableViewCell>(_ cell: Cell) {
+        (cell as? FocusableCell)?.delegate = self
+    }
+}
+
+extension FormViewController: FocusableCellDelegate {
+    public func focusableCellHasSuccessor(_ cell: FocusableCell) -> Bool {
+        return nextFocusableCell(after: cell) != nil
+    }
+
+    public func focusableCellShouldYieldFocus(_ cell: FocusableCell) -> Bool {
+        guard let next = nextFocusableCell(after: cell) else {
+            return false
+        }
+
+        next.focus()
+        return true
+    }
+
+    private func nextFocusableCell(after cell: FocusableCell) -> FocusableCell? {
+        let cell = cell as! UITableViewCell
+
+        guard let indexPath = tableView.indexPath(for: cell) else {
+            return nil
+        }
+
+        for row in indexPath.row + 1 ..< tableView.numberOfRows(inSection: 0) {
+            let indexPath = IndexPath(row: row, section: 0)
+
+            if let nextCell = tableView.cellForRow(at: indexPath) as? FocusableCell {
+                return nextCell
+            }
+        }
+
+        return nil
     }
 }
 

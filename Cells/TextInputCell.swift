@@ -12,6 +12,7 @@ final class TextInputCell: UITableViewCell {
     @IBOutlet weak var peekWidthConstraint: NSLayoutConstraint!
 
     private var viewModel: TextInputCellViewModel!
+    internal weak var delegate: FocusableCellDelegate?
 
     private var isSecure: SignalProducer<Bool, NoError> {
         return viewModel.isSecure
@@ -25,6 +26,11 @@ final class TextInputCell: UITableViewCell {
             .take(during: reactive.lifetime)
     }
 
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        textField.delegate = self
+    }
+
     func setup(viewModel: TextInputCellViewModel) {
         self.viewModel = viewModel
         textField.placeholder = viewModel.placeholder
@@ -33,15 +39,6 @@ final class TextInputCell: UITableViewCell {
             <~ viewModel.text
                 .producer
                 .take(until: reactive.prepareForReuse)
-
-        viewModel.isFocused
-            .producer
-            .filter { $0 }
-            .skipRepeats()
-            .observe(on: QueueScheduler.main) // ‼️ NOTE: This is really important to avoid deadlocks 💥
-            .startWithValues { [weak self] _ in
-                self?.textField.becomeFirstResponder()
-            }
 
         textField.reactive.isSecureTextEntry
             <~ isSecure
@@ -55,11 +52,6 @@ final class TextInputCell: UITableViewCell {
 
         textField.reactive.isEnabled
             <~ viewModel.isInteractable
-                .producer
-                .take(until: reactive.prepareForReuse)
-
-        textField.reactive.returnKeyType
-            <~ viewModel.keyboardReturnKeyType
                 .producer
                 .take(until: reactive.prepareForReuse)
 
@@ -79,9 +71,26 @@ final class TextInputCell: UITableViewCell {
         viewModel.applyStyle(to: peekButton)
         viewModel.applyBackgroundColor(to: [self, textField])
 
-        textField.delegate = viewModel.textFieldDelegate
-
         self.selectionStyle = viewModel.selectionStyle
         self.peekWidthConstraint.constant = CGFloat(viewModel.width)
+    }
+}
+
+extension TextInputCell: FocusableCell {
+    func focus() {
+        textField.becomeFirstResponder()
+    }
+}
+
+extension TextInputCell: UITextFieldDelegate {
+    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
+        let hasSuccessor = delegate?.focusableCellHasSuccessor(self) ?? false
+        textField.returnKeyType = hasSuccessor ? .next : .done
+        return true
+    }
+
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        let succeeds = delegate?.focusableCellShouldYieldFocus(self) ?? false
+        return !succeeds
     }
 }

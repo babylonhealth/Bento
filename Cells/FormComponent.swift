@@ -14,7 +14,7 @@ public enum FormComponent {
     case segmentedInput(SegmentedCellViewModel)
     case selection(SelectionCellViewModel, group: SelectionCellGroup, spec: SelectionCellViewSpec)
 
-    private var viewModel: Any {
+    var viewModel: Any {
         switch self {
         case .textInput(let viewModel):
             return viewModel
@@ -47,20 +47,12 @@ public enum FormComponent {
         }
     }
 
-    var focusable: Focusable? {
-        return viewModel as? Focusable
-    }
-
     var interactable: Interactable? {
         return viewModel as? Interactable
     }
 
     var selectable: Selectable? {
         return viewModel as? Selectable
-    }
-
-    var textEditable: TextEditable? {
-        return viewModel as? TextEditable
     }
 }
 

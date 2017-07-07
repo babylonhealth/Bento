@@ -1,25 +1,16 @@
 import ReactiveSwift
 import enum Result.NoError
 
-public struct TitledTextInputCellViewModel: Focusable, Interactable, TextEditable {
+public struct TitledTextInputCellViewModel: Interactable, FocusableFormComponent {
 
     private let visualDependencies: VisualDependenciesProtocol
     let title: String
     let placeholder: String
     let text: ValidatingProperty<String, InvalidInput>
-    let textFieldDelegate: TextFieldDelegate
-    let isFocused = MutableProperty(false)
     public let isInteractable = MutableProperty(true)
     let autocapitalizationType: UITextAutocapitalizationType
     let autocorrectionType: UITextAutocorrectionType
     let keyboardType: UIKeyboardType
-
-    // TextEditable's properties
-    let keyboardReturnKeyType: MutableProperty<UIReturnKeyType>
-
-    var lostFocusReason: Signal<LostFocusReason, NoError> {
-        return textFieldDelegate.lostFocusReason
-    }
 
     public init(title: String,
          placeholder: String,
@@ -27,9 +18,7 @@ public struct TitledTextInputCellViewModel: Focusable, Interactable, TextEditabl
          autocapitalizationType: UITextAutocapitalizationType = .sentences,
          autocorrectionType: UITextAutocorrectionType = .`default`,
          keyboardType: UIKeyboardType = .`default`,
-         keyboardReturnKeyType: UIReturnKeyType = .next,
-         visualDependencies: VisualDependenciesProtocol,
-         textFieldDelegate: TextFieldDelegate = TextFieldDelegate()) {
+         visualDependencies: VisualDependenciesProtocol) {
 
         self.title = title
         self.placeholder = placeholder
@@ -37,11 +26,7 @@ public struct TitledTextInputCellViewModel: Focusable, Interactable, TextEditabl
         self.autocapitalizationType = autocapitalizationType
         self.autocorrectionType = autocorrectionType
         self.keyboardType = keyboardType
-        self.keyboardReturnKeyType = MutableProperty(keyboardReturnKeyType)
         self.visualDependencies = visualDependencies
-        self.textFieldDelegate = textFieldDelegate
-
-        self.isFocused <~ textFieldDelegate.isFocused
     }
 
     func applyTitleStyle(to label: UILabel) {

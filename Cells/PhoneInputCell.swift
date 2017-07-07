@@ -9,6 +9,12 @@ class PhoneInputCell: UITableViewCell {
     @IBOutlet weak var phoneNumberTextField: UITextField!
 
     private var viewModel: PhoneInputCellViewModel!
+    internal weak var delegate: FocusableCellDelegate?
+
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        phoneNumberTextField.delegate = self
+    }
 
     func setup(viewModel: PhoneInputCellViewModel) {
         self.viewModel = viewModel
@@ -30,7 +36,6 @@ class PhoneInputCell: UITableViewCell {
 
         phoneNumberTextField.keyboardType = .phonePad
         phoneNumberTextField.placeholder = viewModel.placeholder
-        phoneNumberTextField.delegate = viewModel.textFieldDelegate
         viewModel.applyInputStyle(to: phoneNumberTextField)
 
         phoneNumberTextField.reactive.text
@@ -43,20 +48,6 @@ class PhoneInputCell: UITableViewCell {
                 .producer
                 .take(until: reactive.prepareForReuse)
 
-        phoneNumberTextField.reactive.returnKeyType
-            <~ viewModel.keyboardReturnKeyType
-                .producer
-                .take(until: reactive.prepareForReuse)
-
-        viewModel.isFocused
-            .producer
-            .filter { $0 }
-            .skipRepeats()
-            .observe(on: QueueScheduler.main) // ‼️ NOTE: This is really important to avoid deadlocks 💥
-            .startWithValues { [weak self] _ in
-                self?.phoneNumberTextField.becomeFirstResponder()
-            }
-
         viewModel.countryCode <~ countryCodeTextField.reactive.continuousTextValues
             .skipNil()
             .take(until: reactive.prepareForReuse)
@@ -64,6 +55,25 @@ class PhoneInputCell: UITableViewCell {
         viewModel.phoneNumber <~ phoneNumberTextField.reactive.continuousTextValues
             .skipNil()
             .take(until: reactive.prepareForReuse)
+    }
+}
+
+extension PhoneInputCell: FocusableCell {
+    func focus() {
+        phoneNumberTextField.becomeFirstResponder()
+    }
+}
+
+extension PhoneInputCell: UITextFieldDelegate {
+    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
+        let hasSuccessor = delegate?.focusableCellHasSuccessor(self) ?? false
+        textField.returnKeyType = hasSuccessor ? .next : .done
+        return true
+    }
+
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        let succeeds = delegate?.focusableCellShouldYieldFocus(self) ?? false
+        return !succeeds
     }
 }
 

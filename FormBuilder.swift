@@ -134,14 +134,12 @@ public struct FormSectionBuilder {
                     TextInputCellViewModel(placeholder: placeholder,
                                            text: text,
                                            isSecure: false,
-                                           keyboardReturnKeyType: .next,
                                            visualDependencies: visualDependencies))
             case let .passwordField(placeholder, text):
                 return .textInput(
                     TextInputCellViewModel(placeholder: placeholder,
                                            text: text,
                                            isSecure: true,
-                                           keyboardReturnKeyType: .next,
                                            visualDependencies: visualDependencies))
             case let .titledTextField(title, placeholder, text):
                 return .titledTextInput(

@@ -1,7 +1,7 @@
 import ReactiveSwift
 import Result
 
-public struct TextInputCellViewModel: Focusable, Interactable, TextEditable {
+public struct TextInputCellViewModel: Interactable, FocusableFormComponent {
 
     private let _isSecure: MutableProperty<Bool>
     private let _clearsOnBeginEditing: MutableProperty<Bool>
@@ -13,14 +13,9 @@ public struct TextInputCellViewModel: Focusable, Interactable, TextEditable {
     let keyboardType: UIKeyboardType
     let visualDependencies: VisualDependenciesProtocol
     let formContent: FormContentProtocol?
-    let textFieldDelegate: TextFieldDelegate
-    let isFocused = MutableProperty(false)
     let isInteractable = MutableProperty(true)
     let selectionStyle: UITableViewCellSelectionStyle = .none
     let width: Float
-
-    // TextEditable's properties
-    let keyboardReturnKeyType: MutableProperty<UIReturnKeyType>
 
     var isSecure: Property<Bool> {
         return Property(_isSecure)
@@ -28,10 +23,6 @@ public struct TextInputCellViewModel: Focusable, Interactable, TextEditable {
 
     var clearsOnBeginEditing: Property<Bool> {
         return Property(_clearsOnBeginEditing)
-    }
-
-    var lostFocusReason: Signal<LostFocusReason, NoError> {
-        return textFieldDelegate.lostFocusReason
     }
 
     var peekAction: Action<Void, Void, NoError> {
@@ -45,10 +36,8 @@ public struct TextInputCellViewModel: Focusable, Interactable, TextEditable {
          autocapitalizationType: UITextAutocapitalizationType = .sentences,
          autocorrectionType: UITextAutocorrectionType = .`default`,
          keyboardType: UIKeyboardType = .`default`,
-         keyboardReturnKeyType: UIReturnKeyType = .next,
          visualDependencies: VisualDependenciesProtocol,
-         formContent: FormContentProtocol? = nil,
-         textFieldDelegate: TextFieldDelegate = TextFieldDelegate()) {
+         formContent: FormContentProtocol? = nil) {
         self._isSecure = MutableProperty(isSecure)
         let clearsOnBeginEditingValue = isSecure ? true : clearsOnBeginEditing
         self._clearsOnBeginEditing = MutableProperty(clearsOnBeginEditingValue)
@@ -57,12 +46,9 @@ public struct TextInputCellViewModel: Focusable, Interactable, TextEditable {
         self.autocapitalizationType = autocapitalizationType
         self.autocorrectionType = autocorrectionType
         self.keyboardType = keyboardType
-        self.keyboardReturnKeyType = MutableProperty(keyboardReturnKeyType)
         self.visualDependencies = visualDependencies
         self.formContent = formContent
-        self.textFieldDelegate = textFieldDelegate
 
-        self.isFocused <~ textFieldDelegate.isFocused
         self.width = isSecure ? 54 : 0
     }
 

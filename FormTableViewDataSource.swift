@@ -30,11 +30,17 @@ import UIKit
 import ReactiveSwift
 import Dwifft
 
-public final class FormTableViewDataSource: NSObject, UITableViewDataSource {
-    private(set) var components: [FormComponent]
+public protocol FormCellConfigurator: class {
+    func configure<Cell: UITableViewCell>(_ cell: Cell)
+}
 
-    private override init() {
-        components = []
+public final class FormTableViewDataSource: NSObject, UITableViewDataSource {
+    internal private(set) var components: [FormComponent]
+    private weak var configurator: FormCellConfigurator?
+
+    private init(configurator: FormCellConfigurator?) {
+        self.components = []
+        self.configurator = configurator
         super.init()
     }
 
@@ -46,60 +52,66 @@ public final class FormTableViewDataSource: NSObject, UITableViewDataSource {
         return components.count
     }
 
+    private func configure<Cell: UITableViewCell>(_ dequeue: (IndexPath) -> Cell, for indexPath: IndexPath) -> Cell {
+        let cell = dequeue(indexPath)
+        configurator?.configure(cell)
+        return cell
+    }
+
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cellViewModel = components[indexPath.row]
 
         switch cellViewModel {
         case .textInput(let viewModel):
-            let cell: TextInputCell = tableView.dequeueReusableCell(for: indexPath)
+            let cell: TextInputCell = configure(tableView.dequeueReusableCell(for:), for: indexPath)
             cell.setup(viewModel: viewModel)
             return cell
         case .titledTextInput(let viewModel):
-            let cell: TitledTextInputCell = tableView.dequeueReusableCell(for: indexPath)
+            let cell: TitledTextInputCell = configure(tableView.dequeueReusableCell(for:), for: indexPath)
             cell.setup(viewModel: viewModel)
             return cell
         case .phoneTextInput(let viewModel):
-            let cell: PhoneInputCell = tableView.dequeueReusableCell(for: indexPath)
+            let cell: PhoneInputCell = configure(tableView.dequeueReusableCell(for:), for: indexPath)
             cell.setup(viewModel: viewModel)
             return cell
         case .separator(let viewModel):
-            let cell: SeparatorCell = tableView.dequeueReusableCell(for: indexPath)
+            let cell: SeparatorCell = configure(tableView.dequeueReusableCell(for:), for: indexPath)
             cell.setup(viewModel: viewModel)
             return cell
         case .space(let viewModel):
-            let cell: EmptySpaceCell = tableView.dequeueReusableCell(for: indexPath)
+            let cell: EmptySpaceCell = configure(tableView.dequeueReusableCell(for:), for: indexPath)
             cell.setup(viewModel: viewModel)
             return cell
         case .description(let viewModel):
-            let cell: DescriptionCell = tableView.dequeueReusableCell(for: indexPath)
+            let cell: DescriptionCell = configure(tableView.dequeueReusableCell(for:), for: indexPath)
             cell.setup(viewModel: viewModel)
             return cell
         case .facebookButton(let viewModel):
-            let cell: FacebookCell = tableView.dequeueReusableCell(for: indexPath)
+            let cell: FacebookCell = configure(tableView.dequeueReusableCell(for:), for: indexPath)
             cell.setup(viewModel: viewModel)
             return cell
         case .actionButton(let viewModel, let spec):
-            let cell: ActionCell = tableView.dequeueReusableCell(for: indexPath)
+            let cell: ActionCell = configure(tableView.dequeueReusableCell(for:), for: indexPath)
             cell.setup(viewModel: viewModel, spec: spec)
             return cell
         case .actionInput(let viewModel):
-            let cell: ActionInputCell = tableView.dequeueReusableCell(for: indexPath)
+            let cell: ActionInputCell = configure(tableView.dequeueReusableCell(for:), for: indexPath)
             cell.setup(viewModel: viewModel)
             return cell
         case .actionIconInput(let viewModel):
-            let cell: ActionIconInputCell = tableView.dequeueReusableCell(for: indexPath)
+            let cell: ActionIconInputCell = configure(tableView.dequeueReusableCell(for:), for: indexPath)
             cell.setup(viewModel: viewModel)
             return cell
         case .actionDescription(let viewModel):
-            let cell: ActionDescriptionCell = tableView.dequeueReusableCell(for: indexPath)
+            let cell: ActionDescriptionCell = configure(tableView.dequeueReusableCell(for:), for: indexPath)
             cell.setup(viewModel: viewModel)
             return cell
         case .toggle(let viewModel):
-            let cell: ToggleCell = tableView.dequeueReusableCell(for: indexPath)
+            let cell: ToggleCell = configure(tableView.dequeueReusableCell(for:), for: indexPath)
             cell.setup(viewModel: viewModel)
             return cell
         case .segmentedInput(let viewModel):
-            let cell: SegmentedCell = tableView.dequeueReusableCell(for: indexPath)
+            let cell: SegmentedCell = configure(tableView.dequeueReusableCell(for:), for: indexPath)
             cell.setup(viewModel: viewModel)
             return cell
         case let .selection(item, group, spec):
@@ -109,7 +121,7 @@ public final class FormTableViewDataSource: NSObject, UITableViewDataSource {
         }
     }
 
-    public static func bind(_ tableView: UITableView, to components: Property<[FormComponent]>) -> FormTableViewDataSource {
+    public static func bind(_ tableView: UITableView, to components: Property<[FormComponent]>, configurator: FormCellConfigurator? = nil) -> FormTableViewDataSource {
         tableView.register(TextInputCell.self)
         tableView.register(TitledTextInputCell.self)
         tableView.register(PhoneInputCell.self)
@@ -125,7 +137,7 @@ public final class FormTableViewDataSource: NSObject, UITableViewDataSource {
         tableView.register(SegmentedCell.self)
         tableView.register(SelectionCell.self)
 
-        let dataSource = FormTableViewDataSource()
+        let dataSource = FormTableViewDataSource(configurator: configurator)
         tableView.dataSource = dataSource
 
         // Reset the table view internal state.
