@@ -56,10 +56,8 @@ class PhoneInputCell: FormCell {
         phoneNumberTextField.placeholder = viewModel.placeholder
         viewModel.applyInputStyle(to: phoneNumberTextField)
 
-        phoneNumberTextField.reactive.text
-            <~ viewModel.phoneNumber
-                .producer
-                .take(until: reactive.prepareForReuse)
+        phoneNumberTextField.reactive.text <~ viewModel.phoneNumber.producer
+            .take(until: reactive.prepareForReuse)
     }
 }
 

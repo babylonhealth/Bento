@@ -55,25 +55,17 @@ final class TextInputCell: FormCell {
             .filterMap { isEnabled.value ? $0 : nil }
             .take(until: reactive.prepareForReuse)
 
-        textField.reactive.text
-            <~ viewModel.text
-                .producer
-                .take(until: reactive.prepareForReuse)
+        textField.reactive.text <~ viewModel.text.producer
+            .take(until: reactive.prepareForReuse)
 
-        textField.reactive.isSecureTextEntry
-            <~ isSecure
-                .producer
-                .take(until: reactive.prepareForReuse)
+        textField.reactive.isSecureTextEntry <~ isSecure.producer
+            .take(until: reactive.prepareForReuse)
 
-        textField.reactive.clearsOnBeginEditing
-            <~ clearsOnBeginEditing
-                .producer
-                .take(until: reactive.prepareForReuse)
+        textField.reactive.clearsOnBeginEditing <~ clearsOnBeginEditing.producer
+            .take(until: reactive.prepareForReuse)
 
-        peekButton.reactive.isSelected
-            <~ isSecure
-                .negate()
-                .take(until: reactive.prepareForReuse)
+        peekButton.reactive.isSelected <~ isSecure.negate()
+            .take(until: reactive.prepareForReuse)
         
         peekButton.reactive.pressed = CocoaAction(viewModel.peekAction)
 
