@@ -35,6 +35,10 @@ public struct FormBuilder {
         return FormBuilder(components: components)
     }
 
+    public static func |-* (builder: FormBuilder, other: FormBuilder) -> FormBuilder {
+        return builder |-* { other }
+    }
+
     public static func |-* (builder: FormBuilder, generator: () -> FormBuilder) -> FormBuilder {
         var components = builder.components
         components.append(contentsOf: generator().components)
@@ -199,6 +203,12 @@ public struct FormSectionBuilder {
         return FormSectionBuilder(components: components)
     }
 
+    public static func |-+(builder: FormSectionBuilder, component: [FormSectionBuilder.Component]) -> FormSectionBuilder {
+        var components = builder.components
+        components.append(contentsOf: component)
+        return FormSectionBuilder(components: components)
+    }
+
     public static func |-* (builder: FormSectionBuilder, generator: () -> FormSectionBuilder) -> FormSectionBuilder {
         var components = builder.components
         components.append(contentsOf: generator().components)
@@ -236,7 +246,7 @@ public struct Validator<T> {
         return condition() ? generator(formBuilder) : nil
     }
 
-    public static func iff(_ condition: @autoclosure @escaping () -> Bool, generator: @escaping (T) -> T) -> Validator {
+    public static func iff(_ condition: @autoclosure @escaping () -> Bool, generator: @escaping (T) -> T) -> Validator<T> {
         return Validator(condition: condition, generator: generator)
     }
 }
