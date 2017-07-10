@@ -3,7 +3,7 @@ import ReactiveSwift
 import ReactiveCocoa
 import Result
 
-open class SelectionCell: UITableViewCell, ReusableCell, NibLoadableCell {
+open class SelectionCell: FormCell, NibLoadableCell {
     enum Style {
         case rightTick
         case leftTickWithDetailDisclosure
@@ -54,20 +54,20 @@ open class SelectionCell: UITableViewCell, ReusableCell, NibLoadableCell {
         state.value = (group: group, identifier: viewModel.identifier)
     }
 
-    private func update(isSelectedInGroup: Bool, isExecuting: Bool, isProcessing: Bool) {
-        isUserInteractionEnabled = !isExecuting
-        disclosure.isEnabled = !isExecuting
+    private func update(isSelectedInGroup: Bool, isEnabled: Bool, isProcessing: Bool) {
+        isUserInteractionEnabled = isEnabled
+        disclosure.isEnabled = isEnabled
         disclosure.isHidden = isProcessing
 
         switch style! {
         case .leftTickWithDetailDisclosure:
             disclosure.isHidden = isProcessing
             leftTick.isHidden = !isSelectedInGroup
-            leftTick.tintColor = isExecuting ? spec.disabledTickColor : spec.tickColor
+            leftTick.tintColor = !isEnabled ? spec.disabledTickColor : spec.tickColor
 
         case .rightTick:
             rightTick.isHidden = !(!isProcessing && isSelectedInGroup)
-            rightTick.tintColor = isExecuting ? spec.disabledTickColor : spec.tickColor
+            rightTick.tintColor = !isEnabled ? spec.disabledTickColor : spec.tickColor
         }
 
         activityIndicator.isHidden = !isProcessing
@@ -94,18 +94,24 @@ open class SelectionCell: UITableViewCell, ReusableCell, NibLoadableCell {
                 }
             }
 
-        state.producer
-            .skipNil()
-            .flatMap(.latest) { group, identifier in
-                return group.selection.producer
-                    .map { $0 == identifier }
-                    .skipRepeats()
-                    .combineLatest(with: group.isExecuting.producer)
-            }
-            .combineLatest(with: isProcessing.producer)
+        SignalProducer
+            .combineLatest(
+                state.producer
+                    .skipNil()
+                    .flatMap(.latest) { group, identifier in
+                        return group.selection.producer
+                            .map { $0 == identifier }
+                            .skipRepeats()
+                            .combineLatest(with: group.isExecuting.producer)
+                    },
+                isProcessing.producer,
+                isFormEnabled.producer)
+            .producer
             .startWithValues { [weak self] arguments in
-                let ((isSelectedInGroup, isExecuting), isProcessing) = arguments
-                self?.update(isSelectedInGroup: isSelectedInGroup, isExecuting: isExecuting, isProcessing: isProcessing)
+                let ((isSelectedInGroup, isExecuting), isProcessing, isFormEnabled) = arguments
+                self?.update(isSelectedInGroup: isSelectedInGroup,
+                             isEnabled: !isExecuting && isFormEnabled,
+                             isProcessing: isProcessing)
             }
     }
 
