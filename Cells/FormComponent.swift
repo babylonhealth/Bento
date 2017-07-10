@@ -12,7 +12,7 @@ public enum FormComponent {
     case actionDescription(ActionDescriptionCellViewModel)
     case toggle(ToggleCellViewModel)
     case segmentedInput(SegmentedCellViewModel)
-    case selection(SelectionCellViewModel, group: SelectionGroup, spec: SelectionCellViewSpec)
+    case selection(SelectionCellViewModel, group: SelectionCellGroup, spec: SelectionCellViewSpec)
 
     private var viewModel: Any {
         switch self {

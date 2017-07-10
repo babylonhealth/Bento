@@ -20,7 +20,7 @@ open class SelectionCell: UITableViewCell, ReusableCell, NibLoadableCell {
     @IBOutlet weak var leftTick: UIImageView!
     @IBOutlet weak var rightTick: UIImageView!
 
-    private let state = MutableProperty<(group: SelectionGroup, identifier: Int)?>(nil)
+    private let state = MutableProperty<(group: SelectionCellGroup, identifier: Int)?>(nil)
     private let isProcessing = MutableProperty(false)
     private var spec: SelectionCellViewSpec!
 
@@ -34,7 +34,7 @@ open class SelectionCell: UITableViewCell, ReusableCell, NibLoadableCell {
         }
     }
 
-    func configure(for viewModel: SelectionCellViewModel, in group: SelectionGroup, spec: SelectionCellViewSpec) {
+    func configure(for viewModel: SelectionCellViewModel, in group: SelectionCellGroup, spec: SelectionCellViewSpec) {
         self.spec = spec
         avatar.image = spec.defaultIcon
 

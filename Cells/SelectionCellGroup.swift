@@ -3,7 +3,7 @@ import ReactiveSwift
 import ReactiveCocoa
 import Result
 
-public protocol SelectionGroup: class {
+public protocol SelectionCellGroup: class {
     /// The unique identifier of the current selection in the group.
     var selection: Property<Int?> { get }
 
@@ -20,7 +20,7 @@ public protocol SelectionGroup: class {
     var discloseDetails: ((Int) -> SignalProducer<Never, NoError>)? { get }
 }
 
-extension SelectionGroup {
+extension SelectionCellGroup {
     public var discloseDetails: ((Int) -> SignalProducer<Never, NoError>)? {
         return nil
     }
