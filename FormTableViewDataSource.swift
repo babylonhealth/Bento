@@ -165,10 +165,10 @@ public final class FormTableViewDataSource: NSObject, UITableViewDataSource {
                 for step in Dwifft.diff(previous, current) {
                     switch step {
                     case let .insert(index, _):
-                        tableView.insertRows(at: [IndexPath(row: index, section: 0)], with: .automatic)
+                        tableView.insertRows(at: [IndexPath(row: index, section: 0)], with: .fade)
 
                     case let .delete(index, _):
-                        tableView.deleteRows(at: [IndexPath(row: index, section: 0)], with: .automatic)
+                        tableView.deleteRows(at: [IndexPath(row: index, section: 0)], with: .fade)
                     }
                 }
             }
