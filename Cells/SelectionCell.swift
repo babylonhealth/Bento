@@ -24,31 +24,32 @@ open class SelectionCell: FormCell, NibLoadableCell {
     private let isProcessing = MutableProperty(false)
     private var spec: SelectionCellViewSpec!
 
-    private var style: Style! {
-        didSet {
-            let usesLeftTick = style == .leftTickWithDetailDisclosure
-            disclosure.isHidden = !usesLeftTick
-            avatarLeading.constant = usesLeftTick ? avatarLeadingInsetWithLeftTick : avatarLeadingInsetNoLeftTick
-            leftTick.isHidden = true
-            rightTick.isHidden = true
-        }
-    }
+    private var style: Style!
 
     func configure(for viewModel: SelectionCellViewModel, in group: SelectionCellGroup, spec: SelectionCellViewSpec) {
         self.spec = spec
-        avatar.image = spec.defaultIcon
 
+        avatar.image = viewModel.icon ?? spec.defaultIcon
         label.text = viewModel.title
-        avatar.image = viewModel.icon ?? avatar.image
+
         style = group.discloseDetails == nil ? .rightTick : .leftTickWithDetailDisclosure
+
+        // Both are hidden initially.
+        leftTick.isHidden = true
+        rightTick.isHidden = true
 
         switch style! {
         case .leftTickWithDetailDisclosure:
             leftTick.image = spec.tick
             leftTick.tintColor = spec.tickColor
+            disclosure.isHidden = false
+            avatarLeading.constant = avatarLeadingInsetWithLeftTick
+
         case .rightTick:
-            leftTick.image = spec.tick
+            rightTick.image = spec.tick
             rightTick.tintColor = spec.tickColor
+            disclosure.isHidden = true
+            avatarLeading.constant = avatarLeadingInsetNoLeftTick
         }
 
         state.value = (group: group, identifier: viewModel.identifier)
@@ -57,7 +58,6 @@ open class SelectionCell: FormCell, NibLoadableCell {
     private func update(isSelectedInGroup: Bool, isEnabled: Bool, isProcessing: Bool) {
         isUserInteractionEnabled = isEnabled
         disclosure.isEnabled = isEnabled
-        disclosure.isHidden = isProcessing
 
         switch style! {
         case .leftTickWithDetailDisclosure:
