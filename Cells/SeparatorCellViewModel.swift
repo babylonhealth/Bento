@@ -20,3 +20,9 @@ public struct SeparatorCellViewModel {
         self.visualDependencies.styles.backgroundCustomColor.apply(color: Colors.white, to: view)
     }
 }
+
+extension SeparatorCellViewModel: Equatable {
+    public static func ==(left: SeparatorCellViewModel, right: SeparatorCellViewModel) -> Bool {
+        return left.isFullCell == right.isFullCell && left.width == right.width && left.selectionStyle == right.selectionStyle
+    }
+}

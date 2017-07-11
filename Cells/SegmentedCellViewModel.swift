@@ -1,7 +1,7 @@
 import ReactiveSwift
 import enum Result.NoError
 
-public struct SegmentedCellViewModel {
+public final class SegmentedCellViewModel {
 
     public struct Option {
         let title: String

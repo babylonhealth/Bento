@@ -2,7 +2,7 @@ import ReactiveSwift
 import Result
 import TTTAttributedLabel
 
-public struct ActionDescriptionCellViewModel {
+public final class ActionDescriptionCellViewModel {
     let visualDependencies: VisualDependenciesProtocol
     let title: NSAttributedString
     let action: Action<Void, Void, NoError>

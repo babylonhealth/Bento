@@ -1,7 +1,7 @@
 import ReactiveSwift
 import enum Result.NoError
 
-public struct TitledTextInputCellViewModel: FocusableFormComponent {
+public final class TitledTextInputCellViewModel: FocusableFormComponent {
 
     private let visualDependencies: VisualDependenciesProtocol
     let title: String
