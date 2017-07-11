@@ -19,8 +19,14 @@
                 <rect key="frame" x="0.0" y="0.0" width="375" height="60"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icTickPurple" translatesAutoresizingMaskIntoConstraints="NO" id="O1i-Po-ZeL" userLabel="leftTick">
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="O1i-Po-ZeL" userLabel="leftTick">
                         <rect key="frame" x="9" y="24" width="16" height="12"/>
+                        <constraints>
+                            <constraint firstAttribute="height" relation="lessThanOrEqual" constant="16" id="Gag-fm-Ntf"/>
+                            <constraint firstAttribute="width" relation="lessThanOrEqual" constant="16" id="PSO-sD-dFV"/>
+                            <constraint firstAttribute="height" priority="750" constant="12" id="SWJ-gF-NrN"/>
+                            <constraint firstAttribute="width" priority="750" constant="16" id="nzj-FJ-70j"/>
+                        </constraints>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PdA-T5-JiS">
                         <rect key="frame" x="86" y="19.5" width="239" height="21"/>
@@ -38,8 +44,14 @@
                     <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="detailDisclosure" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wbI-cO-bgx">
                         <rect key="frame" x="338" y="19" width="22" height="22"/>
                     </button>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icTickPurple" translatesAutoresizingMaskIntoConstraints="NO" id="jzr-m6-GEP" userLabel="rightTick">
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="jzr-m6-GEP" userLabel="rightTick">
                         <rect key="frame" x="344" y="24" width="16" height="12"/>
+                        <constraints>
+                            <constraint firstAttribute="width" priority="750" constant="16" id="6Jj-f1-m2Q"/>
+                            <constraint firstAttribute="height" relation="lessThanOrEqual" constant="16" id="QVm-HO-22B"/>
+                            <constraint firstAttribute="width" relation="lessThanOrEqual" constant="16" id="seh-Pt-m8S"/>
+                            <constraint firstAttribute="height" priority="750" constant="12" id="yTC-5V-SIP"/>
+                        </constraints>
                     </imageView>
                     <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="gge-6i-uHN">
                         <rect key="frame" x="339" y="20" width="20" height="20"/>
@@ -84,7 +96,6 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="icTickPurple" width="16" height="12"/>
         <image name="profilePlaceHolder" width="80" height="80"/>
     </resources>
 </document>
