@@ -14,3 +14,9 @@ public struct EmptySpaceCellViewModel {
         self.visualDependencies.styles.backgroundTransparentColor.apply(to: view)
     }
 }
+
+extension EmptySpaceCellViewModel: Equatable {
+    public static func ==(left: EmptySpaceCellViewModel, right: EmptySpaceCellViewModel) -> Bool {
+        return left.height == right.height && left.selectionStyle == right.selectionStyle
+    }
+}

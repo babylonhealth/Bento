@@ -1,7 +1,7 @@
 import ReactiveSwift
 import enum Result.NoError
 
-public struct FacebookCellViewModel {
+public final class FacebookCellViewModel {
     let selectionStyle: UITableViewCellSelectionStyle = .none
     let title: String = LocalizationUI.SignIn.signInWithFacebook
     let visualDependencies: VisualDependenciesProtocol

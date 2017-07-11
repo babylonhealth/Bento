@@ -1,7 +1,7 @@
 import ReactiveSwift
 import Result
 
-public struct ActionInputCellViewModel {
+public final class ActionInputCellViewModel {
     private let visualDependencies: VisualDependenciesProtocol
     let title: String
     let input: Property<String>

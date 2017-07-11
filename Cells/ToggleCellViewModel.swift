@@ -1,6 +1,6 @@
 import ReactiveSwift
 
-public struct ToggleCellViewModel {
+public final class ToggleCellViewModel {
 
     private let visualDependencies: VisualDependenciesProtocol
     let title: String

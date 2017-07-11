@@ -37,3 +37,9 @@ public struct DescriptionCellViewModel {
         self.visualDependencies.styles.backgroundTransparentColor.apply(to: views)
     }
 }
+
+extension DescriptionCellViewModel: Equatable {
+    public static func ==(left: DescriptionCellViewModel, right: DescriptionCellViewModel) -> Bool {
+        return left.type == right.type && left.text.hash == right.text.hash && left.selectionStyle == right.selectionStyle
+    }
+}
