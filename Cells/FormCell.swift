@@ -10,10 +10,10 @@ open class FormCell: UITableViewCell {
     private final var hasInitialized = false
     private final var _isFormEnabled = MutableProperty<Bool>(true)
 
-    internal final func configure(_ isFormEnabled: Property<Bool>) {
+    internal final func configure(_ isFormEnabled: @autoclosure () -> Property<Bool>) {
         if !hasInitialized {
             hasInitialized = true
-            _isFormEnabled <~ isFormEnabled
+            _isFormEnabled <~ isFormEnabled()
         }
     }
 }
