@@ -118,6 +118,10 @@ public final class FormTableViewDataSource: NSObject, UITableViewDataSource {
             let cell: SelectionCell = tableView.dequeueReusableCell(for: indexPath)
             cell.configure(for: item, in: group, spec: spec)
             return cell
+        case .noteInput(let viewModel):
+            let cell: NoteInputCell = configure(tableView.dequeueReusableCell(for:), for: indexPath)
+            cell.setup(viewModel: viewModel)
+            return cell
         }
     }
 
@@ -136,6 +140,7 @@ public final class FormTableViewDataSource: NSObject, UITableViewDataSource {
         tableView.register(ToggleCell.self)
         tableView.register(SegmentedCell.self)
         tableView.register(SelectionCell.self)
+        tableView.register(NoteInputCell.self)
 
         let dataSource = FormTableViewDataSource(configurator: configurator)
         tableView.dataSource = dataSource
