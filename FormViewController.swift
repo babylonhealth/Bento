@@ -134,13 +134,16 @@ extension FormViewController: FocusableCellDelegate {
         return nextFocusableCell(after: cell) != nil
     }
 
-    public func focusableCellShouldYieldFocus(_ cell: FocusableCell) -> Bool {
+    public func focusableCellWillResignFirstResponder(_ cell: FocusableCell) -> Bool {
         guard let next = nextFocusableCell(after: cell) else {
-            return false
+            // The cell should proceed on resigning its (subview's) first responder status.
+            return true
         }
 
+        // The first responder status would be taken over by the next focusable cell, so
+        // the cell should not attempt to resign.
         next.focus()
-        return true
+        return false
     }
 
     private func nextFocusableCell(after cell: FocusableCell) -> FocusableCell? {

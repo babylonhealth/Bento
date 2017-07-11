@@ -75,8 +75,7 @@ extension PhoneInputCell: UITextFieldDelegate {
     }
 
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        let succeeds = delegate?.focusableCellShouldYieldFocus(self) ?? false
-        return !succeeds
+        return delegate?.focusableCellWillResignFirstResponder(self) ?? true
     }
 }
 

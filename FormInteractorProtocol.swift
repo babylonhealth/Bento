@@ -10,11 +10,11 @@ public protocol FocusableCellDelegate: class {
     ///            otherwise.
     func focusableCellHasSuccessor(_ cell: FocusableCell) -> Bool
 
-    /// `cell` attempts to yield its focus.
+    /// `cell` is about to yield its (subview's) first responder status.
     ///
-    /// - returns: `true` if the focus has been yielded to a succeeding `FocusableCell`.
-    ///            `false` if there is no `FocusableCell` succeeding `cell`.
-    func focusableCellShouldYieldFocus(_ cell: FocusableCell) -> Bool
+    /// - returns: `true` if `cell` should proceed on resigning the status. `false` if
+    ///            the delegate takes control of the resigning process.
+    func focusableCellWillResignFirstResponder(_ cell: FocusableCell) -> Bool
 }
 
 public protocol FocusableCell: class {
