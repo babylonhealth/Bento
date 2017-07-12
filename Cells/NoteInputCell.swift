@@ -85,7 +85,8 @@ extension NoteInputCell: FocusableCell {
 extension NoteInputCell: DynamicHeightCell, UITextViewDelegate {
     func textViewDidChange(_ textView: UITextView) {
         if textView.intrinsicContentSize.height != textViewHeight {
-            heightDelegate?.dynamicHeightCellHeightDidChange()
+            let delta = textView.intrinsicContentSize.height - textViewHeight
+            heightDelegate?.dynamicHeightCellHeightDidChange(delta: delta)
         }
     }
 }

@@ -2,7 +2,7 @@ import ReactiveSwift
 import enum Result.NoError
 
 public protocol DynamicHeightCellDelegate: class {
-    func dynamicHeightCellHeightDidChange()
+    func dynamicHeightCellHeightDidChange(delta: CGFloat)
 }
 
 public protocol DynamicHeightCell: class {

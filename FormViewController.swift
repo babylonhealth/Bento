@@ -167,9 +167,17 @@ extension FormViewController: FocusableCellDelegate {
 }
 
 extension FormViewController: DynamicHeightCellDelegate {
-    public func dynamicHeightCellHeightDidChange() {
+    public func dynamicHeightCellHeightDidChange(delta: CGFloat) {
+        UIView.setAnimationsEnabled(false)
         tableView.beginUpdates()
         tableView.endUpdates()
+        UIView.setAnimationsEnabled(true)
+
+        if delta > 0.0 {
+            var contentOffset = tableView.contentOffset
+            contentOffset.y += delta
+            tableView.setContentOffset(contentOffset, animated: false)
+        }
     }
 }
 
