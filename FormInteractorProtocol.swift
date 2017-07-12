@@ -1,6 +1,14 @@
 import ReactiveSwift
 import enum Result.NoError
 
+public protocol DynamicHeightCellDelegate: class {
+    func dynamicHeightCellHeightDidChange()
+}
+
+public protocol DynamicHeightCell: class {
+    var heightDelegate: DynamicHeightCellDelegate? { get set }
+}
+
 public protocol FocusableCellDelegate: class {
     /// Whether `cell` has a succeeding `FocusableCell`.
     ///
