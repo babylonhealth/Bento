@@ -18,14 +18,7 @@ final class NoteInputCell: FormCell {
 
     override func awakeFromNib() {
         super.awakeFromNib()
-
         textView.delegate = self
-
-        placeholder.reactive.isHidden <~ textView.reactive.continuousTextValues
-            .filterMap {
-                guard let text = $0 else { return false }
-                return !text.isEmpty
-        }
     }
 
     func setup(viewModel: NoteInputCellViewModel) {
@@ -83,10 +76,27 @@ extension NoteInputCell: FocusableCell {
 }
 
 extension NoteInputCell: DynamicHeightCell, UITextViewDelegate {
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        placeholder.isHidden = true
+    }
+
+    func textViewDidEndEditing(_ textView: UITextView) {
+        placeholder.isHidden = !textView.text.isEmpty
+    }
+
     func textViewDidChange(_ textView: UITextView) {
         if textView.intrinsicContentSize.height != textViewHeight {
             let delta = textView.intrinsicContentSize.height - textViewHeight
             heightDelegate?.dynamicHeightCellHeightDidChange(delta: delta)
         }
+    }
+}
+
+@IBDesignable class NoteInputCellTextView: UITextView {
+    override func awakeFromNib() {
+        super.awakeFromNib()
+
+        textContainerInset = .zero
+        textContainer.lineFragmentPadding = 0
     }
 }
