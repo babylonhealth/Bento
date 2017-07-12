@@ -27,9 +27,10 @@
                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences" enablesReturnKeyAutomatically="YES"/>
                     </textView>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TTn-j0-Qal">
-                        <rect key="frame" x="344" y="5" width="23" height="32"/>
+                        <rect key="frame" x="344" y="0.0" width="23" height="32"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="23" id="dlg-x4-9LP"/>
+                            <constraint firstAttribute="height" constant="32" id="pzI-x6-Zt9" userLabel="height = 18"/>
                         </constraints>
                         <state key="normal" image="camera.png"/>
                     </button>
@@ -41,7 +42,7 @@
                     </label>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="TTn-j0-Qal" firstAttribute="top" secondItem="Erp-HD-Hhb" secondAttribute="top" constant="5" id="6pk-0d-iLt"/>
+                    <constraint firstItem="TTn-j0-Qal" firstAttribute="top" secondItem="i4I-pr-1tn" secondAttribute="top" id="VgE-P1-q6b"/>
                     <constraint firstAttribute="trailingMargin" secondItem="TTn-j0-Qal" secondAttribute="trailing" id="XcU-XT-kB1"/>
                     <constraint firstItem="i4I-pr-1tn" firstAttribute="top" secondItem="Erp-HD-Hhb" secondAttribute="top" id="cAT-2E-DsS"/>
                     <constraint firstAttribute="bottom" secondItem="i4I-pr-1tn" secondAttribute="bottom" id="e6P-yU-50H"/>

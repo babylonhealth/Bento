@@ -12,12 +12,12 @@ public struct NoteInputCellViewModel: FocusableFormComponent {
     let formContent: FormContentProtocol?
     let selectionStyle: UITableViewCellSelectionStyle = .none
 
-    let addAction: Action<Void, Void, NoError>
+    let addPhotosAction: Action<Void, Void, NoError>
 
     public init(placeholder: String,
                 text: ValidatingProperty<String, InvalidInput>,
                 isEnabled: Property<Bool> = Property(value: true),
-                addAction: Action<Void, Void, NoError>,
+                addPhotosAction: Action<Void, Void, NoError>,
                 autocapitalizationType: UITextAutocapitalizationType = .sentences,
                 autocorrectionType: UITextAutocorrectionType = .`default`,
                 keyboardType: UIKeyboardType = .`default`,
@@ -32,7 +32,7 @@ public struct NoteInputCellViewModel: FocusableFormComponent {
         self.keyboardType = keyboardType
         self.visualDependencies = visualDependencies
         self.formContent = formContent
-        self.addAction = addAction
+        self.addPhotosAction = addPhotosAction
     }
 
     func applyStyle(to label: UILabel) {

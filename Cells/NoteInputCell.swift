@@ -15,7 +15,6 @@ final class NoteInputCell: FormCell {
 
     override func awakeFromNib() {
         super.awakeFromNib()
-        textView.delegate = self
     }
 
     func setup(viewModel: NoteInputCellViewModel) {
@@ -24,12 +23,13 @@ final class NoteInputCell: FormCell {
 
         let isEnabled = viewModel.isEnabled.and(isFormEnabled)
 
+        
         isEnabled.producer
             .take(until: reactive.prepareForReuse)
             .startWithSignal { isEnabled, _ in
                 textView.reactive.isUserInteractionEnabled <~ isEnabled
                 addPhotosButton.reactive.isEnabled <~ isEnabled
-        }
+            }
 
         // FIXME: Remove workaround in ReactiveSwift 2.0.
         //
@@ -51,13 +51,14 @@ final class NoteInputCell: FormCell {
         textView.reactive.text <~ viewModel.text.producer
             .take(until: reactive.prepareForReuse)
 
-        textView.reactive.continuousTextValues
-            .observe(on: UIScheduler())
-            .observeValues { value in
-                self.placeholder.isHidden = (value != nil && value!.isEmpty == false)
-        }
+        placeholder.reactive.isHidden <~ textView.reactive.continuousTextValues
+            .filterMap {
+                guard let text = $0 else { return false }
+                return !text.isEmpty
+            }
+            .take(until: reactive.prepareForReuse)
 
-        addPhotosButton.reactive.pressed = CocoaAction(viewModel.addAction)
+        addPhotosButton.reactive.pressed = CocoaAction(viewModel.addPhotosAction)
 
         viewModel.applyStyle(to: textView)
         viewModel.applyStyle(to: placeholder)
@@ -71,17 +72,5 @@ final class NoteInputCell: FormCell {
 extension NoteInputCell: FocusableCell {
     func focus() {
         textView.becomeFirstResponder()
-    }
-}
-
-extension NoteInputCell: UITextViewDelegate {
-
-    func textViewShouldBeginEditing(_ textView: UITextView) -> Bool {
-        let hasSuccessor = delegate?.focusableCellHasSuccessor(self) ?? false        
-        return true
-    }
-
-    func textViewDidEndEditing(_ textView: UITextView) -> Bool {
-        return delegate?.focusableCellWillResignFirstResponder(self) ?? true
     }
 }
