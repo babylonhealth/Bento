@@ -15,6 +15,12 @@ final class NoteInputCell: FormCell {
 
     override func awakeFromNib() {
         super.awakeFromNib()
+
+        placeholder.reactive.isHidden <~ textView.reactive.continuousTextValues
+            .filterMap {
+                guard let text = $0 else { return false }
+                return !text.isEmpty
+        }
     }
 
     func setup(viewModel: NoteInputCellViewModel) {
@@ -22,8 +28,6 @@ final class NoteInputCell: FormCell {
         placeholder.text = viewModel.placeholder
 
         let isEnabled = viewModel.isEnabled.and(isFormEnabled)
-
-        
         isEnabled.producer
             .take(until: reactive.prepareForReuse)
             .startWithSignal { isEnabled, _ in
@@ -49,13 +53,6 @@ final class NoteInputCell: FormCell {
             .take(until: reactive.prepareForReuse)
 
         textView.reactive.text <~ viewModel.text.producer
-            .take(until: reactive.prepareForReuse)
-
-        placeholder.reactive.isHidden <~ textView.reactive.continuousTextValues
-            .filterMap {
-                guard let text = $0 else { return false }
-                return !text.isEmpty
-            }
             .take(until: reactive.prepareForReuse)
 
         addPhotosButton.reactive.pressed = CocoaAction(viewModel.addPhotosAction)
