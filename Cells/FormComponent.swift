@@ -56,39 +56,35 @@ extension FormComponent: Equatable {
     public static func ==(lhs: FormComponent, rhs: FormComponent) -> Bool {
         switch (lhs, rhs) {
         case let (.textInput(lhsViewModel), .textInput(rhsViewModel)):
-            return lhsViewModel.placeholder.hash == rhsViewModel.placeholder.hash
+            return lhsViewModel === rhsViewModel
         case let (.titledTextInput(lhsViewModel), .titledTextInput(rhsViewModel)):
-            return lhsViewModel.placeholder.hash == rhsViewModel.placeholder.hash
-                && lhsViewModel.title.hash == rhsViewModel.title.hash
+            return lhsViewModel === rhsViewModel
         case let (.phoneTextInput(lhsViewModel), .phoneTextInput(rhsViewModel)):
-            return lhsViewModel.placeholder.hash == rhsViewModel.placeholder.hash
-                && lhsViewModel.title.hash == rhsViewModel.title.hash
+            return lhsViewModel === rhsViewModel
         case let (.actionButton(lhsViewModel, _), .actionButton(rhsViewModel, _)):
-            return lhsViewModel.action === rhsViewModel.action
+            return lhsViewModel === rhsViewModel
         case let (.facebookButton(lhsViewModel), .facebookButton(rhsViewModel)):
-            return lhsViewModel.title == rhsViewModel.title
+            return lhsViewModel === rhsViewModel
         case let (.description(lhsViewModel), .description(rhsViewModel)):
-            return lhsViewModel.text == rhsViewModel.text
-                && lhsViewModel.type == rhsViewModel.type
+            return lhsViewModel == rhsViewModel
         case let (.separator(lhsViewModel), .separator(rhsViewModel)):
-            return lhsViewModel.width == rhsViewModel.width
-                && lhsViewModel.isFullCell == rhsViewModel.isFullCell
+            return lhsViewModel == rhsViewModel
         case let (.space(lhsViewModel), .space(rhsViewModel)):
-            return lhsViewModel.height == rhsViewModel.height
+            return lhsViewModel == rhsViewModel
         case let (.actionInput(lhsViewModel), .actionInput(rhsViewModel)):
-            return lhsViewModel.title == rhsViewModel.title
+            return lhsViewModel === rhsViewModel
         case let (.actionIconInput(lhsViewModel), .actionIconInput(rhsViewModel)):
-            return lhsViewModel.title == rhsViewModel.title
+            return lhsViewModel === rhsViewModel
         case let (.actionDescription(lhsViewModel), .actionDescription(rhsViewModel)):
-            return lhsViewModel.title == rhsViewModel.title
+            return lhsViewModel === rhsViewModel
         case let (.toggle(lhsViewModel), .toggle(rhsViewModel)):
-            return lhsViewModel.title == rhsViewModel.title
+            return lhsViewModel === rhsViewModel
         case let (.segmentedInput(lhsViewModel), .segmentedInput(rhsViewModel)):
-            return lhsViewModel.options == rhsViewModel.options
+            return lhsViewModel === rhsViewModel
         case let (.selection(lhsViewModel, lhsGroup, _), .selection(rhsViewModel, rhsGroup, _)):
-            return lhsViewModel.title == rhsViewModel.title && lhsGroup === rhsGroup
+            return lhsViewModel === rhsViewModel && lhsGroup === rhsGroup
         case let (.noteInput(lhsViewModel), .noteInput(rhsViewModel)):
-            return lhsViewModel.placeholder.hash == rhsViewModel.placeholder.hash
+            return lhsViewModel == rhsViewModel
         default:
             return false
         }

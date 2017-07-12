@@ -1,7 +1,7 @@
 import ReactiveSwift
 import Result
 
-public struct TextInputCellViewModel: FocusableFormComponent {
+public final class TextInputCellViewModel: FocusableFormComponent {
 
     private let _isSecure: MutableProperty<Bool>
     private let _clearsOnBeginEditing: MutableProperty<Bool>
