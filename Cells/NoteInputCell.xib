@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12121" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="44" id="XFH-90-E0O" userLabel="NoteInputCell" customClass="NoteInputCell" customModule="BabylonUI" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="XFH-90-E0O" id="Erp-HD-Hhb">
+                <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="i4I-pr-1tn">
+                        <rect key="frame" x="16" y="0.0" width="328" height="43.5"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences" enablesReturnKeyAutomatically="YES"/>
+                    </textView>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TTn-j0-Qal">
+                        <rect key="frame" x="344" y="0.0" width="23" height="32"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="23" id="dlg-x4-9LP"/>
+                            <constraint firstAttribute="height" constant="32" id="pzI-x6-Zt9" userLabel="height = 18"/>
+                        </constraints>
+                        <state key="normal" image="camera.png"/>
+                    </button>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="G02-eo-kg0">
+                        <rect key="frame" x="21" y="11.5" width="42" height="21"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="TTn-j0-Qal" firstAttribute="top" secondItem="i4I-pr-1tn" secondAttribute="top" id="VgE-P1-q6b"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="TTn-j0-Qal" secondAttribute="trailing" id="XcU-XT-kB1"/>
+                    <constraint firstItem="i4I-pr-1tn" firstAttribute="top" secondItem="Erp-HD-Hhb" secondAttribute="top" id="cAT-2E-DsS"/>
+                    <constraint firstAttribute="bottom" secondItem="i4I-pr-1tn" secondAttribute="bottom" id="e6P-yU-50H"/>
+                    <constraint firstItem="G02-eo-kg0" firstAttribute="centerY" secondItem="Erp-HD-Hhb" secondAttribute="centerY" id="fe8-eZ-1Id"/>
+                    <constraint firstItem="G02-eo-kg0" firstAttribute="leading" secondItem="i4I-pr-1tn" secondAttribute="leading" constant="5" id="g32-81-cAC"/>
+                    <constraint firstItem="i4I-pr-1tn" firstAttribute="trailing" secondItem="TTn-j0-Qal" secondAttribute="leading" id="iph-Rp-w9x"/>
+                    <constraint firstItem="i4I-pr-1tn" firstAttribute="leading" secondItem="Erp-HD-Hhb" secondAttribute="leading" constant="16" id="tck-fX-WuA"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="addPhotosButton" destination="TTn-j0-Qal" id="uwk-r8-9Wf"/>
+                <outlet property="placeholder" destination="G02-eo-kg0" id="7mM-Kj-Pp8"/>
+                <outlet property="textView" destination="i4I-pr-1tn" id="YsM-OE-0cG"/>
+            </connections>
+            <point key="canvasLocation" x="39.5" y="-162"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="camera.png" width="32" height="32"/>
+    </resources>
+</document>

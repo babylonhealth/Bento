@@ -126,6 +126,7 @@ public struct FormSectionBuilder {
         case selectionField(title: String, value: Property<String>, action: Action<Void, Void, NoError>)
         case iconSelectionField(icon: UIImage, title: String, value: Property<String>, action: Action<Void, Void, NoError>)
         case segmentedField(options: [SegmentedCellViewModel.Option], initial: Int)
+        case noteField(placeholder: String, text: ValidatingProperty<String, InvalidInput>, addPhotosAction: Action<Void, Void, NoError>)
         case toggle(title: String, isOn: MutableProperty<Bool>)
         case custom(FormComponent)
 
@@ -174,6 +175,13 @@ public struct FormSectionBuilder {
                     SegmentedCellViewModel(options: options,
                                            selectedIndex: initial,
                                            visualDependencies: visualDependencies))
+            case let .noteField(placeholder, text, addPhotosAction):
+                return .noteInput(
+                    NoteInputCellViewModel(placeholder: placeholder,
+                                           text: text,
+                                           addPhotosAction: addPhotosAction,
+                                           visualDependencies: visualDependencies,
+                                           formContent: nil))
             case let .toggle(title, isOn):
                 return .toggle(
                     ToggleCellViewModel(title: title,
