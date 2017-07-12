@@ -84,7 +84,7 @@ extension FormComponent: Equatable {
         case let (.selection(lhsViewModel, lhsGroup, _), .selection(rhsViewModel, rhsGroup, _)):
             return lhsViewModel === rhsViewModel && lhsGroup === rhsGroup
         case let (.noteInput(lhsViewModel), .noteInput(rhsViewModel)):
-            return lhsViewModel == rhsViewModel
+            return lhsViewModel === rhsViewModel
         default:
             return false
         }

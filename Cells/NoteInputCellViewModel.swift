@@ -1,7 +1,7 @@
 import ReactiveSwift
 import Result
 
-public struct NoteInputCellViewModel: FocusableFormComponent {
+public final class NoteInputCellViewModel: FocusableFormComponent {
     let placeholder: String
     let text: ValidatingProperty<String, InvalidInput>
     let isEnabled: Property<Bool>
