@@ -13,7 +13,6 @@ public final class TextInputCellViewModel: FocusableFormComponent {
     let autocorrectionType: UITextAutocorrectionType
     let keyboardType: UIKeyboardType
     let visualDependencies: VisualDependenciesProtocol
-    let formContent: FormContentProtocol?
     let selectionStyle: UITableViewCellSelectionStyle = .none
     let width: Float
 
@@ -37,8 +36,7 @@ public final class TextInputCellViewModel: FocusableFormComponent {
          autocapitalizationType: UITextAutocapitalizationType = .sentences,
          autocorrectionType: UITextAutocorrectionType = .`default`,
          keyboardType: UIKeyboardType = .`default`,
-         visualDependencies: VisualDependenciesProtocol,
-         formContent: FormContentProtocol? = nil) {
+         visualDependencies: VisualDependenciesProtocol) {
         self._isSecure = MutableProperty(isSecure)
         let clearsOnBeginEditingValue = isSecure ? true : clearsOnBeginEditing
         self._clearsOnBeginEditing = MutableProperty(clearsOnBeginEditingValue)
@@ -49,7 +47,6 @@ public final class TextInputCellViewModel: FocusableFormComponent {
         self.autocorrectionType = autocorrectionType
         self.keyboardType = keyboardType
         self.visualDependencies = visualDependencies
-        self.formContent = formContent
 
         self.width = isSecure ? 54 : 0
     }
@@ -64,8 +61,8 @@ public final class TextInputCellViewModel: FocusableFormComponent {
 
     func applyStyle(to button: UIButton) {
         button.tintColor = .clear
-        button.setImage(formContent?.peekImage, for: .normal)
-        button.setImage(formContent?.unPeekImage, for: .selected)
+        button.setImage(visualDependencies.styles.formIcons.peekImage, for: .normal)
+        button.setImage(visualDependencies.styles.formIcons.unPeekImage, for: .selected)
     }
 
     func applyBackgroundColor(to views: [UIView]) {

@@ -180,8 +180,7 @@ public struct FormSectionBuilder {
                     NoteInputCellViewModel(placeholder: placeholder,
                                            text: text,
                                            addPhotosAction: addPhotosAction,
-                                           visualDependencies: visualDependencies,
-                                           formContent: nil))
+                                           visualDependencies: visualDependencies))
             case let .toggle(title, isOn):
                 return .toggle(
                     ToggleCellViewModel(title: title,

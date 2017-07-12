@@ -9,7 +9,6 @@ public final class NoteInputCellViewModel: FocusableFormComponent {
     let autocorrectionType: UITextAutocorrectionType
     let keyboardType: UIKeyboardType
     let visualDependencies: VisualDependenciesProtocol
-    let formContent: FormContentProtocol?
     let selectionStyle: UITableViewCellSelectionStyle = .none
 
     let addPhotosAction: Action<Void, Void, NoError>
@@ -21,8 +20,7 @@ public final class NoteInputCellViewModel: FocusableFormComponent {
                 autocapitalizationType: UITextAutocapitalizationType = .sentences,
                 autocorrectionType: UITextAutocorrectionType = .`default`,
                 keyboardType: UIKeyboardType = .`default`,
-                visualDependencies: VisualDependenciesProtocol,
-                formContent: FormContentProtocol? = nil) {
+                visualDependencies: VisualDependenciesProtocol) {
 
         self.placeholder = placeholder
         self.text = text
@@ -31,7 +29,6 @@ public final class NoteInputCellViewModel: FocusableFormComponent {
         self.autocorrectionType = autocorrectionType
         self.keyboardType = keyboardType
         self.visualDependencies = visualDependencies
-        self.formContent = formContent
         self.addPhotosAction = addPhotosAction
     }
 
@@ -49,7 +46,7 @@ public final class NoteInputCellViewModel: FocusableFormComponent {
 
     func applyStyle(to button: UIButton) {
         button.tintColor = .clear
-        button.setImage(formContent?.cameraImage, for: .normal)
+        button.setImage(visualDependencies.styles.formIcons.cameraImage, for: .normal)
     }
 
     func applyBackgroundColor(to views: [UIView]) {
