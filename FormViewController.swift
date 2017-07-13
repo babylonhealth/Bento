@@ -126,6 +126,7 @@ extension FormViewController: FormCellConfigurator {
     public func configure<Cell : UITableViewCell>(_ cell: Cell) {
         (cell as? FormCell)?.configure(form.submiting.negate())
         (cell as? FocusableCell)?.delegate = self
+        (cell as? DynamicHeightCell)?.heightDelegate = self
     }
 }
 
@@ -162,6 +163,21 @@ extension FormViewController: FocusableCellDelegate {
         }
 
         return nil
+    }
+}
+
+extension FormViewController: DynamicHeightCellDelegate {
+    public func dynamicHeightCellHeightDidChange(delta: CGFloat) {
+        UIView.setAnimationsEnabled(false)
+        tableView.beginUpdates()
+        tableView.endUpdates()
+        UIView.setAnimationsEnabled(true)
+
+        if delta > 0.0 {
+            var contentOffset = tableView.contentOffset
+            contentOffset.y += delta
+            tableView.setContentOffset(contentOffset, animated: false)
+        }
     }
 }
 

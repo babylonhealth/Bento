@@ -36,13 +36,13 @@ public struct FormBuilder {
     }
 
     public static func |-* (builder: FormBuilder, other: FormBuilder) -> FormBuilder {
-        return builder |-* { other }
+        var components = builder.components
+        components.append(contentsOf: other.components)
+        return FormBuilder(components: components)
     }
 
     public static func |-* (builder: FormBuilder, generator: () -> FormBuilder) -> FormBuilder {
-        var components = builder.components
-        components.append(contentsOf: generator().components)
-        return FormBuilder(components: components)
+        return builder |-* generator()
     }
 
     public static func |-+ (builder: FormBuilder, sectioner: Sectioner) -> FormBuilder {
@@ -124,6 +124,9 @@ public struct FormSectionBuilder {
         case titledTextField(title: String, placeholder: String, text: ValidatingProperty<String, InvalidInput>)
         case phoneTextField(title: String, placeholder: String, countryCode: MutableProperty<String>, phoneNumber: MutableProperty<String>)
         case selectionField(title: String, value: Property<String>, action: Action<Void, Void, NoError>)
+        case iconSelectionField(icon: UIImage, title: String, value: Property<String>, action: Action<Void, Void, NoError>)
+        case segmentedField(options: [SegmentedCellViewModel.Option], initial: Int)
+        case noteField(placeholder: String, text: ValidatingProperty<String, InvalidInput>, addPhotosAction: Action<Void, Void, NoError>)
         case toggle(title: String, isOn: MutableProperty<Bool>)
         case custom(FormComponent)
 
@@ -160,6 +163,24 @@ public struct FormSectionBuilder {
                                              title: title,
                                              input: value,
                                              selected: action))
+            case let .iconSelectionField(icon, title, value, action):
+                return .actionIconInput(
+                    ActionIconInputCellViewModel(visualDependencies: visualDependencies,
+                                                 icon: icon,
+                                                 title: title,
+                                                 input: value,
+                                                 selected: action))
+            case let .segmentedField(options, initial):
+                return .segmentedInput(
+                    SegmentedCellViewModel(options: options,
+                                           selectedIndex: initial,
+                                           visualDependencies: visualDependencies))
+            case let .noteField(placeholder, text, addPhotosAction):
+                return .noteInput(
+                    NoteInputCellViewModel(placeholder: placeholder,
+                                           text: text,
+                                           addPhotosAction: addPhotosAction,
+                                           visualDependencies: visualDependencies))
             case let .toggle(title, isOn):
                 return .toggle(
                     ToggleCellViewModel(title: title,
@@ -207,10 +228,14 @@ public struct FormSectionBuilder {
         return FormSectionBuilder(components: components)
     }
 
-    public static func |-* (builder: FormSectionBuilder, generator: () -> FormSectionBuilder) -> FormSectionBuilder {
+    public static func |-* (builder: FormSectionBuilder, other: FormSectionBuilder) -> FormSectionBuilder {
         var components = builder.components
-        components.append(contentsOf: generator().components)
+        components.append(contentsOf: other.components)
         return FormSectionBuilder(components: components)
+    }
+
+    public static func |-* (builder: FormSectionBuilder, generator: () -> FormSectionBuilder) -> FormSectionBuilder {
+        return builder |-* generator()
     }
 
     public static func |-? (builder: FormSectionBuilder, validator: Validator<FormSectionBuilder>) -> FormSectionBuilder {

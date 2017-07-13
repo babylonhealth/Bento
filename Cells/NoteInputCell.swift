@@ -11,10 +11,15 @@ final class NoteInputCell: FormCell {
     @IBOutlet weak var addPhotosButton: UIButton!
     @IBOutlet weak var placeholder: UILabel!
     private var viewModel: NoteInputCellViewModel!
+
     internal weak var delegate: FocusableCellDelegate?
+    internal weak var heightDelegate: DynamicHeightCellDelegate?
+    fileprivate var textViewHeight: CGFloat = 0.0
 
     override func awakeFromNib() {
         super.awakeFromNib()
+
+        textView.delegate = self
 
         placeholder.reactive.isHidden <~ textView.reactive.continuousTextValues
             .filterMap {
@@ -64,10 +69,24 @@ final class NoteInputCell: FormCell {
 
         self.selectionStyle = viewModel.selectionStyle
     }
+
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        textViewHeight = textView.intrinsicContentSize.height
+    }
 }
 
 extension NoteInputCell: FocusableCell {
     func focus() {
         textView.becomeFirstResponder()
+    }
+}
+
+extension NoteInputCell: DynamicHeightCell, UITextViewDelegate {
+    func textViewDidChange(_ textView: UITextView) {
+        if textView.intrinsicContentSize.height != textViewHeight {
+            let delta = textView.intrinsicContentSize.height - textViewHeight
+            heightDelegate?.dynamicHeightCellHeightDidChange(delta: delta)
+        }
     }
 }
