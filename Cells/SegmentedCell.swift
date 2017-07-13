@@ -47,8 +47,9 @@ public final class SegmentedCell: FormCell {
     func setup(viewModel: SegmentedCellViewModel) {
         self.viewModel = viewModel
 
-        stackView.arrangedSubviews
-            .forEach(stackView.removeArrangedSubview)
+        for view in stackView.arrangedSubviews {
+            view.removeFromSuperview()
+        }
 
         var first: UIButton?
 
