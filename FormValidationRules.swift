@@ -172,42 +172,41 @@ public enum FormValidationRules {
 
     public static func conditionallyNonOptionalValidatingProperty<P, T>(
         initialValue: T? = nil,
-        condition: P,
+        needsValidation: P,
         invalidMessage: String
         ) -> ValidatingProperty<T?, InvalidInput> where P: PropertyProtocol, P.Value == Bool {
 
         // NOTE: This is done manually until we get proper generics (Swift 4)
-        return ValidatingProperty(initialValue, with: condition, { (value, condition) in
-            guard condition else { return .valid }
-
+        return ValidatingProperty(initialValue, with: needsValidation) { (value, needsValidation) in
+            guard needsValidation else { return .valid }
             return value != nil ? .valid : .invalid(InvalidInput(reason: invalidMessage))
-        })
+        }
     }
 
     public static func conditionallyNonEmptyValidatingProperty<P>(
         initialValue: String = "",
-        condition: P,
+        needsValidation: P,
         invalidMessage: String
         ) -> ValidatingProperty<String, InvalidInput> where P: PropertyProtocol, P.Value == Bool {
 
         return conditionallyValidatingProperty(initialValue: initialValue,
-                                               condition: condition,
+                                               needsValidation: needsValidation,
                                                validation: { $0.isEmpty == false },
                                                invalidMessage: invalidMessage)
     }
 
     private static func conditionallyValidatingProperty<T, P>(
         initialValue: T,
-        condition: P,
+        needsValidation: P,
         validation: @escaping (T) -> Bool,
         invalidMessage: String
         ) -> ValidatingProperty<T, InvalidInput> where P: PropertyProtocol, P.Value == Bool {
 
-        return ValidatingProperty(initialValue, with: condition, { (value, condition) in
-            guard condition else { return .valid }
+        return ValidatingProperty(initialValue, with: needsValidation) { (value, needsValidation) in
+            guard needsValidation else { return .valid }
 
             return validation(value) ? .valid : .invalid(InvalidInput(reason: invalidMessage))
-        })
+        }
     }
 
     private static func makeValidatingProperty(regex: String, initialValue: String, invalidMessage: String) -> ValidatingProperty<String, InvalidInput> {
