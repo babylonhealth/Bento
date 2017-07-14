@@ -29,16 +29,20 @@ public struct FormBuilder {
             .flatMap { $0 }
     }
 
+    public func cached(with visualDependencies: VisualDependenciesProtocol) -> FormBuilder {
+        return FormBuilder(components: build(with: visualDependencies).map(Component.custom))
+    }
+
     public static func |-+(builder: FormBuilder, component: Component) -> FormBuilder {
-        var components = builder.components
-        components.append(component)
-        return FormBuilder(components: components)
+        return FormBuilder(components: builder.components + [component])
+    }
+
+    public static func |-* (builder: FormBuilder, other: [FormComponent]) -> FormBuilder {
+        return FormBuilder(components: builder.components + other.map(Component.custom))
     }
 
     public static func |-* (builder: FormBuilder, other: FormBuilder) -> FormBuilder {
-        var components = builder.components
-        components.append(contentsOf: other.components)
-        return FormBuilder(components: components)
+        return FormBuilder(components: builder.components + other.components)
     }
 
     public static func |-* (builder: FormBuilder, generator: () -> FormBuilder) -> FormBuilder {
@@ -254,6 +258,10 @@ public struct FormSectionBuilder {
             .flatMap { $0 }
 
         return [delimiterSeparator, interleavedFormComponents, delimiterSeparator].flatMap { $0 }
+    }
+
+    public func cached(with visualDependencies: VisualDependenciesProtocol) -> FormSectionBuilder {
+        return FormSectionBuilder(components: components.map { Component.custom($0.formComponent(with: visualDependencies)) })
     }
 }
 
