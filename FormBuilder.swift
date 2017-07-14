@@ -160,16 +160,18 @@ public struct FormSectionBuilder {
             case let .selectionField(title, value, action):
                 return .actionInput(
                     ActionInputCellViewModel(visualDependencies: visualDependencies,
-                                             title: title,
+                                             title: Property(value: title),
                                              input: value,
+                                             inputTextAlignment: .left,
                                              selected: action))
             case let .iconSelectionField(icon, title, value, action):
-                return .actionIconInput(
-                    ActionIconInputCellViewModel(visualDependencies: visualDependencies,
-                                                 icon: icon,
-                                                 title: title,
-                                                 input: value,
-                                                 selected: action))
+                return .actionInput(
+                    ActionInputCellViewModel(visualDependencies: visualDependencies,
+                                             icon: icon,
+                                             title: Property(value: title),
+                                             input: value,
+                                             inputTextAlignment: .right,
+                                             selected: action))
             case let .segmentedField(options, initial):
                 return .segmentedInput(
                     SegmentedCellViewModel(options: options,
