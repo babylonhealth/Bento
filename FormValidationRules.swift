@@ -172,7 +172,7 @@ public enum FormValidationRules {
 
     public static func conditionallyNonOptionalValidatingProperty<P, T>(
         initialValue: T? = nil,
-        needsValidation: P,
+        validateIf needsValidation: P,
         invalidMessage: String
         ) -> ValidatingProperty<T?, InvalidInput> where P: PropertyProtocol, P.Value == Bool {
 
@@ -185,19 +185,19 @@ public enum FormValidationRules {
 
     public static func conditionallyNonEmptyValidatingProperty<P>(
         initialValue: String = "",
-        needsValidation: P,
+        validateIf needsValidation: P,
         invalidMessage: String
         ) -> ValidatingProperty<String, InvalidInput> where P: PropertyProtocol, P.Value == Bool {
 
         return conditionallyValidatingProperty(initialValue: initialValue,
-                                               needsValidation: needsValidation,
+                                               validateIf: needsValidation,
                                                validation: { $0.isEmpty == false },
                                                invalidMessage: invalidMessage)
     }
 
     private static func conditionallyValidatingProperty<T, P>(
         initialValue: T,
-        needsValidation: P,
+        validateIf needsValidation: P,
         validation: @escaping (T) -> Bool,
         invalidMessage: String
         ) -> ValidatingProperty<T, InvalidInput> where P: PropertyProtocol, P.Value == Bool {
