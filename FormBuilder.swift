@@ -100,7 +100,12 @@ extension FormBuilder {
                 let style = visualDependencies.styles.buttonBackgroundBrandColor
                     .composing(with: visualDependencies.styles.buttonRoundCorners)
                     .composing(with: visualDependencies.styles.buttonTextBody)
-                let spec = ActionCellViewSpec(title: text, buttonStyle: style, hasDynamicHeight: false)
+
+                let disabledStyle = visualDependencies.styles.buttonTitleDisabledColor
+                    .composing(with: visualDependencies.styles.buttonRoundCorners)
+                    .composing(with: visualDependencies.styles.buttonTextBody)
+
+                let spec = ActionCellViewSpec(title: text, buttonStyle: style, disabledButtonStyle: disabledStyle, hasDynamicHeight: false)
                 let viewModel = ActionCellViewModel(action: action, isLoading: action.isExecuting)
                 return [.actionButton(viewModel, spec)]
             case let .secondaryButton(text, hasDynamicHeight, action):
