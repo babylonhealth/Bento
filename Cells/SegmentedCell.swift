@@ -51,7 +51,7 @@ public final class SegmentedCell: FormCell {
             .take(until: reactive.prepareForReuse)
 
         return viewModel.options.enumerated().map { index, option in
-            let button = UIButton(type: .custom)
+            let button = SegmentedCellButton()
             viewModel.visualDependencies.styles.segmentedCellButton.apply(to: button)
             button.imageEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 4)
             button.titleEdgeInsets = UIEdgeInsets(top: 0, left: 4, bottom: 0, right: 0)
@@ -75,3 +75,21 @@ public final class SegmentedCell: FormCell {
 }
 
 extension SegmentedCell: ReusableCell {}
+
+private class SegmentedCellButton: UIButton {
+    init() {
+        super.init(frame: .zero)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+    }
+
+    override var isSelected: Bool {
+        get { return super.isSelected }
+        set {
+            super.isSelected = newValue
+            imageView?.tintColor = titleColor(for: newValue ? .selected : .normal)
+        }
+    }
+}
