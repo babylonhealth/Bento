@@ -56,8 +56,6 @@ public final class SegmentedCell: FormCell {
                     }
                 }
             }
-
-
     }
 
     private func generateButtons() -> [UIButton] {
@@ -71,10 +69,19 @@ public final class SegmentedCell: FormCell {
             button.imageEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 4)
             button.titleEdgeInsets = UIEdgeInsets(top: 0, left: 4, bottom: 0, right: 0)
             button.setTitle(option.title, for: .normal)
-            button.setImage(UIImage(named: option.imageName), for: .normal)
-            button.setImage(UIImage(named: option.imageName)?.withRenderingMode(.alwaysTemplate), for: .selected)
-            button.reactive.isSelected <~ viewModel.selectedIndex.map { $0 == index }
-            button.reactive.pressed = CocoaAction(viewModel.selection, input: index)
+
+            let icon = option.icon.withRenderingMode(.alwaysTemplate)
+            button.setImage(icon, for: .normal)
+
+            button.reactive.isSelected <~ viewModel.selection.map { $0 == index }.producer
+                .take(until: reactive.prepareForReuse)
+
+            button.reactive.controlEvents(.primaryActionTriggered)
+                .take(until: reactive.prepareForReuse)
+                .observeValues { [selection = viewModel.selection] _ in
+                    selection.value = index
+                }
+
             button.reactive.isEnabled <~ isEnabled
             return button
         }
