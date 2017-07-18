@@ -129,7 +129,7 @@ public struct FormSectionBuilder {
         case phoneTextField(title: String, placeholder: String, countryCode: MutableProperty<String>, phoneNumber: MutableProperty<String>)
         case selectionField(title: String, value: Property<String>, action: Action<Void, Void, NoError>)
         case iconSelectionField(icon: UIImage, title: String, value: Property<String>, action: Action<Void, Void, NoError>)
-        case segmentedField(options: [SegmentedCellViewModel.Option], initial: Int)
+        case segmentedField(options: [SegmentedCellViewModel.Option], selection: MutableProperty<Int>)
         case noteField(placeholder: String, text: ValidatingProperty<String, InvalidInput>, addPhotosAction: Action<Void, Void, NoError>)
         case imageField(image: UIImage, imageSize: CGSize)
         case toggle(title: String, isOn: MutableProperty<Bool>)
@@ -175,10 +175,10 @@ public struct FormSectionBuilder {
                                                  title: title,
                                                  input: value,
                                                  selected: action))
-            case let .segmentedField(options, initial):
+            case let .segmentedField(options, selection):
                 return .segmentedInput(
                     SegmentedCellViewModel(options: options,
-                                           selectedIndex: initial,
+                                           selection: selection,
                                            visualDependencies: visualDependencies))
             case let .noteField(placeholder, text, addPhotosAction):
                 return .noteInput(
