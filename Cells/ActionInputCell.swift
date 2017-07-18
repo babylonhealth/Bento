@@ -3,7 +3,7 @@ import ReactiveSwift
 
 extension ActionInputCell: NibLoadableCell {}
 
-final class ActionInputCell: UITableViewCell {
+final class ActionInputCell: FormCell {
 
     private var viewModel: ActionInputCellViewModel!
 
@@ -12,6 +12,10 @@ final class ActionInputCell: UITableViewCell {
     @IBOutlet weak var iconView: UIImageView!
     @IBOutlet var titleViewAlignment: NSLayoutConstraint!
 
+    override var canBecomeFirstResponder: Bool {
+        return true
+    }
+
     func setup(viewModel: ActionInputCellViewModel) {
         self.viewModel = viewModel
         viewModel.applyTitleStyle(to: titleView)
@@ -19,6 +23,8 @@ final class ActionInputCell: UITableViewCell {
         iconView.image = viewModel.icon
         accessoryType = viewModel.accessory
         selectionStyle = self.viewModel.selectionStyle
+
+        reactive.isUserInteractionEnabled <~ viewModel.isSelected.isEnabled.and(isFormEnabled).producer
 
         titleView.reactive.text <~ viewModel.title.producer
             .take(until: reactive.prepareForReuse)
