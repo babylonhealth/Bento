@@ -28,12 +28,12 @@ public final class ActionInputCellViewModel {
     }
 
     public convenience init(visualDependencies: VisualDependenciesProtocol,
-                icon: UIImage? = nil,
-                title: String,
-                input: Property<String>? = nil,
-                inputTextAlignment: TextAlignment = .left,
-                selected: Action<Void, Void, NoError>,
-                accessory: UITableViewCellAccessoryType = .disclosureIndicator) {
+                            icon: UIImage? = nil,
+                            title: String,
+                            input: Property<String>? = nil,
+                            inputTextAlignment: TextAlignment = .left,
+                            selected: Action<Void, Void, NoError>,
+                            accessory: UITableViewCellAccessoryType = .disclosureIndicator) {
         self.init(visualDependencies: visualDependencies,
                   icon: icon,
                   title: Property(value: title),

@@ -160,7 +160,7 @@ public struct FormSectionBuilder {
             case let .selectionField(title, value, action):
                 return .actionInput(
                     ActionInputCellViewModel(visualDependencies: visualDependencies,
-                                             title: Property(value: title),
+                                             title: title,
                                              input: value,
                                              inputTextAlignment: .left,
                                              selected: action))
@@ -168,7 +168,7 @@ public struct FormSectionBuilder {
                 return .actionInput(
                     ActionInputCellViewModel(visualDependencies: visualDependencies,
                                              icon: icon,
-                                             title: Property(value: title),
+                                             title: title,
                                              input: value,
                                              inputTextAlignment: .right,
                                              selected: action))
