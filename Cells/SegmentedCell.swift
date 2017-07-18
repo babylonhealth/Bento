@@ -40,10 +40,24 @@ public final class SegmentedCell: FormCell {
         stackView.arrangedSubviews
             .forEach(stackView.removeArrangedSubview)
 
+        var first: UIButton?
+
         generateButtons()
             .map { [$0] }
             .joined(separator: [generateSeparator()])
-            .forEach(stackView.addArrangedSubview)
+            .forEach { view in
+                stackView.addArrangedSubview(view)
+
+                if let button = view as? UIButton {
+                    if let first = first {
+                        button.widthAnchor.constraint(equalTo: first.widthAnchor).isActive = true
+                    } else {
+                        first = button
+                    }
+                }
+            }
+
+
     }
 
     private func generateButtons() -> [UIButton] {
@@ -52,6 +66,7 @@ public final class SegmentedCell: FormCell {
 
         return viewModel.options.enumerated().map { index, option in
             let button = SegmentedCellButton()
+
             viewModel.visualDependencies.styles.segmentedCellButton.apply(to: button)
             button.imageEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 4)
             button.titleEdgeInsets = UIEdgeInsets(top: 0, left: 4, bottom: 0, right: 0)
