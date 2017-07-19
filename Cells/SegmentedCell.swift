@@ -8,7 +8,6 @@ public final class SegmentedCell: FormCell {
         $0.translatesAutoresizingMaskIntoConstraints = false
         $0.isLayoutMarginsRelativeArrangement = true
         $0.distribution = .fillProportionally
-        $0.layoutMargins = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
         return $0
     }(UIStackView())
 
@@ -19,14 +18,25 @@ public final class SegmentedCell: FormCell {
 
         selectionStyle = .none
 
-        addSubview(stackView)
+        translatesAutoresizingMaskIntoConstraints = false
+        preservesSuperviewLayoutMargins = true
+        contentView.preservesSuperviewLayoutMargins = true
+        contentView.addSubview(stackView)
 
         NSLayoutConstraint.activate([
-            stackView.topAnchor.constraint(equalTo: topAnchor),
-            stackView.leftAnchor.constraint(equalTo: leftAnchor),
-            stackView.bottomAnchor.constraint(equalTo: bottomAnchor),
-            stackView.rightAnchor.constraint(equalTo: rightAnchor),
+            stackView.leftAnchor.constraint(equalTo: contentView.layoutMarginsGuide.leftAnchor),
+            stackView.rightAnchor.constraint(equalTo: contentView.layoutMarginsGuide.rightAnchor),
+            stackView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+            contentView.heightAnchor.constraint(greaterThanOrEqualToConstant: 44.0)
         ])
+
+        let lowerPriorityConstraints = [
+            stackView.topAnchor.constraint(greaterThanOrEqualTo: contentView.topAnchor),
+            stackView.bottomAnchor.constraint(greaterThanOrEqualTo: contentView.bottomAnchor)
+        ]
+
+        lowerPriorityConstraints.forEach { $0.priority = UILayoutPriorityDefaultLow }
+        NSLayoutConstraint.activate(lowerPriorityConstraints)
     }
 
     @available(*, unavailable)
@@ -64,7 +74,6 @@ public final class SegmentedCell: FormCell {
 
         return viewModel.options.enumerated().map { index, option in
             let button = SegmentedCellButton(disabledColor: viewModel.visualDependencies.styles.appColors.disabledColor)
-
             viewModel.visualDependencies.styles.segmentedCellButton.apply(to: button)
             button.imageEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 4)
             button.titleEdgeInsets = UIEdgeInsets(top: 0, left: 4, bottom: 0, right: 0)
