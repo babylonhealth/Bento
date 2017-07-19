@@ -115,7 +115,7 @@ private class SegmentedCellButton: UIButton {
         get { return super.isSelected }
         set {
             super.isSelected = newValue
-            imageView?.tintColor = newValue ? tintColor : disabledColor
+            tintColor = newValue ? nil : disabledColor
         }
     }
 
@@ -124,6 +124,7 @@ private class SegmentedCellButton: UIButton {
         super.init(frame: .zero)
         setTitleColor(disabledColor, for: .normal)
         setTitleColor(tintColor, for: .selected)
+        imageView?.tintColor = nil
     }
     
     required init?(coder aDecoder: NSCoder) {
