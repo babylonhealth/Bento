@@ -29,10 +29,3 @@ public final class SegmentedCellViewModel {
         self.visualDependencies = visualDependencies
     }
 }
-
-extension SegmentedCellViewModel.Option: Equatable {
-
-    public static func ==(lhs: SegmentedCellViewModel.Option, rhs: SegmentedCellViewModel.Option) -> Bool {
-        return lhs.title == rhs.title && lhs.icon == rhs.icon
-    }
-}
