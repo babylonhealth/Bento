@@ -63,7 +63,7 @@ public final class SegmentedCell: FormCell {
             .take(until: reactive.prepareForReuse)
 
         return viewModel.options.enumerated().map { index, option in
-            let button = SegmentedCellButton()
+            let button = SegmentedCellButton(disabledColor: viewModel.visualDependencies.styles.appColors.disabledColor)
 
             viewModel.visualDependencies.styles.segmentedCellButton.apply(to: button)
             button.imageEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 4)
@@ -91,7 +91,7 @@ public final class SegmentedCell: FormCell {
         let separator = UIView()
         separator.translatesAutoresizingMaskIntoConstraints = false
         separator.widthAnchor.constraint(equalToConstant: 1.0).isActive = true
-        separator.backgroundColor = Colors.hintGrey
+        separator.backgroundColor = viewModel.visualDependencies.styles.appColors.disabledColor
         return separator
     }
 }
@@ -99,19 +99,29 @@ public final class SegmentedCell: FormCell {
 extension SegmentedCell: ReusableCell {}
 
 private class SegmentedCellButton: UIButton {
-    init() {
-        super.init(frame: .zero)
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-    }
+    private let disabledColor: UIColor
 
     override var isSelected: Bool {
         get { return super.isSelected }
         set {
             super.isSelected = newValue
-            imageView?.tintColor = titleColor(for: newValue ? .selected : .normal)
+            imageView?.tintColor = newValue ? tintColor : disabledColor
         }
+    }
+
+    init(disabledColor: UIColor) {
+        self.disabledColor = disabledColor
+        super.init(frame: .zero)
+        setTitleColor(disabledColor, for: .normal)
+        setTitleColor(tintColor, for: .selected)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError()
+    }
+
+    override func tintColorDidChange() {
+        super.tintColorDidChange()
+        setTitleColor(tintColor, for: .selected)
     }
 }
