@@ -101,7 +101,7 @@ public final class SegmentedCell: FormCell {
         let separator = UIView()
         separator.translatesAutoresizingMaskIntoConstraints = false
         separator.widthAnchor.constraint(equalToConstant: 1.0).isActive = true
-        separator.backgroundColor = viewModel.visualDependencies.styles.appColors.disabledColor
+        separator.backgroundColor = viewModel.visualDependencies.styles.appColors.formSeparatorColor
         return separator
     }
 }
