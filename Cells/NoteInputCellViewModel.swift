@@ -45,7 +45,6 @@ public final class NoteInputCellViewModel: FocusableFormComponent {
     }
 
     func applyStyle(to button: UIButton) {
-        button.tintColor = .clear
         button.setImage(visualDependencies.styles.formIcons.cameraImage, for: .normal)
     }
 
