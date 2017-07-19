@@ -22,7 +22,7 @@ final class ActionInputCell: FormCell {
         viewModel.applyInputStyle(to: subtitleView)
         iconView.image = viewModel.icon
         accessoryType = viewModel.accessory
-        selectionStyle = self.viewModel.selectionStyle
+        selectionStyle = viewModel.selectionStyle
 
         reactive.isUserInteractionEnabled <~ viewModel.isSelected.isEnabled.and(isFormEnabled).producer
 
