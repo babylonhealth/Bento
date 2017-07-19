@@ -98,10 +98,6 @@ public final class FormTableViewDataSource: NSObject, UITableViewDataSource {
             let cell: ActionInputCell = configure(tableView.dequeueReusableCell(for:), for: indexPath)
             cell.setup(viewModel: viewModel)
             return cell
-        case .actionIconInput(let viewModel):
-            let cell: ActionIconInputCell = configure(tableView.dequeueReusableCell(for:), for: indexPath)
-            cell.setup(viewModel: viewModel)
-            return cell
         case .actionDescription(let viewModel):
             let cell: ActionDescriptionCell = configure(tableView.dequeueReusableCell(for:), for: indexPath)
             cell.setup(viewModel: viewModel)
@@ -138,7 +134,6 @@ public final class FormTableViewDataSource: NSObject, UITableViewDataSource {
         tableView.register(DescriptionCell.self)
         tableView.register(ActionCell.self)
         tableView.register(ActionInputCell.self)
-        tableView.register(ActionIconInputCell.self)
         tableView.register(ActionDescriptionCell.self)
         tableView.register(FacebookCell.self)
         tableView.register(ToggleCell.self)

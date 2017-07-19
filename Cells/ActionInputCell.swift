@@ -7,9 +7,10 @@ final class ActionInputCell: FormCell {
 
     private var viewModel: ActionInputCellViewModel!
 
-    @IBOutlet weak var title: UILabel!
-    @IBOutlet weak var input: UILabel!
-    @IBOutlet weak var inputTrailing: NSLayoutConstraint!
+    @IBOutlet weak var titleView: UILabel!
+    @IBOutlet weak var subtitleView: UILabel!
+    @IBOutlet weak var iconView: UIImageView!
+    @IBOutlet var titleViewAlignment: NSLayoutConstraint!
 
     override var canBecomeFirstResponder: Bool {
         return true
@@ -17,30 +18,47 @@ final class ActionInputCell: FormCell {
 
     func setup(viewModel: ActionInputCellViewModel) {
         self.viewModel = viewModel
-        self.selectionStyle = self.viewModel.selectionStyle
-        viewModel.applyTitleStyle(to: title)
-        viewModel.applyInputStyle(to: input)
-        title.text = viewModel.title
+        viewModel.applyTitleStyle(to: titleView)
+        viewModel.applyInputStyle(to: subtitleView)
+        iconView.image = viewModel.icon
         accessoryType = viewModel.accessory
-        inputTrailing.constant = accessoryType == .none ? 16 : 0
+        selectionStyle = viewModel.selectionStyle
 
         reactive.isUserInteractionEnabled <~ viewModel.isSelected.isEnabled.and(isFormEnabled).producer
+
+        titleView.reactive.text <~ viewModel.title.producer
             .take(until: reactive.prepareForReuse)
 
-        input.reactive.text <~ viewModel.input.producer
-            .take(until: reactive.prepareForReuse)
+        if let input = viewModel.input {
+            subtitleView.isHidden = false
+            subtitleView.reactive.text <~ input.producer
+                .take(until: reactive.prepareForReuse)
+        } else {
+            subtitleView.isHidden = true
+        }
 
-        isUserInteractionEnabled = true
+        if let icon = viewModel.icon {
+            iconView.isHidden = false
+            iconView.image = icon
+        } else {
+            iconView.isHidden = true
+        }
+
+        switch viewModel.inputTextAlignment {
+        case .left, .center:
+            titleViewAlignment.isActive = true
+
+        case .right:
+            titleViewAlignment.isActive = false
+        }
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
         if selected {
-            // Steal the first responder to dismiss the active input view.
             becomeFirstResponder()
             resignFirstResponder()
-
             viewModel.isSelected.apply().start()
         }
     }
