@@ -20,6 +20,9 @@ public final class SegmentedCellViewModel {
     let selection: MutableProperty<Int>
 
     public init(options: [Option], selection: MutableProperty<Int>, isEnabled: Property<Bool>? = nil, visualDependencies: VisualDependenciesProtocol) {
+        precondition(!options.isEmpty)
+        precondition(options.indices.contains(selection.value))
+
         self.options = options
         self.selection = selection
         self.isEnabled = isEnabled ?? Property(value: true)
