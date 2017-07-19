@@ -51,22 +51,18 @@ public final class SegmentedCell: FormCell {
             view.removeFromSuperview()
         }
 
-        var first: UIButton?
+        let buttons = generateButtons()
 
-        generateButtons()
+        let constraints = buttons
+            .dropFirst()
+            .map { $0.widthAnchor.constraint(equalTo: buttons[0].widthAnchor) }
+
+        buttons
             .map { [$0] }
             .joined(separator: [generateSeparator()])
-            .forEach { view in
-                stackView.addArrangedSubview(view)
+            .forEach(stackView.addArrangedSubview)
 
-                if let button = view as? UIButton {
-                    if let first = first {
-                        button.widthAnchor.constraint(equalTo: first.widthAnchor).isActive = true
-                    } else {
-                        first = button
-                    }
-                }
-            }
+        NSLayoutConstraint.activate(constraints)
     }
 
     private func generateButtons() -> [UIButton] {
@@ -86,11 +82,9 @@ public final class SegmentedCell: FormCell {
             button.reactive.isSelected <~ viewModel.selection.map { $0 == index }.producer
                 .take(until: reactive.prepareForReuse)
 
-            button.reactive.controlEvents(.primaryActionTriggered)
+            viewModel.selection <~ button.reactive.controlEvents(.primaryActionTriggered)
                 .take(until: reactive.prepareForReuse)
-                .observeValues { [selection = viewModel.selection] _ in
-                    selection.value = index
-                }
+                .map { _ in index }
 
             button.reactive.isEnabled <~ isEnabled
             return button
@@ -112,10 +106,8 @@ private class SegmentedCellButton: UIButton {
     private let disabledColor: UIColor
 
     override var isSelected: Bool {
-        get { return super.isSelected }
-        set {
-            super.isSelected = newValue
-            tintColor = newValue ? nil : disabledColor
+        didSet {
+            tintColor = isSelected ? nil : disabledColor
         }
     }
 
