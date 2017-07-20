@@ -12,6 +12,7 @@ final class ActionCell: FormCell {
     @IBOutlet var heightConstraint: NSLayoutConstraint!
 
     var viewModel: ActionCellViewModel!
+    private var isWaitingForCompletion: Bool = false
 
     override var canBecomeFirstResponder: Bool {
         return true
@@ -21,7 +22,6 @@ final class ActionCell: FormCell {
         self.viewModel = viewModel
 
         selectionStyle = spec.selectionStyle
-        spec.buttonStyle.apply(to: button)
         button.setTitle(spec.title, for: .normal)
         
         heightConstraint.isActive = !spec.hasDynamicHeight
@@ -33,11 +33,29 @@ final class ActionCell: FormCell {
                 self?.becomeFirstResponder()
                 self?.resignFirstResponder()
 
-                viewModel.action.apply(()).start()
+                self?.isWaitingForCompletion = true
+                viewModel.action.apply(()).start { event in
+                    if event.isTerminating {
+                        self?.isWaitingForCompletion = false
+                    }
+                }
             }
 
         button.reactive.isEnabled <~ viewModel.action.isEnabled.and(isFormEnabled).producer
             .take(until: reactive.prepareForReuse)
+            .observe(on: UIScheduler())
+            .injectSideEffect { [weak self] isEnabled in
+                guard let strongSelf = self, !strongSelf.isWaitingForCompletion
+                    else { return }
+
+                UIView.animate(withDuration: 0.25) {
+                    if isEnabled {
+                        spec.buttonStyle.apply(to: strongSelf.button)
+                    } else {
+                        spec.disabledButtonStyle?.apply(to: strongSelf.button)
+                    }
+                }
+            }
 
         button.reactive.isLoading <~ viewModel.isLoading?.producer
             .take(until: reactive.prepareForReuse)
