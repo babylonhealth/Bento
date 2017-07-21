@@ -5,11 +5,11 @@ public final class SegmentedCellViewModel {
 
     public struct Option {
         let title: String
-        let imageName: String
+        let icon: UIImage
 
-        public init(title: String, imageName: String) {
+        public init(title: String, icon: UIImage) {
             self.title = title
-            self.imageName = imageName
+            self.icon = icon
         }
     }
 
@@ -17,31 +17,15 @@ public final class SegmentedCellViewModel {
 
     let options: [Option]
     let isEnabled: Property<Bool>
-    let selectedIndex: Property<Int>
-    let selection: Action<Int, Void, NoError>
+    let selection: MutableProperty<Int>
 
-    public init(options: [Option], isEnabled: Property<Bool> = Property(value: true), selectedIndex: Int = 0, visualDependencies: VisualDependenciesProtocol) {
-        precondition(options.isEmpty == false)
-        precondition(options.indices.contains(selectedIndex))
+    public init(options: [Option], selection: MutableProperty<Int>, isEnabled: Property<Bool>? = nil, visualDependencies: VisualDependenciesProtocol) {
+        precondition(!options.isEmpty)
+        precondition(options.indices.contains(selection.value))
 
         self.options = options
-        self.isEnabled = isEnabled
+        self.selection = selection
+        self.isEnabled = isEnabled ?? Property(value: true)
         self.visualDependencies = visualDependencies
-
-        let selectedIndex = MutableProperty(selectedIndex)
-
-        self.selectedIndex = Property(capturing: selectedIndex)
-
-        self.selection = Action { index in
-            selectedIndex.swap(index)
-            return .empty
-        }
-    }
-}
-
-extension SegmentedCellViewModel.Option: Equatable {
-
-    public static func ==(lhs: SegmentedCellViewModel.Option, rhs: SegmentedCellViewModel.Option) -> Bool {
-        return lhs.title == rhs.title && lhs.imageName == rhs.imageName
     }
 }
