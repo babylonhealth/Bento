@@ -13,7 +13,7 @@ public enum FormComponent {
     case actionDescription(ActionDescriptionCellViewModel)
     case toggle(ToggleCellViewModel)
     case segmentedInput(SegmentedCellViewModel)
-    case selection(SelectionCellViewModel, group: SelectionCellGroup, spec: SelectionCellViewSpec)
+    case selection(SelectionCellViewModel, group: SelectionCellGroupViewModel, spec: SelectionCellViewSpec)
     case noteInput(NoteInputCellViewModel)
     case image(ImageCellViewModel)
 
