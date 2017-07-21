@@ -110,6 +110,14 @@ public final class FormTableViewDataSource: NSObject, UITableViewDataSource {
             let cell: SegmentedCell = configure(tableView.dequeueReusableCell(for:), for: indexPath)
             cell.setup(viewModel: viewModel)
             return cell
+        case let .textOptionsInput(viewModel, viewSpec):
+            let cell: TextOptionsCell = configure(tableView.dequeueReusableCell(for:), for: indexPath)
+            cell.setup(viewModel: viewModel, viewSpec: viewSpec)
+            return cell
+        case let .imageOptionsInput(viewModel, viewSpec):
+            let cell: ImageOptionsCell = configure(tableView.dequeueReusableCell(for:), for: indexPath)
+            cell.setup(viewModel: viewModel, viewSpec: viewSpec)
+            return cell
         case let .selection(item, group, spec):
             let cell: SelectionCell = tableView.dequeueReusableCell(for: indexPath)
             cell.configure(for: item, in: group, spec: spec)
@@ -140,6 +148,8 @@ public final class FormTableViewDataSource: NSObject, UITableViewDataSource {
         tableView.register(SegmentedCell.self)
         tableView.register(SelectionCell.self)
         tableView.register(NoteInputCell.self)
+        tableView.register(TextOptionsCell.self)
+        tableView.register(ImageOptionsCell.self)
         tableView.register(ImageCell.self)
 
         let dataSource = FormTableViewDataSource(configurator: configurator)

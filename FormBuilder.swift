@@ -136,6 +136,8 @@ public struct FormSectionBuilder {
         case iconSelectionField(icon: UIImage, title: String, value: Property<String>, action: Action<Void, Void, NoError>)
         case segmentedField(options: [SegmentedCellViewModel.Option], selection: MutableProperty<Int>)
         case noteField(placeholder: String, text: ValidatingProperty<String, InvalidInput>, addPhotosAction: Action<Void, Void, NoError>)
+        case textOptionsField(items: Property<[String]>, selectionAction: Action<Void, Void, NoError>, destructiveAction: Action<Void, Void, NoError>, spec: TextOptionsCellViewSpec)
+        case imageOptionsField(items: Property<[UIImage]>, selectionAction: Action<Void, Void, NoError>, destructiveAction: Action<Void, Void, NoError>, spec: ImageOptionsCellViewSpec)
         case imageField(image: UIImage, imageSize: CGSize)
         case toggle(title: String, isOn: MutableProperty<Bool>)
         case custom(FormComponent)
@@ -193,6 +195,10 @@ public struct FormSectionBuilder {
                                            text: text,
                                            addPhotosAction: addPhotosAction,
                                            visualDependencies: visualDependencies))
+            case let .textOptionsField(items, selectionAction, destructiveAction, spec):
+                return .textOptionsInput(TextOptionsCellViewModel(items: items, selectionAction: selectionAction, destructiveAction: destructiveAction), spec)
+            case let .imageOptionsField(items, selectionAction, destructiveAction, spec):
+                return .imageOptionsInput(ImageOptionsCellViewModel(items: items, selectionAction: selectionAction, destructiveAction: destructiveAction), spec)
             case let .toggle(title, isOn):
                 return .toggle(
                     ToggleCellViewModel(title: title,

@@ -5,6 +5,8 @@ public enum FormComponent {
     case actionButton(ActionCellViewModel, ActionCellViewSpec)
     case facebookButton(FacebookCellViewModel)
     case description(DescriptionCellViewModel)
+    case textOptionsInput(TextOptionsCellViewModel, TextOptionsCellViewSpec)
+    case imageOptionsInput(ImageOptionsCellViewModel, ImageOptionsCellViewSpec)
     case separator(SeparatorCellViewModel)
     case space(EmptySpaceCellViewModel)
     case actionInput(ActionInputCellViewModel)
@@ -28,6 +30,10 @@ public enum FormComponent {
         case .facebookButton(let viewModel):
             return viewModel
         case .description(let viewModel):
+            return viewModel
+        case let .textOptionsInput(viewModel, _):
+            return viewModel
+        case let .imageOptionsInput(viewModel, _):
             return viewModel
         case .separator(let viewModel):
             return viewModel
@@ -67,6 +73,10 @@ extension FormComponent: Equatable {
             return lhsViewModel === rhsViewModel
         case let (.description(lhsViewModel), .description(rhsViewModel)):
             return lhsViewModel == rhsViewModel
+        case let (.textOptionsInput(lhsViewModel, _), .textOptionsInput(rhsViewModel, _)):
+            return lhsViewModel === rhsViewModel
+        case let (.imageOptionsInput(lhsViewModel, _), .imageOptionsInput(rhsViewModel, _)):
+            return lhsViewModel === rhsViewModel
         case let (.separator(lhsViewModel), .separator(rhsViewModel)):
             return lhsViewModel == rhsViewModel
         case let (.space(lhsViewModel), .space(rhsViewModel)):
