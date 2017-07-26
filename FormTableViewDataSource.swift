@@ -119,7 +119,7 @@ public final class FormTableViewDataSource: NSObject, UITableViewDataSource {
             cell.setup(viewModel: viewModel, viewSpec: viewSpec)
             return cell
         case let .selection(item, group, spec):
-            let cell: SelectionCell = tableView.dequeueReusableCell(for: indexPath)
+            let cell: SelectionCell = configure(tableView.dequeueReusableCell(for:), for: indexPath)
             cell.configure(for: item, in: group, spec: spec)
             return cell
         case .noteInput(let viewModel):
@@ -129,6 +129,10 @@ public final class FormTableViewDataSource: NSObject, UITableViewDataSource {
         case .image(let viewModel):
             let cell: ImageCell = configure(tableView.dequeueReusableCell(for:), for: indexPath)
             cell.setup(viewModel: viewModel)
+            return cell
+        case let .activityIndicator(viewModel, viewSpec):
+            let cell: ActivityIndicatorCell = configure(tableView.dequeueReusableCell(for:), for: indexPath)
+            cell.setup(viewModel: viewModel, viewSpec: viewSpec)
             return cell
         }
     }
@@ -151,6 +155,7 @@ public final class FormTableViewDataSource: NSObject, UITableViewDataSource {
         tableView.register(TextOptionsCell.self)
         tableView.register(ImageOptionsCell.self)
         tableView.register(ImageCell.self)
+        tableView.register(ActivityIndicatorCell.self)
 
         let dataSource = FormTableViewDataSource(configurator: configurator)
         tableView.dataSource = dataSource

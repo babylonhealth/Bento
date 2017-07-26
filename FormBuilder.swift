@@ -80,6 +80,7 @@ extension FormBuilder {
         case section(FormSectionBuilder)
         case primaryButton(text: String, action: Action<Void, Void, NoError>)
         case secondaryButton(text: String, hasDynamicHeight: Bool, action: Action<Void, Void, NoError>)
+        case activityIndicator(isRefreshing: Property<Bool>)
         case custom(FormComponent)
 
         public func formComponent(with visualDependencies: VisualDependenciesProtocol) -> [FormComponent] {
@@ -116,6 +117,9 @@ extension FormBuilder {
                 return [.actionButton(viewModel, spec)]
             case let .section(builder):
                 return builder.build(with: visualDependencies)
+            case let .activityIndicator(isRefreshing):
+                return [.activityIndicator(ActivityIndicatorCellViewModel(isRefreshing: isRefreshing),
+                                           ActivityIndicatorCellViewSpec(cellStyle: visualDependencies.styles.backgroundTransparentColor))]
             case let .custom(formComponent):
                 return [formComponent]
             }
