@@ -10,20 +10,33 @@ final class NoteInputCell: FormCell {
     @IBOutlet weak var textView: UITextView!
     @IBOutlet weak var addPhotosButton: UIButton!
     @IBOutlet weak var placeholder: UILabel!
+
     private var viewModel: NoteInputCellViewModel!
 
     internal weak var delegate: FocusableCellDelegate?
     internal weak var heightDelegate: DynamicHeightCellDelegate?
-    fileprivate var textViewHeight: CGFloat = 0.0
+
+    private let cellMinimumHeight: CGFloat = 43.5
+    private var contentViewHeight: NSLayoutConstraint!
+
+    @IBOutlet var textViewHeight: NSLayoutConstraint!
+    @IBOutlet var addPhotosButtonTextViewTopEdge: NSLayoutConstraint!
 
     override func awakeFromNib() {
         super.awakeFromNib()
         textView.delegate = self
+
+        contentViewHeight = contentView.heightAnchor.constraint(equalToConstant: cellMinimumHeight)
+        contentViewHeight.priority = UILayoutPriorityRequired - 1
+        contentViewHeight.isActive = true
+
+        updateContentViewHeight()
     }
 
     func setup(viewModel: NoteInputCellViewModel) {
         self.viewModel = viewModel
         placeholder.text = viewModel.placeholder
+        textView.text = ""
 
         let isEnabled = viewModel.isEnabled.and(isFormEnabled)
         isEnabled.producer
@@ -50,8 +63,17 @@ final class NoteInputCell: FormCell {
             .filterMap { isEnabled.value ? $0 : nil }
             .take(until: reactive.prepareForReuse)
 
-        textView.reactive.text <~ viewModel.text.producer
+        viewModel.text.producer
             .take(until: reactive.prepareForReuse)
+            .observe(on: UIScheduler())
+            .startWithValues { [weak self] value in
+                guard let strongSelf = self else { return }
+                if !strongSelf.textView.isFirstResponder {
+                    strongSelf.textView.text = value
+                    // Update the text view as if the user has made changes to it.
+                    strongSelf.textViewDidChange(strongSelf.textView)
+                }
+            }
 
         addPhotosButton.reactive.pressed = CocoaAction(viewModel.addPhotosAction)
 
@@ -63,9 +85,38 @@ final class NoteInputCell: FormCell {
         self.selectionStyle = viewModel.selectionStyle
     }
 
+    override func layoutMarginsDidChange() {
+        super.layoutMarginsDidChange()
+        updateContentViewHeight()
+    }
+
     override func layoutSubviews() {
+        updateContentViewHeight()
         super.layoutSubviews()
-        textViewHeight = textView.intrinsicContentSize.height
+    }
+
+    fileprivate func updateContentViewHeight() {
+        let intrinsicContentSize = textView.intrinsicContentSize
+
+        if intrinsicContentSize.height != textViewHeight.constant {
+            // Offset the content height so that when its text view grows beyond the
+            // minimum height, an illusion of the text view staying in place would be
+            // maintained.
+            let minimumTextViewHeight = ("" as NSString).size(attributes: [NSFontAttributeName: textView.font!]).height
+            let minimumContentHeight = max(cellMinimumHeight - layoutMargins.top - layoutMargins.bottom, minimumTextViewHeight)
+            let inset = max(minimumContentHeight - minimumTextViewHeight, 0.0)
+
+            addPhotosButtonTextViewTopEdge.constant = minimumTextViewHeight / 2.0 - addPhotosButton.frame.height / 2.0
+
+            // When the system-wide content size category has changed, and the app resumes
+            // to the foreground, the UITextView refuses to resize itself regardless of
+            // tons of means being attempted. So now its height is maintained explicitly.
+            textViewHeight.constant = intrinsicContentSize.height
+            contentViewHeight.constant = max(cellMinimumHeight, inset + intrinsicContentSize.height + layoutMargins.top + layoutMargins.bottom)
+
+            let delta = textView.bounds.height - intrinsicContentSize.height
+            heightDelegate?.dynamicHeightCellHeightDidChange(delta: delta)
+        }
     }
 }
 
@@ -78,11 +129,7 @@ extension NoteInputCell: FocusableCell {
 extension NoteInputCell: DynamicHeightCell, UITextViewDelegate {
     func textViewDidChange(_ textView: UITextView) {
         placeholder.isHidden = textView.text != nil ? !textView.text.isEmpty : false
-
-        if textView.intrinsicContentSize.height != textViewHeight {
-            let delta = textView.intrinsicContentSize.height - textViewHeight
-            heightDelegate?.dynamicHeightCellHeightDidChange(delta: delta)
-        }
+        updateContentViewHeight()
     }
 }
 
