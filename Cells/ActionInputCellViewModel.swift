@@ -2,8 +2,14 @@ import ReactiveSwift
 import Result
 
 public final class ActionInputCellViewModel {
+    public enum IconStyle {
+        case miniature
+        case largeRoundAvatar
+    }
+
     private let visualDependencies: VisualDependenciesProtocol
     let icon: UIImage?
+    let iconStyle: IconStyle
     let title: Property<String>
     let input: Property<String>?
     let inputTextAlignment: TextAlignment
@@ -13,6 +19,7 @@ public final class ActionInputCellViewModel {
 
     public init(visualDependencies: VisualDependenciesProtocol,
                 icon: UIImage? = nil,
+                iconStyle: IconStyle = .miniature,
                 title: Property<String>,
                 input: Property<String>? = nil,
                 inputTextAlignment: TextAlignment = .left,
@@ -20,6 +27,7 @@ public final class ActionInputCellViewModel {
                 accessory: UITableViewCellAccessoryType = .disclosureIndicator) {
         self.visualDependencies = visualDependencies
         self.icon = icon
+        self.iconStyle = iconStyle
         self.title = title
         self.inputTextAlignment = inputTextAlignment
         self.input = input

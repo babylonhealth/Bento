@@ -4,13 +4,16 @@ import ReactiveSwift
 extension ActionInputCell: NibLoadableCell {}
 
 final class ActionInputCell: FormCell {
-
     private var viewModel: ActionInputCellViewModel!
 
-    @IBOutlet weak var titleView: UILabel!
-    @IBOutlet weak var subtitleView: UILabel!
+    @IBOutlet var miniatureIconWidthConstraint: NSLayoutConstraint!
+    @IBOutlet var largeRoundAvatarWidthConstraint: NSLayoutConstraint!
+    @IBOutlet var largeRoundAvatarVerticalMarginConstraints: [NSLayoutConstraint]!
+
+    @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var subtitleLabel: UILabel!
     @IBOutlet weak var iconView: UIImageView!
-    @IBOutlet var titleViewAlignment: NSLayoutConstraint!
+    @IBOutlet var titleLabelMinWidthConstraint: NSLayoutConstraint!
 
     override var canBecomeFirstResponder: Bool {
         return true
@@ -18,23 +21,23 @@ final class ActionInputCell: FormCell {
 
     func setup(viewModel: ActionInputCellViewModel) {
         self.viewModel = viewModel
-        viewModel.applyTitleStyle(to: titleView)
-        viewModel.applyInputStyle(to: subtitleView)
+        viewModel.applyTitleStyle(to: titleLabel)
+        viewModel.applyInputStyle(to: subtitleLabel)
         iconView.image = viewModel.icon
         accessoryType = viewModel.accessory
         selectionStyle = viewModel.selectionStyle
 
         reactive.isUserInteractionEnabled <~ viewModel.isSelected.isEnabled.and(isFormEnabled).producer
 
-        titleView.reactive.text <~ viewModel.title.producer
+        titleLabel.reactive.text <~ viewModel.title.producer
             .take(until: reactive.prepareForReuse)
 
         if let input = viewModel.input {
-            subtitleView.isHidden = false
-            subtitleView.reactive.text <~ input.producer
+            subtitleLabel.isHidden = false
+            subtitleLabel.reactive.text <~ input.producer
                 .take(until: reactive.prepareForReuse)
         } else {
-            subtitleView.isHidden = true
+            subtitleLabel.isHidden = true
         }
 
         if let icon = viewModel.icon {
@@ -46,10 +49,22 @@ final class ActionInputCell: FormCell {
 
         switch viewModel.inputTextAlignment {
         case .left, .center:
-            titleViewAlignment.isActive = true
-
+            titleLabelMinWidthConstraint.isActive = true
         case .right:
-            titleViewAlignment.isActive = false
+            titleLabelMinWidthConstraint.isActive = false
+        }
+
+        switch viewModel.iconStyle {
+        case .miniature:
+            largeRoundAvatarWidthConstraint.isActive = false
+            NSLayoutConstraint.deactivate(largeRoundAvatarVerticalMarginConstraints)
+            miniatureIconWidthConstraint.isActive = true
+            iconView.layer.cornerRadius = 0.0
+        case .largeRoundAvatar:
+            miniatureIconWidthConstraint.isActive = false
+            largeRoundAvatarWidthConstraint.isActive = true
+            NSLayoutConstraint.activate(largeRoundAvatarVerticalMarginConstraints)
+            iconView.layer.cornerRadius = largeRoundAvatarWidthConstraint.constant / 2.0
         }
     }
 
