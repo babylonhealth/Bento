@@ -1,48 +1,50 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12118" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12121" systemVersion="16G29" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12086"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="TitledTextInputCell" rowHeight="44" id="SWY-5H-n7C" customClass="TitledTextInputCell" customModule="Babylon" customModuleProvider="target">
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="TitledTextInputCell" rowHeight="44" id="SWY-5H-n7C" customClass="TitledTextInputCell" customModule="BabylonUI" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
             <autoresizingMask key="autoresizingMask"/>
-            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="SWY-5H-n7C" id="rma-CG-kG2">
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" tableViewCell="SWY-5H-n7C" id="rma-CG-kG2">
                 <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JLU-SY-Ann" userLabel="Title">
-                        <rect key="frame" x="16" y="14.5" width="125" height="15"/>
-                        <constraints>
-                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="125" id="ela-D4-MBT"/>
-                        </constraints>
-                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                        <nil key="textColor"/>
-                        <nil key="highlightedColor"/>
-                    </label>
-                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" adjustsFontSizeToFit="NO" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="BSg-dK-l5k">
-                        <rect key="frame" x="151" y="14.5" width="208" height="15"/>
-                        <nil key="textColor"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                        <textInputTraits key="textInputTraits" returnKeyType="done"/>
-                    </textField>
+                    <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="l8b-XZ-uGk">
+                        <rect key="frame" x="15" y="11" width="345" height="22"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JLU-SY-Ann" userLabel="Title">
+                                <rect key="frame" x="0.0" y="0.0" width="125" height="22"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="125" id="ela-D4-MBT"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Placeholder" textAlignment="natural" adjustsFontSizeToFit="NO" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="BSg-dK-l5k">
+                                <rect key="frame" x="125" y="0.0" width="220" height="22"/>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <textInputTraits key="textInputTraits" returnKeyType="done"/>
+                            </textField>
+                        </subviews>
+                    </stackView>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="JLU-SY-Ann" firstAttribute="leading" secondItem="rma-CG-kG2" secondAttribute="leadingMargin" constant="16" id="9VS-3X-0MH"/>
-                    <constraint firstItem="BSg-dK-l5k" firstAttribute="leading" secondItem="JLU-SY-Ann" secondAttribute="trailing" constant="10" id="FEo-RN-Yip"/>
-                    <constraint firstItem="BSg-dK-l5k" firstAttribute="top" secondItem="rma-CG-kG2" secondAttribute="topMargin" constant="14" id="T04-wo-XUZ"/>
-                    <constraint firstAttribute="bottomMargin" secondItem="JLU-SY-Ann" secondAttribute="bottom" constant="14" id="Yhk-0v-0xd"/>
-                    <constraint firstAttribute="bottomMargin" secondItem="BSg-dK-l5k" secondAttribute="bottom" constant="14" id="Zhq-Zh-qLd"/>
-                    <constraint firstAttribute="trailing" secondItem="BSg-dK-l5k" secondAttribute="trailing" constant="16" id="bch-Kh-EgY"/>
-                    <constraint firstItem="JLU-SY-Ann" firstAttribute="top" secondItem="rma-CG-kG2" secondAttribute="topMargin" constant="14" id="u9r-Rh-zgz"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="l8b-XZ-uGk" secondAttribute="trailing" id="2JA-OP-YZd"/>
+                    <constraint firstAttribute="leadingMargin" secondItem="l8b-XZ-uGk" secondAttribute="leading" id="DQe-9X-Cca"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="l8b-XZ-uGk" secondAttribute="bottom" id="Hdr-ST-xpT"/>
+                    <constraint firstAttribute="topMargin" secondItem="l8b-XZ-uGk" secondAttribute="top" id="hev-WH-GbY"/>
                 </constraints>
                 <edgeInsets key="layoutMargins" top="0.0" left="0.0" bottom="0.0" right="0.0"/>
             </tableViewCellContentView>
