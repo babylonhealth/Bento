@@ -7,7 +7,6 @@ import BabylonFoundation
 extension FacebookCell: NibLoadableCell {}
 
 final class FacebookCell: FormCell {
-
     @IBOutlet weak var button: LoadingButton!
 
     var viewModel: FacebookCellViewModel!

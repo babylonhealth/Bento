@@ -31,17 +31,47 @@ import ReactiveSwift
 import Dwifft
 
 public protocol FormCellConfigurator: class {
-    func configure<Cell: UITableViewCell>(_ cell: Cell)
+    func configure<Cell: FormCell>(_ cell: Cell)
+    func updateSeparatorsOfVisibleCells()
 }
 
 public final class FormTableViewDataSource: NSObject, UITableViewDataSource {
-    internal private(set) var components: [FormComponent]
+    private var components: [FormComponent]
+    private weak var tableView: UITableView?
     private weak var configurator: FormCellConfigurator?
 
-    private init(configurator: FormCellConfigurator?) {
+    public var indexOfPreferredRowForInitialFocus: Int? {
+        if let startIndex = components.index(where: { $0.viewModel is FocusableFormComponent }) {
+            let slice = components[startIndex ..< components.endIndex]
+            guard let preferred = slice.index(where: { ($0.viewModel as? FocusableFormComponent)?.isPreferredForFocusing ?? false }) else {
+                return startIndex
+            }
+            return preferred
+        }
+        return nil
+    }
+
+    public init(for tableView: UITableView) {
         self.components = []
-        self.configurator = configurator
+        self.tableView = tableView
         super.init()
+    }
+
+    /// Whether the form has adjacent section defining cells starting from the given index.
+    ///
+    /// If the given index points to the last cell, `hasAdjacentSectionDefiningCells(at:)`
+    /// would behave as if a section defining cell is ordered after it.
+    ///
+    /// - parameters:
+    ///   - row: The cell index.
+    ///
+    /// - returns: `true` if there are adjacent section defining cells starting from
+    ///            `row`. `false` otherwise.
+    public func hasAdjacentSectionDefiningCells(at row: Int) -> Bool {
+        guard row < components.count - 1 else {
+            return components[row].definesSection
+        }
+        return components[row].definesSection && components[row + 1].definesSection
     }
 
     public func numberOfSections(in tableView: UITableView) -> Int {
@@ -52,7 +82,7 @@ public final class FormTableViewDataSource: NSObject, UITableViewDataSource {
         return components.count
     }
 
-    private func configure<Cell: UITableViewCell>(_ dequeue: (IndexPath) -> Cell, for indexPath: IndexPath) -> Cell {
+    private func configure<Cell: FormCell>(_ dequeue: (IndexPath) -> Cell, for indexPath: IndexPath) -> Cell {
         let cell = dequeue(indexPath)
         configurator?.configure(cell)
         return cell
@@ -72,10 +102,6 @@ public final class FormTableViewDataSource: NSObject, UITableViewDataSource {
             return cell
         case .phoneTextInput(let viewModel):
             let cell: PhoneInputCell = configure(tableView.dequeueReusableCell(for:), for: indexPath)
-            cell.setup(viewModel: viewModel)
-            return cell
-        case .separator(let viewModel):
-            let cell: SeparatorCell = configure(tableView.dequeueReusableCell(for:), for: indexPath)
             cell.setup(viewModel: viewModel)
             return cell
         case .space(let viewModel):
@@ -137,11 +163,13 @@ public final class FormTableViewDataSource: NSObject, UITableViewDataSource {
         }
     }
 
-    public static func bind(_ tableView: UITableView, to components: Property<[FormComponent]>, configurator: FormCellConfigurator? = nil) -> FormTableViewDataSource {
+    public func bind(to components: Property<[FormComponent]>, configurator: FormCellConfigurator?) {
+        guard let tableView = self.tableView else { return }
+        self.configurator = configurator
+
         tableView.register(TextInputCell.self)
         tableView.register(TitledTextInputCell.self)
         tableView.register(PhoneInputCell.self)
-        tableView.register(SeparatorCell.self)
         tableView.register(EmptySpaceCell.self)
         tableView.register(DescriptionCell.self)
         tableView.register(ActionCell.self)
@@ -157,8 +185,7 @@ public final class FormTableViewDataSource: NSObject, UITableViewDataSource {
         tableView.register(ImageCell.self)
         tableView.register(ActivityIndicatorCell.self)
 
-        let dataSource = FormTableViewDataSource(configurator: configurator)
-        tableView.dataSource = dataSource
+        tableView.dataSource = self
 
         // Reset the table view internal state.
         tableView.reloadData()
@@ -167,15 +194,14 @@ public final class FormTableViewDataSource: NSObject, UITableViewDataSource {
             .combinePrevious([])
             .take(duringLifetimeOf: tableView)
             .observe(on: UIScheduler())
-            .startWithValues { [weak tableView] previous, current in
-                guard let tableView = tableView else { return }
-                dataSource.components = current
+            .startWithValues { previous, current in
+                guard let tableView = self.tableView else { return }
+                self.components = current
 
                 // Dismiss any first responder to avoid view corruption.
                 tableView.endEditing(true)
 
                 tableView.beginUpdates()
-                defer { tableView.endUpdates() }
 
                 for step in Dwifft.diff(previous, current) {
                     switch step {
@@ -186,8 +212,9 @@ public final class FormTableViewDataSource: NSObject, UITableViewDataSource {
                         tableView.deleteRows(at: [IndexPath(row: index, section: 0)], with: .fade)
                     }
                 }
-            }
 
-        return dataSource
+                tableView.endUpdates()
+                self.configurator?.updateSeparatorsOfVisibleCells()
+            }
     }
 }

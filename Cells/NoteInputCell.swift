@@ -6,7 +6,6 @@ import Result
 extension NoteInputCell: NibLoadableCell {}
 
 final class NoteInputCell: FormCell {
-
     @IBOutlet weak var textView: UITextView!
     @IBOutlet weak var addPhotosButton: UIButton!
     @IBOutlet weak var placeholder: UILabel!

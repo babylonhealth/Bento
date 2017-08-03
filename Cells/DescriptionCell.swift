@@ -10,8 +10,7 @@ public enum DescriptionCellType {
 
 extension DescriptionCell: NibLoadableCell {}
 
-final class DescriptionCell: UITableViewCell {
-
+final class DescriptionCell: FormCell {
     @IBOutlet weak var descriptionLabel: UILabel!
 
     var viewModel: DescriptionCellViewModel!

@@ -7,9 +7,9 @@ open class FormViewController: UIViewController {
     public let tableView: UITableView
 
     fileprivate let form: Form
-    fileprivate var dataSource: FormTableViewDataSource!
+    fileprivate let dataSource: FormTableViewDataSource
 
-    private let visualDependencies: VisualDependenciesProtocol
+    fileprivate let visualDependencies: VisualDependenciesProtocol
     private var keyboardChangeDisposable: Disposable?
 
     public init<F: Form>(form: F, visualDependencies: VisualDependenciesProtocol) {
@@ -22,10 +22,12 @@ open class FormViewController: UIViewController {
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 44
 
-        super.init(nibName: nil, bundle: nil)
+        dataSource = FormTableViewDataSource(for: tableView)
 
+        super.init(nibName: nil, bundle: nil)
         tableView.delegate = self
-        dataSource = FormTableViewDataSource.bind(tableView, to: form.components, configurator: self)
+
+        dataSource.bind(to: form.components, configurator: self)
     }
 
     @available(*, unavailable)
@@ -95,18 +97,7 @@ open class FormViewController: UIViewController {
     ///
     /// - warning: `focus(animated:)` should not be called in `viewWillAppear(_:)`.
     public func focus(animated: Bool = true) {
-        var indexOfPreferredRow: Int? {
-            if let startIndex = dataSource.components.index(where: { $0.viewModel is FocusableFormComponent }) {
-                let slice = dataSource.components[startIndex ..< dataSource.components.endIndex]
-                guard let preferred = slice.index(where: { ($0.viewModel as? FocusableFormComponent)?.isPreferredForFocusing ?? false }) else {
-                    return startIndex
-                }
-                return preferred
-            }
-            return nil
-        }
-
-        if let row = indexOfPreferredRow {
+        if let row = dataSource.indexOfPreferredRowForInitialFocus {
             CATransaction.begin()
 
             tableView.scrollToRow(at: IndexPath(row: row, section: 0), at: .top, animated: animated)
@@ -123,10 +114,28 @@ open class FormViewController: UIViewController {
 }
 
 extension FormViewController: FormCellConfigurator {
-    public func configure<Cell : UITableViewCell>(_ cell: Cell) {
-        (cell as? FormCell)?.configure(form.submiting.negate())
+    public func configure<Cell : FormCell>(_ cell: Cell) {
+        cell.configure(form.submiting.negate(), visualDependencies.styles.appColors.formSeparatorColor)
         (cell as? FocusableCell)?.delegate = self
         (cell as? DynamicHeightCell)?.heightDelegate = self
+    }
+
+    public func updateSeparatorsOfVisibleCells() {
+        // This method complements `willDisplayCell`, which is not called on untouched
+        // rows during a form layout update. Since the adjacent cells of these untouched
+        // rows may require a change in separator visibility, we perform a pass on all
+        // visible cells.
+
+        if let indexPaths = tableView.indexPathsForVisibleRows {
+            for indexPath in indexPaths {
+                guard let cell = tableView.cellForRow(at: indexPath) else {
+                    continue
+                }
+
+                let formCell = unsafeDowncast(cell, to: FormCell.self)
+                formCell.separator.isHidden = dataSource.hasAdjacentSectionDefiningCells(at: indexPath.row)
+            }
+        }
     }
 }
 
@@ -188,5 +197,11 @@ extension FormViewController: UITableViewDelegate {
         // as in terms of logic since when the cell is being reused it will receive a call for `setSelected(_:animated:)`
         // with a true value which will wrongly lead to invocation of the action.
         tableView.deselectRow(at: indexPath, animated: true)
+    }
+
+    public func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        // See `updateSeparatorsOfVisibleCells()` for the implementation note.
+        let cell = unsafeDowncast(cell, to: FormCell.self)
+        cell.separator.isHidden = dataSource.hasAdjacentSectionDefiningCells(at: indexPath.row)
     }
 }

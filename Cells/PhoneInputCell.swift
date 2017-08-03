@@ -3,7 +3,6 @@ import ReactiveCocoa
 import UIKit
 
 class PhoneInputCell: FormCell {
-
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var countryCodeTextField: UITextField!
     @IBOutlet weak var phoneNumberTextField: UITextField!

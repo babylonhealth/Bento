@@ -7,7 +7,6 @@ import BabylonFoundation
 extension ActionCell: NibLoadableCell {}
 
 final class ActionCell: FormCell {
-
     @IBOutlet weak var button: LoadingButton!
     @IBOutlet var heightConstraint: NSLayoutConstraint!
 

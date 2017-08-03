@@ -2,8 +2,7 @@ import UIKit
 
 extension EmptySpaceCell: NibLoadableCell {}
 
-final class EmptySpaceCell: UITableViewCell {
-
+final class EmptySpaceCell: FormCell {
     var viewModel: EmptySpaceCellViewModel!
 
     @IBOutlet weak var heightConstraint: NSLayoutConstraint!

@@ -6,7 +6,6 @@ import Result
 extension TextInputCell: NibLoadableCell {}
 
 final class TextInputCell: FormCell {
-
     @IBOutlet weak var textField: UITextField!
     @IBOutlet weak var peekButton: UIButton!
     @IBOutlet weak var peekWidthConstraint: NSLayoutConstraint!

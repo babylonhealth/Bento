@@ -3,8 +3,7 @@ import TTTAttributedLabel
 
 extension ActionDescriptionCell: NibLoadableCell {}
 
-class ActionDescriptionCell: UITableViewCell {
-
+class ActionDescriptionCell: FormCell {
     fileprivate var viewModel: ActionDescriptionCellViewModel!
 
     @IBOutlet weak var title: TTTAttributedLabel!

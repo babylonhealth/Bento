@@ -7,7 +7,6 @@ public enum FormComponent {
     case description(DescriptionCellViewModel)
     case textOptionsInput(TextOptionsCellViewModel, TextOptionsCellViewSpec)
     case imageOptionsInput(ImageOptionsCellViewModel, ImageOptionsCellViewSpec)
-    case separator(SeparatorCellViewModel)
     case space(EmptySpaceCellViewModel)
     case actionInput(ActionInputCellViewModel)
     case actionDescription(ActionDescriptionCellViewModel)
@@ -17,6 +16,20 @@ public enum FormComponent {
     case noteInput(NoteInputCellViewModel)
     case image(ImageCellViewModel)
     case activityIndicator(ActivityIndicatorCellViewModel, ActivityIndicatorCellViewSpec)
+
+    /// Indicates whether the component defines a section. `FormViewController` uses
+    /// `definesSection` to determine the visibility of cell separators.
+    ///
+    /// - note: If there are multiple section-defining components in a row, no separator
+    ///         would be displayed between them.
+    var definesSection: Bool {
+        switch self {
+        case .description, .actionDescription, .space, .facebookButton, .actionButton:
+            return true
+        default:
+            return false
+        }
+    }
 
     var viewModel: Any {
         switch self {
@@ -35,8 +48,6 @@ public enum FormComponent {
         case let .textOptionsInput(viewModel, _):
             return viewModel
         case let .imageOptionsInput(viewModel, _):
-            return viewModel
-        case .separator(let viewModel):
             return viewModel
         case .space(let viewModel):
             return viewModel
@@ -80,8 +91,6 @@ extension FormComponent: Equatable {
             return lhsViewModel === rhsViewModel
         case let (.imageOptionsInput(lhsViewModel, _), .imageOptionsInput(rhsViewModel, _)):
             return lhsViewModel === rhsViewModel
-        case let (.separator(lhsViewModel), .separator(rhsViewModel)):
-            return lhsViewModel == rhsViewModel
         case let (.space(lhsViewModel), .space(rhsViewModel)):
             return lhsViewModel == rhsViewModel
         case let (.actionInput(lhsViewModel), .actionInput(rhsViewModel)):

@@ -2,7 +2,7 @@ import UIKit
 
 extension ImageCell: NibLoadableCell {}
 
-final class ImageCell: UITableViewCell {
+final class ImageCell: FormCell {
 
     @IBOutlet weak var iconView: UIImageView!
     @IBOutlet weak var imageHeight: NSLayoutConstraint!

@@ -1,7 +1,6 @@
 import ReactiveSwift
 
 class TitledTextInputCell: FormCell {
-
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var textField: UITextField!
 
