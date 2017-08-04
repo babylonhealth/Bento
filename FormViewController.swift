@@ -115,7 +115,7 @@ open class FormViewController: UIViewController {
 
 extension FormViewController: FormCellConfigurator {
     public func configure(_ cell: FormCell) {
-        cell.configure(form.submiting.negate(), visualDependencies.styles.appColors.formSeparatorColor)
+        cell.configure(form.isSubmitting.negate(), visualDependencies.styles.appColors.formSeparatorColor)
         (cell as? FocusableCell)?.delegate = self
         (cell as? DynamicHeightCell)?.heightDelegate = self
     }

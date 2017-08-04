@@ -1,17 +1,19 @@
 import UIKit
 
-public struct DescriptionCellViewModel {
+public final class DescriptionCellViewModel {
     public let text: String
     public let type: DescriptionCellType
     public let visualDependencies: VisualDependenciesProtocol
     public let selectionStyle: UITableViewCellSelectionStyle
+    public let backgroundColorStyle: UIViewStyle<UIView>
 
-    public init(text: String, type: DescriptionCellType, visualDependencies: VisualDependenciesProtocol, selectionStyle: UITableViewCellSelectionStyle = .none) {
+    public init(text: String, type: DescriptionCellType, visualDependencies: VisualDependenciesProtocol, selectionStyle: UITableViewCellSelectionStyle = .none, backgroundColorStyle: UIViewStyle<UIView>? = nil) {
 
         self.text = text
         self.type = type
         self.visualDependencies = visualDependencies
         self.selectionStyle = selectionStyle
+        self.backgroundColorStyle = backgroundColorStyle ?? visualDependencies.styles.backgroundTransparentColor
     }
 
     public func applyStyle(to label: UILabel) {
@@ -26,6 +28,8 @@ public struct DescriptionCellViewModel {
             visualDependencies.styles.labelFormFooter.apply(to: label)
         case .alert:
             visualDependencies.styles.labelFormAlert.apply(to: label)
+        case let .custom(labelStyle):
+            labelStyle.apply(to: label)
         }
     }
 
@@ -34,12 +38,6 @@ public struct DescriptionCellViewModel {
     }
 
     public func applyBackgroundColor(to views: [UIView]) {
-        self.visualDependencies.styles.backgroundTransparentColor.apply(to: views)
-    }
-}
-
-extension DescriptionCellViewModel: Equatable {
-    public static func ==(left: DescriptionCellViewModel, right: DescriptionCellViewModel) -> Bool {
-        return left.type == right.type && left.text.hash == right.text.hash && left.selectionStyle == right.selectionStyle
+        self.backgroundColorStyle.apply(to: views)
     }
 }

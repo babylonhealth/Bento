@@ -6,6 +6,7 @@ public enum DescriptionCellType {
     case link
     case footer
     case alert
+    case custom(labelStyle: UIViewStyle<UILabel>)
 }
 
 extension DescriptionCell: NibLoadableCell {}

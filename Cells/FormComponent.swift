@@ -86,7 +86,7 @@ extension FormComponent: Equatable {
         case let (.facebookButton(lhsViewModel), .facebookButton(rhsViewModel)):
             return lhsViewModel === rhsViewModel
         case let (.description(lhsViewModel), .description(rhsViewModel)):
-            return lhsViewModel == rhsViewModel
+            return lhsViewModel === rhsViewModel
         case let (.textOptionsInput(lhsViewModel, _), .textOptionsInput(rhsViewModel, _)):
             return lhsViewModel === rhsViewModel
         case let (.imageOptionsInput(lhsViewModel, _), .imageOptionsInput(rhsViewModel, _)):
