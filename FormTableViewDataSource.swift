@@ -31,7 +31,7 @@ import ReactiveSwift
 import Dwifft
 
 public protocol FormCellConfigurator: class {
-    func configure<Cell: FormCell>(_ cell: Cell)
+    func configure(_ cell: FormCell)
     func updateSeparatorsOfVisibleCells()
 }
 
