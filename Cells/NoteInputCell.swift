@@ -70,7 +70,7 @@ final class NoteInputCell: FormCell {
                 if !strongSelf.textView.isFirstResponder {
                     strongSelf.textView.text = value
                     // Update the text view as if the user has made changes to it.
-                    strongSelf.textViewDidChange(strongSelf.textView)
+                    strongSelf.textViewDidChange(strongSelf.textView, isUserInteraction: false)
                 }
             }
 
@@ -94,7 +94,8 @@ final class NoteInputCell: FormCell {
         super.layoutSubviews()
     }
 
-    fileprivate func updateContentViewHeight() {
+    @discardableResult
+    fileprivate func updateContentViewHeight() -> CGFloat {
         let intrinsicContentSize = textView.intrinsicContentSize
 
         if intrinsicContentSize.height != textViewHeight.constant {
@@ -113,9 +114,10 @@ final class NoteInputCell: FormCell {
             textViewHeight.constant = intrinsicContentSize.height
             contentViewHeight.constant = max(cellMinimumHeight, inset + intrinsicContentSize.height + layoutMargins.top + layoutMargins.bottom)
 
-            let delta = textView.bounds.height - intrinsicContentSize.height
-            heightDelegate?.dynamicHeightCellHeightDidChange(delta: delta)
+            return textView.bounds.height - intrinsicContentSize.height
         }
+
+        return 0.0
     }
 }
 
@@ -127,8 +129,16 @@ extension NoteInputCell: FocusableCell {
 
 extension NoteInputCell: DynamicHeightCell, UITextViewDelegate {
     func textViewDidChange(_ textView: UITextView) {
+        textViewDidChange(textView, isUserInteraction: true)
+    }
+
+    func textViewDidChange(_ textView: UITextView, isUserInteraction: Bool) {
         placeholder.isHidden = textView.text != nil ? !textView.text.isEmpty : false
-        updateContentViewHeight()
+        let delta = updateContentViewHeight()
+
+        if isUserInteraction {
+            heightDelegate?.dynamicHeightCellHeightDidChange(delta: delta)
+        }
     }
 }
 
