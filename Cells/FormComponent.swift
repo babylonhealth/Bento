@@ -24,7 +24,7 @@ public enum FormComponent {
     ///         would be displayed between them.
     var definesSection: Bool {
         switch self {
-        case .description, .actionDescription, .space, .facebookButton, .actionButton:
+        case .description, .actionDescription, .space, .facebookButton, .actionButton, .image, .activityIndicator:
             return true
         default:
             return false
