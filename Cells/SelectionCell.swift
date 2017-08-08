@@ -3,7 +3,7 @@ import ReactiveSwift
 import ReactiveCocoa
 import Result
 
-open class SelectionCell: FormCell, NibLoadableCell {
+open class SelectionCell: FormItemCell, NibLoadableCell {
     enum Style {
         case rightTick
         case leftTickWithDetailDisclosure

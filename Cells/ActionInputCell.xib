@@ -47,9 +47,6 @@
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
-                        <constraints>
-                            <constraint firstAttribute="height" relation="greaterThanOrEqual" priority="999" constant="43.5" id="qvm-jR-33t"/>
-                        </constraints>
                         <userDefinedRuntimeAttributes>
                             <userDefinedRuntimeAttribute type="boolean" keyPath="layoutMarginsRelativeArrangement" value="NO"/>
                         </userDefinedRuntimeAttributes>

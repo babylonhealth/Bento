@@ -3,7 +3,7 @@ import ReactiveSwift
 
 extension ActionInputCell: NibLoadableCell {}
 
-final class ActionInputCell: FormCell {
+final class ActionInputCell: FormItemCell {
     private var viewModel: ActionInputCellViewModel!
 
     @IBOutlet var miniatureIconWidthConstraint: NSLayoutConstraint!

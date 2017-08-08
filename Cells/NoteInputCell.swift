@@ -5,7 +5,7 @@ import Result
 
 extension NoteInputCell: NibLoadableCell {}
 
-final class NoteInputCell: FormCell {
+final class NoteInputCell: FormItemCell {
     @IBOutlet weak var textView: UITextView!
     @IBOutlet weak var addPhotosButton: UIButton!
     @IBOutlet weak var placeholder: UILabel!
@@ -15,7 +15,6 @@ final class NoteInputCell: FormCell {
     internal weak var delegate: FocusableCellDelegate?
     internal weak var heightDelegate: DynamicHeightCellDelegate?
 
-    private let cellMinimumHeight: CGFloat = 43.5
     private var contentViewHeight: NSLayoutConstraint!
 
     @IBOutlet var textViewHeight: NSLayoutConstraint!
@@ -25,7 +24,7 @@ final class NoteInputCell: FormCell {
         super.awakeFromNib()
         textView.delegate = self
 
-        contentViewHeight = contentView.heightAnchor.constraint(equalToConstant: cellMinimumHeight)
+        contentViewHeight = contentView.heightAnchor.constraint(equalToConstant: minimumHeight)
         contentViewHeight.priority = UILayoutPriorityRequired - 1
         contentViewHeight.isActive = true
 
@@ -103,16 +102,16 @@ final class NoteInputCell: FormCell {
             // minimum height, an illusion of the text view staying in place would be
             // maintained.
             let minimumTextViewHeight = ("" as NSString).size(attributes: [NSFontAttributeName: textView.font!]).height
-            let minimumContentHeight = max(cellMinimumHeight - layoutMargins.top - layoutMargins.bottom, minimumTextViewHeight)
+            let minimumContentHeight = max(minimumHeight - layoutMargins.top - layoutMargins.bottom, minimumTextViewHeight)
             let inset = max(minimumContentHeight - minimumTextViewHeight, 0.0)
 
-            addPhotosButtonTextViewTopEdge.constant = minimumTextViewHeight / 2.0 - addPhotosButton.frame.height / 2.0
+            addPhotosButtonTextViewTopEdge.constant = (minimumTextViewHeight - addPhotosButton.frame.height) / 2.0
 
             // When the system-wide content size category has changed, and the app resumes
             // to the foreground, the UITextView refuses to resize itself regardless of
             // tons of means being attempted. So now its height is maintained explicitly.
             textViewHeight.constant = intrinsicContentSize.height
-            contentViewHeight.constant = max(cellMinimumHeight, inset + intrinsicContentSize.height + layoutMargins.top + layoutMargins.bottom)
+            contentViewHeight.constant = max(minimumHeight, inset + intrinsicContentSize.height + layoutMargins.top + layoutMargins.bottom)
 
             return textView.bounds.height - intrinsicContentSize.height
         }

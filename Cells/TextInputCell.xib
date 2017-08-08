@@ -1,46 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12121" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12121" systemVersion="16G29" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="TextInputCell" rowHeight="44" id="XFH-90-E0O" customClass="TextInputCell" customModule="BabylonUI" customModuleProvider="target">
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="TextInputCell" rowHeight="44" id="XFH-90-E0O" customClass="TextInputCell" customModule="BabylonUI" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
             <autoresizingMask key="autoresizingMask"/>
-            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="XFH-90-E0O" id="Erp-HD-Hhb">
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" tableViewCell="XFH-90-E0O" id="Erp-HD-Hhb">
                 <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="RXj-4k-cfk">
-                        <rect key="frame" x="16" y="0.0" width="305" height="44"/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="43.5" id="pbk-R0-mdd"/>
-                        </constraints>
+                        <rect key="frame" x="15" y="11" width="306" height="22"/>
                         <nil key="textColor"/>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <textInputTraits key="textInputTraits" returnKeyType="done"/>
                     </textField>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TTn-j0-Qal">
-                        <rect key="frame" x="321" y="0.0" width="54" height="44.5"/>
+                        <rect key="frame" x="321" y="0.0" width="54" height="43.5"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="54" id="dlg-x4-9LP"/>
                         </constraints>
                     </button>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="RXj-4k-cfk" firstAttribute="height" secondItem="Erp-HD-Hhb" secondAttribute="height" constant="1" id="0Vw-Yp-jtu"/>
                     <constraint firstItem="TTn-j0-Qal" firstAttribute="top" secondItem="Erp-HD-Hhb" secondAttribute="top" id="6pk-0d-iLt"/>
-                    <constraint firstAttribute="bottom" secondItem="RXj-4k-cfk" secondAttribute="bottom" constant="-1" id="Cqy-Dh-xDn"/>
-                    <constraint firstItem="RXj-4k-cfk" firstAttribute="leading" secondItem="Erp-HD-Hhb" secondAttribute="leading" constant="16" id="DFa-OS-q0B"/>
-                    <constraint firstItem="RXj-4k-cfk" firstAttribute="top" secondItem="Erp-HD-Hhb" secondAttribute="top" id="O5F-iP-CFx"/>
-                    <constraint firstAttribute="bottom" secondItem="TTn-j0-Qal" secondAttribute="bottom" constant="-1" id="Vid-vm-r9Z"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="RXj-4k-cfk" secondAttribute="bottom" id="Cqy-Dh-xDn"/>
+                    <constraint firstItem="RXj-4k-cfk" firstAttribute="leading" secondItem="Erp-HD-Hhb" secondAttribute="leadingMargin" id="DFa-OS-q0B"/>
+                    <constraint firstItem="RXj-4k-cfk" firstAttribute="top" secondItem="Erp-HD-Hhb" secondAttribute="topMargin" id="O5F-iP-CFx"/>
+                    <constraint firstAttribute="bottom" secondItem="TTn-j0-Qal" secondAttribute="bottom" id="Vid-vm-r9Z"/>
                     <constraint firstAttribute="trailing" secondItem="TTn-j0-Qal" secondAttribute="trailing" id="XcU-XT-kB1"/>
                     <constraint firstItem="TTn-j0-Qal" firstAttribute="leading" secondItem="RXj-4k-cfk" secondAttribute="trailing" id="rQ3-Xb-rkF"/>
                 </constraints>

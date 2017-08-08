@@ -15,6 +15,16 @@ open class FormCell: UITableViewCell {
 
     internal let separator = UIView()
 
+    // The point height of the 1-pixel separator.
+    internal var separatorHeight: CGFloat {
+        switch window?.screen.scale {
+        case 2.0?, 3.0?:
+            return 0.5
+        default:
+            return 1
+        }
+    }
+
     override public init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         (isCellSelected, isCellSelectedObserver) = Signal.pipe()
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -46,7 +56,8 @@ open class FormCell: UITableViewCell {
 
     override open func layoutSubviews() {
         super.layoutSubviews()
-        separator.frame = CGRect(x: 0, y: frame.height - 1, width: frame.width, height: 1)
+        let height = separatorHeight
+        separator.frame = CGRect(x: 0, y: frame.height - height, width: frame.width, height: height)
     }
 
     override open func setSelected(_ selected: Bool, animated: Bool) {

@@ -2,7 +2,7 @@ import UIKit
 import ReactiveSwift
 import ReactiveCocoa
 
-public final class SegmentedCell: FormCell {
+public final class SegmentedCell: FormItemCell {
     let stackView: UIStackView
 
     var viewModel: SegmentedCellViewModel!

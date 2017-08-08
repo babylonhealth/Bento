@@ -3,7 +3,7 @@ import ReactiveCocoa
 
 extension ToggleCell: NibLoadableCell {}
 
-class ToggleCell: FormCell {
+class ToggleCell: FormItemCell {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var toggle: UISwitch!
 
