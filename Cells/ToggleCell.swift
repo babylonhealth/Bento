@@ -11,6 +11,10 @@ class ToggleCell: FormItemCell {
 
     override func awakeFromNib() {
         super.awakeFromNib()
+
+        let heightConstraint = contentView.heightAnchor.constraint(greaterThanOrEqualToConstant: 43.5)
+        heightConstraint.priority = UILayoutPriorityRequired - 1
+        heightConstraint.isActive = true
     }
 
     func setup(viewModel: ToggleCellViewModel) {
