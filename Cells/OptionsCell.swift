@@ -64,7 +64,7 @@ extension TextOptionsCell: UICollectionViewDataSource {
 
 extension TextOptionsCell: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        viewModel.selectionAction.apply().start()
+        viewModel.selectionAction.apply(indexPath.row).start()
     }
 }
 
@@ -90,6 +90,8 @@ final class ImageOptionsCell: OptionsCell {
 
         heightConstraint.constant = viewSpec.mediaCellDimension
         heightConstraint.isActive = true
+
+        collectionView.reloadData()
     }
 }
 
@@ -98,11 +100,11 @@ extension ImageOptionsCell: ReusableCell, UICollectionViewDelegateFlowLayout {}
 extension ImageOptionsCell: UICollectionViewDataSource {
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let item = self.viewModel.items.value[indexPath.row]
+        let item = self.viewModel.items[indexPath.row]
         let cell: ImageOptionsCollectionCell = collectionView.dequeueReusableCell(withReuseIdentifier: ImageOptionsCollectionCell.reuseIdentifier, for: indexPath) as! ImageOptionsCollectionCell
         cell.mediaImageView.image = item
         cell.closeButton.setImage(viewSpec.mediaCellCloseIcon, for: .normal)
-        cell.closeButton.reactive.pressed = CocoaAction(viewModel.destructiveAction)
+        cell.closeButton.reactive.pressed = CocoaAction(viewModel.destructiveAction, input: (indexPath.row))
         return cell
     }
 
@@ -111,7 +113,7 @@ extension ImageOptionsCell: UICollectionViewDataSource {
     }
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return self.viewModel.items.value.count
+        return self.viewModel.items.count
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -121,7 +123,7 @@ extension ImageOptionsCell: UICollectionViewDataSource {
 
 extension ImageOptionsCell: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        //TODO: Trigger selectionAction here
+        viewModel.selectionAction.apply(indexPath.row).start()
     }
 }
 
@@ -150,6 +152,7 @@ class OptionsCell: FormCell {
         self.collectionView.backgroundColor = .white
 
         self.heightConstraint = heightAnchor.constraint(equalToConstant: 0)
+        self.heightConstraint.priority = UILayoutPriorityRequired - 1
         self.collectionViewHeightConstraint = collectionView.heightAnchor.constraint(equalToConstant: 0)
     }
     required init(coder aDecoder: NSCoder) { fatalError("init(coder:)") }

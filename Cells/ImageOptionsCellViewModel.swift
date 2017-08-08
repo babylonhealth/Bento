@@ -3,11 +3,13 @@ import enum Result.NoError
 
 public class ImageOptionsCellViewModel {
 
-    let items: Property<[UIImage]>
-    let selectionAction: Action<Void, Void, NoError>
-    let destructiveAction: Action<Void, Void, NoError>
-    
-    public init(items: Property<[UIImage]>, selectionAction: Action<Void, Void, NoError>, destructiveAction: Action<Void, Void, NoError>) {
+    let items: [UIImage]
+    let selectionAction: Action<Int, Void, NoError>
+    let destructiveAction: Action<Int, Void, NoError>
+
+    public init(items: [UIImage],
+                selectionAction: Action<Int, Void, NoError>,
+                destructiveAction: Action<Int, Void, NoError>) {
         
         self.items = items
         self.selectionAction = selectionAction

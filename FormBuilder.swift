@@ -81,8 +81,8 @@ extension FormBuilder {
         case noteField(placeholder: String, text: ValidatingProperty<String, InvalidInput>, addPhotosAction: Action<Void, Void, NoError>)
         case toggle(title: String, isOn: MutableProperty<Bool>)
         case imageField(image: UIImage, imageSize: CGSize)
-        case textOptionsField(items: Property<[String]>, selectionAction: Action<Void, Void, NoError>, destructiveAction: Action<Void, Void, NoError>, spec: TextOptionsCellViewSpec)
-        case imageOptionsField(items: Property<[UIImage]>, selectionAction: Action<Void, Void, NoError>, destructiveAction: Action<Void, Void, NoError>, spec: ImageOptionsCellViewSpec)
+        case textOptionsField(items: Property<[String]>, selectionAction: Action<Int, Void, NoError>, spec: TextOptionsCellViewSpec)
+        case imageOptionsField(items: [UIImage], selectionAction: Action<Int, Void, NoError>, destructiveAction: Action<Int, Void, NoError>, spec: ImageOptionsCellViewSpec)
         case activityIndicator(isRefreshing: Property<Bool>)
         case custom(FormComponent)
 
@@ -183,8 +183,8 @@ extension FormBuilder {
                                            addPhotosAction: addPhotosAction,
                                            visualDependencies: visualDependencies))
 
-            case let .textOptionsField(items, selectionAction, destructiveAction, spec):
-                return .textOptionsInput(TextOptionsCellViewModel(items: items, selectionAction: selectionAction, destructiveAction: destructiveAction), spec)
+            case let .textOptionsField(items, selectionAction, spec):
+                return .textOptionsInput(TextOptionsCellViewModel(items: items, selectionAction: selectionAction), spec)
 
             case let .imageOptionsField(items, selectionAction, destructiveAction, spec):
                 return .imageOptionsInput(ImageOptionsCellViewModel(items: items, selectionAction: selectionAction, destructiveAction: destructiveAction), spec)
