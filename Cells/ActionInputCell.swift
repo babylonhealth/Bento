@@ -6,9 +6,11 @@ extension ActionInputCell: NibLoadableCell {}
 final class ActionInputCell: FormItemCell {
     private var viewModel: ActionInputCellViewModel!
 
+    @IBOutlet var stackViewLeadingConstraint: NSLayoutConstraint!
     @IBOutlet var miniatureIconWidthConstraint: NSLayoutConstraint!
     @IBOutlet var largeRoundAvatarWidthConstraint: NSLayoutConstraint!
     @IBOutlet var largeRoundAvatarVerticalMarginConstraints: [NSLayoutConstraint]!
+    @IBOutlet var stackView: UIStackView!
 
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var subtitleLabel: UILabel!
@@ -40,32 +42,47 @@ final class ActionInputCell: FormItemCell {
             subtitleLabel.isHidden = true
         }
 
-        if let icon = viewModel.icon {
-            iconView.isHidden = false
-            iconView.image = icon
-        } else {
-            iconView.isHidden = true
-        }
+        var activatingConstraints: [NSLayoutConstraint] = []
+        var deactivatingConstraints: [NSLayoutConstraint] = []
 
         switch viewModel.inputTextAlignment {
         case .left, .center:
-            titleLabelMinWidthConstraint.isActive = true
+            activatingConstraints.append(titleLabelMinWidthConstraint)
         case .right:
-            titleLabelMinWidthConstraint.isActive = false
+            deactivatingConstraints.append(titleLabelMinWidthConstraint)
         }
 
-        switch viewModel.iconStyle {
-        case .miniature:
-            largeRoundAvatarWidthConstraint.isActive = false
-            NSLayoutConstraint.deactivate(largeRoundAvatarVerticalMarginConstraints)
-            miniatureIconWidthConstraint.isActive = true
-            iconView.layer.cornerRadius = 0.0
-        case .largeRoundAvatar:
-            miniatureIconWidthConstraint.isActive = false
-            largeRoundAvatarWidthConstraint.isActive = true
-            NSLayoutConstraint.activate(largeRoundAvatarVerticalMarginConstraints)
+        switch (viewModel.iconStyle, viewModel.icon) {
+        case let (.largeRoundAvatar, icon?):
+            deactivatingConstraints.append(miniatureIconWidthConstraint)
+            activatingConstraints.append(largeRoundAvatarWidthConstraint)
+            activatingConstraints.append(contentsOf: largeRoundAvatarVerticalMarginConstraints)
+
             iconView.layer.cornerRadius = largeRoundAvatarWidthConstraint.constant / 2.0
+            stackViewLeadingConstraint.constant = largeRoundAvatarWidthConstraint.constant + stackView.spacing
+            iconView.isHidden = false
+            iconView.image = icon
+        case let (_, icon):
+            // The icon view still participates in Auto Layout even if it is hidden. So
+            // if the icon is not present, the miniature style would be forced so that
+            // the icon view can practically have no effect on the cell height.
+            deactivatingConstraints.append(largeRoundAvatarWidthConstraint)
+            deactivatingConstraints.append(contentsOf: largeRoundAvatarVerticalMarginConstraints)
+            activatingConstraints.append(miniatureIconWidthConstraint)
+            iconView.layer.cornerRadius = 0.0
+
+            if let icon = icon {
+                iconView.isHidden = false
+                iconView.image = icon
+                stackViewLeadingConstraint.constant = miniatureIconWidthConstraint.constant + stackView.spacing
+            } else {
+                iconView.isHidden = true
+                stackViewLeadingConstraint.constant = 0
+            }
         }
+        
+        NSLayoutConstraint.deactivate(deactivatingConstraints)
+        NSLayoutConstraint.activate(activatingConstraints)
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
