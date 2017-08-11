@@ -75,6 +75,7 @@ extension FormBuilder {
         case titledTextField(title: String, placeholder: String, text: ValidatingProperty<String, InvalidInput>)
         case phoneTextField(title: String, placeholder: String, countryCode: MutableProperty<String>, phoneNumber: MutableProperty<String>)
         case selectionField(title: String, value: Property<String>, action: Action<Void, Void, NoError>)
+        case buttonField(title: String, action: Action<Void, Void, NoError>)
         case iconSelectionField(icon: UIImage, title: String, value: Property<String>, action: Action<Void, Void, NoError>)
         case avatarSelectionField(icon: UIImage, title: Property<String>, action: Action<Void, Void, NoError>)
         case segmentedField(options: [SegmentedCellViewModel.Option], selection: MutableProperty<Int>)
@@ -154,6 +155,18 @@ extension FormBuilder {
                                              input: value,
                                              inputTextAlignment: .left,
                                              selected: action))
+
+            case let .buttonField(title, action):
+                let style = visualDependencies.styles.labelTextBrandColor
+                    .composing(with: visualDependencies.styles.labelTextBody)
+                return .actionInput(
+                    ActionInputCellViewModel(visualDependencies: visualDependencies,
+                                             title: title,
+                                             input: nil,
+                                             inputTextAlignment: .left,
+                                             selected: action,
+                                             accessory: .none,
+                                             titleStyle: style))
 
             case let .iconSelectionField(icon, title, value, action):
                 return .actionInput(

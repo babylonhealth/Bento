@@ -16,6 +16,7 @@ public final class ActionInputCellViewModel {
     let selectionStyle: UITableViewCellSelectionStyle = .gray
     let isSelected: Action<Void, Void, NoError>
     let accessory: UITableViewCellAccessoryType
+    private let titleStyle: UIViewStyle<UILabel>?
 
     public init(visualDependencies: VisualDependenciesProtocol,
                 icon: UIImage? = nil,
@@ -24,7 +25,8 @@ public final class ActionInputCellViewModel {
                 input: Property<String>? = nil,
                 inputTextAlignment: TextAlignment = .left,
                 selected: Action<Void, Void, NoError>,
-                accessory: UITableViewCellAccessoryType = .disclosureIndicator) {
+                accessory: UITableViewCellAccessoryType = .disclosureIndicator,
+                titleStyle: UIViewStyle<UILabel>? = nil) {
         self.visualDependencies = visualDependencies
         self.icon = icon
         self.iconStyle = iconStyle
@@ -33,6 +35,7 @@ public final class ActionInputCellViewModel {
         self.input = input
         self.isSelected = selected
         self.accessory = accessory
+        self.titleStyle = titleStyle
     }
 
     public convenience init(visualDependencies: VisualDependenciesProtocol,
@@ -41,18 +44,24 @@ public final class ActionInputCellViewModel {
                             input: Property<String>? = nil,
                             inputTextAlignment: TextAlignment = .left,
                             selected: Action<Void, Void, NoError>,
-                            accessory: UITableViewCellAccessoryType = .disclosureIndicator) {
+                            accessory: UITableViewCellAccessoryType = .disclosureIndicator,
+                            titleStyle: UIViewStyle<UILabel>? = nil) {
         self.init(visualDependencies: visualDependencies,
                   icon: icon,
                   title: Property(value: title),
                   input: input,
                   inputTextAlignment: inputTextAlignment,
                   selected: selected,
-                  accessory: accessory)
+                  accessory: accessory,
+                  titleStyle: titleStyle)
     }
 
     func applyTitleStyle(to label: UILabel) {
-        visualDependencies.styles.labelFormFieldTitle.apply(to: label)
+        if let titleStyle = titleStyle {
+            titleStyle.apply(to: label)
+        } else {
+            visualDependencies.styles.labelFormFieldTitle.apply(to: label)
+        }
     }
 
     func applyInputStyle(to label: UILabel) {
