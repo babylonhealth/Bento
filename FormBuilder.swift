@@ -115,6 +115,7 @@ extension FormBuilder {
                     .composing(with: visualDependencies.styles.buttonTextBody)
                 let spec = ActionCellViewSpec(title: text, buttonStyle: style, hasDynamicHeight: hasDynamicHeight)
                 let viewModel = ActionCellViewModel(action: action, isLoading: action.isExecuting)
+
                 return .actionButton(viewModel, spec)
 
             case let .textField(placeholder, text):

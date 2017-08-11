@@ -28,6 +28,12 @@ final class TextOptionsCell: OptionsCell {
         collectionViewHeightConstraint.isActive = true
         heightConstraint.constant = viewSpec.cellHeight
         heightConstraint.isActive = true
+
+        //Deselect previous selected cell
+        if let indexPath = self.collectionView.indexPathsForSelectedItems?.first {
+            collectionView.deselectItem(at: indexPath, animated: true)
+        }
+        collectionView.reloadData()
     }
 }
 
