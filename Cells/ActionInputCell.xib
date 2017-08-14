@@ -20,8 +20,8 @@
                 <rect key="frame" x="0.0" y="0.0" width="287" height="60.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="100" verticalHuggingPriority="100" horizontalCompressionResistancePriority="100" verticalCompressionResistancePriority="100" translatesAutoresizingMaskIntoConstraints="NO" id="fdD-vJ-F2N">
-                        <rect key="frame" x="18.5" y="11" width="38.5" height="38.5"/>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="100" verticalHuggingPriority="100" horizontalCompressionResistancePriority="100" verticalCompressionResistancePriority="100" translatesAutoresizingMaskIntoConstraints="NO" id="fdD-vJ-F2N">
+                        <rect key="frame" x="18" y="11" width="39" height="39"/>
                         <constraints>
                             <constraint firstAttribute="width" priority="998" constant="32" id="7sI-SY-ueM"/>
                             <constraint firstAttribute="width" priority="999" constant="42" id="DIX-vO-aSQ"/>

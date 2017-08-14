@@ -42,7 +42,11 @@ open class SelectionCell: FormItemCell, NibLoadableCell {
         disposable.inner = nil
         self.spec = spec
 
-        avatar.image = viewModel.icon ?? spec.defaultIcon
+        avatar.reactive.image
+            <~ viewModel.icon
+                .take(until: reactive.prepareForReuse)
+                .prefix(value: spec.defaultIcon)
+
         label.text = viewModel.title
         spec.labelStyle?.apply(to: label)
 

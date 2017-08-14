@@ -25,7 +25,6 @@ final class ActionInputCell: FormItemCell {
         self.viewModel = viewModel
         viewModel.applyTitleStyle(to: titleLabel)
         viewModel.applyInputStyle(to: subtitleLabel)
-        iconView.image = viewModel.icon
         accessoryType = viewModel.accessory
         selectionStyle = viewModel.selectionStyle
 
@@ -37,6 +36,7 @@ final class ActionInputCell: FormItemCell {
         if let input = viewModel.input {
             subtitleLabel.isHidden = false
             subtitleLabel.reactive.text <~ input.producer
+                .observe(on: UIScheduler())
                 .take(until: reactive.prepareForReuse)
         } else {
             subtitleLabel.isHidden = true
@@ -61,7 +61,9 @@ final class ActionInputCell: FormItemCell {
             iconView.layer.cornerRadius = largeRoundAvatarWidthConstraint.constant / 2.0
             stackViewLeadingConstraint.constant = largeRoundAvatarWidthConstraint.constant + stackView.spacing
             iconView.isHidden = false
-            iconView.image = icon
+            iconView.reactive.image <~ icon
+                .observe(on: UIScheduler())
+                .take(until: reactive.prepareForReuse)
         case let (_, icon):
             // The icon view still participates in Auto Layout even if it is hidden. So
             // if the icon is not present, the miniature style would be forced so that
@@ -73,7 +75,9 @@ final class ActionInputCell: FormItemCell {
 
             if let icon = icon {
                 iconView.isHidden = false
-                iconView.image = icon
+                iconView.reactive.image <~ icon
+                    .observe(on: UIScheduler())
+                    .take(until: reactive.prepareForReuse)
                 stackViewLeadingConstraint.constant = miniatureIconWidthConstraint.constant + stackView.spacing
             } else {
                 iconView.isHidden = true

@@ -8,7 +8,7 @@ public final class ActionInputCellViewModel {
     }
 
     private let visualDependencies: VisualDependenciesProtocol
-    let icon: UIImage?
+    let icon: SignalProducer<UIImage, NoError>?
     let iconStyle: IconStyle
     let title: Property<String>
     let input: Property<String>?
@@ -19,7 +19,7 @@ public final class ActionInputCellViewModel {
     private let titleStyle: UIViewStyle<UILabel>?
 
     public init(visualDependencies: VisualDependenciesProtocol,
-                icon: UIImage? = nil,
+                icon: SignalProducer<UIImage, NoError>? = nil,
                 iconStyle: IconStyle = .miniature,
                 title: Property<String>,
                 input: Property<String>? = nil,
@@ -39,7 +39,7 @@ public final class ActionInputCellViewModel {
     }
 
     public convenience init(visualDependencies: VisualDependenciesProtocol,
-                            icon: UIImage? = nil,
+                            icon: SignalProducer<UIImage, NoError>? = nil,
                             title: String,
                             input: Property<String>? = nil,
                             inputTextAlignment: TextAlignment = .left,

@@ -1,4 +1,6 @@
 import UIKit
+import ReactiveSwift
+import ReactiveCocoa
 
 extension ImageCell: NibLoadableCell {}
 
@@ -14,8 +16,9 @@ final class ImageCell: FormCell {
         self.viewModel = viewModel
         self.viewModel.applyBackgroundColor(to: [self])
         self.selectionStyle = self.viewModel.selectionStyle
-        self.iconView.image = viewModel.image
+        self.iconView.reactive.image <~ viewModel.image
         self.imageWidth.constant = viewModel.imageSize.width
         self.imageHeight.constant = viewModel.imageSize.height
+        self.iconView.layer.cornerRadius = self.imageWidth.constant / 2.0
     }
 }
