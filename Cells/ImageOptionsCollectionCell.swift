@@ -5,7 +5,9 @@ class ImageOptionsCollectionCell: UICollectionViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        self.mediaImageView.layer.cornerRadius = 10
+        self.mediaImageView.layer.cornerRadius = 15
+        self.mediaImageView.clipsToBounds = true
+        self.mediaImageView.contentMode = .scaleAspectFill
     }
 }
 

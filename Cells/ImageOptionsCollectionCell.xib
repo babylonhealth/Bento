@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12121" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12121" systemVersion="16G29" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -36,9 +36,9 @@
             </view>
             <constraints>
                 <constraint firstItem="Nt6-dh-Fch" firstAttribute="centerX" secondItem="qyt-DD-EZz" secondAttribute="centerX" id="1fL-ta-Xa3"/>
+                <constraint firstItem="Nt6-dh-Fch" firstAttribute="trailing" secondItem="aPu-AO-ZSl" secondAttribute="leading" constant="15" id="Qbt-3D-IYZ"/>
                 <constraint firstItem="Nt6-dh-Fch" firstAttribute="centerY" secondItem="qyt-DD-EZz" secondAttribute="centerY" id="dTj-oh-GHZ"/>
-                <constraint firstAttribute="trailing" secondItem="aPu-AO-ZSl" secondAttribute="trailing" id="jUx-UF-otN"/>
-                <constraint firstItem="aPu-AO-ZSl" firstAttribute="top" secondItem="qyt-DD-EZz" secondAttribute="top" constant="6" id="mAJ-7F-7zW"/>
+                <constraint firstItem="Nt6-dh-Fch" firstAttribute="top" secondItem="aPu-AO-ZSl" secondAttribute="bottom" constant="-12" id="pXx-FU-gxJ"/>
             </constraints>
             <connections>
                 <outlet property="closeButton" destination="aPu-AO-ZSl" id="u0L-vA-Ed6"/>
