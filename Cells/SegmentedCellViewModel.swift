@@ -5,11 +5,13 @@ public final class SegmentedCellViewModel {
 
     public struct Option {
         let title: String
-        let icon: UIImage
+        let iconSelected: UIImage
+        let iconUnselected: UIImage
 
-        public init(title: String, icon: UIImage) {
+        public init(title: String, iconSelected: UIImage, iconUnselected: UIImage) {
             self.title = title
-            self.icon = icon
+            self.iconSelected = iconSelected
+            self.iconUnselected = iconUnselected
         }
     }
 

@@ -48,8 +48,11 @@ public final class SegmentedCell: FormItemCell {
             let option = viewModel.options[position]
             button.setTitle(option.title, for: .normal)
 
-            let icon = option.icon.withRenderingMode(.alwaysTemplate)
-            button.setImage(icon, for: .normal)
+            let iconSelected = option.iconSelected.withRenderingMode(.alwaysTemplate)
+            let iconUnselected = option.iconUnselected.withRenderingMode(.alwaysTemplate)
+
+            button.setImage(iconUnselected, for: .normal)
+            button.setImage(iconSelected, for: .selected)
 
             button.reactive.isSelected <~ viewModel.selection.map { $0 == position }.producer
                 .take(until: reactive.prepareForReuse)
