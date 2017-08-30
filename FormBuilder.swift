@@ -81,7 +81,7 @@ extension FormBuilder {
         case segmentedField(options: [SegmentedCellViewModel.Option], selection: MutableProperty<Int>)
         case noteField(placeholder: String, text: ValidatingProperty<String, InvalidInput>, addPhotosAction: Action<Void, Void, NoError>)
         case toggle(title: String, isOn: MutableProperty<Bool>)
-        case imageField(image: SignalProducer<UIImage, NoError>, imageSize: CGSize)
+        case imageField(image: SignalProducer<UIImage, NoError>, imageSize: CGSize, imageAlignment: ImageCellAlignment, isRounded: Bool)
         case textOptionsField(items: Property<[String]>, selectionAction: Action<Int, Void, NoError>, spec: TextOptionsCellViewSpec, headline: String)
         case imageOptionsField(items: [UIImage], selectionAction: Action<Int, Void, NoError>, destructiveAction: Action<Int, Void, NoError>, spec: ImageOptionsCellViewSpec)
         case activityIndicator(isRefreshing: Property<Bool>)
@@ -209,10 +209,12 @@ extension FormBuilder {
                                         isOn: isOn,
                                         visualDependencies: visualDependencies))
 
-            case let.imageField(image, imageSize):
+            case let.imageField(image, imageSize, imageAlignment, isRounded):
                 return .image(ImageCellViewModel(image: image,
                                                  imageSize: imageSize,
-                                                 visualDependencies: visualDependencies))
+                                                 visualDependencies: visualDependencies,
+                                                 imageAlignment: imageAlignment,
+                                                 isRounded: isRounded))
 
             case let .activityIndicator(isRefreshing):
                 return .activityIndicator(ActivityIndicatorCellViewModel(isRefreshing: isRefreshing),

@@ -15,7 +15,7 @@
             <rect key="frame" x="0.0" y="0.0" width="480" height="70"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
-                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Nd1-bq-rVa">
+                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Nd1-bq-rVa">
                     <rect key="frame" x="0.0" y="0.0" width="480" height="70"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="70" id="17w-9j-Q0v"/>
@@ -24,10 +24,6 @@
                 </imageView>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-            <constraints>
-                <constraint firstItem="Nd1-bq-rVa" firstAttribute="centerX" secondItem="oxG-fx-9xl" secondAttribute="centerX" id="E8o-xg-ki6"/>
-                <constraint firstItem="Nd1-bq-rVa" firstAttribute="centerY" secondItem="oxG-fx-9xl" secondAttribute="centerY" id="aF9-dD-Mzt"/>
-            </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
                 <outlet property="iconView" destination="Nd1-bq-rVa" id="oFw-6w-Pbu"/>
