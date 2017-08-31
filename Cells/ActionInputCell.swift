@@ -15,6 +15,8 @@ final class ActionInputCell: FormItemCell {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var subtitleLabel: UILabel!
     @IBOutlet weak var iconView: UIImageView!
+    @IBOutlet weak var subIconView: UIImageView!
+    
     @IBOutlet var titleLabelMinWidthConstraint: NSLayoutConstraint!
 
     override var canBecomeFirstResponder: Bool {
@@ -42,6 +44,18 @@ final class ActionInputCell: FormItemCell {
             subtitleLabel.isHidden = true
         }
 
+        if viewModel.isVertical {
+            self.stackView.axis = .vertical
+            self.stackView.alignment = .leading
+            self.stackView.isBaselineRelativeArrangement = true
+            self.stackView.spacing = 18
+        } else {
+            self.stackView.axis = .horizontal
+            self.stackView.alignment = .center
+            self.stackView.isBaselineRelativeArrangement = false
+            self.stackView.spacing = 10
+        }
+
         var activatingConstraints: [NSLayoutConstraint] = []
         var deactivatingConstraints: [NSLayoutConstraint] = []
 
@@ -50,6 +64,14 @@ final class ActionInputCell: FormItemCell {
             activatingConstraints.append(titleLabelMinWidthConstraint)
         case .right:
             deactivatingConstraints.append(titleLabelMinWidthConstraint)
+        }
+
+        if let subIcon = viewModel.subIcon {
+            self.subIconView.image = subIcon
+            subIconView.isHidden = false
+        } else {
+            subIconView.isHidden = true
+            self.subIconView.image = nil
         }
 
         switch (viewModel.iconStyle, viewModel.icon) {

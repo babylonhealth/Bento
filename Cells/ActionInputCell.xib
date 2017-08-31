@@ -28,6 +28,13 @@
                             <constraint firstAttribute="width" secondItem="fdD-vJ-F2N" secondAttribute="height" multiplier="1:1" id="fQV-gQ-p6A"/>
                         </constraints>
                     </imageView>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="100" verticalHuggingPriority="100" horizontalCompressionResistancePriority="100" verticalCompressionResistancePriority="100" translatesAutoresizingMaskIntoConstraints="NO" id="inf-WA-avm">
+                        <rect key="frame" x="49" y="41" width="15" height="16"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="15" id="Z6O-kc-ELA"/>
+                            <constraint firstAttribute="height" constant="16" id="eZy-KQ-sos"/>
+                        </constraints>
+                    </imageView>
                     <stackView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="1000" verticalCompressionResistancePriority="999" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="nlC-mS-VnQ">
                         <rect key="frame" x="67" y="11" width="212" height="39"/>
                         <subviews>
@@ -57,6 +64,8 @@
                     <constraint firstItem="fdD-vJ-F2N" firstAttribute="top" relation="greaterThanOrEqual" secondItem="H2p-sc-9uM" secondAttribute="topMargin" id="HJ2-Yv-l0k"/>
                     <constraint firstAttribute="bottomMargin" secondItem="nlC-mS-VnQ" secondAttribute="bottom" id="IKS-Op-zVq"/>
                     <constraint firstItem="nlC-mS-VnQ" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" id="O7D-cu-bIT"/>
+                    <constraint firstItem="inf-WA-avm" firstAttribute="leading" secondItem="fdD-vJ-F2N" secondAttribute="trailing" constant="-8" id="f8E-Z2-SDB"/>
+                    <constraint firstItem="inf-WA-avm" firstAttribute="bottom" secondItem="fdD-vJ-F2N" secondAttribute="bottom" constant="7" id="h8z-C0-LRd"/>
                     <constraint firstItem="nlC-mS-VnQ" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="52" id="uHw-kU-j1D"/>
                 </constraints>
             </tableViewCellContentView>
@@ -67,6 +76,7 @@
                 <outlet property="miniatureIconWidthConstraint" destination="7sI-SY-ueM" id="43I-Pr-UVi"/>
                 <outlet property="stackView" destination="nlC-mS-VnQ" id="4Sl-10-IV7"/>
                 <outlet property="stackViewLeadingConstraint" destination="uHw-kU-j1D" id="6cJ-Yq-v0P"/>
+                <outlet property="subIconView" destination="inf-WA-avm" id="CcI-Hf-XxG"/>
                 <outlet property="subtitleLabel" destination="du3-Ep-iDX" id="ZdN-6Q-ids"/>
                 <outlet property="titleLabel" destination="ViO-5T-VHS" id="BKR-gh-dOG"/>
                 <outlet property="titleLabelMinWidthConstraint" destination="phn-c3-YLs" id="RaR-TI-vnX"/>

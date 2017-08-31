@@ -77,7 +77,7 @@ extension FormBuilder {
         case selectionField(title: String, value: Property<String>, action: Action<Void, Void, NoError>)
         case buttonField(title: String, action: Action<Void, Void, NoError>)
         case iconSelectionField(icon: SignalProducer<UIImage, NoError>, title: String, value: Property<String>, action: Action<Void, Void, NoError>)
-        case avatarSelectionField(icon: SignalProducer<UIImage, NoError>, title: Property<String>, action: Action<Void, Void, NoError>)
+        case avatarSelectionField(icon: SignalProducer<UIImage, NoError>, subIcon: UIImage?, title: Property<String>, input: Property<String>?, isVertical: Bool, action: Action<Void, Void, NoError>, subtitleStyle: UIViewStyle<UILabel>?)
         case segmentedField(options: [SegmentedCellViewModel.Option], selection: MutableProperty<Int>)
         case noteField(placeholder: String, text: ValidatingProperty<String, InvalidInput>, addPhotosAction: Action<Void, Void, NoError>)
         case toggle(title: String, isOn: MutableProperty<Bool>)
@@ -176,14 +176,18 @@ extension FormBuilder {
                                              input: value,
                                              inputTextAlignment: .right,
                                              selected: action))
-            case let .avatarSelectionField(icon, title, action):
+            case let .avatarSelectionField(icon, subIcon, title, input, isVertical, action, subtitleStyle):
                 return .actionInput(
                     ActionInputCellViewModel(visualDependencies: visualDependencies,
                                              icon: icon,
+                                             subIcon: subIcon,
                                              iconStyle: .largeRoundAvatar,
                                              title: title,
-                                             inputTextAlignment: .right,
-                                             selected: action))
+                                             input: input,
+                                             inputTextAlignment: .left,
+                                             selected: action,
+                                             subtitleStyle: subtitleStyle,
+                                             isVertical: isVertical))
             case let .segmentedField(options, selection):
                 return .segmentedInput(
                     SegmentedCellViewModel(options: options,
