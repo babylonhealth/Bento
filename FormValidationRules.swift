@@ -141,6 +141,21 @@ public enum FormValidationRules {
         return ValidatingProperty(initialValue, { evaluate($0) |> toValidatorOutput(invalidMessage) })
     }
 
+    public static func conditionallyPhoneNumberValidatingProperty<P>(initialValue: String = "",
+                                                     validateIf needsValidation: P,
+                                                     invalidMessage: String
+        ) -> ValidatingProperty<String, InvalidInput> where P: PropertyProtocol, P.Value == Bool {
+
+        func evaluate(_ input: String) -> Bool {
+            return Result<PhoneNumber, PhoneNumberError> { try PhoneNumberKit().parse(input) }.value != nil
+        }
+
+        return conditionallyValidatingProperty(initialValue: initialValue,
+                                               validateIf: needsValidation,
+                                               validation: evaluate,
+                                               invalidMessage: invalidMessage)
+    }
+
     public static func emailValidatingProperty(initialValue: String = "", invalidMessage: String = LocalizationUI.Error.emailInvalidErrorMessage) -> ValidatingProperty<String, InvalidInput> {
         return makeValidatingProperty(regex: emailValidation(), initialValue: initialValue, invalidMessage: invalidMessage)
     }
