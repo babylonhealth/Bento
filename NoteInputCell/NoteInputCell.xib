@@ -20,7 +20,7 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" text="Lorem ipsum" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="i4I-pr-1tn" customClass="NoteInputCellTextView" customModule="BabylonUI">
-                        <rect key="frame" x="15" y="5.5" width="318" height="33"/>
+                        <rect key="frame" x="15" y="5.5" width="297" height="33"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="33" id="aP9-zx-moE"/>
@@ -29,10 +29,10 @@
                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                     </textView>
                     <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TTn-j0-Qal">
-                        <rect key="frame" x="337" y="5.5" width="23" height="18"/>
+                        <rect key="frame" x="316" y="5.5" width="44" height="44"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="23" id="dlg-x4-9LP"/>
-                            <constraint firstAttribute="height" constant="18" id="pzI-x6-Zt9" userLabel="height = 18"/>
+                            <constraint firstAttribute="width" constant="44" id="blj-uA-5kh"/>
+                            <constraint firstAttribute="height" constant="44" id="oIN-JW-uxf"/>
                         </constraints>
                     </button>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="G02-eo-kg0">
