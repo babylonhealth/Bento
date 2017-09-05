@@ -1,4 +1,3 @@
-import BabylonUI
 import UIKit
 
 public final class ImageOptionsCellViewSpec {
