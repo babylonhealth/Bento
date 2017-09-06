@@ -11,7 +11,6 @@ final class ImageCell: FormCell {
     @IBOutlet weak var imageWidth: NSLayoutConstraint!
 
     var viewModel: ImageCellViewModel!
-    private let viewMargin: CGFloat = 14
     private var imageConstraints: [NSLayoutConstraint]!
 
     func setup(viewModel: ImageCellViewModel) {
@@ -35,20 +34,15 @@ final class ImageCell: FormCell {
         switch alignment {
         case .leading:
             imageConstraints = [
-                iconView.topAnchor.constraint(equalTo: self.topAnchor),
-                iconView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
-                iconView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: viewMargin)
+                iconView.leadingAnchor.constraint(equalTo: contentView.layoutMarginsGuide.leadingAnchor)
             ]
         case .centered:
             imageConstraints = [
-                iconView.centerXAnchor.constraint(equalTo: self.centerXAnchor),
-                iconView.centerYAnchor.constraint(equalTo: self.centerYAnchor)
+                iconView.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
             ]
         case .trailing:
             imageConstraints = [
-                iconView.topAnchor.constraint(equalTo: self.topAnchor),
-                iconView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
-                iconView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -viewMargin)
+                iconView.trailingAnchor.constraint(equalTo: contentView.layoutMarginsGuide.trailingAnchor)
             ]
         }
 

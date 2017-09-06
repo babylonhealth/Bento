@@ -11,26 +11,31 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <view contentMode="scaleToFill" id="oxG-fx-9xl" customClass="ImageCell" customModule="BabylonUI" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="480" height="70"/>
-            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-            <subviews>
-                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Nd1-bq-rVa">
-                    <rect key="frame" x="0.0" y="0.0" width="480" height="70"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="70" id="17w-9j-Q0v"/>
-                        <constraint firstAttribute="width" constant="480" id="ZZE-kN-9n5"/>
-                    </constraints>
-                </imageView>
-            </subviews>
-            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="8Ec-2N-KDC" customClass="ImageCell" customModule="BabylonUI" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" tableViewCell="8Ec-2N-KDC" id="9gF-FE-Zzd">
+                <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView verifyAmbiguity="off" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="iEj-5u-Vcj">
+                        <rect key="frame" x="67" y="0.0" width="240" height="43.5"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="240" id="Y7H-Ka-P1I"/>
+                            <constraint firstAttribute="height" constant="43.5" id="bQy-QT-PbP"/>
+                        </constraints>
+                    </imageView>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="iEj-5u-Vcj" firstAttribute="top" secondItem="9gF-FE-Zzd" secondAttribute="top" id="4B5-1W-rsZ"/>
+                    <constraint firstAttribute="bottom" secondItem="iEj-5u-Vcj" secondAttribute="bottom" id="SMm-Cv-8XM"/>
+                </constraints>
+            </tableViewCellContentView>
             <connections>
-                <outlet property="iconView" destination="Nd1-bq-rVa" id="oFw-6w-Pbu"/>
-                <outlet property="imageHeight" destination="17w-9j-Q0v" id="fj1-fL-4GO"/>
-                <outlet property="imageWidth" destination="ZZE-kN-9n5" id="Cro-ag-8iX"/>
+                <outlet property="iconView" destination="iEj-5u-Vcj" id="wxY-95-m4j"/>
+                <outlet property="imageHeight" destination="bQy-QT-PbP" id="zbW-U2-lcc"/>
+                <outlet property="imageWidth" destination="Y7H-Ka-P1I" id="K6s-D1-xmk"/>
             </connections>
-            <point key="canvasLocation" x="-798" y="-475"/>
-        </view>
+        </tableViewCell>
     </objects>
 </document>
