@@ -51,7 +51,9 @@ open class FormViewController: UIViewController {
                 guard let tableView = tableView else { return }
 
                 func animate() {
-                    let keyboardHeight = (tableView.window!.frame.height - context.endFrame.minY)
+                    // Treat the keyboard as hidden if the table view has been removed
+                    // from a `UIWindow`.
+                    let keyboardHeight = tableView.window.map { $0.frame.height - context.endFrame.minY } ?? 0
                     tableView.contentInset.bottom = keyboardHeight
                     tableView.scrollIndicatorInsets.bottom = keyboardHeight
                 }
