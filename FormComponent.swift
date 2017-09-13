@@ -13,6 +13,7 @@ public enum FormComponent {
     case toggle(ToggleCellViewModel)
     case segmentedInput(SegmentedCellViewModel)
     case selection(SelectionCellViewModel, group: SelectionCellGroupViewModel, spec: SelectionCellViewSpec)
+    case note(NoteCellViewModel)
     case noteInput(NoteInputCellViewModel)
     case image(ImageCellViewModel)
     case activityIndicator(ActivityIndicatorCellViewModel, ActivityIndicatorCellViewSpec)
@@ -63,6 +64,8 @@ public enum FormComponent {
             return viewModel
         case .noteInput(let viewModel):
             return viewModel
+        case .note(let viewModel):
+            return viewModel
         case .image(let viewModel):
             return viewModel
         case let .activityIndicator(viewModel, _):
@@ -104,6 +107,8 @@ extension FormComponent: Equatable {
         case let (.selection(lhsViewModel, lhsGroup, _), .selection(rhsViewModel, rhsGroup, _)):
             return lhsViewModel === rhsViewModel && lhsGroup === rhsGroup
         case let (.noteInput(lhsViewModel), .noteInput(rhsViewModel)):
+            return lhsViewModel === rhsViewModel
+        case let (.note(lhsViewModel), .note(rhsViewModel)):
             return lhsViewModel === rhsViewModel
         case let (.image(lhsViewModel), .image(rhsViewModel)):
             return lhsViewModel === rhsViewModel

@@ -45,6 +45,7 @@
                 <constraints>
                     <constraint firstItem="TTn-j0-Qal" firstAttribute="leading" secondItem="i4I-pr-1tn" secondAttribute="trailing" constant="4" id="2Ou-S5-BCN"/>
                     <constraint firstItem="G02-eo-kg0" firstAttribute="centerY" secondItem="Erp-HD-Hhb" secondAttribute="centerY" id="4r5-7E-qXL"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="i4I-pr-1tn" secondAttribute="trailing" priority="250" id="4vc-Um-HrK"/>
                     <constraint firstItem="i4I-pr-1tn" firstAttribute="centerY" secondItem="Erp-HD-Hhb" secondAttribute="centerY" id="73d-gW-zYb"/>
                     <constraint firstAttribute="trailingMargin" secondItem="TTn-j0-Qal" secondAttribute="trailing" id="BBe-IZ-aZm"/>
                     <constraint firstItem="TTn-j0-Qal" firstAttribute="top" secondItem="i4I-pr-1tn" secondAttribute="top" id="J4G-H8-bDB"/>
@@ -54,6 +55,7 @@
             </tableViewCellContentView>
             <connections>
                 <outlet property="addPhotosButton" destination="TTn-j0-Qal" id="uwk-r8-9Wf"/>
+                <outlet property="addPhotosButtonTextViewSpacing" destination="4vc-Um-HrK" id="adr-5u-xTn"/>
                 <outlet property="addPhotosButtonTextViewTopEdge" destination="J4G-H8-bDB" id="JWo-8J-ebz"/>
                 <outlet property="placeholder" destination="G02-eo-kg0" id="7mM-Kj-Pp8"/>
                 <outlet property="textView" destination="i4I-pr-1tn" id="YsM-OE-0cG"/>

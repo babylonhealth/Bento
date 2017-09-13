@@ -2,7 +2,7 @@ import ReactiveSwift
 import Result
 
 public final class NoteInputCellViewModel: FocusableFormComponent {
-    let placeholder: String
+    let placeholder: String?
     let text: ValidatingProperty<String, InvalidInput>
     let isEnabled: Property<Bool>
     let autocapitalizationType: UITextAutocapitalizationType
@@ -11,12 +11,12 @@ public final class NoteInputCellViewModel: FocusableFormComponent {
     let visualDependencies: VisualDependenciesProtocol
     let selectionStyle: UITableViewCellSelectionStyle = .none
 
-    let addPhotosAction: Action<Void, Void, NoError>
+    let addPhotosAction: Action<Void, Void, NoError>?
 
-    public init(placeholder: String,
+    public init(placeholder: String? = nil,
                 text: ValidatingProperty<String, InvalidInput>,
                 isEnabled: Property<Bool> = Property(value: true),
-                addPhotosAction: Action<Void, Void, NoError>,
+                addPhotosAction: Action<Void, Void, NoError>? = nil,
                 autocapitalizationType: UITextAutocapitalizationType = .sentences,
                 autocorrectionType: UITextAutocorrectionType = .`default`,
                 keyboardType: UIKeyboardType = .`default`,

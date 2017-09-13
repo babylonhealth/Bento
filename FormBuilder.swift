@@ -85,6 +85,7 @@ extension FormBuilder {
         case textOptionsField(items: Property<[String]>, selectionAction: Action<Int, Void, NoError>, spec: TextOptionsCellViewSpec, headline: String)
         case imageOptionsField(items: [UIImage], selectionAction: Action<Int, Void, NoError>, destructiveAction: Action<Int, Void, NoError>, spec: ImageOptionsCellViewSpec)
         case activityIndicator(isRefreshing: Property<Bool>)
+        case note(Property<String>)
         case custom(FormComponent)
 
         public func formComponent(with visualDependencies: VisualDependenciesProtocol) -> FormComponent {
@@ -200,6 +201,10 @@ extension FormBuilder {
                                            text: text,
                                            addPhotosAction: addPhotosAction,
                                            visualDependencies: visualDependencies))
+
+            case let .note(text):
+                return .note(NoteCellViewModel(text: text,
+                                               visualDependencies: visualDependencies))
 
             case let .textOptionsField(items, selectionAction, spec, headline):
                 return .textOptionsInput(TextOptionsCellViewModel(items: items, selectionAction: selectionAction, headline: headline), spec)

@@ -10,7 +10,7 @@ final class NoteInputCell: FormItemCell {
     @IBOutlet weak var addPhotosButton: UIButton!
     @IBOutlet weak var placeholder: UILabel!
 
-    private var viewModel: NoteInputCellViewModel!
+    private var viewModel: NoteInputCellViewModelProtocol!
 
     internal weak var delegate: FocusableCellDelegate?
     internal weak var heightDelegate: DynamicHeightCellDelegate?
@@ -19,6 +19,7 @@ final class NoteInputCell: FormItemCell {
 
     @IBOutlet var textViewHeight: NSLayoutConstraint!
     @IBOutlet var addPhotosButtonTextViewTopEdge: NSLayoutConstraint!
+    @IBOutlet var addPhotosButtonTextViewSpacing: NSLayoutConstraint!
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -29,9 +30,11 @@ final class NoteInputCell: FormItemCell {
         contentViewHeight.isActive = true
 
         updateContentViewHeight()
+
+        selectionStyle = .none
     }
 
-    func setup(viewModel: NoteInputCellViewModel) {
+    func setup(viewModel: NoteInputCellViewModelProtocol) {
         self.viewModel = viewModel
         placeholder.text = viewModel.placeholder
         textView.text = ""
@@ -57,11 +60,13 @@ final class NoteInputCell: FormItemCell {
         // This has been fixed in RAS 2.0.
         // https://github.com/ReactiveCocoa/ReactiveSwift/pull/400
         // https://github.com/ReactiveCocoa/ReactiveSwift/pull/481
-        viewModel.text <~ textView.reactive.continuousTextValues
-            .filterMap { isEnabled.value ? $0 : nil }
-            .take(until: reactive.prepareForReuse)
+        if let target = viewModel.textBindingTarget {
+            target <~ textView.reactive.continuousTextValues
+                .filterMap { isEnabled.value ? $0 : nil }
+                .take(until: reactive.prepareForReuse)
+        }
 
-        viewModel.text.producer
+        viewModel.textProducer
             .take(until: reactive.prepareForReuse)
             .observe(on: UIScheduler())
             .startWithValues { [weak self] value in
@@ -73,14 +78,19 @@ final class NoteInputCell: FormItemCell {
                 }
             }
 
-        addPhotosButton.reactive.pressed = CocoaAction(viewModel.addPhotosAction)
+        if let action = viewModel.addPhotosAction {
+            addPhotosButton.reactive.pressed = CocoaAction(action)
+            addPhotosButton.isHidden = false
+            NSLayoutConstraint.activate([addPhotosButtonTextViewSpacing])
+        } else {
+            addPhotosButton.isHidden = true
+            NSLayoutConstraint.deactivate([addPhotosButtonTextViewSpacing])
+        }
 
         viewModel.applyStyle(to: textView)
         viewModel.applyStyle(to: placeholder)
         viewModel.applyStyle(to: addPhotosButton)
         viewModel.applyBackgroundColor(to: [self, textView])
-
-        self.selectionStyle = viewModel.selectionStyle
     }
 
     override func layoutMarginsDidChange() {
@@ -94,8 +104,9 @@ final class NoteInputCell: FormItemCell {
     }
 
     @discardableResult
-    fileprivate func updateContentViewHeight() -> CGFloat {
-        let intrinsicContentSize = textView.intrinsicContentSize
+    fileprivate func updateContentViewHeight(targetWidth: CGFloat? = nil) -> CGFloat {
+        let intrinsicContentSize = textView.sizeThatFits(CGSize(width: targetWidth ?? frame.width,
+                                                                height: .greatestFiniteMagnitude))
 
         if intrinsicContentSize.height != textViewHeight.constant {
             // Offset the content height so that when its text view grows beyond the
@@ -117,6 +128,11 @@ final class NoteInputCell: FormItemCell {
         }
 
         return 0.0
+    }
+
+    override func systemLayoutSizeFitting(_ targetSize: CGSize, withHorizontalFittingPriority horizontalFittingPriority: UILayoutPriority, verticalFittingPriority: UILayoutPriority) -> CGSize {
+        updateContentViewHeight(targetWidth: targetSize.width)
+        return CGSize(width: targetSize.width, height: contentViewHeight.constant)
     }
 }
 
@@ -148,4 +164,38 @@ extension NoteInputCell: DynamicHeightCell, UITextViewDelegate {
         textContainerInset = .zero
         textContainer.lineFragmentPadding = 0
     }
+}
+
+internal protocol NoteInputCellViewModelProtocol: class {
+    var textProducer: SignalProducer<String, NoError> { get }
+    var textBindingTarget: BindingTarget<String>? { get }
+    var addPhotosAction: Action<Void, Void, NoError>? { get }
+    var isEnabled: Property<Bool> { get }
+
+    var placeholder: String? { get }
+    var autocapitalizationType: UITextAutocapitalizationType { get }
+    var autocorrectionType: UITextAutocorrectionType { get }
+    var keyboardType: UIKeyboardType { get }
+    var visualDependencies: VisualDependenciesProtocol { get }
+
+    func applyStyle(to label: UILabel)
+    func applyStyle(to textView: UITextView)
+    func applyStyle(to button: UIButton)
+    func applyBackgroundColor(to views: [UIView])
+}
+
+extension NoteInputCellViewModel: NoteInputCellViewModelProtocol {
+    var textProducer: SignalProducer<String, NoError> { return text.producer }
+    var textBindingTarget: BindingTarget<String>? { return text.bindingTarget }
+}
+
+extension NoteCellViewModel: NoteInputCellViewModelProtocol {
+    var placeholder: String? { return nil }
+    var isEnabled: Property<Bool> { return Property(value: false) }
+    var autocapitalizationType: UITextAutocapitalizationType { return .none }
+    var autocorrectionType: UITextAutocorrectionType { return .no }
+    var keyboardType: UIKeyboardType { return .default }
+    var addPhotosAction: Action<Void, Void, NoError>? { return nil }
+    var textProducer: SignalProducer<String, NoError> { return text.producer }
+    var textBindingTarget: BindingTarget<String>? { return nil }
 }
