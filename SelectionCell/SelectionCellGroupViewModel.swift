@@ -59,7 +59,7 @@ public final class SelectionCellGroupViewModel {
                            isFormEnabled.producer,
                            selection.producer.map { $0 == identifier }.skipRepeats(),
                            processingId.producer.map { $0 == identifier }.skipRepeats())
-            .map { [hasDisclosureAction] arguments in
+            .map { arguments in
                 let (actionAvailability, isFormEnabled, isSelected, isProcessing) = arguments
                 if isProcessing {
                     return .processing(selected: isSelected)
