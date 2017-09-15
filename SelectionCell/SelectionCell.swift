@@ -95,6 +95,7 @@ open class SelectionCell: FormItemCell, NibLoadableCell {
             disclosure.isHidden = style == .rightTick
             disclosure.isEnabled = false
             configureTick(isSelected: selected, isEnabled: false, isProcessing: false)
+            accessoryType = spec.accessoryType
 
         case let .enabled(selected, isDisclosureEnabled):
             isUserInteractionEnabled = true
@@ -102,6 +103,7 @@ open class SelectionCell: FormItemCell, NibLoadableCell {
             disclosure.isHidden = style == .rightTick
             disclosure.isEnabled = isDisclosureEnabled
             configureTick(isSelected: selected, isEnabled: true, isProcessing: false)
+            accessoryType = spec.accessoryType
 
         case let .processing(selected):
             isUserInteractionEnabled = false
@@ -109,6 +111,7 @@ open class SelectionCell: FormItemCell, NibLoadableCell {
             activityIndicator.startAnimating()
             disclosure.isHidden = true
             configureTick(isSelected: selected, isEnabled: false, isProcessing: true)
+            accessoryType = .none
         }
     }
 
