@@ -122,7 +122,7 @@ private func evaluate(_ input: String) -> (String) -> Bool {
     return { regex in NSPredicate(format:"SELF MATCHES %@", regex).evaluate(with: input) }
 }
 
-private func toValidatorOutput<T>(_ errorMessage: String) -> (Bool) -> ValidatorOutput<T, InvalidInput> {
+private func toValidatorOutput<T>(_ errorMessage: String) -> (Bool) -> ValidatingProperty<T, InvalidInput>.Decision {
     return { isValid in isValid ? .valid : .invalid(InvalidInput(reason: errorMessage)) }
 }
 
