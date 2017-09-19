@@ -3,13 +3,14 @@ import enum Result.NoError
 
 public final class FacebookCellViewModel {
     let selectionStyle: UITableViewCellSelectionStyle = .none
-    let title: String = LocalizationUI.SignIn.signInWithFacebook
+    let title: String
     let visualDependencies: VisualDependenciesProtocol
     let action: Action<Void, Void, NoError>
     let isEnabled: Property<Bool>
     let isLoading: Property<Bool>?
 
-    public init(action: Action<Void, Void, NoError>, isEnabled: Property<Bool> = Property(value: true), visualDependencies: VisualDependenciesProtocol, isLoading: Property<Bool>? = nil) {
+    public init(title: String, action: Action<Void, Void, NoError>, isEnabled: Property<Bool> = Property(value: true), visualDependencies: VisualDependenciesProtocol, isLoading: Property<Bool>? = nil) {
+        self.title = title
         self.action = action
         self.visualDependencies = visualDependencies
         self.isLoading = isLoading

@@ -70,14 +70,33 @@ extension FormBuilder {
         }
 
         public static func header(text: String) -> Component {
-            return Component { visualDependencies in
-                return .description(.init(text: text, type: .header, visualDependencies: visualDependencies))
-            }
+            return description(.header, text: text)
         }
 
         public static func headline(text: String) -> Component {
+            return description(.headline, text: text)
+        }
+
+        public static func description(_ type: DescriptionCellType, text: String) -> Component {
             return Component { visualDependencies in
-                return .description(.init(text: text, type: .headline, visualDependencies: visualDependencies))
+                return .description(.init(text: text, type: type, visualDependencies: visualDependencies))
+            }
+        }
+
+        public static func actionDescription(_ description: NSAttributedString, action: Action<Void, Void, NoError>) -> Component {
+            return Component { visualDependencies in
+                return .actionDescription(ActionDescriptionCellViewModel(visualDependencies: visualDependencies,
+                                                                         title: description,
+                                                                         action: action))
+            }
+        }
+
+        public static func facebookButton(title: String, action: Action<Void, Void, NoError>) -> Component {
+            return Component { visualDependencies in
+                return .facebookButton(FacebookCellViewModel(title: title,
+                                                             action: action,
+                                                             visualDependencies: visualDependencies,
+                                                             isLoading: action.isExecuting))
             }
         }
 
@@ -109,12 +128,22 @@ extension FormBuilder {
             }
         }
 
-        public static func textField(placeholder: String, text: ValidatingProperty<String, InvalidInput>) -> Component {
+        public static func textField(
+            placeholder: String,
+            text: ValidatingProperty<String, InvalidInput>,
+            clearsOnBeginEditing: Bool = false,
+            autocapitalizationType: UITextAutocapitalizationType = .sentences,
+            autocorrectionType: UITextAutocorrectionType = .default,
+            keyboardType: UIKeyboardType = .default
+        ) -> Component {
             return Component { visualDependencies in
                 return .textInput(
                     TextInputCellViewModel(placeholder: placeholder,
                                            text: text,
                                            isSecure: false,
+                                           clearsOnBeginEditing: clearsOnBeginEditing,
+                                           autocapitalizationType: autocapitalizationType,
+                                           autocorrectionType: autocorrectionType,
                                            visualDependencies: visualDependencies))
             }
         }
@@ -129,12 +158,13 @@ extension FormBuilder {
             }
         }
 
-        public static func titledTextField(title: String, placeholder: String, text: ValidatingProperty<String, InvalidInput>) -> Component {
+        public static func titledTextField(title: String, placeholder: String, text: ValidatingProperty<String, InvalidInput>, isEnabled: Property<Bool> = Property(value: true)) -> Component {
             return Component { visualDependencies in
                 return .titledTextInput(
                     TitledTextInputCellViewModel(title: title,
                                                  placeholder: placeholder,
                                                  text: text,
+                                                 isEnabled: isEnabled,
                                                  visualDependencies: visualDependencies))
             }
         }
@@ -150,14 +180,15 @@ extension FormBuilder {
             }
         }
 
-        public static func selectionField(title: String, value: Property<String>, action: Action<Void, Void, NoError>) -> Component {
+        public static func selectionField(title: String, value: Property<String>, inputTextAlignment: TextAlignment = .right, action: Action<Void, Void, NoError>, accessory: UITableViewCellAccessoryType = .disclosureIndicator) -> Component {
             return Component { visualDependencies in
                 return .actionInput(
                     ActionInputCellViewModel(visualDependencies: visualDependencies,
                                              title: title,
                                              input: value,
-                                             inputTextAlignment: .left,
-                                             selected: action))
+                                             inputTextAlignment: inputTextAlignment,
+                                             selected: action,
+                                             accessory: accessory))
             }
         }
 
