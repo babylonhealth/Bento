@@ -83,6 +83,7 @@ final class ActionInputCell: FormItemCell {
             iconView.layer.cornerRadius = largeRoundAvatarWidthConstraint.constant / 2.0
             stackViewLeadingConstraint.constant = largeRoundAvatarWidthConstraint.constant + stackView.spacing
             iconView.isHidden = false
+            iconView.contentMode = .scaleAspectFill
             iconView.reactive.image <~ icon
                 .observe(on: UIScheduler())
                 .take(until: reactive.prepareForReuse)
@@ -94,6 +95,7 @@ final class ActionInputCell: FormItemCell {
             deactivatingConstraints.append(contentsOf: largeRoundAvatarVerticalMarginConstraints)
             activatingConstraints.append(miniatureIconWidthConstraint)
             iconView.layer.cornerRadius = 0.0
+            iconView.contentMode = .center
 
             if let icon = icon {
                 iconView.isHidden = false
