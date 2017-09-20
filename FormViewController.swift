@@ -28,6 +28,10 @@ open class FormViewController: UIViewController {
         tableView.delegate = self
 
         dataSource.bind(to: form.components, configurator: self)
+
+        if let form = form as? RefreshableForm {
+            setupRefreshControl(with: form.refresh)
+        }
     }
 
     @available(*, unavailable)
@@ -94,6 +98,12 @@ open class FormViewController: UIViewController {
             visualDependencies.styles.navigationBarBackButton
                 .apply(view: navigationBar, to: navigationItem)
         }
+    }
+
+    private func setupRefreshControl(with action: Action<Void, Never, NoError>) {
+        let refreshControl = UIRefreshControl()
+        tableView.refreshControl = refreshControl
+        refreshControl.reactive.refresh = CocoaAction(action)
     }
 
     /// Focus the preferred focusable row in the form.
