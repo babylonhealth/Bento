@@ -35,10 +35,6 @@ open class FormViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
 
-    override open func loadView() {
-        view = tableView
-    }
-
     open override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
 
@@ -79,10 +75,20 @@ open class FormViewController: UIViewController {
     open override func viewDidLoad() {
         super.viewDidLoad()
 
+        view.addSubview(tableView)
         tableView.keyboardDismissMode = .interactive
 
         visualDependencies.styles.backgroundFormColor
             .apply(to: tableView)
+        visualDependencies.styles.backgroundFormColor
+            .apply(to: view)
+
+        NSLayoutConstraint.activate([
+            tableView.topAnchor.constraint(equalTo: view.topAnchor),
+            tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
+        ])
 
         if let navigationBar = navigationController?.navigationBar {
             visualDependencies.styles.navigationBarBackButton
