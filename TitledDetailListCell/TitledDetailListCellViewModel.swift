@@ -11,11 +11,11 @@ public struct TitledDetailListItem {
 public final class TitledDetailListCellViewModel {
     private let visualDependencies: VisualDependenciesProtocol
     private let title: String
-    let items: [DetailItemViewModel]
+    let items: [TitledDetailListItemViewModel]
 
     init(title: String, items: [TitledDetailListItem], visualDependencies: VisualDependenciesProtocol) {
         self.title = title
-        self.items = items.map { DetailItemViewModel(visualDependencies: visualDependencies, item: $0) }
+        self.items = items.map { TitledDetailListItemViewModel(visualDependencies: visualDependencies, item: $0) }
         self.visualDependencies = visualDependencies
     }
 

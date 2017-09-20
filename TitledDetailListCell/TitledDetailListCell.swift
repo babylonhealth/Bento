@@ -13,7 +13,7 @@ final class TitledDetailListCell: FormCell {
         subviews.forEach { $0.removeFromSuperview() }
 
         viewModel.items.forEach { item in
-            let view = viewFromNib(classType: DetailItemView.self) as! DetailItemView
+            let view = viewFromNib(classType: TitledDetailListItemView.self) as! TitledDetailListItemView
             view.setup(viewModel: item)
             listStackView.addArrangedSubview(view)
         }
