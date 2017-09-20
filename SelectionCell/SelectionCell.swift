@@ -25,6 +25,10 @@ open class SelectionCell: FormItemCell, NibLoadableCell {
 
     private var style: Style!
 
+    override open var preferredSeparatorLeadingAnchor: NSLayoutXAxisAnchor {
+        return label.leadingAnchor
+    }
+
     override open func awakeFromNib() {
         super.awakeFromNib()
 

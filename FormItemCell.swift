@@ -1,9 +1,9 @@
 import UIKit
 
 open class FormItemCell: FormCell {
-    // 44pt * 44pt is the recommended minimum tappable area.
-    //
-    // Configurable in the future with form-wise styling.
+    /// 44pt * 44pt is the recommended minimum tappable area.
+    ///
+    /// Configurable in the future with form-wise styling.
     public let minimumHeight: CGFloat = 44
 
     private var heightConstraint: NSLayoutConstraint!

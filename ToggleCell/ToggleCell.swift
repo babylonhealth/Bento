@@ -9,6 +9,10 @@ class ToggleCell: FormItemCell {
 
     var viewModel: ToggleCellViewModel!
 
+    override var preferredSeparatorLeadingAnchor: NSLayoutXAxisAnchor {
+        return titleLabel.leadingAnchor
+    }
+
     func setup(viewModel: ToggleCellViewModel) {
         self.viewModel = viewModel
 

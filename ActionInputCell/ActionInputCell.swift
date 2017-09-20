@@ -23,6 +23,10 @@ final class ActionInputCell: FormItemCell {
         return true
     }
 
+    override var preferredSeparatorLeadingAnchor: NSLayoutXAxisAnchor {
+        return titleLabel.leadingAnchor
+    }
+
     func setup(viewModel: ActionInputCellViewModel) {
         self.viewModel = viewModel
         viewModel.applyTitleStyle(to: titleLabel)

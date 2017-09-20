@@ -30,6 +30,17 @@ import UIKit
 import ReactiveSwift
 import Dwifft
 
+public enum FormCellSeparatorVisibility {
+    /// The separator should be invisible.
+    case invisible
+
+    /// The separator is visible and can be inset.
+    case visible
+
+    /// The separator is visible, but no inset should be applied.
+    case visibleNoInset
+}
+
 public protocol FormCellConfigurator: class {
     func configure(_ cell: FormCell)
     func updateSeparatorsOfVisibleCells()
@@ -57,21 +68,24 @@ public final class FormTableViewDataSource: NSObject, UITableViewDataSource {
         super.init()
     }
 
-    /// Whether the form has adjacent section defining cells starting from the given index.
-    ///
-    /// If the given index points to the last cell, `hasAdjacentSectionDefiningCells(at:)`
-    /// would behave as if a section defining cell is ordered after it.
+    /// Compute the separator visibility for the specified cell.
     ///
     /// - parameters:
     ///   - row: The cell index.
     ///
-    /// - returns: `true` if there are adjacent section defining cells starting from
-    ///            `row`. `false` otherwise.
-    public func hasAdjacentSectionDefiningCells(at row: Int) -> Bool {
-        guard row < components.count - 1 else {
-            return components[row].definesSection
+    /// - returns: The separator visibility for the specified cell.
+    public func separatorVisibility(forCellAt row: Int) -> FormCellSeparatorVisibility {
+        let definesSection = components[row].definesSection
+        let nextCellDefinesSection = row < components.count - 1 ? components[row + 1].definesSection : true
+
+        switch (definesSection, nextCellDefinesSection) {
+        case (true, true):
+            return .invisible
+        case (true, false), (false, true):
+            return .visibleNoInset
+        case (false, false):
+            return .visible
         }
-        return components[row].definesSection && components[row + 1].definesSection
     }
 
     public func numberOfSections(in tableView: UITableView) -> Int {

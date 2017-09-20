@@ -15,9 +15,6 @@ public final class SegmentedCell: FormItemCell {
         // Disable the default selection style.
         selectionStyle = .none
 
-        // Disable autoresizing.
-        translatesAutoresizingMaskIntoConstraints = false
-
         // Honor the FormView layout margins.
         preservesSuperviewLayoutMargins = true
         contentView.preservesSuperviewLayoutMargins = true

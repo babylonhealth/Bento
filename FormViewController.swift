@@ -150,8 +150,8 @@ extension FormViewController: FormCellConfigurator {
                     continue
                 }
 
-                let formCell = unsafeDowncast(cell, to: FormCell.self)
-                formCell.separator.isHidden = dataSource.hasAdjacentSectionDefiningCells(at: indexPath.row)
+                unsafeDowncast(cell, to: FormCell.self)
+                    .visibility = dataSource.separatorVisibility(forCellAt: indexPath.row)
             }
         }
     }
@@ -220,6 +220,6 @@ extension FormViewController: UITableViewDelegate {
     public func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         // See `updateSeparatorsOfVisibleCells()` for the implementation note.
         let cell = unsafeDowncast(cell, to: FormCell.self)
-        cell.separator.isHidden = dataSource.hasAdjacentSectionDefiningCells(at: indexPath.row)
+        cell.visibility = dataSource.separatorVisibility(forCellAt: indexPath.row)
     }
 }

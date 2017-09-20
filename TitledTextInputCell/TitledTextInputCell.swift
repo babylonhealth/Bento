@@ -7,6 +7,10 @@ class TitledTextInputCell: FormItemCell {
     private var viewModel: TitledTextInputCellViewModel!
     internal weak var delegate: FocusableCellDelegate?
 
+    override var preferredSeparatorLeadingAnchor: NSLayoutXAxisAnchor {
+        return titleLabel.leadingAnchor
+    }
+
     override func awakeFromNib() {
         super.awakeFromNib()
         textField.delegate = self

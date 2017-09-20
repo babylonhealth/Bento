@@ -10,6 +10,10 @@ class PhoneInputCell: FormItemCell {
     private var viewModel: PhoneInputCellViewModel!
     internal weak var delegate: FocusableCellDelegate?
 
+    override var preferredSeparatorLeadingAnchor: NSLayoutXAxisAnchor {
+        return titleLabel.leadingAnchor
+    }
+
     override func awakeFromNib() {
         super.awakeFromNib()
         phoneNumberTextField.delegate = self
