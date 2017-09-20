@@ -269,6 +269,12 @@ extension FormBuilder {
             }
         }
 
+        public static func titledDetailList(title: String, items: [TitledDetailListItem]) -> Component {
+            return Component { visualDependencies in
+                return .titledDetailList(TitledDetailListCellViewModel(title: title, items: items, visualDependencies: visualDependencies))
+            }
+        }
+
         public static func multiselectionItem(
             title: String,
             icon: SignalProducer<UIImage, NoError>,

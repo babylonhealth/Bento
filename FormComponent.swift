@@ -17,6 +17,7 @@ public enum FormComponent {
     case noteInput(NoteInputCellViewModel)
     case image(ImageCellViewModel)
     case activityIndicator(ActivityIndicatorCellViewModel, ActivityIndicatorCellViewSpec)
+    case titledDetailList(TitledDetailListCellViewModel)
 
     /// Indicates whether the component defines a section. `FormViewController` uses
     /// `definesSection` to determine the visibility of cell separators.
@@ -25,7 +26,7 @@ public enum FormComponent {
     ///         would be displayed between them.
     var definesSection: Bool {
         switch self {
-        case .description, .actionDescription, .space, .facebookButton, .actionButton, .image, .activityIndicator:
+        case .description, .actionDescription, .space, .facebookButton, .actionButton, .image, .activityIndicator, .titledDetailList:
             return true
         default:
             return false
@@ -70,6 +71,8 @@ public enum FormComponent {
             return viewModel
         case let .activityIndicator(viewModel, _):
             return viewModel
+        case let .titledDetailList(viewModel):
+            return viewModel
         }
     }
 }
@@ -113,6 +116,8 @@ extension FormComponent: Equatable {
         case let (.image(lhsViewModel), .image(rhsViewModel)):
             return lhsViewModel === rhsViewModel
         case let (.activityIndicator(lhsViewModel, _), .activityIndicator(rhsViewModel, _)):
+            return lhsViewModel === rhsViewModel
+        case let (.titledDetailList(lhsViewModel), .titledDetailList(rhsViewModel)):
             return lhsViewModel === rhsViewModel
         default:
             return false

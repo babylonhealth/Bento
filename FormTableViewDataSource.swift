@@ -164,6 +164,10 @@ public final class FormTableViewDataSource: NSObject, UITableViewDataSource {
             let cell: ActivityIndicatorCell = configure(tableView.dequeueReusableCell(for:), for: indexPath)
             cell.setup(viewModel: viewModel, viewSpec: viewSpec)
             return cell
+        case let .titledDetailList(viewModel):
+            let cell: TitledDetailListCell = configure(tableView.dequeueReusableCell(for:), for: indexPath)
+            cell.setup(viewModel: viewModel)
+            return cell
         }
     }
 
@@ -188,6 +192,7 @@ public final class FormTableViewDataSource: NSObject, UITableViewDataSource {
         tableView.register(ImageOptionsCell.self)
         tableView.register(ImageCell.self)
         tableView.register(ActivityIndicatorCell.self)
+        tableView.register(TitledDetailListCell.self)
 
         tableView.dataSource = self
 
