@@ -12,6 +12,14 @@ final class ImageCell: FormCell {
 
     var viewModel: ImageCellViewModel!
     private var imageConstraints: [NSLayoutConstraint]!
+    private var tapRecognizer: UITapGestureRecognizer!
+
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.userDidTapIconView))
+        iconView.addGestureRecognizer(tapRecognizer)        
+        iconView.reactive.isUserInteractionEnabled <~ isFormEnabled
+    }
 
     func setup(viewModel: ImageCellViewModel) {
         self.viewModel = viewModel
@@ -47,5 +55,9 @@ final class ImageCell: FormCell {
         }
 
         NSLayoutConstraint.activate(imageConstraints)
+    }
+
+    @objc private func userDidTapIconView() {
+        viewModel?.selected?.apply().start()
     }
 }
