@@ -1,9 +1,13 @@
-//
-//  TitledDetailListCellViewSpec.swift
-//  BabylonUI
-//
-//  Created by Ana Catarina Figueira De Mesquita Figueiredo on 21/09/2017.
-//  Copyright © 2017 Babylon. All rights reserved.
-//
+public final class TitledListCellViewSpec {
+    public let titleColor: UIColor
+    public let titleStyle: UIViewStyle<UILabel>
+    public let itemViewSpec: TitledListItemViewSpec
 
-import Foundation
+    public init(titleColor: UIColor,
+                titleStyle: UIViewStyle<UILabel>,
+                itemViewSpec: TitledListItemViewSpec) {
+        self.titleColor = titleColor
+        self.titleStyle = titleStyle
+        self.itemViewSpec = itemViewSpec
+    }
+}

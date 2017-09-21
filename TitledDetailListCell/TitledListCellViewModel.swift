@@ -9,19 +9,11 @@ public struct TitledListItem {
 }
 
 public final class TitledListCellViewModel {
-    private let visualDependencies: VisualDependenciesProtocol
-    private let title: String
+    let title: String
     let items: [TitledListItemViewModel]
 
-    init(title: String, items: [TitledListItem], visualDependencies: VisualDependenciesProtocol) {
+    init(title: String, items: [TitledListItem]) {
         self.title = title
-        self.items = items.map { TitledListItemViewModel(visualDependencies: visualDependencies, item: $0) }
-        self.visualDependencies = visualDependencies
-    }
-
-    func applyTitleStyle(to label: UILabel) {
-        visualDependencies.styles.labelTextTitle3.apply(to: label)
-        label.textColor = Colors.black
-        label.text = title
+        self.items = items.map { TitledListItemViewModel(item: $0) }
     }
 }

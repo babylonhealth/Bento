@@ -271,7 +271,15 @@ extension FormBuilder {
 
         public static func titledList(title: String, items: [TitledListItem]) -> Component {
             return Component { visualDependencies in
-                return .titledList(TitledListCellViewModel(title: title, items: items, visualDependencies: visualDependencies))
+                let listItemViewSpec = TitledListItemViewSpec(titleColor: .black,
+                                                          titleStyle: visualDependencies.styles.labelTextFootnote,
+                                                          descriptionColor: Colors.silverGrey,
+                                                          descriptionStyle: visualDependencies.styles.labelTextFootnote)
+                return .titledList(TitledListCellViewModel(title: title,
+                                                           items: items),
+                                   TitledListCellViewSpec(titleColor: .black,
+                                                          titleStyle: visualDependencies.styles.labelTextTitle3,
+                                                          itemViewSpec: listItemViewSpec))
             }
         }
 

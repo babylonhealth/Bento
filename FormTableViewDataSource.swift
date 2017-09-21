@@ -164,9 +164,9 @@ public final class FormTableViewDataSource: NSObject, UITableViewDataSource {
             let cell: ActivityIndicatorCell = configure(tableView.dequeueReusableCell(for:), for: indexPath)
             cell.setup(viewModel: viewModel, viewSpec: viewSpec)
             return cell
-        case let .titledList(viewModel):
+        case let .titledList(viewModel, viewSpec):
             let cell: TitledListCell = configure(tableView.dequeueReusableCell(for:), for: indexPath)
-            cell.setup(viewModel: viewModel)
+            cell.setup(viewModel: viewModel, viewSpec: viewSpec)
             return cell
         }
     }
