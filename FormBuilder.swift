@@ -269,9 +269,9 @@ extension FormBuilder {
             }
         }
 
-        public static func titledDetailList(title: String, items: [TitledDetailListItem]) -> Component {
+        public static func titledList(title: String, items: [TitledListItem]) -> Component {
             return Component { visualDependencies in
-                return .titledDetailList(TitledDetailListCellViewModel(title: title, items: items, visualDependencies: visualDependencies))
+                return .titledList(TitledListCellViewModel(title: title, items: items, visualDependencies: visualDependencies))
             }
         }
 
