@@ -6,6 +6,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -19,26 +20,26 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yf6-PS-EO4" customClass="TTTAttributedLabel">
-                        <rect key="frame" x="16" y="16" width="343" height="24"/>
+                        <rect key="frame" x="8" y="11" width="359" height="24"/>
                         <fontDescription key="fontDescription" style="UICTFontTextStyleTitle3"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <stackView opaque="NO" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" axis="vertical" distribution="fillEqually" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="sS5-Nr-uZV">
-                        <rect key="frame" x="16" y="50" width="343" height="134.5"/>
+                        <rect key="frame" x="8" y="45" width="359" height="145"/>
                         <userDefinedRuntimeAttributes>
                             <userDefinedRuntimeAttribute type="boolean" keyPath="isLayoutMarginsRelativeArrangement" value="YES"/>
                         </userDefinedRuntimeAttributes>
                     </stackView>
                 </subviews>
                 <constraints>
-                    <constraint firstAttribute="trailing" secondItem="yf6-PS-EO4" secondAttribute="trailing" constant="16" id="0Yk-tI-b6G"/>
-                    <constraint firstAttribute="bottom" secondItem="sS5-Nr-uZV" secondAttribute="bottom" constant="16" id="5mh-Wx-axz"/>
-                    <constraint firstItem="sS5-Nr-uZV" firstAttribute="top" secondItem="yf6-PS-EO4" secondAttribute="bottom" constant="10" id="Iyv-nY-V9a"/>
-                    <constraint firstItem="yf6-PS-EO4" firstAttribute="leading" secondItem="mOI-6j-qPU" secondAttribute="leading" constant="16" id="TC3-tR-VgQ"/>
-                    <constraint firstItem="yf6-PS-EO4" firstAttribute="top" secondItem="mOI-6j-qPU" secondAttribute="top" constant="16" id="ft1-fQ-6yh"/>
-                    <constraint firstItem="sS5-Nr-uZV" firstAttribute="leading" secondItem="mOI-6j-qPU" secondAttribute="leading" constant="16" id="npJ-h6-Jvq"/>
-                    <constraint firstAttribute="trailing" secondItem="sS5-Nr-uZV" secondAttribute="trailing" constant="16" id="pBa-SS-3VM"/>
+                    <constraint firstItem="yf6-PS-EO4" firstAttribute="top" secondItem="mOI-6j-qPU" secondAttribute="topMargin" id="6hb-2u-yOW"/>
+                    <constraint firstItem="yf6-PS-EO4" firstAttribute="leading" secondItem="mOI-6j-qPU" secondAttribute="leadingMargin" id="8Gi-2z-UYJ"/>
+                    <constraint firstItem="yf6-PS-EO4" firstAttribute="trailing" secondItem="mOI-6j-qPU" secondAttribute="trailingMargin" id="INc-Qb-21N"/>
+                    <constraint firstItem="sS5-Nr-uZV" firstAttribute="top" secondItem="yf6-PS-EO4" secondAttribute="bottom" constant="10" id="KRs-fK-bo8"/>
+                    <constraint firstItem="sS5-Nr-uZV" firstAttribute="leading" secondItem="mOI-6j-qPU" secondAttribute="leadingMargin" id="Ug0-LO-otc"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="sS5-Nr-uZV" secondAttribute="bottom" id="cZD-5v-yQG"/>
+                    <constraint firstItem="sS5-Nr-uZV" firstAttribute="trailing" secondItem="mOI-6j-qPU" secondAttribute="trailingMargin" id="npj-8q-Wiq"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
