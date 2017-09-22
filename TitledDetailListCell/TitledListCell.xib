@@ -26,7 +26,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <stackView opaque="NO" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" axis="vertical" distribution="fillEqually" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="sS5-Nr-uZV">
-                        <rect key="frame" x="8" y="45" width="359" height="145"/>
+                        <rect key="frame" x="8" y="49" width="359" height="135"/>
                         <userDefinedRuntimeAttributes>
                             <userDefinedRuntimeAttribute type="boolean" keyPath="isLayoutMarginsRelativeArrangement" value="YES"/>
                         </userDefinedRuntimeAttributes>
@@ -36,7 +36,7 @@
                     <constraint firstItem="yf6-PS-EO4" firstAttribute="top" secondItem="mOI-6j-qPU" secondAttribute="topMargin" id="6hb-2u-yOW"/>
                     <constraint firstItem="yf6-PS-EO4" firstAttribute="leading" secondItem="mOI-6j-qPU" secondAttribute="leadingMargin" id="8Gi-2z-UYJ"/>
                     <constraint firstItem="yf6-PS-EO4" firstAttribute="trailing" secondItem="mOI-6j-qPU" secondAttribute="trailingMargin" id="INc-Qb-21N"/>
-                    <constraint firstItem="sS5-Nr-uZV" firstAttribute="top" secondItem="yf6-PS-EO4" secondAttribute="bottom" constant="10" id="KRs-fK-bo8"/>
+                    <constraint firstItem="sS5-Nr-uZV" firstAttribute="top" secondItem="yf6-PS-EO4" secondAttribute="bottom" constant="14" id="KRs-fK-bo8"/>
                     <constraint firstItem="sS5-Nr-uZV" firstAttribute="leading" secondItem="mOI-6j-qPU" secondAttribute="leadingMargin" id="Ug0-LO-otc"/>
                     <constraint firstAttribute="bottomMargin" secondItem="sS5-Nr-uZV" secondAttribute="bottom" constant="6" id="cZD-5v-yQG"/>
                     <constraint firstItem="sS5-Nr-uZV" firstAttribute="trailing" secondItem="mOI-6j-qPU" secondAttribute="trailingMargin" id="npj-8q-Wiq"/>
