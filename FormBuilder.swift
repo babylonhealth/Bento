@@ -278,7 +278,7 @@ extension FormBuilder {
                 return .titledList(TitledListCellViewModel(title: title,
                                                            items: items),
                                    TitledListCellViewSpec(titleColor: .black,
-                                                          titleStyle: visualDependencies.styles.labelTextTitle3,
+                                                          titleStyle: visualDependencies.styles.labelTextTitle2.composing(with: visualDependencies.styles.labelTextStyleWithMediumWeight),
                                                           itemViewSpec: listItemViewSpec))
             }
         }
