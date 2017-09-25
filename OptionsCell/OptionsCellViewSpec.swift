@@ -1,6 +1,6 @@
 import UIKit
 
-public final class ImageOptionsCellViewSpec {
+public struct ImageOptionsCellViewSpec {
     public let mediaThumbDimension: CGFloat
     public let mediaCellDimension: CGFloat
     public let destructiveButtonStyle: UIViewStyle<UIButton>

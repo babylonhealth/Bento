@@ -1,4 +1,4 @@
-public final class ActionCellViewSpec {
+public struct ActionCellViewSpec {
     public let title: String
     public let buttonStyle: UIViewStyle<UIButton>
     public let disabledButtonStyle: UIViewStyle<UIButton>?

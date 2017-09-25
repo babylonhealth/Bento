@@ -1,6 +1,6 @@
 import UIKit
 
-public final class TextOptionsCellViewSpec {
+public struct TextOptionsCellViewSpec {
     public let buttonStyle: UIViewStyle<UIButton>
     public let buttonInsets: UIEdgeInsets
     public let labelStyle: UIViewStyle<UILabel>

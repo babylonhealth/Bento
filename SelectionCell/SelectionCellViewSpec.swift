@@ -1,6 +1,6 @@
 import UIKit
 
-public final class SelectionCellViewSpec {
+public struct SelectionCellViewSpec {
     public let tick: UIImage
     public let defaultIcon: UIImage
     public let tickColor: UIColor

@@ -1,4 +1,4 @@
-public final class ActivityIndicatorCellViewSpec {
+public struct ActivityIndicatorCellViewSpec {
     public let cellStyle: UIViewStyle<UIView>?
 
     public init(cellStyle: UIViewStyle<UIView>?) {
