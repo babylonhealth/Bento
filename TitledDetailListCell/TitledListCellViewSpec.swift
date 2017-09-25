@@ -1,4 +1,4 @@
-public final class TitledListCellViewSpec {
+public struct TitledListCellViewSpec {
     public let titleColor: UIColor
     public let titleStyle: UIViewStyle<UILabel>
     public let itemViewSpec: TitledListItemViewSpec
