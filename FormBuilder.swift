@@ -300,6 +300,20 @@ extension FormBuilder {
             }
         }
 
+        public static func titledList(title: String, items: [TitledListItem]) -> Component {
+            return Component { visualDependencies in
+                let listItemViewSpec = TitledListItemViewSpec(titleColor: .black,
+                                                          titleStyle: visualDependencies.styles.labelTextFootnote,
+                                                          descriptionColor: Colors.silverGrey,
+                                                          descriptionStyle: visualDependencies.styles.labelTextFootnote)
+                return .titledList(TitledListCellViewModel(title: title,
+                                                           items: items),
+                                   TitledListCellViewSpec(titleColor: .black,
+                                                          titleStyle: visualDependencies.styles.labelTextTitle3.composing(with: visualDependencies.styles.labelTextStyleWithMediumWeight),
+                                                          itemViewSpec: listItemViewSpec))
+            }
+        }
+
         public static func multiselectionItem(
             title: String,
             icon: SignalProducer<UIImage, NoError>,
