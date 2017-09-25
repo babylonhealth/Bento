@@ -1,4 +1,4 @@
-struct TitledListItemViewModel{
+struct TitledListItemViewModel {
     let title: String
     let description: String
 
