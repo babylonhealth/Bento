@@ -1,5 +1,6 @@
 import ReactiveSwift
 import Result
+import BabylonFoundation
 
 public protocol Form {
     var components: Property<[FormComponent]> { get }
@@ -7,5 +8,5 @@ public protocol Form {
 }
 
 public protocol RefreshableForm: Form {
-    var refresh: Action<Void, Never, NoError> { get }
+    var refresh: ActionInput<Void> { get }
 }

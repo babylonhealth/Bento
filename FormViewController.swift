@@ -1,4 +1,5 @@
 import UIKit
+import BabylonFoundation
 import ReactiveSwift
 import ReactiveCocoa
 import enum Result.NoError
@@ -12,31 +13,40 @@ open class FormViewController: UIViewController {
     fileprivate let visualDependencies: VisualDependenciesProtocol
     private var keyboardChangeDisposable: Disposable?
 
+    public init<F: RefreshableForm>(form: F, visualDependencies: VisualDependenciesProtocol) {
+        self.form = form
+        self.visualDependencies = visualDependencies
+        tableView = UITableView()
+        dataSource = FormTableViewDataSource(for: tableView)
+        super.init(nibName: nil, bundle: nil)
+
+        setupTableView()
+        setupRefreshControl(with: form.refresh)
+    }
+
     public init<F: Form>(form: F, visualDependencies: VisualDependenciesProtocol) {
         self.form = form
         self.visualDependencies = visualDependencies
-
         tableView = UITableView()
-        tableView.translatesAutoresizingMaskIntoConstraints = false
-        tableView.separatorStyle = .none
-        tableView.rowHeight = UITableViewAutomaticDimension
-        tableView.estimatedRowHeight = 44
-
         dataSource = FormTableViewDataSource(for: tableView)
-
         super.init(nibName: nil, bundle: nil)
-        tableView.delegate = self
 
-        dataSource.bind(to: form.components, configurator: self)
-
-        if let form = form as? RefreshableForm {
-            setupRefreshControl(with: form.refresh)
-        }
+        setupTableView()
     }
 
     @available(*, unavailable)
     required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    private func setupTableView() {
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        tableView.separatorStyle = .none
+        tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.estimatedRowHeight = 44
+        tableView.delegate = self
+
+        dataSource.bind(to: form.components, configurator: self)
     }
 
     open override func viewDidAppear(_ animated: Bool) {
@@ -100,10 +110,12 @@ open class FormViewController: UIViewController {
         }
     }
 
-    private func setupRefreshControl(with action: Action<Void, Never, NoError>) {
+    private func setupRefreshControl(with action: ActionInput<Void>) {
         let refreshControl = UIRefreshControl()
         tableView.refreshControl = refreshControl
-        refreshControl.reactive.refresh = CocoaAction(action)
+        refreshControl.reactive.isEnabled <~ action.isEnabled.producer.observe(on: UIScheduler())
+        refreshControl.reactive.isRefreshing <~ action.isExecuting.producer.observe(on: UIScheduler())
+        action <~ refreshControl.reactive.controlEvents(.valueChanged).filterMap { $0.isRefreshing ? () : nil }
     }
 
     /// Focus the preferred focusable row in the form.
@@ -223,3 +235,4 @@ extension FormViewController: UITableViewDelegate {
         cell.visibility = dataSource.separatorVisibility(forCellAt: indexPath.row)
     }
 }
+
