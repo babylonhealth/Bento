@@ -208,7 +208,7 @@ extension FormBuilder {
             }
         }
 
-        public static func iconSelectionField(icon: SignalProducer<UIImage, NoError>, title: String, value: Property<String>, action: Action<Void, Void, NoError>) -> Component {
+        public static func iconSelectionField(icon: SignalProducer<UIImage, NoError>, title: String, value: Property<String>? = nil, action: Action<Void, Void, NoError>) -> Component {
             return Component { visualDependencies in
                 return .actionInput(
                     ActionInputCellViewModel(visualDependencies: visualDependencies,

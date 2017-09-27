@@ -28,6 +28,10 @@ public final class DescriptionCellViewModel {
             visualDependencies.styles.labelFormFooter.apply(to: label)
         case .alert:
             visualDependencies.styles.labelFormAlert.apply(to: label)
+        case .centeredTitle:
+            visualDependencies.styles.labelFormCenterTitleValue.apply(to: label)
+        case .centeredSubtitle:
+            visualDependencies.styles.labelFormCenterSubtitleValue.apply(to: label)
         case let .custom(labelStyle):
             labelStyle.apply(to: label)
         }
