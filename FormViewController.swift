@@ -73,7 +73,7 @@ open class FormViewController: UIViewController {
                                options: UIViewAnimationOptions(context.animationCurve),
                                animations: animate,
                                completion: nil)
-            }
+        }
     }
 
     open override func viewWillDisappear(_ animated: Bool) {
@@ -102,7 +102,7 @@ open class FormViewController: UIViewController {
             tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
-        ])
+            ])
 
         if let navigationBar = navigationController?.navigationBar {
             visualDependencies.styles.navigationBarBackButton
@@ -133,7 +133,7 @@ open class FormViewController: UIViewController {
             tableView.scrollToRow(at: IndexPath(row: row, section: 0), at: .top, animated: animated)
             CATransaction.setCompletionBlock { [weak tableView] in
                 if let cell = tableView?.cellForRow(at: IndexPath(row: row, section: 0)),
-                   let focusableCell = cell as? FocusableCell {
+                    let focusableCell = cell as? FocusableCell {
                     focusableCell.focus()
                 }
             }

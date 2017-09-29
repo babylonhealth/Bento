@@ -1,24 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12118" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12086"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="cNr-D6-18F" customClass="ActionCell" customModule="Babylon" customModuleProvider="target">
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="cNr-D6-18F" customClass="ActionCell" customModule="BabylonUI" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
             <autoresizingMask key="autoresizingMask"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="cNr-D6-18F" id="bk2-X3-NSn">
                 <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="siF-J8-uxF" customClass="LoadingButton" customModule="Babylon" customModuleProvider="target">
+                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="siF-J8-uxF" customClass="LoadingButton" customModule="BabylonUI" customModuleProvider="target">
                         <rect key="frame" x="16" y="0.0" width="343" height="44"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="44" id="fTk-1J-ehW"/>
@@ -27,9 +27,7 @@
                     </button>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="siF-J8-uxF" firstAttribute="leading" secondItem="bk2-X3-NSn" secondAttribute="leading" constant="16" id="1E2-Va-0Tr"/>
                     <constraint firstItem="siF-J8-uxF" firstAttribute="top" secondItem="bk2-X3-NSn" secondAttribute="top" priority="750" id="F6U-VO-wiQ"/>
-                    <constraint firstAttribute="trailing" secondItem="siF-J8-uxF" secondAttribute="trailing" constant="16" id="SYh-oL-Ysk"/>
                     <constraint firstAttribute="bottom" secondItem="siF-J8-uxF" secondAttribute="bottom" priority="750" id="unh-cO-DEC"/>
                 </constraints>
             </tableViewCellContentView>

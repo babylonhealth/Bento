@@ -2,7 +2,7 @@ import UIKit
 import ReactiveSwift
 import enum Result.NoError
 
-public enum ImageCellAlignment {
+public enum CellElementAlignment {
     case leading
     case centered
     case trailing
@@ -13,7 +13,7 @@ final public class ImageCellViewModel {
     public let imageSize: CGSize
     public let visualDependencies: VisualDependenciesProtocol
     public let selectionStyle: UITableViewCellSelectionStyle
-    public let imageAlignment: ImageCellAlignment
+    public let imageAlignment: CellElementAlignment
     public let isRounded: Bool
     public let selected: Action<Void, Void, NoError>?
 
@@ -21,7 +21,7 @@ final public class ImageCellViewModel {
                 imageSize: CGSize,
                 visualDependencies: VisualDependenciesProtocol,
                 selectionStyle: UITableViewCellSelectionStyle = .none,
-                imageAlignment: ImageCellAlignment,
+                imageAlignment: CellElementAlignment,
                 isRounded: Bool,
                 selected: Action<Void, Void, NoError>? = nil) {
         self.image = image

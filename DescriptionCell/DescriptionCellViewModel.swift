@@ -7,8 +7,11 @@ public final class DescriptionCellViewModel {
     public let selectionStyle: UITableViewCellSelectionStyle
     public let backgroundColorStyle: UIViewStyle<UIView>
 
-    public init(text: String, type: DescriptionCellType, visualDependencies: VisualDependenciesProtocol, selectionStyle: UITableViewCellSelectionStyle = .none, backgroundColorStyle: UIViewStyle<UIView>? = nil) {
-
+    public init(text: String,
+                type: DescriptionCellType,
+                visualDependencies: VisualDependenciesProtocol,
+                selectionStyle: UITableViewCellSelectionStyle = .none,
+                backgroundColorStyle: UIViewStyle<UIView>? = nil) {
         self.text = text
         self.type = type
         self.visualDependencies = visualDependencies
@@ -28,6 +31,8 @@ public final class DescriptionCellViewModel {
             visualDependencies.styles.labelFormFooter.apply(to: label)
         case .alert:
             visualDependencies.styles.labelFormAlert.apply(to: label)
+        case .captionText:
+            visualDependencies.styles.labelFormCaption.apply(to: label)
         case .centeredTitle:
             visualDependencies.styles.labelFormCenterTitleValue.apply(to: label)
         case .centeredSubtitle:

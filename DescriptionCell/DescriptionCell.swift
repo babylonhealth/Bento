@@ -6,6 +6,7 @@ public enum DescriptionCellType {
     case link
     case footer
     case alert
+    case captionText
     case centeredTitle
     case centeredSubtitle
     case custom(labelStyle: UIViewStyle<UILabel>)

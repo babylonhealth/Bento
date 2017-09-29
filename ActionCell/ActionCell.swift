@@ -25,6 +25,13 @@ final class ActionCell: FormCell {
         
         heightConstraint.isActive = !spec.hasDynamicHeight
 
+        let buttonMargin = viewModel.margins ?? spec.buttonMargins
+
+        NSLayoutConstraint.activate([
+            button.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: buttonMargin),
+            button.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -buttonMargin)
+            ])
+
         button.reactive.controlEvents(.primaryActionTriggered)
             .take(until: reactive.prepareForReuse)
             .observeValues { [weak self] _ in

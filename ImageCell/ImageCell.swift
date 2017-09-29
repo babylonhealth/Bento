@@ -36,7 +36,7 @@ final class ImageCell: FormCell {
         }
     }
 
-    private func setupImage(with alignment: ImageCellAlignment) {
+    private func setupImage(with alignment: CellElementAlignment) {
         NSLayoutConstraint.deactivate(imageConstraints ?? [])
 
         switch alignment {

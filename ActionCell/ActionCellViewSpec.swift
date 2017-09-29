@@ -4,6 +4,7 @@ public struct ActionCellViewSpec {
     public let disabledButtonStyle: UIViewStyle<UIButton>?
     public let hasDynamicHeight: Bool
     public let selectionStyle: UITableViewCellSelectionStyle
+    public let buttonMargins: CGFloat = 16
 
     public init(title: String,
                 buttonStyle: UIViewStyle<UIButton>,

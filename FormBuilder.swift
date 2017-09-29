@@ -128,6 +128,21 @@ extension FormBuilder {
             }
         }
 
+        public static func cellButton(text: String,
+                                      hasDynamicHeight: Bool = false,
+                                      action: Action<Void, Void, NoError>,
+                                      buttonMargins: CGFloat) -> Component {
+            return Component { visualDependencies in
+                let style = visualDependencies.styles.buttonTitleBrandColor
+                    .composing(with: visualDependencies.styles.buttonTextBody)
+                    .composing(with: visualDependencies.styles.buttonBackgroundWhiteColor)
+                let spec = ActionCellViewSpec(title: text, buttonStyle: style, hasDynamicHeight: hasDynamicHeight)
+                let viewModel = ActionCellViewModel(action: action, isLoading: action.isExecuting, margins: buttonMargins)
+
+                return .actionButton(viewModel, spec)
+            }
+        }
+
         public static func textField(
             placeholder: String,
             text: ValidatingProperty<String, InvalidInput>,
@@ -208,7 +223,11 @@ extension FormBuilder {
             }
         }
 
-        public static func iconSelectionField(icon: SignalProducer<UIImage, NoError>, title: String, value: Property<String>? = nil, action: Action<Void, Void, NoError>) -> Component {
+        public static func iconSelectionField(icon: SignalProducer<UIImage, NoError>,
+                                              title: String,
+                                              titleStyle: UIViewStyle<UILabel>? = nil,
+                                              value: Property<String>? = nil,
+                                              action: Action<Void, Void, NoError>) -> Component {
             return Component { visualDependencies in
                 return .actionInput(
                     ActionInputCellViewModel(visualDependencies: visualDependencies,
@@ -216,7 +235,8 @@ extension FormBuilder {
                                              title: title,
                                              input: value,
                                              inputTextAlignment: .right,
-                                             selected: action))
+                                             selected: action,
+                                             titleStyle: titleStyle))
             }
         }
 
@@ -283,7 +303,7 @@ extension FormBuilder {
             }
         }
 
-        public static func imageField(image: SignalProducer<UIImage, NoError>, imageSize: CGSize, imageAlignment: ImageCellAlignment = .centered, isRounded: Bool = false) -> Component {
+        public static func imageField(image: SignalProducer<UIImage, NoError>, imageSize: CGSize, imageAlignment: CellElementAlignment = .centered, isRounded: Bool = false) -> Component {
             return Component { visualDependencies in
                 return .image(ImageCellViewModel(image: image,
                                                  imageSize: imageSize,
