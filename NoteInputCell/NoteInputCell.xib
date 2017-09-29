@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12121" systemVersion="16G29" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -19,8 +19,8 @@
                 <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" text="Lorem ipsum" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="i4I-pr-1tn" customClass="NoteInputCellTextView" customModule="BabylonUI">
-                        <rect key="frame" x="15" y="5.5" width="297" height="33"/>
+                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="1000" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" text="Lorem ipsum" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="i4I-pr-1tn" customClass="NoteInputCellTextView" customModule="BabylonUI">
+                        <rect key="frame" x="8" y="5.5" width="311" height="33"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="33" id="aP9-zx-moE"/>
@@ -29,14 +29,14 @@
                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                     </textView>
                     <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TTn-j0-Qal">
-                        <rect key="frame" x="316" y="5.5" width="44" height="44"/>
+                        <rect key="frame" x="323" y="5.5" width="44" height="44"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="44" id="blj-uA-5kh"/>
                             <constraint firstAttribute="height" constant="44" id="oIN-JW-uxf"/>
                         </constraints>
                     </button>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="G02-eo-kg0">
-                        <rect key="frame" x="15" y="11" width="42" height="21"/>
+                        <rect key="frame" x="8" y="11" width="42" height="21"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
@@ -45,7 +45,7 @@
                 <constraints>
                     <constraint firstItem="TTn-j0-Qal" firstAttribute="leading" secondItem="i4I-pr-1tn" secondAttribute="trailing" constant="4" id="2Ou-S5-BCN"/>
                     <constraint firstItem="G02-eo-kg0" firstAttribute="centerY" secondItem="Erp-HD-Hhb" secondAttribute="centerY" id="4r5-7E-qXL"/>
-                    <constraint firstAttribute="trailingMargin" secondItem="i4I-pr-1tn" secondAttribute="trailing" priority="250" id="4vc-Um-HrK"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="i4I-pr-1tn" secondAttribute="trailing" priority="500" id="4vc-Um-HrK" userLabel="Text View Trailing Fallback"/>
                     <constraint firstItem="i4I-pr-1tn" firstAttribute="centerY" secondItem="Erp-HD-Hhb" secondAttribute="centerY" id="73d-gW-zYb"/>
                     <constraint firstAttribute="trailingMargin" secondItem="TTn-j0-Qal" secondAttribute="trailing" id="BBe-IZ-aZm"/>
                     <constraint firstItem="TTn-j0-Qal" firstAttribute="top" secondItem="i4I-pr-1tn" secondAttribute="top" id="J4G-H8-bDB"/>
@@ -55,7 +55,7 @@
             </tableViewCellContentView>
             <connections>
                 <outlet property="addPhotosButton" destination="TTn-j0-Qal" id="uwk-r8-9Wf"/>
-                <outlet property="addPhotosButtonTextViewSpacing" destination="4vc-Um-HrK" id="adr-5u-xTn"/>
+                <outlet property="addPhotosButtonTextViewSpacing" destination="2Ou-S5-BCN" id="hpA-U5-lRm"/>
                 <outlet property="addPhotosButtonTextViewTopEdge" destination="J4G-H8-bDB" id="JWo-8J-ebz"/>
                 <outlet property="placeholder" destination="G02-eo-kg0" id="7mM-Kj-Pp8"/>
                 <outlet property="textView" destination="i4I-pr-1tn" id="YsM-OE-0cG"/>
