@@ -1,7 +1,10 @@
 import UIKit
+import ReactiveSwift
+import Result
 
 public final class DescriptionCellViewModel {
     public let text: String
+    public let selected: Action<Void, Void, NoError>?
     public let type: DescriptionCellType
     public let visualDependencies: VisualDependenciesProtocol
     public let selectionStyle: UITableViewCellSelectionStyle
@@ -11,8 +14,10 @@ public final class DescriptionCellViewModel {
                 type: DescriptionCellType,
                 visualDependencies: VisualDependenciesProtocol,
                 selectionStyle: UITableViewCellSelectionStyle = .none,
-                backgroundColorStyle: UIViewStyle<UIView>? = nil) {
+                backgroundColorStyle: UIViewStyle<UIView>? = nil,
+                selected: Action<Void, Void, NoError>? = nil) {
         self.text = text
+        self.selected = selected
         self.type = type
         self.visualDependencies = visualDependencies
         self.selectionStyle = selectionStyle
@@ -33,7 +38,7 @@ public final class DescriptionCellViewModel {
             visualDependencies.styles.labelFormAlert.apply(to: label)
         case .captionText:
             visualDependencies.styles.labelFormCaption.apply(to: label)
-        case .centeredTitle:
+        case .centeredTitle, .centeredTitleWithDisclosureIndicator:
             visualDependencies.styles.labelFormCenterTitleValue.apply(to: label)
         case .centeredSubtitle:
             visualDependencies.styles.labelFormCenterSubtitleValue.apply(to: label)
@@ -43,7 +48,18 @@ public final class DescriptionCellViewModel {
     }
 
     public func applyText(to label: UILabel) {
-        label.text = self.text
+        if case .centeredTitleWithDisclosureIndicator = type {
+            let attachment = NSTextAttachment()
+            attachment.image = visualDependencies.styles.disclosureIndicator
+
+            let text = NSMutableAttributedString(string: self.text)
+            text.append(NSAttributedString(string: " "))
+            text.append(NSAttributedString(attachment: attachment))
+
+            label.attributedText = text
+        } else {
+            label.text = text
+        }
     }
 
     public func applyBackgroundColor(to views: [UIView]) {

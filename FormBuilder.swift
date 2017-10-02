@@ -77,9 +77,9 @@ extension FormBuilder {
             return description(.headline, text: text)
         }
 
-        public static func description(_ type: DescriptionCellType, text: String) -> Component {
+        public static func description(_ type: DescriptionCellType, text: String, selected: Action<Void, Void, NoError>? = nil) -> Component {
             return Component { visualDependencies in
-                return .description(.init(text: text, type: type, visualDependencies: visualDependencies))
+                return .description(.init(text: text, type: type, visualDependencies: visualDependencies, selected: selected))
             }
         }
 
@@ -303,13 +303,14 @@ extension FormBuilder {
             }
         }
 
-        public static func imageField(image: SignalProducer<UIImage, NoError>, imageSize: CGSize, imageAlignment: CellElementAlignment = .centered, isRounded: Bool = false) -> Component {
+        public static func imageField(image: SignalProducer<UIImage, NoError>, imageSize: CGSize, imageAlignment: CellElementAlignment = .centered, isRounded: Bool = false, selected: Action<Void, Void, NoError>? = nil) -> Component {
             return Component { visualDependencies in
                 return .image(ImageCellViewModel(image: image,
                                                  imageSize: imageSize,
                                                  visualDependencies: visualDependencies,
                                                  imageAlignment: imageAlignment,
-                                                 isRounded: isRounded))
+                                                 isRounded: isRounded,
+                                                 selected: selected))
             }
         }
 
