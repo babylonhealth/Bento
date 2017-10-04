@@ -173,13 +173,34 @@ extension FormBuilder {
             }
         }
 
-        public static func titledTextField(title: String, placeholder: String, text: ValidatingProperty<String, InvalidInput>, isEnabled: Property<Bool> = Property(value: true)) -> Component {
+        public static func titledPasswordField(title: String, placeholder: String, text: ValidatingProperty<String, InvalidInput>) -> Component {
+            return Component { visualDependencies in
+                return .titledTextInput(
+                    TitledTextInputCellViewModel(title: title,
+                                                 placeholder: placeholder,
+                                                 text: text,
+                                                 isSecure: true,
+                                                 visualDependencies: visualDependencies))
+            }
+        }
+
+        public static func titledTextField(title: String,
+                                           placeholder: String,
+                                           text: ValidatingProperty<String, InvalidInput>,
+                                           isEnabled: Property<Bool> = Property(value: true),
+                                           autocapitalizationType: UITextAutocapitalizationType = .sentences,
+                                           autocorrectionType: UITextAutocorrectionType = .default,
+                                           keyboardType: UIKeyboardType = .default ) -> Component {
+
             return Component { visualDependencies in
                 return .titledTextInput(
                     TitledTextInputCellViewModel(title: title,
                                                  placeholder: placeholder,
                                                  text: text,
                                                  isEnabled: isEnabled,
+                                                 autocapitalizationType: autocapitalizationType,
+                                                 autocorrectionType: autocorrectionType,
+                                                 keyboardType: keyboardType,
                                                  visualDependencies: visualDependencies))
             }
         }

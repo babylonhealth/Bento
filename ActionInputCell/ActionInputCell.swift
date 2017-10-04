@@ -115,6 +115,20 @@ final class ActionInputCell: FormItemCell {
         
         NSLayoutConstraint.deactivate(deactivatingConstraints)
         NSLayoutConstraint.activate(activatingConstraints)
+
+        let updateAccessoryView = { [weak self] (loading: Bool) in
+            let makeActivityIndicatorView: () -> UIActivityIndicatorView = {
+                let activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: .gray)
+                activityIndicator.startAnimating()
+                return activityIndicator
+            }
+            self?.accessoryView = loading ? makeActivityIndicatorView() : nil
+        }
+
+        viewModel.isSelected.isExecuting.producer
+            .observe(on: UIScheduler())
+            .take(until: reactive.prepareForReuse)
+            .startWithValues(updateAccessoryView)            
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

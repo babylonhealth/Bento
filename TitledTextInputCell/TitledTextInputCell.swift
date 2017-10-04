@@ -1,11 +1,21 @@
 import ReactiveSwift
+import ReactiveCocoa
+import Result
 
 class TitledTextInputCell: FormItemCell {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var textField: UITextField!
+    @IBOutlet weak var peekButton: UIButton!
+    @IBOutlet weak var peekWidthConstraint: NSLayoutConstraint!
 
     private var viewModel: TitledTextInputCellViewModel!
     internal weak var delegate: FocusableCellDelegate?
+
+    private var isSecure: SignalProducer<Bool, NoError> {
+        return viewModel.isSecure
+            .producer
+            .take(during: reactive.lifetime)
+    }
 
     override var preferredSeparatorLeadingAnchor: NSLayoutXAxisAnchor {
         return titleLabel.leadingAnchor
@@ -27,9 +37,25 @@ class TitledTextInputCell: FormItemCell {
         textField.reactive.text <~ viewModel.text.producer
             .take(until: reactive.prepareForReuse)
 
-        let isEnabled = viewModel.isEnabled.and(isFormEnabled)
-        textField.reactive.isEnabled <~ isEnabled.producer
+        textField.reactive.isSecureTextEntry <~ isSecure.producer
             .take(until: reactive.prepareForReuse)
+
+        let isEnabled = viewModel.isEnabled.and(isFormEnabled)
+
+        isEnabled.producer
+            .take(until: reactive.prepareForReuse)
+            .startWithSignal { isEnabled, _ in
+                textField.reactive.isEnabled <~ isEnabled
+                peekButton.reactive.isEnabled <~ isEnabled
+                }
+
+        peekButton.reactive.isSelected <~ isSecure.negate()
+            .take(until: reactive.prepareForReuse)
+
+        peekButton.reactive.pressed = CocoaAction(viewModel.peekAction)
+        peekWidthConstraint.constant = CGFloat(viewModel.width)
+
+        viewModel.applyStyle(to: peekButton)
 
         // FIXME: Remove workaround in ReactiveSwift 2.0.
         //

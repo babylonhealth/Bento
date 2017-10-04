@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12121" systemVersion="16G29" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -19,8 +19,14 @@
                 <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nH6-55-iX5">
+                        <rect key="frame" x="339" y="5" width="28" height="34"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="28" id="zAU-hk-9mR"/>
+                        </constraints>
+                    </button>
                     <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="l8b-XZ-uGk">
-                        <rect key="frame" x="15" y="11" width="345" height="22"/>
+                        <rect key="frame" x="8" y="11" width="331" height="22"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JLU-SY-Ann" userLabel="Title">
                                 <rect key="frame" x="0.0" y="1" width="125" height="20.5"/>
@@ -32,7 +38,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Placeholder" textAlignment="natural" adjustsFontSizeToFit="NO" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="BSg-dK-l5k">
-                                <rect key="frame" x="135" y="0.5" width="210" height="21"/>
+                                <rect key="frame" x="135" y="0.5" width="196" height="21"/>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <textInputTraits key="textInputTraits" returnKeyType="done"/>
@@ -41,14 +47,18 @@
                     </stackView>
                 </subviews>
                 <constraints>
-                    <constraint firstAttribute="trailingMargin" secondItem="l8b-XZ-uGk" secondAttribute="trailing" id="2JA-OP-YZd"/>
+                    <constraint firstItem="nH6-55-iX5" firstAttribute="leading" secondItem="l8b-XZ-uGk" secondAttribute="trailing" id="3X0-qC-tbk"/>
                     <constraint firstAttribute="leadingMargin" secondItem="l8b-XZ-uGk" secondAttribute="leading" id="DQe-9X-Cca"/>
+                    <constraint firstItem="nH6-55-iX5" firstAttribute="centerY" secondItem="l8b-XZ-uGk" secondAttribute="centerY" id="EEq-5A-tUp"/>
                     <constraint firstAttribute="bottomMargin" secondItem="l8b-XZ-uGk" secondAttribute="bottom" id="Hdr-ST-xpT"/>
                     <constraint firstAttribute="topMargin" secondItem="l8b-XZ-uGk" secondAttribute="top" id="hev-WH-GbY"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="nH6-55-iX5" secondAttribute="trailing" id="mOA-iu-99z"/>
                 </constraints>
                 <edgeInsets key="layoutMargins" top="0.0" left="0.0" bottom="0.0" right="0.0"/>
             </tableViewCellContentView>
             <connections>
+                <outlet property="peekButton" destination="nH6-55-iX5" id="byg-W9-TTT"/>
+                <outlet property="peekWidthConstraint" destination="zAU-hk-9mR" id="0u3-MX-v2K"/>
                 <outlet property="textField" destination="BSg-dK-l5k" id="gEd-Cq-yfb"/>
                 <outlet property="titleLabel" destination="JLU-SY-Ann" id="eJ3-sk-XhC"/>
             </connections>
