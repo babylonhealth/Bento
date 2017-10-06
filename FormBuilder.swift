@@ -117,9 +117,10 @@ extension FormBuilder {
             }
         }
 
-        public static func secondaryButton(text: String, hasDynamicHeight: Bool = false, action: Action<Void, Void, NoError>) -> Component {
+        public static func secondaryButton(text: String, hasDynamicHeight: Bool = false, isDestructive: Bool = false, action: Action<Void, Void, NoError>) -> Component {
             return Component { visualDependencies in
-                let style = visualDependencies.styles.buttonTitleBrandColor
+                let styles = visualDependencies.styles
+                let style = (isDestructive ? styles.buttonTitleDestructiveColor : styles.buttonTitleBrandColor)
                     .composing(with: visualDependencies.styles.buttonTextBody)
                 let spec = ActionCellViewSpec(title: text, buttonStyle: style, hasDynamicHeight: hasDynamicHeight)
                 let viewModel = ActionCellViewModel(action: action, isLoading: action.isExecuting)
@@ -286,7 +287,7 @@ extension FormBuilder {
             }
         }
 
-        public static func noteField(placeholder: String, text: ValidatingProperty<String, InvalidInput>, addPhotosAction: Action<Void, Void, NoError>) -> Component {
+        public static func noteField(placeholder: String, text: ValidatingProperty<String, InvalidInput>, addPhotosAction: Action<Void, Void, NoError>? = nil) -> Component {
             return Component { visualDependencies in
                 return .noteInput(
                     NoteInputCellViewModel(placeholder: placeholder,
@@ -360,7 +361,7 @@ extension FormBuilder {
 
         public static func multiselectionItem(
             title: String,
-            icon: SignalProducer<UIImage, NoError>,
+            icon: SignalProducer<UIImage, NoError>? = nil,
             identifier: Int,
             in group: SelectionCellGroupViewModel,
             spec: SelectionCellViewSpec

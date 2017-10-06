@@ -4,14 +4,10 @@ import ReactiveCocoa
 import Result
 
 open class SelectionCell: FormItemCell, NibLoadableCell {
-    enum Style {
+    private enum Style {
         case rightTick
         case leftTickWithDetailDisclosure
     }
-
-    @IBOutlet var avatarLeading: NSLayoutConstraint!
-    @IBInspectable var avatarLeadingInsetNoLeftTick: CGFloat = 0.0
-    @IBInspectable var avatarLeadingInsetWithLeftTick: CGFloat = 0.0
 
     @IBOutlet weak var avatar: UIImageView!
     @IBOutlet weak var label: UILabel!
@@ -19,6 +15,9 @@ open class SelectionCell: FormItemCell, NibLoadableCell {
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var leftTick: UIImageView!
     @IBOutlet weak var rightTick: UIImageView!
+
+    @IBOutlet var avatarConstraints: [NSLayoutConstraint]!
+    @IBOutlet var leftTickConstraints: [NSLayoutConstraint]!
 
     private let disposable = SerialDisposable()
     private var spec: SelectionCellViewSpec!
@@ -46,10 +45,14 @@ open class SelectionCell: FormItemCell, NibLoadableCell {
         disposable.inner = nil
         self.spec = spec
 
-        avatar.reactive.image
-            <~ viewModel.icon
-                .take(until: reactive.prepareForReuse)
-                .prefix(value: spec.defaultIcon)
+        switch viewModel.icon {
+        case .some(let icon):
+            NSLayoutConstraint.activate(avatarConstraints)
+            avatar.reactive.image <~ icon.take(until: reactive.prepareForReuse)
+        case .none:
+            NSLayoutConstraint.deactivate(avatarConstraints)
+            avatar.image = nil
+        }
 
         label.text = viewModel.title
         spec.labelStyle?.apply(to: label)
@@ -65,13 +68,13 @@ open class SelectionCell: FormItemCell, NibLoadableCell {
             leftTick.image = spec.tick
             leftTick.tintColor = spec.tickColor
             disclosure.isHidden = false
-            avatarLeading.constant = avatarLeadingInsetWithLeftTick
+            NSLayoutConstraint.activate(leftTickConstraints)
 
         case .rightTick:
             rightTick.image = spec.tick
             rightTick.tintColor = spec.tickColor
             disclosure.isHidden = true
-            avatarLeading.constant = avatarLeadingInsetNoLeftTick
+            NSLayoutConstraint.deactivate(leftTickConstraints)
         }
 
         let d = CompositeDisposable()
