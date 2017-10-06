@@ -4,8 +4,12 @@ import ReactiveCocoa
 extension ToggleCell: NibLoadableCell {}
 
 class ToggleCell: FormItemCell {
+    @IBOutlet weak var iconView: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var toggle: UISwitch!
+
+    @IBOutlet weak var iconWidthConstraint: NSLayoutConstraint!
+    @IBOutlet weak var iconLabelSpacingConstraint: NSLayoutConstraint!
 
     var viewModel: ToggleCellViewModel!
 
@@ -26,5 +30,16 @@ class ToggleCell: FormItemCell {
 
         viewModel.isOn <~ toggle.reactive.isOnValues
             .take(until: reactive.prepareForReuse)
+
+        switch viewModel.icon {
+        case let .some(image):
+            iconView.image = image
+            iconWidthConstraint.constant = 32
+            iconLabelSpacingConstraint.constant = 8
+        case .none:
+            iconView.image = nil
+            iconWidthConstraint.constant = 0
+            iconLabelSpacingConstraint.constant = 0
+        }
     }
 }

@@ -315,11 +315,13 @@ extension FormBuilder {
             }
         }
 
-        public static func toggle(title: String, isOn: MutableProperty<Bool>) -> Component {
+        public static func toggle(title: String, isOn: MutableProperty<Bool>, icon: UIImage? = nil, isEnabled: Property<Bool>? = nil) -> Component {
             return Component { visualDependencies in
                 return .toggle(
                     ToggleCellViewModel(title: title,
                                         isOn: isOn,
+                                        icon: icon,
+                                        isEnabled: isEnabled ?? Property(value: true),
                                         visualDependencies: visualDependencies))
             }
         }
