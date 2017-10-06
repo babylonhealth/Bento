@@ -40,6 +40,10 @@ public final class DescriptionCellViewModel {
             visualDependencies.styles.labelFormCaption.apply(to: label)
         case .centeredTitle, .centeredTitleWithDisclosureIndicator:
             visualDependencies.styles.labelFormCenterTitleValue.apply(to: label)
+        case .centeredHeadline:
+            visualDependencies.styles.labelFormCenterHeadlineValue.apply(to: label)
+        case .centeredTime:
+            visualDependencies.styles.labelFormCenterTimeValue.apply(to: label)
         case .centeredSubtitle:
             visualDependencies.styles.labelFormCenterSubtitleValue.apply(to: label)
         case let .custom(labelStyle):

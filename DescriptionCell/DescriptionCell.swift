@@ -11,6 +11,8 @@ public enum DescriptionCellType {
     case centeredTitle
     case centeredTitleWithDisclosureIndicator
     case centeredSubtitle
+    case centeredHeadline
+    case centeredTime
     case custom(labelStyle: UIViewStyle<UILabel>)
 }
 
