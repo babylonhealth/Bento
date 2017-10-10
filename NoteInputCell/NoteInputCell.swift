@@ -104,10 +104,9 @@ final class NoteInputCell: FormItemCell {
     }
 
     @discardableResult
-    fileprivate func updateContentViewHeight(targetWidth: CGFloat? = nil) -> CGFloat {
-        let intrinsicContentSize = textView.sizeThatFits(CGSize(width: targetWidth ?? frame.width,
+    fileprivate func updateContentViewHeight() -> CGFloat {
+        let intrinsicContentSize = textView.sizeThatFits(CGSize(width: textView.frame.width,
                                                                 height: .greatestFiniteMagnitude))
-
         if intrinsicContentSize.height != textViewHeight.constant {
             // Offset the content height so that when its text view grows beyond the
             // minimum height, an illusion of the text view staying in place would be
@@ -131,7 +130,7 @@ final class NoteInputCell: FormItemCell {
     }
 
     override func systemLayoutSizeFitting(_ targetSize: CGSize, withHorizontalFittingPriority horizontalFittingPriority: UILayoutPriority, verticalFittingPriority: UILayoutPriority) -> CGSize {
-        updateContentViewHeight(targetWidth: targetSize.width)
+        updateContentViewHeight()
         return CGSize(width: targetSize.width, height: contentViewHeight.constant)
     }
 }
