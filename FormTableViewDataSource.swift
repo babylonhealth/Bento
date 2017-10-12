@@ -50,6 +50,7 @@ public final class FormTableViewDataSource: NSObject, UITableViewDataSource {
     private var components: [FormComponent]
     private weak var tableView: UITableView?
     private weak var configurator: FormCellConfigurator?
+    private let separatorVisibility: FormViewSpec.SeparatorVisibility
 
     public var indexOfPreferredRowForInitialFocus: Int? {
         if let startIndex = components.index(where: { $0.viewModel is FocusableFormComponent }) {
@@ -62,9 +63,10 @@ public final class FormTableViewDataSource: NSObject, UITableViewDataSource {
         return nil
     }
 
-    public init(for tableView: UITableView) {
+    public init(for tableView: UITableView, separatorVisibility: FormViewSpec.SeparatorVisibility) {
         self.components = []
         self.tableView = tableView
+        self.separatorVisibility = separatorVisibility
         super.init()
     }
 
@@ -78,13 +80,20 @@ public final class FormTableViewDataSource: NSObject, UITableViewDataSource {
         let definesSection = components[row].definesSection
         let nextCellDefinesSection = row < components.count - 1 ? components[row + 1].definesSection : true
 
-        switch (definesSection, nextCellDefinesSection) {
-        case (true, true):
+        switch separatorVisibility {
+        case .betweenItemsAndSections:
+            switch (definesSection, nextCellDefinesSection) {
+            case (false, false):
+                return .visible
+            case (true, false), (false, true):
+                return .visibleNoInset
+            case (true, true):
+                return .invisible
+            }
+        case .betweenItems:
+            return !definesSection && !nextCellDefinesSection ? .visible : .invisible
+        case .none:
             return .invisible
-        case (true, false), (false, true):
-            return .visibleNoInset
-        case (false, false):
-            return .visible
         }
     }
 

@@ -10,25 +10,25 @@ open class FormViewController: UIViewController {
     fileprivate let form: Form
     fileprivate let dataSource: FormTableViewDataSource
 
-    fileprivate let visualDependencies: VisualDependenciesProtocol
+    fileprivate let viewSpec: FormViewSpec
     private var keyboardChangeDisposable: Disposable?
 
-    public init<F: RefreshableForm>(form: F, visualDependencies: VisualDependenciesProtocol) {
+    public init<F: RefreshableForm>(form: F, viewSpec: FormViewSpec) {
         self.form = form
-        self.visualDependencies = visualDependencies
+        self.viewSpec = viewSpec
         tableView = UITableView()
-        dataSource = FormTableViewDataSource(for: tableView)
+        dataSource = FormTableViewDataSource(for: tableView, separatorVisibility: viewSpec.separatorVisibility)
         super.init(nibName: nil, bundle: nil)
 
         setupTableView()
         setupRefreshControl(with: form.refresh)
     }
 
-    public init<F: Form>(form: F, visualDependencies: VisualDependenciesProtocol) {
+    public init<F: Form>(form: F, viewSpec: FormViewSpec) {
         self.form = form
-        self.visualDependencies = visualDependencies
+        self.viewSpec = viewSpec
         tableView = UITableView()
-        dataSource = FormTableViewDataSource(for: tableView)
+        dataSource = FormTableViewDataSource(for: tableView, separatorVisibility: viewSpec.separatorVisibility)
         super.init(nibName: nil, bundle: nil)
 
         setupTableView()
@@ -92,22 +92,15 @@ open class FormViewController: UIViewController {
         view.addSubview(tableView)
         tableView.keyboardDismissMode = .interactive
 
-        visualDependencies.styles.backgroundFormColor
-            .apply(to: tableView)
-        visualDependencies.styles.backgroundFormColor
-            .apply(to: view)
+        tableView.backgroundColor = .clear
+        viewSpec.style?.apply(to: view)
 
         NSLayoutConstraint.activate([
             tableView.topAnchor.constraint(equalTo: view.topAnchor),
             tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
-            ])
-
-        if let navigationBar = navigationController?.navigationBar {
-            visualDependencies.styles.navigationBarBackButton
-                .apply(view: navigationBar, to: navigationItem)
-        }
+        ])
     }
 
     private func setupRefreshControl(with action: ActionInput<Void>) {
@@ -145,7 +138,7 @@ open class FormViewController: UIViewController {
 
 extension FormViewController: FormCellConfigurator {
     public func configure(_ cell: FormCell) {
-        cell.configure(form.isSubmitting.negate(), visualDependencies.styles.appColors.formSeparatorColor)
+        cell.configure(form.isSubmitting.negate(), viewSpec.separatorColor)
         (cell as? FocusableCell)?.delegate = self
         (cell as? DynamicHeightCell)?.heightDelegate = self
     }
