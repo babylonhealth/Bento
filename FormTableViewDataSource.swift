@@ -135,10 +135,6 @@ public final class FormTableViewDataSource: NSObject, UITableViewDataSource {
             let cell: DescriptionCell = configure(tableView.dequeueReusableCell(for:), for: indexPath)
             cell.setup(viewModel: viewModel)
             return cell
-        case .facebookButton(let viewModel):
-            let cell: FacebookCell = configure(tableView.dequeueReusableCell(for:), for: indexPath)
-            cell.setup(viewModel: viewModel)
-            return cell
         case .actionButton(let viewModel, let spec):
             let cell: ActionCell = configure(tableView.dequeueReusableCell(for:), for: indexPath)
             cell.setup(viewModel: viewModel, spec: spec)
@@ -206,7 +202,6 @@ public final class FormTableViewDataSource: NSObject, UITableViewDataSource {
         tableView.register(ActionCell.self)
         tableView.register(ActionInputCell.self)
         tableView.register(ActionDescriptionCell.self)
-        tableView.register(FacebookCell.self)
         tableView.register(ToggleCell.self)
         tableView.register(SegmentedCell.self)
         tableView.register(SelectionCell.self)

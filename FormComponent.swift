@@ -3,7 +3,6 @@ public enum FormComponent {
     case titledTextInput(TitledTextInputCellViewModel)
     case phoneTextInput(PhoneInputCellViewModel)
     case actionButton(ActionCellViewModel, ActionCellViewSpec)
-    case facebookButton(FacebookCellViewModel)
     case description(DescriptionCellViewModel)
     case textOptionsInput(TextOptionsCellViewModel, TextOptionsCellViewSpec)
     case imageOptionsInput(ImageOptionsCellViewModel, ImageOptionsCellViewSpec)
@@ -26,7 +25,7 @@ public enum FormComponent {
     ///         would be displayed between them.
     var definesSection: Bool {
         switch self {
-        case .description, .actionDescription, .space, .facebookButton, .actionButton, .image, .activityIndicator:
+        case .description, .actionDescription, .space, .actionButton, .image, .activityIndicator:
             return true
         default:
             return false
@@ -42,8 +41,6 @@ public enum FormComponent {
         case .phoneTextInput(let viewModel):
             return viewModel
         case .actionButton(let viewModel, _):
-            return viewModel
-        case .facebookButton(let viewModel):
             return viewModel
         case .description(let viewModel):
             return viewModel
@@ -88,8 +85,6 @@ extension FormComponent: Equatable {
         case let (.phoneTextInput(lhsViewModel), .phoneTextInput(rhsViewModel)):
             return lhsViewModel === rhsViewModel
         case let (.actionButton(lhsViewModel, _), .actionButton(rhsViewModel, _)):
-            return lhsViewModel === rhsViewModel
-        case let (.facebookButton(lhsViewModel), .facebookButton(rhsViewModel)):
             return lhsViewModel === rhsViewModel
         case let (.description(lhsViewModel), .description(rhsViewModel)):
             return lhsViewModel === rhsViewModel

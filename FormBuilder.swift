@@ -93,10 +93,14 @@ extension FormBuilder {
 
         public static func facebookButton(title: String, action: Action<Void, Void, NoError>) -> Component {
             return Component { visualDependencies in
-                return .facebookButton(FacebookCellViewModel(title: title,
-                                                             action: action,
-                                                             visualDependencies: visualDependencies,
-                                                             isLoading: action.isExecuting))
+                let style = visualDependencies.styles.buttonFacebook
+                    .composing(with: visualDependencies.styles.buttonRoundCorners)
+                    .composing(with: visualDependencies.styles.buttonTextBody)
+
+                let spec = ActionCellViewSpec(title: title, buttonStyle: style, hasDynamicHeight: false)
+                let viewModel = ActionCellViewModel(action: action, isLoading: action.isExecuting)
+
+                return .actionButton(viewModel, spec)
             }
         }
 
