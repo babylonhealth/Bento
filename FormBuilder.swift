@@ -12,124 +12,93 @@ infix operator |-? : ChainingPrecedence // Compose components pending on a boole
 infix operator |-| : ChainingPrecedence // Compose with an empty space using a specific height
 
 public struct FormBuilder {
-
-    let components: [Component]
+    internal let components: [Component]
 
     public static var empty: FormBuilder {
         return FormBuilder()
     }
 
-    private init(components: [Component] = []) {
+    private init(_ components: [Component] = []) {
         self.components = components
     }
 
     public func build(with visualDependencies: VisualDependenciesProtocol) -> [FormComponent] {
-        return components.map { $0.builder(visualDependencies) }
+        return FormBuilderV2<Int>(components: components.enumerated().map { $1.wrapped($0) })
+            .build(with: visualDependencies)
     }
 
     public static func |-+(builder: FormBuilder, component: Component) -> FormBuilder {
-        return FormBuilder(components: builder.components + [component])
+        return FormBuilder(builder.components + [component])
     }
 
     public static func |-* (builder: FormBuilder, components: [FormBuilder.Component]) -> FormBuilder {
-        var sum = builder.components
-        sum.append(contentsOf: components)
-        return FormBuilder(components: sum)
+        return FormBuilder(builder.components + components)
     }
 
     public static func |-* (builder: FormBuilder, other: FormBuilder) -> FormBuilder {
-        return FormBuilder(components: builder.components + other.components)
+        return FormBuilder(builder.components + other.components)
     }
 
     public static func |-* (builder: FormBuilder, generator: () -> FormBuilder) -> FormBuilder {
-        return builder |-* generator()
+        return FormBuilder(builder.components + generator().components)
     }
 
     public static func |-? (builder: FormBuilder, validator: Validator<FormBuilder>) -> FormBuilder {
-        return validator.generate(with: builder) ?? builder
+        guard validator.condition() else { return builder }
+        return FormBuilder(builder.components + validator.generator(.empty).components)
     }
 
     public static func |-| (builder: FormBuilder, height: Float) -> FormBuilder {
-        return builder |-+ .space(height: height)
+        return FormBuilder(builder.components + [.space(height: height)])
     }
 }
 
 extension FormBuilder {
 
     public struct Component {
-        fileprivate let builder: (VisualDependenciesProtocol) -> FormComponent
+        fileprivate let wrapped: (Int) -> FormBuilderV2<Int>.Component
 
-        public init(_ builder: @escaping (VisualDependenciesProtocol) -> FormComponent) {
-            self.builder = builder
+        public init(_ component: @escaping (Int) -> FormBuilderV2<Int>.Component) {
+            wrapped = component
         }
 
         public static func space(height: Float) -> Component {
-            return Component { visualDependencies in
-                return .space(.init(height: height, visualDependencies: visualDependencies))
-            }
+            return Component { _ in .space(height: height) }
         }
 
         public static func header(text: String) -> Component {
-            return description(.header, text: text)
+            return Component { .header($0, text: text) }
         }
 
         public static func headline(text: String) -> Component {
-            return description(.headline, text: text)
+            return Component { .headline($0, text: text) }
         }
 
         public static func description(_ type: DescriptionCellType, text: String, selected: Action<Void, Void, NoError>? = nil) -> Component {
-            return Component { visualDependencies in
-                return .description(.init(text: text, type: type, visualDependencies: visualDependencies, selected: selected))
-            }
+            return Component { .description($0, type, text: text, selected: selected) }
         }
 
         public static func actionDescription(_ description: NSAttributedString, action: Action<Void, Void, NoError>) -> Component {
-            return Component { visualDependencies in
-                return .actionDescription(ActionDescriptionCellViewModel(visualDependencies: visualDependencies,
-                                                                         title: description,
-                                                                         action: action))
+            return Component {
+                return .actionDescription($0, description, action: action)
             }
         }
 
         public static func facebookButton(title: String, action: Action<Void, Void, NoError>) -> Component {
-            return Component { visualDependencies in
-                let style = visualDependencies.styles.buttonFacebook
-                    .composing(with: visualDependencies.styles.buttonRoundCorners)
-                    .composing(with: visualDependencies.styles.buttonTextBody)
-
-                let spec = ActionCellViewSpec(title: title, buttonStyle: style, hasDynamicHeight: false)
-                let viewModel = ActionCellViewModel(action: action, isLoading: action.isExecuting)
-
-                return .actionButton(viewModel, spec)
+            return Component {
+                return .facebookButton($0, title: title, action: action)
             }
         }
 
         public static func primaryButton(text: String, action: Action<Void, Void, NoError>) -> Component {
-            return Component { visualDependencies in
-                let style = visualDependencies.styles.buttonBackgroundBrandColor
-                    .composing(with: visualDependencies.styles.buttonRoundCorners)
-                    .composing(with: visualDependencies.styles.buttonTextBody)
-
-                let disabledStyle = visualDependencies.styles.buttonTitleDisabledColor
-                    .composing(with: visualDependencies.styles.buttonRoundCorners)
-                    .composing(with: visualDependencies.styles.buttonTextBody)
-
-                let spec = ActionCellViewSpec(title: text, buttonStyle: style, disabledButtonStyle: disabledStyle, hasDynamicHeight: false)
-                let viewModel = ActionCellViewModel(action: action, isLoading: action.isExecuting)
-
-                return .actionButton(viewModel, spec)
+            return Component {
+                return .primaryButton($0, text: text, action: action)
             }
         }
 
         public static func secondaryButton(text: String, hasDynamicHeight: Bool = false, isDestructive: Bool = false, action: Action<Void, Void, NoError>) -> Component {
-            return Component { visualDependencies in
-                let styles = visualDependencies.styles
-                let style = (isDestructive ? styles.buttonTitleDestructiveColor : styles.buttonTitleBrandColor)
-                    .composing(with: visualDependencies.styles.buttonTextBody)
-                let spec = ActionCellViewSpec(title: text, buttonStyle: style, hasDynamicHeight: hasDynamicHeight)
-                let viewModel = ActionCellViewModel(action: action, isLoading: action.isExecuting)
-
-                return .actionButton(viewModel, spec)
+            return Component {
+                return .secondaryButton($0, text: text, hasDynamicHeight: hasDynamicHeight, isDestructive: isDestructive, action: action)
             }
         }
 
@@ -137,14 +106,8 @@ extension FormBuilder {
                                       hasDynamicHeight: Bool = false,
                                       action: Action<Void, Void, NoError>,
                                       buttonMargins: CGFloat) -> Component {
-            return Component { visualDependencies in
-                let style = visualDependencies.styles.buttonTitleBrandColor
-                    .composing(with: visualDependencies.styles.buttonTextBody)
-                    .composing(with: visualDependencies.styles.buttonBackgroundWhiteColor)
-                let spec = ActionCellViewSpec(title: text, buttonStyle: style, hasDynamicHeight: hasDynamicHeight)
-                let viewModel = ActionCellViewModel(action: action, isLoading: action.isExecuting, margins: buttonMargins)
-
-                return .actionButton(viewModel, spec)
+            return Component {
+                return .cellButton($0, text: text, hasDynamicHeight: hasDynamicHeight, action: action, buttonMargins: buttonMargins)
             }
         }
 
@@ -156,36 +119,20 @@ extension FormBuilder {
             autocorrectionType: UITextAutocorrectionType = .default,
             keyboardType: UIKeyboardType = .default
         ) -> Component {
-            return Component { visualDependencies in
-                return .textInput(
-                    TextInputCellViewModel(placeholder: placeholder,
-                                           text: text,
-                                           isSecure: false,
-                                           clearsOnBeginEditing: clearsOnBeginEditing,
-                                           autocapitalizationType: autocapitalizationType,
-                                           autocorrectionType: autocorrectionType,
-                                           visualDependencies: visualDependencies))
+            return Component {
+                return .textField($0, placeholder: placeholder, text: text, clearsOnBeginEditing: clearsOnBeginEditing, autocapitalizationType: autocapitalizationType, autocorrectionType: autocorrectionType, keyboardType: keyboardType)
             }
         }
 
         public static func passwordField(placeholder: String, text: ValidatingProperty<String, InvalidInput>) -> Component {
-            return Component { visualDependencies in
-                return .textInput(
-                    TextInputCellViewModel(placeholder: placeholder,
-                                           text: text,
-                                           isSecure: true,
-                                           visualDependencies: visualDependencies))
+            return Component {
+                return .passwordField($0, placeholder: placeholder, text: text)
             }
         }
 
         public static func titledPasswordField(title: String, placeholder: String, text: ValidatingProperty<String, InvalidInput>) -> Component {
-            return Component { visualDependencies in
-                return .titledTextInput(
-                    TitledTextInputCellViewModel(title: title,
-                                                 placeholder: placeholder,
-                                                 text: text,
-                                                 isSecure: true,
-                                                 visualDependencies: visualDependencies))
+            return Component {
+                return .titledPasswordField($0, title: title, placeholder: placeholder, text: text)
             }
         }
 
@@ -197,55 +144,26 @@ extension FormBuilder {
                                            autocorrectionType: UITextAutocorrectionType = .default,
                                            keyboardType: UIKeyboardType = .default ) -> Component {
 
-            return Component { visualDependencies in
-                return .titledTextInput(
-                    TitledTextInputCellViewModel(title: title,
-                                                 placeholder: placeholder,
-                                                 text: text,
-                                                 isEnabled: isEnabled,
-                                                 autocapitalizationType: autocapitalizationType,
-                                                 autocorrectionType: autocorrectionType,
-                                                 keyboardType: keyboardType,
-                                                 visualDependencies: visualDependencies))
+            return Component {
+                return .titledTextField($0, title: title, placeholder: placeholder, text: text, isEnabled: isEnabled, autocapitalizationType: autocapitalizationType, autocorrectionType: autocorrectionType, keyboardType: keyboardType)
             }
         }
 
         public static func phoneTextField(title: String, placeholder: String, countryCode: MutableProperty<String>, phoneNumber: MutableProperty<String>) -> Component {
-            return Component { visualDependencies in
-                return .phoneTextInput(
-                    PhoneInputCellViewModel(title: title,
-                                            placeholder: placeholder,
-                                            countryCode: countryCode,
-                                            phoneNumber: phoneNumber,
-                                            visualDependencies: visualDependencies))
+            return Component {
+                return .phoneTextField($0, title: title, placeholder: placeholder, countryCode: countryCode, phoneNumber: phoneNumber)
             }
         }
 
         public static func selectionField(title: String, value: Property<String>, inputTextAlignment: TextAlignment = .right, action: Action<Void, Void, NoError>, accessory: UITableViewCellAccessoryType = .disclosureIndicator) -> Component {
-            return Component { visualDependencies in
-                return .actionInput(
-                    ActionInputCellViewModel(visualDependencies: visualDependencies,
-                                             title: title,
-                                             input: value,
-                                             inputTextAlignment: inputTextAlignment,
-                                             selected: action,
-                                             accessory: accessory))
+            return Component {
+                return .selectionField($0, title: title, value: value, inputTextAlignment: inputTextAlignment, action: action, accessory: accessory)
             }
         }
 
         public static func buttonField(title: String, action: Action<Void, Void, NoError>) -> Component {
-            return Component { visualDependencies in
-                let style = visualDependencies.styles.labelTextBrandColor
-                    .composing(with: visualDependencies.styles.labelTextBody)
-
-                return .actionInput(
-                    ActionInputCellViewModel(visualDependencies: visualDependencies,
-                                             title: title,
-                                             input: nil,
-                                             inputTextAlignment: .left,
-                                             selected: action,
-                                             accessory: .none,
-                                             titleStyle: style))
+            return Component {
+                return .buttonField($0, title: title, action: action)
             }
         }
 
@@ -254,112 +172,68 @@ extension FormBuilder {
                                               titleStyle: UIViewStyle<UILabel>? = nil,
                                               value: Property<String>? = nil,
                                               action: Action<Void, Void, NoError>) -> Component {
-            return Component { visualDependencies in
-                return .actionInput(
-                    ActionInputCellViewModel(visualDependencies: visualDependencies,
-                                             icon: icon,
-                                             title: title,
-                                             input: value,
-                                             inputTextAlignment: .right,
-                                             selected: action,
-                                             titleStyle: titleStyle))
+            return Component {
+                return .iconSelectionField($0, icon: icon, title: title, titleStyle: titleStyle, value: value, action: action)
             }
         }
 
         public static func avatarSelectionField(icon: SignalProducer<UIImage, NoError>, subIcon: UIImage?, title: Property<String>, input: Property<String>? = nil, isVertical: Bool = false, action: Action<Void, Void, NoError>, subtitleStyle: UIViewStyle<UILabel>? = nil) -> Component {
-            return Component { visualDependencies in
-                return .actionInput(
-                    ActionInputCellViewModel(visualDependencies: visualDependencies,
-                                             icon: icon,
-                                             subIcon: subIcon,
-                                             iconStyle: .largeRoundAvatar,
-                                             title: title,
-                                             input: input,
-                                             inputTextAlignment: .left,
-                                             selected: action,
-                                             subtitleStyle: subtitleStyle,
-                                             isVertical: isVertical))
+            return Component {
+                return .avatarSelectionField($0, icon: icon, subIcon: subIcon, title: title, input: input, isVertical: isVertical, action: action, subtitleStyle: subtitleStyle)
             }
         }
 
         public static func segmentedField(options: [SegmentedCellViewModel.Option], selection: MutableProperty<Int>) -> Component {
-            return Component { visualDependencies in
-                return .segmentedInput(
-                    SegmentedCellViewModel(options: options,
-                                           selection: selection,
-                                           visualDependencies: visualDependencies))
+            return Component {
+                return .segmentedField($0, options: options, selection: selection)
             }
         }
 
         public static func noteField(placeholder: String, text: ValidatingProperty<String, InvalidInput>, addPhotosAction: Action<Void, Void, NoError>? = nil) -> Component {
-            return Component { visualDependencies in
-                return .noteInput(
-                    NoteInputCellViewModel(placeholder: placeholder,
-                                           text: text,
-                                           addPhotosAction: addPhotosAction,
-                                           visualDependencies: visualDependencies))
-            }
+            return Component {
+                return .noteField($0, placeholder: placeholder, text: text, addPhotosAction: addPhotosAction)
+           }
         }
 
         public static func note(_ text: Property<String>) -> Component {
-            return Component { visualDependencies in
-                return .note(NoteCellViewModel(text: text,
-                                               visualDependencies: visualDependencies))
+            return Component {
+                return .note($0, text)
             }
         }
 
         public static func textOptionsField(items: Property<[String]>, selectionAction: Action<Int, Void, NoError>, spec: TextOptionsCellViewSpec, headline: String? = nil) -> Component {
-            return Component { visualDependencies in
-                return .textOptionsInput(TextOptionsCellViewModel(items: items, selectionAction: selectionAction, headline: headline), spec)
+            return Component {
+                return .textOptionsField($0, items: items, selectionAction: selectionAction, spec: spec, headline: headline)
             }
         }
 
         public static func imageOptionsField(items: [UIImage], selectionAction: Action<Int, Void, NoError>, destructiveAction: Action<Int, Void, NoError>, spec: ImageOptionsCellViewSpec) -> Component {
-            return Component { visualDependencies in
-                return .imageOptionsInput(ImageOptionsCellViewModel(items: items, selectionAction: selectionAction, destructiveAction: destructiveAction), spec)
+            return Component {
+                return .imageOptionsField($0, items: items, selectionAction: selectionAction, destructiveAction: destructiveAction, spec: spec)
             }
         }
 
         public static func toggle(title: String, isOn: MutableProperty<Bool>, icon: UIImage? = nil, isEnabled: Property<Bool>? = nil) -> Component {
-            return Component { visualDependencies in
-                return .toggle(
-                    ToggleCellViewModel(title: title,
-                                        isOn: isOn,
-                                        icon: icon,
-                                        isEnabled: isEnabled ?? Property(value: true),
-                                        visualDependencies: visualDependencies))
+            return Component {
+                return .toggle($0, title: title, isOn: isOn, icon: icon, isEnabled: isEnabled)
             }
         }
 
         public static func imageField(image: SignalProducer<UIImage, NoError>, imageSize: CGSize, imageAlignment: CellElementAlignment = .centered, isRounded: Bool = false, selected: Action<Void, Void, NoError>? = nil) -> Component {
-            return Component { visualDependencies in
-                return .image(ImageCellViewModel(image: image,
-                                                 imageSize: imageSize,
-                                                 visualDependencies: visualDependencies,
-                                                 imageAlignment: imageAlignment,
-                                                 isRounded: isRounded,
-                                                 selected: selected))
+            return Component {
+                return .imageField($0, image: image, imageSize: imageSize, imageAlignment: imageAlignment, isRounded: isRounded, selected: selected)
             }
         }
 
         public static func activityIndicator(isRefreshing: Property<Bool>) -> Component {
-            return Component { visualDependencies in
-                return .activityIndicator(ActivityIndicatorCellViewModel(isRefreshing: isRefreshing),
-                                          ActivityIndicatorCellViewSpec(cellStyle: visualDependencies.styles.backgroundTransparentColor))
+            return Component {
+                return .activityIndicator($0, isRefreshing: isRefreshing)
             }
         }
 
         public static func titledList(title: String, items: [TitledListItem]) -> Component {
-            return Component { visualDependencies in
-                let listItemViewSpec = TitledListItemViewSpec(titleColor: .black,
-                                                          titleStyle: visualDependencies.styles.labelTextFootnote,
-                                                          descriptionColor: Colors.silverGrey,
-                                                          descriptionStyle: visualDependencies.styles.labelTextFootnote)
-                return .titledList(TitledListCellViewModel(title: title,
-                                                           items: items),
-                                   TitledListCellViewSpec(titleColor: .black,
-                                                          titleStyle: visualDependencies.styles.labelTextTitle3.composing(with: visualDependencies.styles.labelTextStyleWithMediumWeight),
-                                                          itemViewSpec: listItemViewSpec))
+            return Component {
+                return .titledList($0, title: title, items: items)
             }
         }
 
@@ -370,16 +244,13 @@ extension FormBuilder {
             in group: SelectionCellGroupViewModel,
             spec: SelectionCellViewSpec
         ) -> Component {
-            return Component { visualDependencies in
-                let viewModel = SelectionCellViewModel(title: title,
-                                                       icon: icon,
-                                                       identifier: identifier)
-                return .selection(viewModel, group: group, spec: spec)
+            return Component {
+                return .multiselectionItem($0, title: title, icon: icon, identifier: identifier, in: group, spec: spec)
             }
         }
 
         public static func custom(_ component: FormComponent) -> Component {
-            return Component { _ in component }
+            return Component { .custom($0, component) }
         }
     }
 }
