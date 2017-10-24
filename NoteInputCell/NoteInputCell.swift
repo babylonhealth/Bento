@@ -189,7 +189,6 @@ extension NoteInputCellViewModel: NoteInputCellViewModelProtocol {
 }
 
 extension NoteCellViewModel: NoteInputCellViewModelProtocol {
-    var placeholder: String? { return nil }
     var isEnabled: Property<Bool> { return Property(value: false) }
     var autocapitalizationType: UITextAutocapitalizationType { return .none }
     var autocorrectionType: UITextAutocorrectionType { return .no }

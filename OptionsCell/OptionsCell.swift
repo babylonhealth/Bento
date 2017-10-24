@@ -38,8 +38,15 @@ extension ImageOptionsCell: UICollectionViewDataSource {
         let item = self.viewModel.items[indexPath.row]
         let cell: ImageOptionsCollectionCell = collectionView.dequeueReusableCell(withReuseIdentifier: ImageOptionsCollectionCell.reuseIdentifier, for: indexPath) as! ImageOptionsCollectionCell
         cell.mediaImageView.image = item
-        cell.closeButton.setImage(viewSpec.mediaCellCloseIcon, for: .normal)
-        cell.closeButton.reactive.pressed = CocoaAction(viewModel.destructiveAction, input: (indexPath.row))
+
+        if let destructive = viewModel.destructiveAction {
+            cell.closeButton.isHidden = false
+            cell.closeButton.setImage(viewSpec.mediaCellCloseIcon, for: .normal)
+            cell.closeButton.reactive.pressed = CocoaAction(destructive, input: indexPath.row)
+        } else {
+            cell.closeButton.isHidden = true
+        }
+
         return cell
     }
 

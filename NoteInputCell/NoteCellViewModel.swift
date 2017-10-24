@@ -5,10 +5,12 @@ import Result
 ///
 /// - note: It is backed by `NoteInputCell`, but with user interaction disabled.
 public final class NoteCellViewModel: FocusableFormComponent {
+    let placeholder: String?
     let text: Property<String>
     let visualDependencies: VisualDependenciesProtocol
 
-    public init(text: Property<String>, visualDependencies: VisualDependenciesProtocol) {
+    public init(placeholder: String?, text: Property<String>, visualDependencies: VisualDependenciesProtocol) {
+        self.placeholder = placeholder
         self.text = text
         self.visualDependencies = visualDependencies
     }

@@ -302,9 +302,10 @@ extension FormBuilderV2 {
             }
         }
 
-        public static func note(_ identifier: Identifier, _ text: Property<String>) -> Component {
+        public static func note(_ identifier: Identifier, _ text: Property<String>, placeholder: String? = nil) -> Component {
             return Component { visualDependencies in
-                return .note(NoteCellViewModel(text: text,
+                return .note(NoteCellViewModel(placeholder: placeholder,
+                                               text: text,
                                                visualDependencies: visualDependencies))
             }
         }
@@ -315,7 +316,7 @@ extension FormBuilderV2 {
             }
         }
 
-        public static func imageOptionsField(_ identifier: Identifier, items: [UIImage], selectionAction: Action<Int, Void, NoError>, destructiveAction: Action<Int, Void, NoError>, spec: ImageOptionsCellViewSpec) -> Component {
+        public static func imageOptionsField(_ identifier: Identifier, items: [UIImage], selectionAction: Action<Int, Void, NoError>, destructiveAction: Action<Int, Void, NoError>? = nil, spec: ImageOptionsCellViewSpec) -> Component {
             return Component { visualDependencies in
                 return .imageOptionsInput(ImageOptionsCellViewModel(items: items, selectionAction: selectionAction, destructiveAction: destructiveAction), spec)
             }

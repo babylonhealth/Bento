@@ -195,9 +195,10 @@ extension FormBuilder {
            }
         }
 
-        public static func note(_ text: Property<String>) -> Component {
+
+        public static func note(_ text: Property<String>, placeholder: String? = nil) -> Component {
             return Component {
-                return .note($0, text)
+                return .note($0, text, placeholder: placeholder)
             }
         }
 
@@ -207,7 +208,7 @@ extension FormBuilder {
             }
         }
 
-        public static func imageOptionsField(items: [UIImage], selectionAction: Action<Int, Void, NoError>, destructiveAction: Action<Int, Void, NoError>, spec: ImageOptionsCellViewSpec) -> Component {
+        public static func imageOptionsField(items: [UIImage], selectionAction: Action<Int, Void, NoError>, destructiveAction: Action<Int, Void, NoError>? = nil, spec: ImageOptionsCellViewSpec) -> Component {
             return Component {
                 return .imageOptionsField($0, items: items, selectionAction: selectionAction, destructiveAction: destructiveAction, spec: spec)
             }
