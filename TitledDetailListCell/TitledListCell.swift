@@ -4,6 +4,11 @@ final class TitledListCell: FormCell {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var listStackView: UIStackView!
 
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        listStackView.isLayoutMarginsRelativeArrangement = true
+    }
+
     func setup(viewModel: TitledListCellViewModel, viewSpec: TitledListCellViewSpec) {
         setupTitle(viewModel: viewModel, viewSpec: viewSpec)
         setupList(viewModel: viewModel, itemViewSpec: viewSpec.itemViewSpec)

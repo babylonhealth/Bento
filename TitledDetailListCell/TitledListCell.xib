@@ -27,9 +27,6 @@
                     </label>
                     <stackView opaque="NO" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" axis="vertical" distribution="fillEqually" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="sS5-Nr-uZV">
                         <rect key="frame" x="8" y="49" width="359" height="135"/>
-                        <userDefinedRuntimeAttributes>
-                            <userDefinedRuntimeAttribute type="boolean" keyPath="isLayoutMarginsRelativeArrangement" value="YES"/>
-                        </userDefinedRuntimeAttributes>
                     </stackView>
                 </subviews>
                 <constraints>
