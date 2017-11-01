@@ -10,6 +10,7 @@ public enum CellElementAlignment {
 
 final public class ImageCellViewModel {
     public let image: SignalProducer<UIImage, NoError>
+    public let leftIcon: SignalProducer<UIImage?, NoError>
     public let imageSize: CGSize
     public let visualDependencies: VisualDependenciesProtocol
     public let selectionStyle: UITableViewCellSelectionStyle
@@ -23,8 +24,10 @@ final public class ImageCellViewModel {
                 selectionStyle: UITableViewCellSelectionStyle = .none,
                 imageAlignment: CellElementAlignment,
                 isRounded: Bool,
-                selected: Action<Void, Void, NoError>? = nil) {
+                selected: Action<Void, Void, NoError>? = nil,
+                leftIcon: SignalProducer<UIImage?, NoError> = .empty) {
         self.image = image
+        self.leftIcon = leftIcon
         self.visualDependencies = visualDependencies
         self.selectionStyle = selectionStyle
         self.imageSize = imageSize

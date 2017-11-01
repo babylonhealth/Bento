@@ -333,14 +333,15 @@ extension FormBuilderV2 {
             }
         }
 
-        public static func imageField(_ identifier: Identifier, image: SignalProducer<UIImage, NoError>, imageSize: CGSize, imageAlignment: CellElementAlignment = .centered, isRounded: Bool = false, selected: Action<Void, Void, NoError>? = nil) -> Component {
+        public static func imageField(_ identifier: Identifier, image: SignalProducer<UIImage, NoError>, imageSize: CGSize, imageAlignment: CellElementAlignment = .centered, isRounded: Bool = false, selected: Action<Void, Void, NoError>? = nil, leftIcon: SignalProducer<UIImage?, NoError> = .empty) -> Component {
             return Component { visualDependencies in
                 return .image(ImageCellViewModel(image: image,
                                                  imageSize: imageSize,
                                                  visualDependencies: visualDependencies,
                                                  imageAlignment: imageAlignment,
                                                  isRounded: isRounded,
-                                                 selected: selected))
+                                                 selected: selected,
+                                                 leftIcon: leftIcon))
             }
         }
 

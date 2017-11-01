@@ -7,6 +7,7 @@ extension ImageCell: NibLoadableCell {}
 final class ImageCell: FormCell {
 
     @IBOutlet weak var iconView: UIImageView!
+    @IBOutlet weak var leftIconView: UIImageView!
     @IBOutlet weak var imageHeight: NSLayoutConstraint!
     @IBOutlet weak var imageWidth: NSLayoutConstraint!
 
@@ -25,14 +26,31 @@ final class ImageCell: FormCell {
         self.viewModel = viewModel
         self.selectionStyle = self.viewModel.selectionStyle
         self.viewModel.applyBackgroundColor(to: [self])
+
         self.iconView.reactive.image <~ viewModel.image
+            .take(until: reactive.prepareForReuse)
+
         self.imageWidth.constant = viewModel.imageSize.width
         self.imageHeight.constant = viewModel.imageSize.height
 
+        viewModel.leftIcon
+            .observe(on: UIScheduler())
+            .take(until: reactive.prepareForReuse)
+            .startWithValues { [weak leftIconView = self.leftIconView] image in
+                leftIconView?.image = image
+                leftIconView?.isHidden = image == nil
+            }
+
         setupImage(with: viewModel.imageAlignment)
+    }
+
+    override func layoutSubviews() {
+        super.layoutSubviews()
 
         if viewModel.isRounded {
-            self.iconView.layer.cornerRadius = self.imageWidth.constant / 2.0
+            self.iconView.layer.cornerRadius = self.iconView.frame.width / 2.0
+        } else {
+            self.iconView.layer.cornerRadius = 0.0
         }
     }
 
