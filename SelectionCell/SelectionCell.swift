@@ -7,6 +7,7 @@ open class SelectionCell: FormItemCell, NibLoadableCell {
     private enum Style {
         case rightTick
         case leftTickWithDetailDisclosure
+        case justDetailDisclosure
     }
 
     @IBOutlet weak var avatar: UIImageView!
@@ -57,7 +58,14 @@ open class SelectionCell: FormItemCell, NibLoadableCell {
         label.text = viewModel.title
         spec.labelStyle?.apply(to: label)
 
-        style = group.hasDisclosureAction ? .leftTickWithDetailDisclosure : .rightTick
+        switch (group.hasDisclosureAction, spec.tick) {
+        case (true, .some):
+            style = .leftTickWithDetailDisclosure
+        case (false, _):
+            style = .rightTick
+        case (true, .none):
+            style = .justDetailDisclosure
+        }
 
         // Both are hidden initially.
         leftTick.isHidden = true
@@ -74,6 +82,10 @@ open class SelectionCell: FormItemCell, NibLoadableCell {
             rightTick.image = spec.tick
             rightTick.tintColor = spec.tickColor
             disclosure.isHidden = true
+            NSLayoutConstraint.deactivate(leftTickConstraints)
+
+        case .justDetailDisclosure:
+            disclosure.isHidden = false
             NSLayoutConstraint.deactivate(leftTickConstraints)
         }
 
@@ -131,6 +143,10 @@ open class SelectionCell: FormItemCell, NibLoadableCell {
         case .rightTick:
             rightTick.isHidden = !(!isProcessing && isSelected)
             rightTick.tintColor = isEnabled ? spec.tickColor : spec.disabledTickColor
+
+        case .justDetailDisclosure:
+            leftTick.isHidden = true
+            rightTick.isHidden = true
         }
     }
 }
