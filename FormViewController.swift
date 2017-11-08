@@ -4,16 +4,16 @@ import ReactiveSwift
 import ReactiveCocoa
 import enum Result.NoError
 
-open class FormViewController: UIViewController {
+open class FormViewController<F: Form>: UIViewController, UITableViewDelegate {
     public let tableView: UITableView
 
-    fileprivate let form: Form
-    fileprivate let dataSource: FormTableViewDataSource
+    public let form: F
+    fileprivate let dataSource: FormTableViewDataSource<F.Identifier>
 
     fileprivate let viewSpec: FormViewSpec
     private var keyboardChangeDisposable: Disposable?
 
-    public init<F: RefreshableForm>(form: F, viewSpec: FormViewSpec) {
+    public init(form: F, viewSpec: FormViewSpec) {
         self.form = form
         self.viewSpec = viewSpec
         tableView = UITableView()
@@ -21,17 +21,10 @@ open class FormViewController: UIViewController {
         super.init(nibName: nil, bundle: nil)
 
         setupTableView()
-        setupRefreshControl(with: form.refresh)
-    }
 
-    public init<F: Form>(form: F, viewSpec: FormViewSpec) {
-        self.form = form
-        self.viewSpec = viewSpec
-        tableView = UITableView()
-        dataSource = FormTableViewDataSource(for: tableView, separatorVisibility: viewSpec.separatorVisibility)
-        super.init(nibName: nil, bundle: nil)
-
-        setupTableView()
+        if let refreshable = form as? Refreshable {
+            setupRefreshControl(with: refreshable.refresh)
+        }
     }
 
     @available(*, unavailable)
@@ -134,6 +127,20 @@ open class FormViewController: UIViewController {
             CATransaction.commit()
         }
     }
+
+    public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        // NOTE: [David] This cannot removed otherwise we are going to introduce a side-effect in `ActionInputCell`
+        // which is triggering the relevant action when the cell is selected. We don't want that selection both visually
+        // as in terms of logic since when the cell is being reused it will receive a call for `setSelected(_:animated:)`
+        // with a true value which will wrongly lead to invocation of the action.
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
+
+    public func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        // See `updateSeparatorsOfVisibleCells()` for the implementation note.
+        let cell = unsafeDowncast(cell, to: FormCell.self)
+        cell.visibility = dataSource.separatorVisibility(forCellAt: indexPath.row)
+    }
 }
 
 extension FormViewController: FormCellConfigurator {
@@ -212,20 +219,3 @@ extension FormViewController: DynamicHeightCellDelegate {
         }
     }
 }
-
-extension FormViewController: UITableViewDelegate {
-    public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        // NOTE: [David] This cannot removed otherwise we are going to introduce a side-effect in `ActionInputCell`
-        // which is triggering the relevant action when the cell is selected. We don't want that selection both visually
-        // as in terms of logic since when the cell is being reused it will receive a call for `setSelected(_:animated:)`
-        // with a true value which will wrongly lead to invocation of the action.
-        tableView.deselectRow(at: indexPath, animated: true)
-    }
-
-    public func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        // See `updateSeparatorsOfVisibleCells()` for the implementation note.
-        let cell = unsafeDowncast(cell, to: FormCell.self)
-        cell.visibility = dataSource.separatorVisibility(forCellAt: indexPath.row)
-    }
-}
-

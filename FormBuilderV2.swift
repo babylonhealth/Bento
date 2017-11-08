@@ -13,8 +13,8 @@ public struct FormBuilderV2<Identifier: Hashable> {
         self.components = components
     }
 
-    public func build(with visualDependencies: VisualDependenciesProtocol) -> [FormComponent] {
-        return components.map { $0.builder(visualDependencies) }
+    public func build(with visualDependencies: VisualDependenciesProtocol) -> [FormItem<Identifier>] {
+        return components.map { FormItem(id: $0.id, component: $0.builder(visualDependencies)) }
     }
 
     public static func |-+(builder: FormBuilderV2<Identifier>, component: Component) -> FormBuilderV2<Identifier> {
@@ -47,42 +47,44 @@ public struct FormBuilderV2<Identifier: Hashable> {
 extension FormBuilderV2 {
 
     public struct Component {
+        fileprivate let id: Identifier?
         fileprivate let builder: (VisualDependenciesProtocol) -> FormComponent
 
-        public init(_ builder: @escaping (VisualDependenciesProtocol) -> FormComponent) {
+        public init(with id: Identifier?, _ builder: @escaping (VisualDependenciesProtocol) -> FormComponent) {
+            self.id = id
             self.builder = builder
         }
 
         public static func space(height: Float) -> Component {
-            return Component { visualDependencies in
+            return Component(with: nil) { visualDependencies in
                 return .space(.init(height: height, visualDependencies: visualDependencies))
             }
         }
 
-        public static func header(_ identifier: Identifier, text: String) -> Component {
-            return description(identifier, .header, text: text)
+        public static func header(_ id: Identifier, text: String) -> Component {
+            return description(id, .header, text: text)
         }
 
-        public static func headline(_ identifier: Identifier, text: String) -> Component {
-            return description(identifier, .headline, text: text)
+        public static func headline(_ id: Identifier, text: String) -> Component {
+            return description(id, .headline, text: text)
         }
 
-        public static func description(_ identifier: Identifier, _ type: DescriptionCellType, text: String, selected: Action<Void, Void, NoError>? = nil) -> Component {
-            return Component { visualDependencies in
+        public static func description(_ id: Identifier, _ type: DescriptionCellType, text: String, selected: Action<Void, Void, NoError>? = nil) -> Component {
+            return Component(with: id) { visualDependencies in
                 return .description(.init(text: text, type: type, visualDependencies: visualDependencies, selected: selected))
             }
         }
 
-        public static func actionDescription(_ identifier: Identifier, _ description: NSAttributedString, action: Action<Void, Void, NoError>) -> Component {
-            return Component { visualDependencies in
+        public static func actionDescription(_ id: Identifier, _ description: NSAttributedString, action: Action<Void, Void, NoError>) -> Component {
+            return Component(with: id) { visualDependencies in
                 return .actionDescription(ActionDescriptionCellViewModel(visualDependencies: visualDependencies,
                                                                          title: description,
                                                                          action: action))
             }
         }
 
-        public static func facebookButton(_ identifier: Identifier, title: String, action: Action<Void, Void, NoError>) -> Component {
-            return Component { visualDependencies in
+        public static func facebookButton(_ id: Identifier, title: String, action: Action<Void, Void, NoError>) -> Component {
+            return Component(with: id) { visualDependencies in
                 let style = visualDependencies.styles.buttonFacebook
                     .composing(with: visualDependencies.styles.buttonRoundCorners)
                     .composing(with: visualDependencies.styles.buttonTextBody)
@@ -94,8 +96,8 @@ extension FormBuilderV2 {
             }
         }
 
-        public static func primaryButton(_ identifier: Identifier, text: String, action: Action<Void, Void, NoError>) -> Component {
-            return Component { visualDependencies in
+        public static func primaryButton(_ id: Identifier, text: String, action: Action<Void, Void, NoError>) -> Component {
+            return Component(with: id) { visualDependencies in
                 let style = visualDependencies.styles.buttonBackgroundBrandColor
                     .composing(with: visualDependencies.styles.buttonRoundCorners)
                     .composing(with: visualDependencies.styles.buttonTextBody)
@@ -111,8 +113,8 @@ extension FormBuilderV2 {
             }
         }
 
-        public static func secondaryButton(_ identifier: Identifier, text: String, hasDynamicHeight: Bool = false, isDestructive: Bool = false, action: Action<Void, Void, NoError>) -> Component {
-            return Component { visualDependencies in
+        public static func secondaryButton(_ id: Identifier, text: String, hasDynamicHeight: Bool = false, isDestructive: Bool = false, action: Action<Void, Void, NoError>) -> Component {
+            return Component(with: id) { visualDependencies in
                 let styles = visualDependencies.styles
                 let style = (isDestructive ? styles.buttonTitleDestructiveColor : styles.buttonTitleBrandColor)
                     .composing(with: visualDependencies.styles.buttonTextBody)
@@ -123,12 +125,12 @@ extension FormBuilderV2 {
             }
         }
 
-        public static func cellButton(_ identifier: Identifier,
+        public static func cellButton(_ id: Identifier,
                                       text: String,
                                       hasDynamicHeight: Bool = false,
                                       action: Action<Void, Void, NoError>,
                                       buttonMargins: CGFloat) -> Component {
-            return Component { visualDependencies in
+            return Component(with: id) { visualDependencies in
                 let style = visualDependencies.styles.buttonTitleBrandColor
                     .composing(with: visualDependencies.styles.buttonTextBody)
                     .composing(with: visualDependencies.styles.buttonBackgroundWhiteColor)
@@ -140,7 +142,7 @@ extension FormBuilderV2 {
         }
 
         public static func textField(
-            _ identifier: Identifier,
+            _ id: Identifier,
             placeholder: String,
             text: ValidatingProperty<String, InvalidInput>,
             clearsOnBeginEditing: Bool = false,
@@ -148,7 +150,7 @@ extension FormBuilderV2 {
             autocorrectionType: UITextAutocorrectionType = .default,
             keyboardType: UIKeyboardType = .default
         ) -> Component {
-            return Component { visualDependencies in
+            return Component(with: id) { visualDependencies in
                 return .textInput(
                     TextInputCellViewModel(placeholder: placeholder,
                                            text: text,
@@ -160,8 +162,8 @@ extension FormBuilderV2 {
             }
         }
 
-        public static func passwordField(_ identifier: Identifier, placeholder: String, text: ValidatingProperty<String, InvalidInput>) -> Component {
-            return Component { visualDependencies in
+        public static func passwordField(_ id: Identifier, placeholder: String, text: ValidatingProperty<String, InvalidInput>) -> Component {
+            return Component(with: id) { visualDependencies in
                 return .textInput(
                     TextInputCellViewModel(placeholder: placeholder,
                                            text: text,
@@ -170,8 +172,8 @@ extension FormBuilderV2 {
             }
         }
 
-        public static func titledPasswordField(_ identifier: Identifier, title: String, placeholder: String, text: ValidatingProperty<String, InvalidInput>) -> Component {
-            return Component { visualDependencies in
+        public static func titledPasswordField(_ id: Identifier, title: String, placeholder: String, text: ValidatingProperty<String, InvalidInput>) -> Component {
+            return Component(with: id) { visualDependencies in
                 return .titledTextInput(
                     TitledTextInputCellViewModel(title: title,
                                                  placeholder: placeholder,
@@ -181,7 +183,7 @@ extension FormBuilderV2 {
             }
         }
 
-        public static func titledTextField(_ identifier: Identifier,
+        public static func titledTextField(_ id: Identifier,
                                            title: String,
                                            placeholder: String,
                                            text: ValidatingProperty<String, InvalidInput>,
@@ -190,7 +192,7 @@ extension FormBuilderV2 {
                                            autocorrectionType: UITextAutocorrectionType = .default,
                                            keyboardType: UIKeyboardType = .default ) -> Component {
 
-            return Component { visualDependencies in
+            return Component(with: id) { visualDependencies in
                 return .titledTextInput(
                     TitledTextInputCellViewModel(title: title,
                                                  placeholder: placeholder,
@@ -203,8 +205,8 @@ extension FormBuilderV2 {
             }
         }
 
-        public static func phoneTextField(_ identifier: Identifier, title: String, placeholder: String, countryCode: MutableProperty<String>, phoneNumber: MutableProperty<String>) -> Component {
-            return Component { visualDependencies in
+        public static func phoneTextField(_ id: Identifier, title: String, placeholder: String, countryCode: MutableProperty<String>, phoneNumber: MutableProperty<String>) -> Component {
+            return Component(with: id) { visualDependencies in
                 return .phoneTextInput(
                     PhoneInputCellViewModel(title: title,
                                             placeholder: placeholder,
@@ -214,8 +216,8 @@ extension FormBuilderV2 {
             }
         }
 
-        public static func selectionField(_ identifier: Identifier, title: String, value: Property<String>, inputTextAlignment: TextAlignment = .right, action: Action<Void, Void, NoError>, accessory: UITableViewCellAccessoryType = .disclosureIndicator) -> Component {
-            return Component { visualDependencies in
+        public static func selectionField(_ id: Identifier, title: String, value: Property<String>, inputTextAlignment: TextAlignment = .right, action: Action<Void, Void, NoError>, accessory: UITableViewCellAccessoryType = .disclosureIndicator) -> Component {
+            return Component(with: id) { visualDependencies in
                 return .actionInput(
                     ActionInputCellViewModel(visualDependencies: visualDependencies,
                                              title: title,
@@ -226,8 +228,8 @@ extension FormBuilderV2 {
             }
         }
 
-        public static func buttonField(_ identifier: Identifier, title: String, action: Action<Void, Void, NoError>) -> Component {
-            return Component { visualDependencies in
+        public static func buttonField(_ id: Identifier, title: String, action: Action<Void, Void, NoError>) -> Component {
+            return Component(with: id) { visualDependencies in
                 let style = visualDependencies.styles.labelTextBrandColor
                     .composing(with: visualDependencies.styles.labelTextBody)
 
@@ -242,13 +244,13 @@ extension FormBuilderV2 {
             }
         }
 
-        public static func iconSelectionField(_ identifier: Identifier,
+        public static func iconSelectionField(_ id: Identifier,
                                               icon: SignalProducer<UIImage, NoError>,
                                               title: String,
                                               titleStyle: UIViewStyle<UILabel>? = nil,
                                               value: Property<String>? = nil,
                                               action: Action<Void, Void, NoError>) -> Component {
-            return Component { visualDependencies in
+            return Component(with: id) { visualDependencies in
                 return .actionInput(
                     ActionInputCellViewModel(visualDependencies: visualDependencies,
                                              icon: icon,
@@ -260,7 +262,7 @@ extension FormBuilderV2 {
             }
         }
 
-        public static func avatarSelectionField(_ identifier: Identifier,
+        public static func avatarSelectionField(_ id: Identifier,
                                                 icon: SignalProducer<UIImage, NoError>,
                                                 subIcon: UIImage?,
                                                 title: Property<String>,
@@ -268,7 +270,7 @@ extension FormBuilderV2 {
                                                 isVertical: Bool = false,
                                                 action: Action<Void, Void, NoError>,
                                                 subtitleStyle: UIViewStyle<UILabel>? = nil) -> Component {
-            return Component { visualDependencies in
+            return Component(with: id) { visualDependencies in
                 return .actionInput(
                     ActionInputCellViewModel(visualDependencies: visualDependencies,
                                              icon: icon,
@@ -283,8 +285,8 @@ extension FormBuilderV2 {
             }
         }
 
-        public static func segmentedField(_ identifier: Identifier, options: [SegmentedCellViewModel.Option], selection: MutableProperty<Int>) -> Component {
-            return Component { visualDependencies in
+        public static func segmentedField(_ id: Identifier, options: [SegmentedCellViewModel.Option], selection: MutableProperty<Int>) -> Component {
+            return Component(with: id) { visualDependencies in
                 return .segmentedInput(
                     SegmentedCellViewModel(options: options,
                                            selection: selection,
@@ -292,8 +294,8 @@ extension FormBuilderV2 {
             }
         }
 
-        public static func noteField(_ identifier: Identifier, placeholder: String, text: ValidatingProperty<String, InvalidInput>, addPhotosAction: Action<Void, Void, NoError>? = nil) -> Component {
-            return Component { visualDependencies in
+        public static func noteField(_ id: Identifier, placeholder: String, text: ValidatingProperty<String, InvalidInput>, addPhotosAction: Action<Void, Void, NoError>? = nil) -> Component {
+            return Component(with: id) { visualDependencies in
                 return .noteInput(
                     NoteInputCellViewModel(placeholder: placeholder,
                                            text: text,
@@ -302,28 +304,28 @@ extension FormBuilderV2 {
             }
         }
 
-        public static func note(_ identifier: Identifier, _ text: Property<String>, placeholder: String? = nil) -> Component {
-            return Component { visualDependencies in
+        public static func note(_ id: Identifier, _ text: Property<String>, placeholder: String? = nil) -> Component {
+            return Component(with: id) { visualDependencies in
                 return .note(NoteCellViewModel(placeholder: placeholder,
                                                text: text,
                                                visualDependencies: visualDependencies))
             }
         }
 
-        public static func textOptionsField(_ identifier: Identifier, items: Property<[String]>, selectionAction: Action<Int, Void, NoError>, spec: TextOptionsCellViewSpec, headline: String? = nil) -> Component {
-            return Component { visualDependencies in
+        public static func textOptionsField(_ id: Identifier, items: Property<[String]>, selectionAction: Action<Int, Void, NoError>, spec: TextOptionsCellViewSpec, headline: String? = nil) -> Component {
+            return Component(with: id) { visualDependencies in
                 return .textOptionsInput(TextOptionsCellViewModel(items: items, selectionAction: selectionAction, headline: headline), spec)
             }
         }
 
-        public static func imageOptionsField(_ identifier: Identifier, items: [UIImage], selectionAction: Action<Int, Void, NoError>, destructiveAction: Action<Int, Void, NoError>? = nil, spec: ImageOptionsCellViewSpec) -> Component {
-            return Component { visualDependencies in
+        public static func imageOptionsField(_ id: Identifier, items: [UIImage], selectionAction: Action<Int, Void, NoError>, destructiveAction: Action<Int, Void, NoError>? = nil, spec: ImageOptionsCellViewSpec) -> Component {
+            return Component(with: id) { visualDependencies in
                 return .imageOptionsInput(ImageOptionsCellViewModel(items: items, selectionAction: selectionAction, destructiveAction: destructiveAction), spec)
             }
         }
 
-        public static func toggle(_ identifier: Identifier, title: String, isOn: MutableProperty<Bool>, icon: UIImage? = nil, isEnabled: Property<Bool>? = nil) -> Component {
-            return Component { visualDependencies in
+        public static func toggle(_ id: Identifier, title: String, isOn: MutableProperty<Bool>, icon: UIImage? = nil, isEnabled: Property<Bool>? = nil) -> Component {
+            return Component(with: id) { visualDependencies in
                 return .toggle(
                     ToggleCellViewModel(title: title,
                                         isOn: isOn,
@@ -333,8 +335,8 @@ extension FormBuilderV2 {
             }
         }
 
-        public static func imageField(_ identifier: Identifier, image: SignalProducer<UIImage, NoError>, imageSize: CGSize, imageAlignment: CellElementAlignment = .centered, isRounded: Bool = false, selected: Action<Void, Void, NoError>? = nil, leftIcon: SignalProducer<UIImage?, NoError> = .empty) -> Component {
-            return Component { visualDependencies in
+        public static func imageField(_ id: Identifier, image: SignalProducer<UIImage, NoError>, imageSize: CGSize, imageAlignment: CellElementAlignment = .centered, isRounded: Bool = false, selected: Action<Void, Void, NoError>? = nil, leftIcon: SignalProducer<UIImage?, NoError> = .empty) -> Component {
+            return Component(with: id) { visualDependencies in
                 return .image(ImageCellViewModel(image: image,
                                                  imageSize: imageSize,
                                                  visualDependencies: visualDependencies,
@@ -345,15 +347,15 @@ extension FormBuilderV2 {
             }
         }
 
-        public static func activityIndicator(_ identifier: Identifier, isRefreshing: Property<Bool>) -> Component {
-            return Component { visualDependencies in
+        public static func activityIndicator(_ id: Identifier, isRefreshing: Property<Bool>) -> Component {
+            return Component(with: id) { visualDependencies in
                 return .activityIndicator(ActivityIndicatorCellViewModel(isRefreshing: isRefreshing),
                                           ActivityIndicatorCellViewSpec(cellStyle: visualDependencies.styles.backgroundTransparentColor))
             }
         }
 
-        public static func titledList(_ identifier: Identifier, title: String, items: [TitledListItem]) -> Component {
-            return Component { visualDependencies in
+        public static func titledList(_ id: Identifier, title: String, items: [TitledListItem]) -> Component {
+            return Component(with: id) { visualDependencies in
                 let listItemViewSpec = TitledListItemViewSpec(titleColor: .black,
                                                           titleStyle: visualDependencies.styles.labelTextFootnote,
                                                           descriptionColor: Colors.silverGrey,
@@ -367,14 +369,14 @@ extension FormBuilderV2 {
         }
 
         public static func multiselectionItem(
-            _ formIdentifier: Identifier,
+            _ formId: Identifier,
             title: String,
             icon: SignalProducer<UIImage, NoError>? = nil,
             identifier: Int,
             in group: SelectionCellGroupViewModel,
             spec: SelectionCellViewSpec
         ) -> Component {
-            return Component { visualDependencies in
+            return Component(with: formId) { visualDependencies in
                 let viewModel = SelectionCellViewModel(title: title,
                                                        icon: icon,
                                                        identifier: identifier)
@@ -382,8 +384,8 @@ extension FormBuilderV2 {
             }
         }
 
-        public static func custom(_ identifier: Identifier, _ component: FormComponent) -> Component {
-            return Component { _ in component }
+        public static func custom(_ id: Identifier, _ component: FormComponent) -> Component {
+            return Component(with: id) { _ in component }
         }
     }
 }

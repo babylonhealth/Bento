@@ -46,16 +46,16 @@ public protocol FormCellConfigurator: class {
     func updateSeparatorsOfVisibleCells()
 }
 
-public final class FormTableViewDataSource: NSObject, UITableViewDataSource {
-    private var components: [FormComponent]
+public final class FormTableViewDataSource<Identifier: Hashable>: NSObject, UITableViewDataSource {
+    private var items: [FormItem<Identifier>]
     private weak var tableView: UITableView?
     private weak var configurator: FormCellConfigurator?
     private let separatorVisibility: FormViewSpec.SeparatorVisibility
 
     public var indexOfPreferredRowForInitialFocus: Int? {
-        if let startIndex = components.index(where: { $0.viewModel is FocusableFormComponent }) {
-            let slice = components[startIndex ..< components.endIndex]
-            guard let preferred = slice.index(where: { ($0.viewModel as? FocusableFormComponent)?.isPreferredForFocusing ?? false }) else {
+        if let startIndex = items.index(where: { $0.component.viewModel is FocusableFormComponent }) {
+            let slice = items[startIndex ..< items.endIndex]
+            guard let preferred = slice.index(where: { ($0.component.viewModel as? FocusableFormComponent)?.isPreferredForFocusing ?? false }) else {
                 return startIndex
             }
             return preferred
@@ -64,7 +64,7 @@ public final class FormTableViewDataSource: NSObject, UITableViewDataSource {
     }
 
     public init(for tableView: UITableView, separatorVisibility: FormViewSpec.SeparatorVisibility) {
-        self.components = []
+        self.items = []
         self.tableView = tableView
         self.separatorVisibility = separatorVisibility
         super.init()
@@ -77,8 +77,8 @@ public final class FormTableViewDataSource: NSObject, UITableViewDataSource {
     ///
     /// - returns: The separator visibility for the specified cell.
     public func separatorVisibility(forCellAt row: Int) -> FormCellSeparatorVisibility {
-        let definesSection = components[row].definesSection
-        let nextCellDefinesSection = row < components.count - 1 ? components[row + 1].definesSection : true
+        let definesSection = items[row].component.definesSection
+        let nextCellDefinesSection = row < items.count - 1 ? items[row + 1].component.definesSection : true
 
         switch separatorVisibility {
         case .betweenItemsAndSections:
@@ -102,7 +102,7 @@ public final class FormTableViewDataSource: NSObject, UITableViewDataSource {
     }
 
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return components.count
+        return items.count
     }
 
     private func configure<Cell: FormCell>(_ dequeue: (IndexPath) -> Cell, for indexPath: IndexPath) -> Cell {
@@ -112,7 +112,7 @@ public final class FormTableViewDataSource: NSObject, UITableViewDataSource {
     }
 
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cellViewModel = components[indexPath.row]
+        let cellViewModel = items[indexPath.row].component
 
         switch cellViewModel {
         case .textInput(let viewModel):
@@ -190,7 +190,7 @@ public final class FormTableViewDataSource: NSObject, UITableViewDataSource {
         }
     }
 
-    public func bind(to components: Property<[FormComponent]>, configurator: FormCellConfigurator?) {
+    public func bind(to components: Property<[FormItem<Identifier>]>, configurator: FormCellConfigurator?) {
         guard let tableView = self.tableView else { return }
         self.configurator = configurator
 
@@ -223,7 +223,7 @@ public final class FormTableViewDataSource: NSObject, UITableViewDataSource {
             .observe(on: UIScheduler())
             .startWithValues { previous, current in
                 guard let tableView = self.tableView else { return }
-                self.components = current
+                self.items = current
 
                 // Dismiss any first responder to avoid view corruption.
                 tableView.endEditing(true)

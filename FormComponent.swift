@@ -1,3 +1,30 @@
+public struct FormItem<Identifier: Hashable>: Hashable {
+    /// The identifier of `self`, or `nil` if `self` represents an empty space.
+    public let id: Identifier?
+
+    /// The form component backing `self`.
+    public let component: FormComponent
+
+    public var hashValue: Int {
+        return id?.hashValue ?? 0
+    }
+
+    /// Initialise a form item.
+    ///
+    /// - parameters:
+    ///   - id: The identifier of the item. `nil` is provisioned for empty spaces and
+    ///         should generally be avoided.
+    ///   - component: The form component backing the item.
+    public init(id: Identifier?, component: FormComponent) {
+        self.id = id
+        self.component = component
+    }
+
+    public static func ==(left: FormItem<Identifier>, right: FormItem<Identifier>) -> Bool {
+        return left.id == right.id && left.component == right.component
+    }
+}
+
 public enum FormComponent {
     case textInput(TextInputCellViewModel)
     case titledTextInput(TitledTextInputCellViewModel)

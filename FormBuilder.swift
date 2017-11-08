@@ -22,7 +22,7 @@ public struct FormBuilder {
         self.components = components
     }
 
-    public func build(with visualDependencies: VisualDependenciesProtocol) -> [FormComponent] {
+    public func build(with visualDependencies: VisualDependenciesProtocol) -> [FormItem<Int>] {
         return FormBuilderV2<Int>(components: components.enumerated().map { $1.wrapped($0) })
             .build(with: visualDependencies)
     }

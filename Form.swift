@@ -3,10 +3,8 @@ import Result
 import BabylonFoundation
 
 public protocol Form {
-    var components: Property<[FormComponent]> { get }
-    var isSubmitting: Property<Bool> { get }
-}
+    associatedtype Identifier: Hashable
 
-public protocol RefreshableForm: Form {
-    var refresh: ActionInput<Void> { get }
+    var components: Property<[FormItem<Identifier>]> { get }
+    var isSubmitting: Property<Bool> { get }
 }
