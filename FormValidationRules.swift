@@ -228,3 +228,22 @@ public enum FormValidationRules {
         return ValidatingProperty(initialValue, { regex |> evaluate($0) |> toValidatorOutput(invalidMessage) })
     }
 }
+
+public struct PhoneProperty {
+    private let combinedFields: ValidatingProperty<String, InvalidInput>
+    public let countryCode: MutableProperty<String>
+    public let number = MutableProperty<String>("")
+    public var validator: PropertyValidator<InvalidInput> {
+        return combinedFields.validator
+    }
+    public init(region: RegionDTO, invalidMessage: String) {
+        countryCode = MutableProperty(region.phoneCountryCode)
+        combinedFields = FormValidationRules.phoneNumberValidatingProperty(invalidMessage: invalidMessage)
+
+        combinedFields <~ Property.combineLatest(countryCode, number)
+            .producer
+            .debounce(0.2, on: QueueScheduler(qos: .userInitiated))
+            .map { [$0, $1].joined(separator: " ") }
+    }
+}
+
