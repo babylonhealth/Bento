@@ -108,8 +108,8 @@ public final class SegmentedCell: FormItemCell {
 
         // Constrain the stack view to the content view.
         let requiredConstraint = [
-            stackView.leftAnchor.constraint(equalTo: contentView.layoutMarginsGuide.leftAnchor),
-            stackView.rightAnchor.constraint(equalTo: contentView.layoutMarginsGuide.rightAnchor),
+            stackView.leadingAnchor.constraint(equalTo: contentView.layoutMarginsGuide.leadingAnchor),
+            stackView.trailingAnchor.constraint(equalTo: contentView.layoutMarginsGuide.trailingAnchor),
             stackView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
             contentView.heightAnchor.constraint(greaterThanOrEqualToConstant: 44.0)
         ]
