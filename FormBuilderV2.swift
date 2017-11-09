@@ -269,6 +269,7 @@ extension FormBuilderV2 {
                                                 input: Property<String>? = nil,
                                                 isVertical: Bool = false,
                                                 action: Action<Void, Void, NoError>,
+                                                accessory: UITableViewCellAccessoryType = .disclosureIndicator,
                                                 subtitleStyle: UIViewStyle<UILabel>? = nil) -> Component {
             return Component(with: id) { visualDependencies in
                 return .actionInput(
@@ -280,6 +281,7 @@ extension FormBuilderV2 {
                                              input: input,
                                              inputTextAlignment: .left,
                                              selected: action,
+                                             accessory: accessory,
                                              subtitleStyle: subtitleStyle,
                                              isVertical: isVertical))
             }
