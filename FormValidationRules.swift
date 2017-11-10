@@ -142,8 +142,8 @@ public enum FormValidationRules {
     }
 
     public static func conditionallyPhoneNumberValidatingProperty<P>(initialValue: String = "",
-                                                     validateIf needsValidation: P,
-                                                     invalidMessage: String
+                                                                     validateIf needsValidation: P,
+                                                                     invalidMessage: String
         ) -> ValidatingProperty<String, InvalidInput> where P: PropertyProtocol, P.Value == Bool {
 
         func evaluate(_ input: String) -> Bool {
