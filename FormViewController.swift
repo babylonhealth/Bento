@@ -5,8 +5,7 @@ import ReactiveCocoa
 import enum Result.NoError
 
 open class FormViewController<F: Form>: UIViewController, UITableViewDelegate {
-    public let tableView: UITableView
-
+    public let tableView: FormTableView
     public let form: F
     fileprivate let dataSource: FormTableViewDataSource<F.Identifier>
 
@@ -16,7 +15,7 @@ open class FormViewController<F: Form>: UIViewController, UITableViewDelegate {
     public init(form: F, viewSpec: FormViewSpec) {
         self.form = form
         self.viewSpec = viewSpec
-        tableView = UITableView()
+        tableView = FormTableView()
         dataSource = FormTableViewDataSource(for: tableView, separatorVisibility: viewSpec.separatorVisibility)
         super.init(nibName: nil, bundle: nil)
 
@@ -39,7 +38,7 @@ open class FormViewController<F: Form>: UIViewController, UITableViewDelegate {
         tableView.estimatedRowHeight = 44
         tableView.delegate = self
 
-        dataSource.bind(to: form.components, configurator: self)
+        dataSource.bind(to: form.tree, configurator: self)
     }
 
     open override func viewDidAppear(_ animated: Bool) {
@@ -141,6 +140,25 @@ open class FormViewController<F: Form>: UIViewController, UITableViewDelegate {
         let cell = unsafeDowncast(cell, to: FormCell.self)
         cell.visibility = dataSource.separatorVisibility(forCellAt: indexPath.row)
     }
+
+    @available(iOS 11, *)
+    open override func viewSafeAreaInsetsDidChange() {
+        super.viewSafeAreaInsetsDidChange()
+        updatePreferredContentHeight()
+    }
+
+    open override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        updatePreferredContentHeight()
+    }
+
+    private func updatePreferredContentHeight() {
+        if #available(iOS 11, *) {
+            tableView.preferredContentHeight = view.safeAreaLayoutGuide.layoutFrame.height
+        } else {
+            tableView.preferredContentHeight = view.frame.height - topLayoutGuide.length - bottomLayoutGuide.length
+        }
+    }
 }
 
 extension FormViewController: FormCellConfigurator {
@@ -166,6 +184,12 @@ extension FormViewController: FormCellConfigurator {
                     .visibility = dataSource.separatorVisibility(forCellAt: indexPath.row)
             }
         }
+    }
+
+    public func update(_ style: FormStyle) {
+        guard style != tableView.formStyle else { return }
+        tableView.formStyle = style
+        tableView.setNeedsLayout()
     }
 }
 

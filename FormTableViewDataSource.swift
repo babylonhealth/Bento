@@ -44,6 +44,7 @@ public enum FormCellSeparatorVisibility {
 public protocol FormCellConfigurator: class {
     func configure(_ cell: FormCell)
     func updateSeparatorsOfVisibleCells()
+    func update(_ style: FormStyle)
 }
 
 public final class FormTableViewDataSource<Identifier: Hashable>: NSObject, UITableViewDataSource {
@@ -190,7 +191,7 @@ public final class FormTableViewDataSource<Identifier: Hashable>: NSObject, UITa
         }
     }
 
-    public func bind(to components: Property<[FormItem<Identifier>]>, configurator: FormCellConfigurator?) {
+    public func bind(to components: Property<FormTree<Identifier>>, configurator: FormCellConfigurator?) {
         guard let tableView = self.tableView else { return }
         self.configurator = configurator
 
@@ -218,19 +219,19 @@ public final class FormTableViewDataSource<Identifier: Hashable>: NSObject, UITa
         tableView.reloadData()
 
         components.producer
-            .combinePrevious([])
+            .combinePrevious(FormTree(items: []))
             .take(duringLifetimeOf: tableView)
             .observe(on: UIScheduler())
             .startWithValues { previous, current in
                 guard let tableView = self.tableView else { return }
-                self.items = current
+                self.items = current.items
 
                 // Dismiss any first responder to avoid view corruption.
                 tableView.endEditing(true)
 
                 tableView.beginUpdates()
 
-                for step in Dwifft.diff(previous, current) {
+                for step in Dwifft.diff(previous.items, current.items) {
                     switch step {
                     case let .insert(index, _):
                         tableView.insertRows(at: [IndexPath(row: index, section: 0)], with: .fade)
@@ -241,6 +242,7 @@ public final class FormTableViewDataSource<Identifier: Hashable>: NSObject, UITa
                 }
 
                 tableView.endUpdates()
+                self.configurator?.update(current.style)
                 self.configurator?.updateSeparatorsOfVisibleCells()
             }
     }

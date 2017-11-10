@@ -13,8 +13,9 @@ public struct FormBuilderV2<Identifier: Hashable> {
         self.components = components
     }
 
-    public func build(with visualDependencies: VisualDependenciesProtocol) -> [FormItem<Identifier>] {
-        return components.map { FormItem(id: $0.id, component: $0.builder(visualDependencies)) }
+    public func build(style: FormStyle = .topYAligned, with visualDependencies: VisualDependenciesProtocol) -> FormTree<Identifier> {
+        return FormTree(items: components.map { FormItem(id: $0.id, component: $0.builder(visualDependencies)) },
+                        style: style)
     }
 
     public static func |-+(builder: FormBuilderV2<Identifier>, component: Component) -> FormBuilderV2<Identifier> {
