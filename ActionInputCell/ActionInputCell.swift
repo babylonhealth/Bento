@@ -34,7 +34,9 @@ final class ActionInputCell: FormItemCell {
         accessoryType = viewModel.accessory
         selectionStyle = viewModel.selectionStyle
 
-        reactive.isUserInteractionEnabled <~ viewModel.isSelected.isEnabled.and(isFormEnabled).producer
+        let isCellEnabled = viewModel.isSelected.isEnabled.and(isFormEnabled).producer
+            .take(until: reactive.prepareForReuse)
+        reactive.isUserInteractionEnabled <~ isCellEnabled
 
         titleLabel.reactive.text <~ viewModel.title.producer
             .take(until: reactive.prepareForReuse)
@@ -112,23 +114,25 @@ final class ActionInputCell: FormItemCell {
                 stackViewLeadingConstraint.constant = 0
             }
         }
-        
+
         NSLayoutConstraint.deactivate(deactivatingConstraints)
         NSLayoutConstraint.activate(activatingConstraints)
 
-        let updateAccessoryView = { [weak self] (loading: Bool) in
+        let updateAccessoryView = { [weak self] (isExecuting: Bool, isEnabled: Bool) in
             let makeActivityIndicatorView: () -> UIActivityIndicatorView = {
                 let activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: .gray)
                 activityIndicator.startAnimating()
                 return activityIndicator
             }
-            self?.accessoryView = loading ? makeActivityIndicatorView() : nil
+            self?.accessoryView = isExecuting ? makeActivityIndicatorView() : nil
+            self?.accessoryType = isEnabled ? viewModel.accessory : .none
         }
 
-        viewModel.isSelected.isExecuting.producer
+        SignalProducer.combineLatest(viewModel.isSelected.isExecuting,
+                                     isCellEnabled)
             .observe(on: UIScheduler())
             .take(until: reactive.prepareForReuse)
-            .startWithValues(updateAccessoryView)            
+            .startWithValues(updateAccessoryView)
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

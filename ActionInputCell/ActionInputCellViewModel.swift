@@ -56,8 +56,7 @@ public final class ActionInputCellViewModel {
                             selected: Action<Void, Void, NoError>,
                             accessory: UITableViewCellAccessoryType = .disclosureIndicator,
                             titleStyle: UIViewStyle<UILabel>? = nil,
-                            subtitleStyle: UIViewStyle<UILabel>? = nil
-                            ) {
+                            subtitleStyle: UIViewStyle<UILabel>? = nil) {
         self.init(visualDependencies: visualDependencies,
                   icon: icon,
                   subIcon: subIcon,

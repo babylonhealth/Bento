@@ -271,7 +271,8 @@ extension FormBuilderV2 {
                                                 isVertical: Bool = false,
                                                 action: Action<Void, Void, NoError>,
                                                 accessory: UITableViewCellAccessoryType = .disclosureIndicator,
-                                                subtitleStyle: UIViewStyle<UILabel>? = nil) -> Component {
+                                                subtitleStyle: UIViewStyle<UILabel>? = nil,
+                                                selectionStyle: UITableViewCellSelectionStyle = .gray) -> Component {
             return Component(with: id) { visualDependencies in
                 return .actionInput(
                     ActionInputCellViewModel(visualDependencies: visualDependencies,
@@ -284,7 +285,8 @@ extension FormBuilderV2 {
                                              selected: action,
                                              accessory: accessory,
                                              subtitleStyle: subtitleStyle,
-                                             isVertical: isVertical))
+                                             isVertical: isVertical)
+                )
             }
         }
 

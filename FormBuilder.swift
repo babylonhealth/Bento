@@ -181,9 +181,9 @@ extension FormBuilder {
             }
         }
 
-        public static func avatarSelectionField(icon: SignalProducer<UIImage, NoError>, subIcon: UIImage?, title: Property<String>, input: Property<String>? = nil, isVertical: Bool = false, action: Action<Void, Void, NoError>, accessory: UITableViewCellAccessoryType = .disclosureIndicator, subtitleStyle: UIViewStyle<UILabel>? = nil) -> Component {
+        public static func avatarSelectionField(icon: SignalProducer<UIImage, NoError>, subIcon: UIImage?, title: Property<String>, input: Property<String>? = nil, isVertical: Bool = false, action: Action<Void, Void, NoError>, accessory: UITableViewCellAccessoryType = .disclosureIndicator, subtitleStyle: UIViewStyle<UILabel>? = nil, selectionStyle: UITableViewCellSelectionStyle = .gray) -> Component {
             return Component {
-                return .avatarSelectionField($0, icon: icon, subIcon: subIcon, title: title, input: input, isVertical: isVertical, action: action, accessory: accessory, subtitleStyle: subtitleStyle)
+                return .avatarSelectionField($0, icon: icon, subIcon: subIcon, title: title, input: input, isVertical: isVertical, action: action, accessory: accessory, subtitleStyle: subtitleStyle, selectionStyle: selectionStyle)
             }
         }
 
