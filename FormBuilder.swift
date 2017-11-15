@@ -31,6 +31,10 @@ public struct FormBuilder {
         return FormBuilder(builder.components + [component])
     }
 
+    public static func |-* (builder: FormBuilder, other: FormBuilderV2<Int>) -> FormBuilder {
+        return FormBuilder(builder.components + other.components.map { component in Component { _ in component } })
+    }
+
     public static func |-* (builder: FormBuilder, components: [FormBuilder.Component]) -> FormBuilder {
         return FormBuilder(builder.components + components)
     }
