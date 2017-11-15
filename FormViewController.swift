@@ -32,6 +32,8 @@ open class FormViewController<F: Form>: UIViewController, UITableViewDelegate {
     }
 
     private func setupTableView() {
+        automaticallyAdjustsScrollViewInsets = false
+
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.separatorStyle = .none
         tableView.rowHeight = UITableViewAutomaticDimension
@@ -56,8 +58,7 @@ open class FormViewController<F: Form>: UIViewController, UITableViewDelegate {
                     // Treat the keyboard as hidden if the table view has been removed
                     // from a `UIWindow`.
                     let keyboardHeight = tableView.window.map { $0.frame.height - context.endFrame.minY } ?? 0
-                    tableView.contentInset.bottom = keyboardHeight
-                    tableView.scrollIndicatorInsets.bottom = keyboardHeight
+                    tableView.keyboardHeight = keyboardHeight
                 }
 
                 UIView.animate(withDuration: context.animationDuration,
@@ -150,6 +151,14 @@ open class FormViewController<F: Form>: UIViewController, UITableViewDelegate {
     open override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         updatePreferredContentHeight()
+
+        guard #available(iOS 11.0, *) else {
+            tableView.additionalContentInsets = UIEdgeInsets(top: topLayoutGuide.length,
+                                                             left: 0,
+                                                             bottom: bottomLayoutGuide.length,
+                                                             right: 0)
+            return
+        }
     }
 
     private func updatePreferredContentHeight() {
@@ -187,9 +196,7 @@ extension FormViewController: FormCellConfigurator {
     }
 
     public func update(_ style: FormStyle) {
-        guard style != tableView.formStyle else { return }
-        tableView.formStyle = style
-        tableView.setNeedsLayout()
+        tableView.setFormStyle(style, animated: true)
     }
 }
 
