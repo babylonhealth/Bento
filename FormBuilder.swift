@@ -116,6 +116,7 @@ extension FormBuilder {
         }
 
         public static func textField(
+            icon: SignalProducer<UIImage, NoError>? = nil,
             placeholder: String,
             text: ValidatingProperty<String, InvalidInput>,
             clearsOnBeginEditing: Bool = false,
@@ -124,7 +125,7 @@ extension FormBuilder {
             keyboardType: UIKeyboardType = .default
         ) -> Component {
             return Component {
-                return .textField($0, placeholder: placeholder, text: text, clearsOnBeginEditing: clearsOnBeginEditing, autocapitalizationType: autocapitalizationType, autocorrectionType: autocorrectionType, keyboardType: keyboardType)
+                return .textField($0, icon: icon, placeholder: placeholder, text: text, clearsOnBeginEditing: clearsOnBeginEditing, autocapitalizationType: autocapitalizationType, autocorrectionType: autocorrectionType, keyboardType: keyboardType)
             }
         }
 

@@ -9,7 +9,11 @@ final class TextInputCell: FormItemCell {
     @IBOutlet weak var textField: UITextField!
     @IBOutlet weak var peekButton: UIButton!
     @IBOutlet weak var peekWidthConstraint: NSLayoutConstraint!
-
+    @IBOutlet weak var iconView: UIImageView!
+    @IBOutlet var iconWidthConstraint: NSLayoutConstraint!
+    @IBOutlet var iconVerticalMarginConstraints: [NSLayoutConstraint]!
+    @IBOutlet var textViewLeadingConstraint: NSLayoutConstraint!
+    
     private var viewModel: TextInputCellViewModel!
     internal weak var delegate: FocusableCellDelegate?
 
@@ -60,6 +64,11 @@ final class TextInputCell: FormItemCell {
             .filterMap { isEnabled.value ? $0 : nil }
             .take(until: reactive.prepareForReuse)
 
+        if let action = viewModel.editingDidEndAction {
+            action <~ textField.reactive.textValues
+                .take(until: reactive.prepareForReuse)
+        }
+
         textField.reactive.text <~ viewModel.text.producer
             .take(until: reactive.prepareForReuse)
 
@@ -80,6 +89,34 @@ final class TextInputCell: FormItemCell {
 
         self.selectionStyle = viewModel.selectionStyle
         self.peekWidthConstraint.constant = CGFloat(viewModel.width)
+
+        var activatingConstraints: [NSLayoutConstraint] = []
+        var deactivatingConstraints: [NSLayoutConstraint] = []
+
+        if let icon = viewModel.icon {
+            activatingConstraints.append(iconWidthConstraint)
+            activatingConstraints.append(contentsOf: iconVerticalMarginConstraints)
+
+            iconView.layer.cornerRadius = iconWidthConstraint.constant / 2.0
+            textViewLeadingConstraint.constant = 60
+            iconView.isHidden = false
+            iconView.contentMode = .scaleAspectFit
+            iconView.reactive.image <~ icon
+                .observe(on: UIScheduler())
+                .take(until: reactive.prepareForReuse)
+        } else {
+            deactivatingConstraints.append(iconWidthConstraint)
+            deactivatingConstraints.append(contentsOf: iconVerticalMarginConstraints)
+
+            iconView.layer.cornerRadius = 0.0
+            iconView.contentMode = .center
+            iconView.isHidden = true
+
+            textViewLeadingConstraint.constant = 0
+        }
+
+        NSLayoutConstraint.deactivate(deactivatingConstraints)
+        NSLayoutConstraint.activate(activatingConstraints)
     }
 }
 

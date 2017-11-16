@@ -15,6 +15,9 @@ public final class TextInputCellViewModel: FocusableFormComponent {
     let visualDependencies: VisualDependenciesProtocol
     let selectionStyle: UITableViewCellSelectionStyle = .none
     let width: Float
+    let editingDidEndAction: Action<String?, Void, NoError>?
+    let icon: SignalProducer<UIImage, NoError>?
+
 
     var isSecure: Property<Bool> {
         return Property(_isSecure)
@@ -28,15 +31,17 @@ public final class TextInputCellViewModel: FocusableFormComponent {
         return Action { .run { self._isSecure.modify { isSecure in isSecure = !(isSecure) } } }
     }
 
-    public init(placeholder: String,
-         text: ValidatingProperty<String, InvalidInput>,
-         isEnabled: Property<Bool> = Property(value: true),
-         isSecure: Bool,
-         clearsOnBeginEditing: Bool = false,
-         autocapitalizationType: UITextAutocapitalizationType = .sentences,
-         autocorrectionType: UITextAutocorrectionType = .`default`,
-         keyboardType: UIKeyboardType = .`default`,
-         visualDependencies: VisualDependenciesProtocol) {
+    public init(icon: SignalProducer<UIImage, NoError>? = nil,
+                placeholder: String,
+                text: ValidatingProperty<String, InvalidInput>,
+                isEnabled: Property<Bool> = Property(value: true),
+                isSecure: Bool,
+                clearsOnBeginEditing: Bool = false,
+                autocapitalizationType: UITextAutocapitalizationType = .sentences,
+                autocorrectionType: UITextAutocorrectionType = .`default`,
+                keyboardType: UIKeyboardType = .`default`,
+                editingDidEndAction: Action<String?, Void, NoError>? = nil,
+                visualDependencies: VisualDependenciesProtocol) {
         self._isSecure = MutableProperty(isSecure)
         let clearsOnBeginEditingValue = isSecure ? true : clearsOnBeginEditing
         self._clearsOnBeginEditing = MutableProperty(clearsOnBeginEditingValue)
@@ -46,6 +51,8 @@ public final class TextInputCellViewModel: FocusableFormComponent {
         self.autocapitalizationType = autocapitalizationType
         self.autocorrectionType = autocorrectionType
         self.keyboardType = keyboardType
+        self.editingDidEndAction = editingDidEndAction
+        self.icon = icon
         self.visualDependencies = visualDependencies
 
         self.width = isSecure ? 54 : 0

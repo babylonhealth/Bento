@@ -144,21 +144,25 @@ extension FormBuilderV2 {
 
         public static func textField(
             _ id: Identifier,
+            icon: SignalProducer<UIImage, NoError>? = nil,
             placeholder: String,
             text: ValidatingProperty<String, InvalidInput>,
             clearsOnBeginEditing: Bool = false,
             autocapitalizationType: UITextAutocapitalizationType = .sentences,
             autocorrectionType: UITextAutocorrectionType = .default,
-            keyboardType: UIKeyboardType = .default
+            keyboardType: UIKeyboardType = .default,
+            editingDidEndAction: Action<String?, Void, NoError> = Action { _ in return .empty }
         ) -> Component {
             return Component(with: id) { visualDependencies in
                 return .textInput(
-                    TextInputCellViewModel(placeholder: placeholder,
+                    TextInputCellViewModel(icon: icon,
+                                           placeholder: placeholder,
                                            text: text,
                                            isSecure: false,
                                            clearsOnBeginEditing: clearsOnBeginEditing,
                                            autocapitalizationType: autocapitalizationType,
                                            autocorrectionType: autocorrectionType,
+                                           editingDidEndAction: editingDidEndAction,
                                            visualDependencies: visualDependencies))
             }
         }
