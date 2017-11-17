@@ -93,6 +93,10 @@ extension FormProperties where Error: ValidationErrorDescriptionProtocol {
 
 public struct InvalidInput: Error {
     public let reason: String
+
+    public init(reason: String) {
+        self.reason = reason
+    }
 }
 
 extension InvalidInput: ValidationErrorDescriptionProtocol {}
