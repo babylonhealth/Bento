@@ -6,12 +6,14 @@ public final class DescriptionCellViewModel {
     public let text: String
     public let selected: Action<Void, Void, NoError>?
     public let type: DescriptionCellType
+    public let horizontalLayout: DescriptionHorizontalLayout
     public let visualDependencies: VisualDependenciesProtocol
     public let selectionStyle: UITableViewCellSelectionStyle
     public let backgroundColorStyle: UIViewStyle<UIView>
 
     public init(text: String,
                 type: DescriptionCellType,
+                horizontalLayout: DescriptionHorizontalLayout = .fill,
                 visualDependencies: VisualDependenciesProtocol,
                 selectionStyle: UITableViewCellSelectionStyle = .none,
                 backgroundColorStyle: UIViewStyle<UIView>? = nil,
@@ -19,6 +21,7 @@ public final class DescriptionCellViewModel {
         self.text = text
         self.selected = selected
         self.type = type
+        self.horizontalLayout = horizontalLayout
         self.visualDependencies = visualDependencies
         self.selectionStyle = selectionStyle
         self.backgroundColorStyle = backgroundColorStyle ?? visualDependencies.styles.backgroundTransparentColor

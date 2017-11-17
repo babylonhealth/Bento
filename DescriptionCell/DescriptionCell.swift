@@ -1,6 +1,11 @@
 import UIKit
 import ReactiveSwift
 
+public enum DescriptionHorizontalLayout {
+    case fill
+    case centeredProportional(Float)
+}
+
 public enum DescriptionCellType {
     case header
     case headline
@@ -20,6 +25,7 @@ extension DescriptionCell: NibLoadableCell {}
 
 final class DescriptionCell: FormCell {
     @IBOutlet weak var descriptionLabel: UILabel!
+    private var descriptionLabelWidthConstraint: NSLayoutConstraint?
     private var tapRecognizer: UITapGestureRecognizer!
 
     var viewModel: DescriptionCellViewModel!
@@ -40,6 +46,22 @@ final class DescriptionCell: FormCell {
         self.viewModel.applyText(to: self.descriptionLabel)
         self.viewModel.applyBackgroundColor(to: [self, self.descriptionLabel])
         self.selectionStyle = self.viewModel.selectionStyle
+
+        if let constraint = descriptionLabelWidthConstraint {
+            constraint.isActive = false
+            descriptionLabelWidthConstraint = nil
+        }
+
+        switch viewModel.horizontalLayout {
+        case .fill:
+            break
+        case .centeredProportional(let ratio):
+            let constraint = descriptionLabel.widthAnchor
+                .constraint(equalTo: contentView.widthAnchor,
+                            multiplier: CGFloat(ratio))
+            constraint.isActive = true
+            descriptionLabelWidthConstraint = constraint
+        }
 
         tapRecognizer.isEnabled = viewModel.selected != nil
     }

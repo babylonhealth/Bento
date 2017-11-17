@@ -70,9 +70,9 @@ extension FormBuilderV2 {
             return description(id, .headline, text: text)
         }
 
-        public static func description(_ id: Identifier, _ type: DescriptionCellType, text: String, selected: Action<Void, Void, NoError>? = nil) -> Component {
+        public static func description(_ id: Identifier, _ type: DescriptionCellType, horizontalLayout: DescriptionHorizontalLayout = .fill, text: String, selected: Action<Void, Void, NoError>? = nil) -> Component {
             return Component(with: id) { visualDependencies in
-                return .description(.init(text: text, type: type, visualDependencies: visualDependencies, selected: selected))
+                return .description(.init(text: text, type: type, horizontalLayout: horizontalLayout, visualDependencies: visualDependencies, selected: selected))
             }
         }
 
