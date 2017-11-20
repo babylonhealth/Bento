@@ -151,6 +151,7 @@ extension FormBuilderV2 {
             autocapitalizationType: UITextAutocapitalizationType = .sentences,
             autocorrectionType: UITextAutocorrectionType = .default,
             keyboardType: UIKeyboardType = .default,
+            allowsYieldingOfFocus: Bool = true,
             editingDidEndAction: Action<String?, Void, NoError> = Action { _ in return .empty }
         ) -> Component {
             return Component(with: id) { visualDependencies in
@@ -162,6 +163,7 @@ extension FormBuilderV2 {
                                            clearsOnBeginEditing: clearsOnBeginEditing,
                                            autocapitalizationType: autocapitalizationType,
                                            autocorrectionType: autocorrectionType,
+                                           allowsYieldingOfFocus: allowsYieldingOfFocus,
                                            editingDidEndAction: editingDidEndAction,
                                            visualDependencies: visualDependencies))
             }

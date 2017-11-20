@@ -17,6 +17,7 @@ public final class TextInputCellViewModel: FocusableFormComponent {
     let width: Float
     let editingDidEndAction: Action<String?, Void, NoError>?
     let icon: SignalProducer<UIImage, NoError>?
+    let allowsYieldingOfFocus: Bool
 
 
     var isSecure: Property<Bool> {
@@ -40,6 +41,7 @@ public final class TextInputCellViewModel: FocusableFormComponent {
                 autocapitalizationType: UITextAutocapitalizationType = .sentences,
                 autocorrectionType: UITextAutocorrectionType = .`default`,
                 keyboardType: UIKeyboardType = .`default`,
+                allowsYieldingOfFocus: Bool = true,
                 editingDidEndAction: Action<String?, Void, NoError>? = nil,
                 visualDependencies: VisualDependenciesProtocol) {
         self._isSecure = MutableProperty(isSecure)
@@ -53,6 +55,7 @@ public final class TextInputCellViewModel: FocusableFormComponent {
         self.keyboardType = keyboardType
         self.editingDidEndAction = editingDidEndAction
         self.icon = icon
+        self.allowsYieldingOfFocus = allowsYieldingOfFocus
         self.visualDependencies = visualDependencies
 
         self.width = isSecure ? 54 : 0

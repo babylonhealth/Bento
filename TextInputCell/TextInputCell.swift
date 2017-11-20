@@ -14,7 +14,7 @@ final class TextInputCell: FormItemCell {
     @IBOutlet var iconVerticalMarginConstraints: [NSLayoutConstraint]!
     @IBOutlet var textViewLeadingConstraint: NSLayoutConstraint!
     
-    private var viewModel: TextInputCellViewModel!
+    fileprivate var viewModel: TextInputCellViewModel!
     internal weak var delegate: FocusableCellDelegate?
 
     private var isSecure: SignalProducer<Bool, NoError> {
@@ -129,7 +129,7 @@ extension TextInputCell: FocusableCell {
 extension TextInputCell: UITextFieldDelegate {
     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
         let hasSuccessor = delegate?.focusableCellHasSuccessor(self) ?? false
-        textField.returnKeyType = hasSuccessor ? .next : .done
+        textField.returnKeyType = hasSuccessor && viewModel.allowsYieldingOfFocus ? .next : .done
         return true
     }
 
