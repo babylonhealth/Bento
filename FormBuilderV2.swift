@@ -152,7 +152,8 @@ extension FormBuilderV2 {
             autocorrectionType: UITextAutocorrectionType = .default,
             keyboardType: UIKeyboardType = .default,
             allowsYieldingOfFocus: Bool = true,
-            editingDidEndAction: Action<String?, Void, NoError> = Action { _ in return .empty }
+            editingDidEndAction: Action<String?, Void, NoError>? = nil,
+            deleteAction: Action<Void, Void, NoError>? = nil
         ) -> Component {
             return Component(with: id) { visualDependencies in
                 return .textInput(
@@ -165,6 +166,7 @@ extension FormBuilderV2 {
                                            autocorrectionType: autocorrectionType,
                                            allowsYieldingOfFocus: allowsYieldingOfFocus,
                                            editingDidEndAction: editingDidEndAction,
+                                           deleteAction: deleteAction,
                                            visualDependencies: visualDependencies))
             }
         }

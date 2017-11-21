@@ -43,3 +43,15 @@ extension FocusableFormComponent {
         return false
     }
 }
+
+protocol DeletableCell {
+    var canBeDeleted: Bool { get }
+
+    func delete()
+}
+
+extension DeletableCell {
+    public var canBeDeleted: Bool {
+        return false
+    }
+}
