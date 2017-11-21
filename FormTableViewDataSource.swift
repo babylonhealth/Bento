@@ -193,8 +193,8 @@ public final class FormTableViewDataSource<Identifier: Hashable>: NSObject, UITa
 
     public func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         guard case .delete = editingStyle,
-              let deletable = items[indexPath.row].component as? DeletableCell,
-              deletable.canBeDeleted else {
+            let deletable = items[indexPath.row].component.viewModel as? DeletableCell,
+            deletable.canBeDeleted else {
             return
         }
 
@@ -202,7 +202,7 @@ public final class FormTableViewDataSource<Identifier: Hashable>: NSObject, UITa
     }
 
     public func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        guard let deletable = items[indexPath.row].component as? DeletableCell,
+        guard let deletable = items[indexPath.row].component.viewModel as? DeletableCell,
             deletable.canBeDeleted else {
             return false
         }

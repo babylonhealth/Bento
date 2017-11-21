@@ -153,6 +153,7 @@ extension FormBuilderV2 {
             keyboardType: UIKeyboardType = .default,
             allowsYieldingOfFocus: Bool = true,
             editingDidEndAction: Action<String?, Void, NoError>? = nil,
+            isDeleted: MutableProperty<Bool>? = nil,
             deleteAction: Action<Void, Void, NoError>? = nil
         ) -> Component {
             return Component(with: id) { visualDependencies in
@@ -166,6 +167,7 @@ extension FormBuilderV2 {
                                            autocorrectionType: autocorrectionType,
                                            allowsYieldingOfFocus: allowsYieldingOfFocus,
                                            editingDidEndAction: editingDidEndAction,
+                                           isDeleted: isDeleted,
                                            deleteAction: deleteAction,
                                            visualDependencies: visualDependencies))
             }
