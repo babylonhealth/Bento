@@ -18,8 +18,7 @@ public final class TextInputCellViewModel: FocusableFormComponent {
     let editingDidEndAction: Action<String?, Void, NoError>?
     let icon: SignalProducer<UIImage, NoError>?
     let allowsYieldingOfFocus: Bool
-    let isDeleted: MutableProperty<Bool>?
-    let deleteAction: Action<Void, Void, NoError>?
+
 
     var isSecure: Property<Bool> {
         return Property(_isSecure)
@@ -44,8 +43,6 @@ public final class TextInputCellViewModel: FocusableFormComponent {
                 keyboardType: UIKeyboardType = .`default`,
                 allowsYieldingOfFocus: Bool = true,
                 editingDidEndAction: Action<String?, Void, NoError>? = nil,
-                isDeleted: MutableProperty<Bool>? = nil,
-                deleteAction: Action<Void, Void, NoError>? = nil,
                 visualDependencies: VisualDependenciesProtocol) {
         self._isSecure = MutableProperty(isSecure)
         let clearsOnBeginEditingValue = isSecure ? true : clearsOnBeginEditing
@@ -59,8 +56,6 @@ public final class TextInputCellViewModel: FocusableFormComponent {
         self.editingDidEndAction = editingDidEndAction
         self.icon = icon
         self.allowsYieldingOfFocus = allowsYieldingOfFocus
-        self.isDeleted = isDeleted
-        self.deleteAction = deleteAction
         self.visualDependencies = visualDependencies
 
         self.width = isSecure ? 54 : 0
@@ -82,16 +77,5 @@ public final class TextInputCellViewModel: FocusableFormComponent {
 
     func applyBackgroundColor(to views: [UIView]) {
         visualDependencies.styles.backgroundCustomColor.apply(color: visualDependencies.styles.appColors.formTextFieldTextBackgroundColor, to: views)
-    }
-}
-
-extension TextInputCellViewModel: DeletableCell {
-    var canBeDeleted: Bool {
-        return deleteAction != nil
-    }
-
-    public func delete() {
-        isDeleted?.value = true
-        deleteAction?.apply().start()
     }
 }
