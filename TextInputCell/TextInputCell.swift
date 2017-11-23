@@ -137,3 +137,13 @@ extension TextInputCell: UITextFieldDelegate {
         return delegate?.focusableCellWillResignFirstResponder(self) ?? true
     }
 }
+
+extension TextInputCell: DeletableCell {
+    var canBeDeleted: Bool {
+        return viewModel.canBeDeleted
+    }
+
+    public func delete(then completion: ((Bool) -> Void)?) {
+        return viewModel.delete(then: completion)
+    }
+}

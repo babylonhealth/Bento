@@ -43,3 +43,20 @@ extension FocusableFormComponent {
         return false
     }
 }
+
+protocol DeletableCell {
+    var canBeDeleted: Bool { get }
+    var deleteActionText: String { get }
+
+    func delete(then completion: ((Bool) -> Void)?)
+}
+
+extension DeletableCell {
+    public var canBeDeleted: Bool {
+        return false
+    }
+
+    public var deleteActionText: String {
+        return NSLocalizedString("delete", comment: "Delete a form cell")
+    }
+}

@@ -142,6 +142,39 @@ open class FormViewController<F: Form>: UIViewController, UITableViewDelegate {
         cell.visibility = dataSource.separatorVisibility(forCellAt: indexPath.row)
     }
 
+    // [Michael] this method is used for iOS < 11.0
+    // Once we require iOS 11 this method can be removed
+    public func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+        guard let deletable = tableView.cellForRow(at: indexPath) as? DeletableCell,
+              deletable.canBeDeleted,
+              form.isSubmitting.value.isFalse else {
+            return []
+        }
+
+        let deleteAction = UITableViewRowAction(style: .destructive, title: deletable.deleteActionText) { _ in
+            deletable.delete(then: nil)
+        }
+
+        return [deleteAction]
+    }
+
+    @available(iOS 11.0, *)
+    public func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration?
+    {
+        guard let deletable = tableView.cellForRow(at: indexPath) as? DeletableCell,
+              deletable.canBeDeleted,
+              form.isSubmitting.value.isFalse else {
+            return UISwipeActionsConfiguration(actions: [])
+        }
+
+        let deleteAction = UIContextualAction(style: .destructive, title: deletable.deleteActionText) { (action, view, handler) in
+            deletable.delete(then: handler)
+        }
+        deleteAction.backgroundColor = .red
+
+        return UISwipeActionsConfiguration(actions: [deleteAction])
+    }
+
     @available(iOS 11, *)
     open override func viewSafeAreaInsetsDidChange() {
         super.viewSafeAreaInsetsDidChange()
