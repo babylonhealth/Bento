@@ -65,7 +65,7 @@ extension FormProperties {
     private func isFormValid(_ formFields: [PropertyValidator<Error>]) -> Property<Bool> {
 
         let reduceIntoOblivion: ([ValidationStatus<Error>]) -> Bool = { result in
-            result.map { $0.isInvalid == false }.reduce(true) { $0.0 && $0.1 }
+            result.map { $0.isInvalid == false }.reduce(true) { $0 && $1 }
         }
 
         let combinedFields = formFields.map { $0.status.producer } |> SignalProducer.combineLatest
@@ -87,7 +87,7 @@ extension FormProperties where Error: ValidationErrorDescriptionProtocol {
             .map { $0.status.value.error }
             .flatMap { $0 }
             .map { $0.reason }
-            .reduce { $0.0 + "\n" + $0.1 }
+            .joined(separator: "\n")
     }
 }
 

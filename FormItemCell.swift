@@ -11,7 +11,7 @@ open class FormItemCell: FormCell {
     override open func updateConstraints() {
         if heightConstraint == nil {
             heightConstraint = contentView.heightAnchor.constraint(greaterThanOrEqualToConstant: minimumHeight)
-            heightConstraint.priority = UILayoutPriorityRequired - 1
+            heightConstraint.priority = UILayoutPriority(UILayoutPriority.required.rawValue - 1)
             heightConstraint.isActive = true
         } else {
             heightConstraint.constant = minimumHeight

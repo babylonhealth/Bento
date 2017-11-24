@@ -151,7 +151,7 @@ open class FormViewController<F: Form>: UIViewController, UITableViewDelegate {
             return []
         }
 
-        let deleteAction = UITableViewRowAction(style: .destructive, title: deletable.deleteActionText) { _ in
+        let deleteAction = UITableViewRowAction(style: .destructive, title: deletable.deleteActionText) { _,_  in
             deletable.delete(then: nil)
         }
 

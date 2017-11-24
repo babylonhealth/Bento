@@ -94,7 +94,7 @@ class OptionsCell: FormCell {
         self.collectionView.backgroundColor = .white
 
         self.heightConstraint = heightAnchor.constraint(equalToConstant: 0)
-        self.heightConstraint.priority = UILayoutPriorityRequired - 1
+        self.heightConstraint.priority = UILayoutPriority(UILayoutPriority.required.rawValue - 1)
         self.collectionViewHeightConstraint = collectionView.heightAnchor.constraint(equalToConstant: 0)
     }
     required init(coder aDecoder: NSCoder) { fatalError("init(coder:)") }

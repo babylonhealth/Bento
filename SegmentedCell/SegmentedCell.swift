@@ -119,7 +119,7 @@ public final class SegmentedCell: FormItemCell {
             stackView.bottomAnchor.constraint(greaterThanOrEqualTo: contentView.bottomAnchor)
         ]
 
-        lowerPriorityConstraints.forEach { $0.priority = UILayoutPriorityDefaultLow }
+        lowerPriorityConstraints.forEach { $0.priority = .defaultLow }
 
         NSLayoutConstraint.activate(requiredConstraint)
         NSLayoutConstraint.activate(lowerPriorityConstraints)

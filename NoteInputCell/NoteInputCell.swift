@@ -26,7 +26,7 @@ final class NoteInputCell: FormItemCell {
         textView.delegate = self
 
         contentViewHeight = contentView.heightAnchor.constraint(equalToConstant: minimumHeight)
-        contentViewHeight.priority = UILayoutPriorityRequired - 1
+        contentViewHeight.priority = UILayoutPriority(UILayoutPriority.required.rawValue - 1)
         contentViewHeight.isActive = true
 
         updateContentViewHeight()
@@ -111,7 +111,7 @@ final class NoteInputCell: FormItemCell {
             // Offset the content height so that when its text view grows beyond the
             // minimum height, an illusion of the text view staying in place would be
             // maintained.
-            let minimumTextViewHeight = ("" as NSString).size(attributes: [NSFontAttributeName: textView.font!]).height
+            let minimumTextViewHeight = ("" as NSString).size(withAttributes: [.font: textView.font!]).height
             let minimumContentHeight = max(minimumHeight - layoutMargins.top - layoutMargins.bottom, minimumTextViewHeight)
             let inset = max(minimumContentHeight - minimumTextViewHeight, 0.0)
 
@@ -121,7 +121,8 @@ final class NoteInputCell: FormItemCell {
             // to the foreground, the UITextView refuses to resize itself regardless of
             // tons of means being attempted. So now its height is maintained explicitly.
             textViewHeight.constant = intrinsicContentSize.height
-            contentViewHeight.constant = max(minimumHeight, inset + intrinsicContentSize.height + layoutMargins.top + layoutMargins.bottom)
+            contentViewHeight.constant = max(minimumHeight,
+                                             inset + intrinsicContentSize.height + layoutMargins.top + layoutMargins.bottom)
 
             return textView.bounds.height - intrinsicContentSize.height
         }
@@ -129,7 +130,9 @@ final class NoteInputCell: FormItemCell {
         return 0.0
     }
 
-    override func systemLayoutSizeFitting(_ targetSize: CGSize, withHorizontalFittingPriority horizontalFittingPriority: UILayoutPriority, verticalFittingPriority: UILayoutPriority) -> CGSize {
+    override func systemLayoutSizeFitting(_ targetSize: CGSize,
+                                          withHorizontalFittingPriority horizontalFittingPriority: UILayoutPriority,
+                                          verticalFittingPriority: UILayoutPriority) -> CGSize {
         updateContentViewHeight()
         return CGSize(width: targetSize.width, height: contentViewHeight.constant)
     }
