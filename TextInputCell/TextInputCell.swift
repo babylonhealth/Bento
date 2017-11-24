@@ -2,6 +2,7 @@ import UIKit
 import ReactiveSwift
 import ReactiveCocoa
 import Result
+import BabylonFoundation
 
 extension TextInputCell: NibLoadableCell {}
 
@@ -140,10 +141,17 @@ extension TextInputCell: UITextFieldDelegate {
 
 extension TextInputCell: DeletableCell {
     var canBeDeleted: Bool {
-        return viewModel.canBeDeleted
+        return viewModel.isEnabled.value && viewModel.deleteAction != nil
     }
 
-    public func delete(then completion: ((Bool) -> Void)?) {
-        return viewModel.delete(then: completion)
+    public func delete() -> SignalProducer<Bool, NoError> {
+        guard let action = viewModel.deleteAction,
+              canBeDeleted else {
+            return SignalProducer(value: false)
+        }
+
+        return action.apply()
+            .map { _ in true }
+            .ignoreError()
     }
 }

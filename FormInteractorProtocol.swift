@@ -49,6 +49,7 @@ protocol DeletableCell {
     var deleteActionText: String { get }
 
     func delete(then completion: ((Bool) -> Void)?)
+    func delete() -> SignalProducer<Bool, NoError>
 }
 
 extension DeletableCell {
@@ -58,5 +59,18 @@ extension DeletableCell {
 
     public var deleteActionText: String {
         return NSLocalizedString("delete", comment: "Delete a form cell")
+    }
+
+    func delete(then completion: ((Bool) -> Void)?) {
+        delete()
+            .observe(on: UIScheduler())
+            .start() {
+                if $0.isCompleted {
+                    // [Michael] this has to be false as sending `true` makes
+                    // UIKit remove the row and `FormViewController` rendering
+                    // becomes completely messed up 🤷️
+                    completion?(false)
+                }
+            }
     }
 }

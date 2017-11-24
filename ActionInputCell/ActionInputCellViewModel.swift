@@ -14,8 +14,9 @@ public final class ActionInputCellViewModel {
     let title: Property<String>
     let input: Property<String>?
     let inputTextAlignment: TextAlignment
-    let selectionStyle: UITableViewCellSelectionStyle = .gray
+    let selectionStyle: UITableViewCellSelectionStyle
     let isSelected: Action<Void, Void, NoError>
+    let wasDeleted: Action<Void, Void, NoError>?
     let accessory: UITableViewCellAccessoryType
     let isVertical: Bool
     private let titleStyle: UIViewStyle<UILabel>?
@@ -29,9 +30,11 @@ public final class ActionInputCellViewModel {
                 input: Property<String>? = nil,
                 inputTextAlignment: TextAlignment = .left,
                 selected: Action<Void, Void, NoError>,
+                deleted: Action<Void, Void, NoError>? = nil,
                 accessory: UITableViewCellAccessoryType = .disclosureIndicator,
                 titleStyle: UIViewStyle<UILabel>? = nil,
                 subtitleStyle: UIViewStyle<UILabel>? = nil,
+                selectionStyle: UITableViewCellSelectionStyle = .gray,
                 isVertical: Bool = false) {
         self.visualDependencies = visualDependencies
         self.icon = icon
@@ -41,9 +44,11 @@ public final class ActionInputCellViewModel {
         self.inputTextAlignment = inputTextAlignment
         self.input = input
         self.isSelected = selected
+        self.wasDeleted = deleted
         self.accessory = accessory
         self.titleStyle = titleStyle
         self.subtitleStyle = subtitleStyle
+        self.selectionStyle = selectionStyle
         self.isVertical = isVertical
     }
 

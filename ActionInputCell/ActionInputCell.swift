@@ -1,10 +1,12 @@
 import UIKit
 import ReactiveSwift
+import enum Result.NoError
+import BabylonFoundation
 
 extension ActionInputCell: NibLoadableCell {}
 
 final class ActionInputCell: FormItemCell {
-    private var viewModel: ActionInputCellViewModel!
+    fileprivate var viewModel: ActionInputCellViewModel!
 
     @IBOutlet var stackViewLeadingConstraint: NSLayoutConstraint!
     @IBOutlet var miniatureIconWidthConstraint: NSLayoutConstraint!
@@ -143,5 +145,21 @@ final class ActionInputCell: FormItemCell {
             resignFirstResponder()
             viewModel.isSelected.apply().start()
         }
+    }
+}
+
+extension ActionInputCell: DeletableCell {
+    var canBeDeleted: Bool {
+        return viewModel.wasDeleted != nil
+    }
+
+    public func delete() -> SignalProducer<Bool, NoError> {
+        guard let action = viewModel.wasDeleted else {
+            return SignalProducer(value: false)
+        }
+
+        return action.apply()
+            .map { _ in true }
+            .ignoreError()
     }
 }

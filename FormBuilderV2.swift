@@ -153,7 +153,6 @@ extension FormBuilderV2 {
             keyboardType: UIKeyboardType = .default,
             allowsYieldingOfFocus: Bool = true,
             editingDidEndAction: Action<String?, Void, NoError>? = nil,
-            isDeleted: MutableProperty<Bool>? = nil,
             deleteAction: Action<Void, Void, NoError>? = nil
         ) -> Component {
             return Component(with: id) { visualDependencies in
@@ -167,7 +166,6 @@ extension FormBuilderV2 {
                                            autocorrectionType: autocorrectionType,
                                            allowsYieldingOfFocus: allowsYieldingOfFocus,
                                            editingDidEndAction: editingDidEndAction,
-                                           isDeleted: isDeleted,
                                            deleteAction: deleteAction,
                                            visualDependencies: visualDependencies))
             }
@@ -280,6 +278,7 @@ extension FormBuilderV2 {
                                                 input: Property<String>? = nil,
                                                 isVertical: Bool = false,
                                                 action: Action<Void, Void, NoError>,
+                                                deleted: Action<Void, Void, NoError>? = nil,
                                                 accessory: UITableViewCellAccessoryType = .disclosureIndicator,
                                                 subtitleStyle: UIViewStyle<UILabel>? = nil,
                                                 selectionStyle: UITableViewCellSelectionStyle = .gray) -> Component {
@@ -293,8 +292,10 @@ extension FormBuilderV2 {
                                              input: input,
                                              inputTextAlignment: .left,
                                              selected: action,
+                                             deleted: deleted,
                                              accessory: accessory,
                                              subtitleStyle: subtitleStyle,
+                                             selectionStyle: selectionStyle,
                                              isVertical: isVertical)
                 )
             }
