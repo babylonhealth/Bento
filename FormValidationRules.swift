@@ -87,7 +87,7 @@ extension FormProperties where Error: ValidationErrorDescriptionProtocol {
             .map { $0.status.value.error }
             .flatMap { $0 }
             .map { $0.reason }
-            .joined(separator: "\n")
+            .reduce { $0 + "\n" + $1 }
     }
 }
 
