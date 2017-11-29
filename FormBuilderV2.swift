@@ -225,7 +225,14 @@ extension FormBuilderV2 {
             }
         }
 
-        public static func selectionField(_ id: Identifier, title: String, value: Property<String>, inputTextAlignment: TextAlignment = .right, action: Action<Void, Void, NoError>, accessory: UITableViewCellAccessoryType = .disclosureIndicator) -> Component {
+        public static func selectionField(
+            _ id: Identifier,
+            title: String,
+            value: Property<String>? = nil,
+            inputTextAlignment: TextAlignment = .right,
+            action: Action<Void, Void, NoError>,
+            accessory: UITableViewCellAccessoryType = .disclosureIndicator
+        ) -> Component {
             return Component(with: id) { visualDependencies in
                 return .actionInput(
                     ActionInputCellViewModel(visualDependencies: visualDependencies,
