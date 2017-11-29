@@ -1,13 +1,9 @@
-public struct FormItem<Identifier: Hashable>: Hashable {
+public struct FormItem<Identifier: Hashable> {
     /// The identifier of `self`, or `nil` if `self` represents an empty space.
     public let id: Identifier?
 
     /// The form component backing `self`.
     public let component: FormComponent
-
-    public var hashValue: Int {
-        return id?.hashValue ?? 0
-    }
 
     /// Initialise a form item.
     ///
@@ -18,10 +14,6 @@ public struct FormItem<Identifier: Hashable>: Hashable {
     public init(id: Identifier?, component: FormComponent) {
         self.id = id
         self.component = component
-    }
-
-    public static func ==(left: FormItem<Identifier>, right: FormItem<Identifier>) -> Bool {
-        return left.id == right.id && left.component == right.component
     }
 }
 

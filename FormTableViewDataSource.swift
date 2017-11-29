@@ -28,7 +28,7 @@
 
 import UIKit
 import ReactiveSwift
-import Dwifft
+import FlexibleDiff
 
 public enum FormCellSeparatorVisibility {
     /// The separator should be invisible.
@@ -49,6 +49,7 @@ public protocol FormCellConfigurator: class {
 
 public final class FormTableViewDataSource<Identifier: Hashable>: NSObject, UITableViewDataSource {
     private var items: [FormItem<Identifier>]
+
     private weak var tableView: UITableView?
     private weak var configurator: FormCellConfigurator?
     private let separatorVisibility: FormViewSpec.SeparatorVisibility
@@ -106,86 +107,111 @@ public final class FormTableViewDataSource<Identifier: Hashable>: NSObject, UITa
         return items.count
     }
 
-    private func configure<Cell: FormCell>(_ dequeue: (IndexPath) -> Cell, for indexPath: IndexPath) -> Cell {
-        let cell = dequeue(indexPath)
+    private func configureCell<Cell: FormCell & ReusableCell>(at indexPath: IndexPath, strategy: GetCellStrategy, in tableView: UITableView, with id: Identifier?) throws -> Cell {
+        let cell: Cell
+
+        switch strategy {
+        case .dequeueCell:
+            cell = tableView.dequeueReusableCell(withIdentifier: Cell.reuseIdentifier, for: indexPath) as! Cell
+        case .visibleCell:
+            guard let visibleCell = tableView.cellForRow(at: indexPath)
+                else { throw GetCellError.cellInvisible }
+
+            // TODO: Remove this workaround once `FormBuilder(V1)` is obsolete.
+            //
+            // fatalError("The component identifier \"\(id)\" is being used with more than one component types.")
+            guard visibleCell is Cell else { throw GetCellError.typeMismatch }
+
+            cell = visibleCell as! Cell
+            cell.prepareForReuse()
+        }
+
         configurator?.configure(cell)
+
+        #if DEBUG
+        cell.accessibilityIdentifier = id.map(String.init(describing:)) ?? "_space"
+        #endif
+
         return cell
     }
 
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cellViewModel = items[indexPath.row].component
+        return try! updateRow(at: indexPath, strategy: .dequeueCell, in: tableView, with: items[indexPath.row])
+    }
 
-        switch cellViewModel {
+    @discardableResult
+    private func updateRow(at indexPath: IndexPath, strategy: GetCellStrategy, in tableView: UITableView, with item: FormItem<Identifier>) throws -> UITableViewCell {
+        switch item.component {
         case .textInput(let viewModel):
-            let cell: TextInputCell = configure(tableView.dequeueReusableCell(for:), for: indexPath)
+            let cell: TextInputCell = try configureCell(at: indexPath, strategy: strategy, in: tableView, with: item.id)
             cell.setup(viewModel: viewModel)
             return cell
         case .titledTextInput(let viewModel):
-            let cell: TitledTextInputCell = configure(tableView.dequeueReusableCell(for:), for: indexPath)
+            let cell: TitledTextInputCell = try configureCell(at: indexPath, strategy: strategy, in: tableView, with: item.id)
             cell.setup(viewModel: viewModel)
             return cell
         case .phoneTextInput(let viewModel):
-            let cell: PhoneInputCell = configure(tableView.dequeueReusableCell(for:), for: indexPath)
+            let cell: PhoneInputCell = try configureCell(at: indexPath, strategy: strategy, in: tableView, with: item.id)
             cell.setup(viewModel: viewModel)
             return cell
         case .space(let viewModel):
-            let cell: EmptySpaceCell = configure(tableView.dequeueReusableCell(for:), for: indexPath)
+            let cell: EmptySpaceCell = try configureCell(at: indexPath, strategy: strategy, in: tableView, with: item.id)
             cell.setup(viewModel: viewModel)
             return cell
         case .description(let viewModel):
-            let cell: DescriptionCell = configure(tableView.dequeueReusableCell(for:), for: indexPath)
+            let cell: DescriptionCell = try configureCell(at: indexPath, strategy: strategy, in: tableView, with: item.id)
             cell.setup(viewModel: viewModel)
             return cell
         case .actionButton(let viewModel, let spec):
-            let cell: ActionCell = configure(tableView.dequeueReusableCell(for:), for: indexPath)
+            let cell: ActionCell = try configureCell(at: indexPath, strategy: strategy, in: tableView, with: item.id)
             cell.setup(viewModel: viewModel, spec: spec)
             return cell
         case .actionInput(let viewModel):
-            let cell: ActionInputCell = configure(tableView.dequeueReusableCell(for:), for: indexPath)
+            let cell: ActionInputCell = try configureCell(at: indexPath, strategy: strategy, in: tableView, with: item.id)
             cell.setup(viewModel: viewModel)
             return cell
         case .actionDescription(let viewModel):
-            let cell: ActionDescriptionCell = configure(tableView.dequeueReusableCell(for:), for: indexPath)
+            let cell: ActionDescriptionCell = try configureCell(at: indexPath, strategy: strategy, in: tableView, with: item.id)
             cell.setup(viewModel: viewModel)
             return cell
         case .toggle(let viewModel):
-            let cell: ToggleCell = configure(tableView.dequeueReusableCell(for:), for: indexPath)
+            let cell: ToggleCell = try configureCell(at: indexPath, strategy: strategy, in: tableView, with: item.id)
             cell.setup(viewModel: viewModel)
             return cell
         case .segmentedInput(let viewModel):
-            let cell: SegmentedCell = configure(tableView.dequeueReusableCell(for:), for: indexPath)
+            let cell: SegmentedCell = try configureCell(at: indexPath, strategy: strategy, in: tableView, with: item.id)
             cell.setup(viewModel: viewModel)
             return cell
         case let .textOptionsInput(viewModel, viewSpec):
-            let cell: TextOptionsCell = configure(tableView.dequeueReusableCell(for:), for: indexPath)
+            let cell: TextOptionsCell = try configureCell(at: indexPath, strategy: strategy, in: tableView, with: item.id)
             cell.setup(viewModel: viewModel, viewSpec: viewSpec)
             return cell
         case let .imageOptionsInput(viewModel, viewSpec):
-            let cell: ImageOptionsCell = configure(tableView.dequeueReusableCell(for:), for: indexPath)
+            let cell: ImageOptionsCell = try configureCell(at: indexPath, strategy: strategy, in: tableView, with: item.id)
             cell.setup(viewModel: viewModel, viewSpec: viewSpec)
             return cell
-        case let .selection(item, group, spec):
-            let cell: SelectionCell = configure(tableView.dequeueReusableCell(for:), for: indexPath)
-            cell.configure(for: item, in: group, spec: spec)
+        case let .selection(selectionItem, group, spec):
+            let cell: SelectionCell = try configureCell(at: indexPath, strategy: strategy, in: tableView, with: item.id)
+            cell.configure(for: selectionItem, in: group, spec: spec)
             return cell
         case .noteInput(let viewModel):
-            let cell: NoteInputCell = configure(tableView.dequeueReusableCell(for:), for: indexPath)
+            let cell: NoteInputCell = try configureCell(at: indexPath, strategy: strategy, in: tableView, with: item.id)
             cell.setup(viewModel: viewModel)
             return cell
         case .note(let viewModel):
-            let cell: NoteInputCell = configure(tableView.dequeueReusableCell(for:), for: indexPath)
+            let cell: NoteInputCell = try configureCell(at: indexPath, strategy: strategy, in: tableView, with: item.id)
             cell.setup(viewModel: viewModel)
             return cell
         case .image(let viewModel):
-            let cell: ImageCell = configure(tableView.dequeueReusableCell(for:), for: indexPath)
+            let cell: ImageCell = try configureCell(at: indexPath, strategy: strategy, in: tableView, with: item.id)
             cell.setup(viewModel: viewModel)
             return cell
         case let .activityIndicator(viewModel, viewSpec):
-            let cell: ActivityIndicatorCell = configure(tableView.dequeueReusableCell(for:), for: indexPath)
+            let cell: ActivityIndicatorCell = try configureCell(at: indexPath, strategy: strategy, in: tableView, with: item.id)
             cell.setup(viewModel: viewModel, viewSpec: viewSpec)
             return cell
         case let .titledList(viewModel, viewSpec):
-            let cell: TitledListCell = configure(tableView.dequeueReusableCell(for:), for: indexPath)
+            let cell: TitledListCell = try configureCell(at: indexPath, strategy: strategy, in: tableView, with: item.id)
             cell.setup(viewModel: viewModel, viewSpec: viewSpec)
             return cell
         }
@@ -224,26 +250,85 @@ public final class FormTableViewDataSource<Identifier: Hashable>: NSObject, UITa
             .observe(on: UIScheduler())
             .startWithValues { previous, current in
                 guard let tableView = self.tableView else { return }
-                self.items = current.items
 
                 // Dismiss any first responder to avoid view corruption.
                 tableView.endEditing(true)
 
+                // Update the cached items.
+                self.items = current.items
+
+                let changeset = Changeset(previous: previous.items,
+                                          current: current.items,
+                                          identifier: DiffIdentifier.init,
+                                          areEqual: { $0.component == $1.component })
+
+                var indexPathsForWorkaround = [IndexPath]()
+
                 tableView.beginUpdates()
 
-                for step in Dwifft.diff(previous.items, current.items) {
-                    switch step {
-                    case let .insert(index, _):
-                        tableView.insertRows(at: [IndexPath(row: index, section: 0)], with: .fade)
+                // `fade` still looks the best.
+                tableView.deleteRows(at: changeset.removals.map { [0, $0] }, with: .fade)
+                tableView.insertRows(at: changeset.inserts.map { [0, $0] }, with: .fade)
 
-                    case let .delete(index, _):
-                        tableView.deleteRows(at: [IndexPath(row: index, section: 0)], with: .fade)
-                    }
+                for move in changeset.moves {
+                    tableView.moveRow(at: [0, move.source], to: [0, move.destination])
                 }
 
+                // NOTE: [anders] `reloadRows` clashes with `moveRow`. Since we
+                //       do not need to reanimate these cells out & in, they
+                //       are rebound with the new cell VM manually here.
+                //
+                //       It is important to update the cells as part of the
+                //       UITableView animation transaction, since the reloading
+                //       might affect the cell content height.
+                [changeset.moves.lazy
+                    .flatMap { $0.isMutated ? ($0.source, $0.destination) : nil },
+                 changeset.mutations.lazy.map { ($0, $0) }]
+                    .joined()
+                    .forEach { source, destination in
+                        do {
+                            try self.updateRow(at: [0, source], strategy: .visibleCell, in: tableView, with: current.items[destination])
+                        } catch GetCellError.typeMismatch {
+                            indexPathsForWorkaround.append([0, destination])
+                        } catch _ {}
+                    }
+
                 tableView.endUpdates()
-                self.configurator?.update(current.style)
+
                 self.configurator?.updateSeparatorsOfVisibleCells()
+                self.configurator?.update(current.style)
+
+                // TODO: Remove this workaround once `FormBuilder(V1)` is
+                //       obsolete.
+                if indexPathsForWorkaround.count > 0 {
+                    tableView.reloadRows(at: indexPathsForWorkaround, with: .none)
+                }
             }
     }
+
+    private struct DiffIdentifier: Hashable {
+        private let id: Identifier?
+
+        var hashValue: Int {
+            return id?.hashValue ?? 0
+        }
+
+        init(_ item: FormItem<Identifier>) {
+            self.id = item.id
+        }
+
+        static func == (left: DiffIdentifier, right: DiffIdentifier) -> Bool {
+            return left.id == right.id
+        }
+    }
+}
+
+private enum GetCellError: Error {
+    case typeMismatch
+    case cellInvisible
+}
+
+private enum GetCellStrategy {
+    case visibleCell
+    case dequeueCell
 }

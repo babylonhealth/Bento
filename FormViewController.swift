@@ -206,8 +206,13 @@ open class FormViewController<F: Form>: UIViewController, UITableViewDelegate {
 extension FormViewController: FormCellConfigurator {
     public func configure(_ cell: FormCell) {
         cell.configure(form.isSubmitting.negate(), viewSpec.separatorColor)
+        viewSpec.style?.apply(to: cell)
         (cell as? FocusableCell)?.delegate = self
         (cell as? DynamicHeightCell)?.heightDelegate = self
+
+        if let itemCell = cell as? FormItemCell {
+            viewSpec.itemCellStyle?.apply(to: itemCell)
+        }
     }
 
     public func updateSeparatorsOfVisibleCells() {
