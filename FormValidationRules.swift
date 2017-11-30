@@ -134,7 +134,6 @@ import Result
 
 // Used as a namespace (an enum without cases cannot be instantiated)
 public enum FormValidationRules {
-
     public static func phoneNumberValidatingProperty(initialValue: String = "", invalidMessage: String
         ) -> ValidatingProperty<String, InvalidInput> {
 
