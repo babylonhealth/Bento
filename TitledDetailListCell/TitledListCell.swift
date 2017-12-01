@@ -1,6 +1,6 @@
 extension TitledListCell: NibLoadableCell {}
 
-final class TitledListCell: FormCell {
+final class TitledListCell: FormItemCell {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var listStackView: UIStackView!
 
