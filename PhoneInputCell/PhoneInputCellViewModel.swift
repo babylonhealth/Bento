@@ -14,7 +14,7 @@ public final class PhoneInputCellViewModel: FocusableFormComponent {
          placeholder: String,
          countryCode: MutableProperty<String>,
          phoneNumber: MutableProperty<String>,
-         isEnabled: Property<Bool> = Property(value: true),
+         isEnabled: Property<Bool>? = nil,
          visualDependencies: VisualDependenciesProtocol) {
 
         self.visualDependencies = visualDependencies
@@ -22,7 +22,7 @@ public final class PhoneInputCellViewModel: FocusableFormComponent {
         self.placeholder = placeholder
         self.countryCode = countryCode
         self.phoneNumber = phoneNumber
-        self.isEnabled = isEnabled
+        self.isEnabled = isEnabled ?? Property(value: true)
     }
 
     func applyTitleStyle(to label: UILabel) {

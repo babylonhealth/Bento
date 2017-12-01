@@ -214,13 +214,14 @@ extension FormBuilderV2 {
             }
         }
 
-        public static func phoneTextField(_ id: Identifier, title: String, placeholder: String, countryCode: MutableProperty<String>, phoneNumber: MutableProperty<String>) -> Component {
+        public static func phoneTextField(_ id: Identifier, title: String, placeholder: String, countryCode: MutableProperty<String>, phoneNumber: MutableProperty<String>, isEnabled: Property<Bool>? = nil) -> Component {
             return Component(with: id) { visualDependencies in
                 return .phoneTextInput(
                     PhoneInputCellViewModel(title: title,
                                             placeholder: placeholder,
                                             countryCode: countryCode,
                                             phoneNumber: phoneNumber,
+                                            isEnabled: isEnabled,
                                             visualDependencies: visualDependencies))
             }
         }
