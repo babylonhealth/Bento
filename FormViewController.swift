@@ -232,10 +232,6 @@ extension FormViewController: FormCellConfigurator {
             }
         }
     }
-
-    public func update(_ style: FormStyle) {
-        tableView.setFormStyle(style, animated: true)
-    }
 }
 
 extension FormViewController: FocusableCellDelegate {

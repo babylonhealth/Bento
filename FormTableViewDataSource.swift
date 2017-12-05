@@ -44,13 +44,12 @@ public enum FormCellSeparatorVisibility {
 public protocol FormCellConfigurator: class {
     func configure(_ cell: FormCell)
     func updateSeparatorsOfVisibleCells()
-    func update(_ style: FormStyle)
 }
 
-public final class FormTableViewDataSource<Identifier: Hashable>: NSObject, UITableViewDataSource {
+public final class FormTableViewDataSource<Identifier: Hashable>: NSObject, UITableViewDataSource, FormTableViewDataSourceProtocol {
     private var items: [FormItem<Identifier>]
 
-    private weak var tableView: UITableView?
+    private weak var tableView: FormTableView?
     private weak var configurator: FormCellConfigurator?
     private let separatorVisibility: FormViewSpec.SeparatorVisibility
 
@@ -65,7 +64,7 @@ public final class FormTableViewDataSource<Identifier: Hashable>: NSObject, UITa
         return nil
     }
 
-    public init(for tableView: UITableView, separatorVisibility: FormViewSpec.SeparatorVisibility) {
+    public init(for tableView: FormTableView, separatorVisibility: FormViewSpec.SeparatorVisibility) {
         self.items = []
         self.tableView = tableView
         self.separatorVisibility = separatorVisibility
@@ -105,6 +104,10 @@ public final class FormTableViewDataSource<Identifier: Hashable>: NSObject, UITa
 
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return items.count
+    }
+
+    public func removeAll() {
+        self.items = []
     }
 
     private func configureCell<Cell: FormCell & ReusableCell>(at indexPath: IndexPath, strategy: GetCellStrategy, in tableView: UITableView, with id: Identifier?) throws -> Cell {
@@ -245,63 +248,63 @@ public final class FormTableViewDataSource<Identifier: Hashable>: NSObject, UITa
         tableView.reloadData()
 
         components.producer
-            .combinePrevious(FormTree(items: []))
             .take(duringLifetimeOf: tableView)
             .observe(on: UIScheduler())
-            .startWithValues { previous, current in
+            .startWithValues { current in
                 guard let tableView = self.tableView else { return }
 
                 // Dismiss any first responder to avoid view corruption.
                 tableView.endEditing(true)
 
-                // Update the cached items.
-                self.items = current.items
+                tableView.transition(to: current.style) {
+                    let changeset = Changeset(previous: self.items,
+                                              current: current.items,
+                                              identifier: DiffIdentifier.init,
+                                              areEqual: { $0.component == $1.component })
 
-                let changeset = Changeset(previous: previous.items,
-                                          current: current.items,
-                                          identifier: DiffIdentifier.init,
-                                          areEqual: { $0.component == $1.component })
+                    var indexPathsForWorkaround = [IndexPath]()
 
-                var indexPathsForWorkaround = [IndexPath]()
+                    // Update the cached items.
+                    self.items = current.items
 
-                tableView.beginUpdates()
+                    tableView.beginUpdates()
 
-                // `fade` still looks the best.
-                tableView.deleteRows(at: changeset.removals.map { [0, $0] }, with: .fade)
-                tableView.insertRows(at: changeset.inserts.map { [0, $0] }, with: .fade)
+                    // `fade` still looks the best.
+                    tableView.deleteRows(at: changeset.removals.map { [0, $0] }, with: .fade)
+                    tableView.insertRows(at: changeset.inserts.map { [0, $0] }, with: .fade)
 
-                for move in changeset.moves {
-                    tableView.moveRow(at: [0, move.source], to: [0, move.destination])
-                }
-
-                // NOTE: [anders] `reloadRows` clashes with `moveRow`. Since we
-                //       do not need to reanimate these cells out & in, they
-                //       are rebound with the new cell VM manually here.
-                //
-                //       It is important to update the cells as part of the
-                //       UITableView animation transaction, since the reloading
-                //       might affect the cell content height.
-                [changeset.moves.lazy
-                    .flatMap { $0.isMutated ? ($0.source, $0.destination) : nil },
-                 changeset.mutations.lazy.map { ($0, $0) }]
-                    .joined()
-                    .forEach { source, destination in
-                        do {
-                            try self.updateRow(at: [0, source], strategy: .visibleCell, in: tableView, with: current.items[destination])
-                        } catch GetCellError.typeMismatch {
-                            indexPathsForWorkaround.append([0, destination])
-                        } catch _ {}
+                    for move in changeset.moves {
+                        tableView.moveRow(at: [0, move.source], to: [0, move.destination])
                     }
 
-                tableView.endUpdates()
+                    // NOTE: [anders] `reloadRows` clashes with `moveRow`. Since we
+                    //       do not need to reanimate these cells out & in, they
+                    //       are rebound with the new cell VM manually here.
+                    //
+                    //       It is important to update the cells as part of the
+                    //       UITableView animation transaction, since the reloading
+                    //       might affect the cell content height.
+                    [changeset.moves.lazy
+                        .flatMap { $0.isMutated ? ($0.source, $0.destination) : nil },
+                     changeset.mutations.lazy.map { ($0, $0) }]
+                        .joined()
+                        .forEach { source, destination in
+                            do {
+                                try self.updateRow(at: [0, source], strategy: .visibleCell, in: tableView, with: current.items[destination])
+                            } catch GetCellError.typeMismatch {
+                                indexPathsForWorkaround.append([0, destination])
+                            } catch _ {}
+                        }
 
-                self.configurator?.updateSeparatorsOfVisibleCells()
-                self.configurator?.update(current.style)
+                    tableView.endUpdates()
 
-                // TODO: Remove this workaround once `FormBuilder(V1)` is
-                //       obsolete.
-                if indexPathsForWorkaround.count > 0 {
-                    tableView.reloadRows(at: indexPathsForWorkaround, with: .none)
+                    self.configurator?.updateSeparatorsOfVisibleCells()
+
+                    // TODO: Remove this workaround once `FormBuilder(V1)` is
+                    //       obsolete.
+                    if indexPathsForWorkaround.count > 0 {
+                        tableView.reloadRows(at: indexPathsForWorkaround, with: .none)
+                    }
                 }
             }
     }

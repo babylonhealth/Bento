@@ -1,4 +1,9 @@
 import UIKit
+import ReactiveSwift
+
+public protocol FormTableViewDataSourceProtocol: class {
+    func removeAll()
+}
 
 open class FormTableView: UITableView {
     public var formStyle: FormStyle = .topYAligned {
@@ -35,45 +40,73 @@ open class FormTableView: UITableView {
         }
     }
 
-    private let animator: UIViewPropertyAnimator = {
-        let animator = UIViewPropertyAnimator(duration: 0.3, curve: .easeInOut, animations: nil)
-        return animator
-    }()
+    private let animator = UIViewPropertyAnimator(duration: 0.2, curve: .easeInOut, animations: nil)
+    private var isTransitioning: Bool = false
+    private var transitionTargetStyle: FormStyle!
+    private var transitionDidComplete: (() -> Void)? = nil
 
-    private var wantsAnimatedInsetChange = false
-    private var hasEnqueuedAnimationCallback = false
     private var deltaForUpdatingContentOffset: CGPoint?
 
     open override func layoutSubviews() {
         super.layoutSubviews()
-
-        guard wantsAnimatedInsetChange else {
-            return updateScrollViewParameters()
-        }
-
-        // Since the content size might change due to the UITableView self
-        // sizing mechaism, we must modify the animation upon any new layout
-        // pass.
-
-        animator.addAnimations {
-            self.updateScrollViewParameters()
-        }
-
-        if !hasEnqueuedAnimationCallback {
-            hasEnqueuedAnimationCallback = true
-            animator.addCompletion { _ in
-                self.wantsAnimatedInsetChange = false
-                self.hasEnqueuedAnimationCallback = false
-            }
-        }
-
-        animator.startAnimation(afterDelay: 0.0)
+        updateScrollViewParameters()
     }
 
-    public func setFormStyle(_ style: FormStyle, animated: Bool) {
-        let shouldAnimate = formStyle != style && animated
-        wantsAnimatedInsetChange = wantsAnimatedInsetChange || shouldAnimate
-        formStyle = style
+    /// Transition the form table view to the specified style.
+    ///
+    /// If multiple transition attempts are raised during an on-going fade-out
+    /// animation, only the style and the completion callback of the last
+    /// attempt would be honoured.
+    ///
+    /// The completion callback would be invoked immediately if no transition
+    /// needs to be performed.
+    ///
+    /// The data source and its batch updating logic must react properly to
+    /// `FormTableViewDataSourceProtocol.removeAll()`, which is invoked by the
+    /// `FormTableView` to purge all existing items as part of the form style
+    /// transition.
+    ///
+    /// - parameters:
+    ///   - style: The target form style.
+    ///   - completion: The completion callback to invoke when the target form
+    ///                 style has been applied.
+    public func transition(to style: FormStyle, completion: @escaping () -> Void) {
+        let shouldAnimate = formStyle != style
+
+        if shouldAnimate.isFalse && transitionDidComplete.isNil {
+            completion()
+            return
+        }
+
+        transitionTargetStyle = style
+        transitionDidComplete = completion
+
+        if isTransitioning.isFalse {
+            isTransitioning = true
+
+            // Quickly fade out the UITableView to prepare for a form style change.
+            animator.addAnimations { self.alpha = 0.0 }
+
+            animator.addCompletion { _ in
+                // Clear the table view content immediately.
+                (self.dataSource as? FormTableViewDataSourceProtocol)?.removeAll()
+                self.reloadData()
+                self.layoutIfNeeded()
+
+                self.alpha = 1.0
+
+                // The form style should only be updated after the table view
+                // has faded out.
+                self.formStyle = self.transitionTargetStyle
+                self.updateScrollViewParameters()
+
+                self.transitionDidComplete?()
+                self.transitionDidComplete = nil
+                self.isTransitioning = false
+            }
+
+            animator.startAnimation()
+        }
     }
 
     private func updateScrollViewParameters() {
