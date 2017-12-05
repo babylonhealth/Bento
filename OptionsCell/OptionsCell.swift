@@ -3,18 +3,25 @@ import ReactiveCocoa
 import UIKit
 import BabylonFoundation
 
-final class ImageOptionsCell: OptionsCell {
+final class ImageOptionsCell: FormItemCell {
+    let collectionView: UICollectionView
+    var collectionViewHeightConstraint: NSLayoutConstraint!
+
     fileprivate var viewModel: ImageOptionsCellViewModel!
     fileprivate var viewSpec: ImageOptionsCellViewSpec!
 
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .horizontal
+        self.collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: layout)
+
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        collectionView.register(ImageOptionsCollectionCell.self)
-        collectionView.topAnchor.constraint(equalTo: topAnchor).isActive = true
-        collectionView.delegate = self
-        collectionView.dataSource = self
+        contentView.addSubview(collectionView)
+
+        setupCollectionView()
     }
 
+    @available(*, unavailable)
     required init(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -23,10 +30,34 @@ final class ImageOptionsCell: OptionsCell {
         self.viewModel = viewModel
         self.viewSpec = viewSpec
 
-        heightConstraint.constant = viewSpec.mediaCellDimension
-        heightConstraint.isActive = true
-
+        collectionViewHeightConstraint.constant = viewSpec.mediaCellDimension
         collectionView.reloadData()
+    }
+
+    private func setupCollectionView() {
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
+
+        collectionViewHeightConstraint = collectionView.heightAnchor.constraint(equalToConstant: 0)
+        collectionViewHeightConstraint.priority = UILayoutPriority(UILayoutPriority.required.rawValue - 1)
+
+        NSLayoutConstraint.activate([
+            collectionView.topAnchor.constraint(equalTo: contentView.topAnchor),
+            collectionView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            collectionView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            collectionView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+            collectionViewHeightConstraint
+        ])
+
+        collectionView.preservesSuperviewLayoutMargins = true
+        collectionView.isScrollEnabled = true
+        collectionView.showsHorizontalScrollIndicator = false
+        collectionView.bounces = true
+        collectionView.alwaysBounceHorizontal = true
+        collectionView.backgroundColor = .clear
+
+        collectionView.register(ImageOptionsCollectionCell.self)
+        collectionView.delegate = self
+        collectionView.dataSource = self
     }
 }
 
@@ -67,35 +98,4 @@ extension ImageOptionsCell: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         viewModel.selectionAction.apply(indexPath.row).start()
     }
-}
-
-class OptionsCell: FormCell {
-
-    let collectionView: UICollectionView
-    var heightConstraint: NSLayoutConstraint!
-    var collectionViewHeightConstraint: NSLayoutConstraint!
-
-    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
-        let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .horizontal
-        self.collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: layout)
-
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
-        addSubview(collectionView)
-        self.collectionView.translatesAutoresizingMaskIntoConstraints = false
-        self.collectionView.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
-        self.collectionView.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
-        self.collectionView.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
-        self.collectionView.contentInset = UIEdgeInsets.init(top: 0, left: 16, bottom: 0, right: 16)
-        self.collectionView.isScrollEnabled = true
-        self.collectionView.showsHorizontalScrollIndicator = false
-        self.collectionView.bounces = true
-        self.collectionView.alwaysBounceHorizontal = true
-        self.collectionView.backgroundColor = .white
-
-        self.heightConstraint = heightAnchor.constraint(equalToConstant: 0)
-        self.heightConstraint.priority = UILayoutPriority(UILayoutPriority.required.rawValue - 1)
-        self.collectionViewHeightConstraint = collectionView.heightAnchor.constraint(equalToConstant: 0)
-    }
-    required init(coder aDecoder: NSCoder) { fatalError("init(coder:)") }
 }
