@@ -12,6 +12,7 @@ open class SelectionCell: FormItemCell, NibLoadableCell {
 
     @IBOutlet weak var avatar: UIImageView!
     @IBOutlet weak var label: UILabel!
+    @IBOutlet weak var subtitleLabel: UILabel!
     @IBOutlet weak var disclosure: UIButton!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var leftTick: UIImageView!
@@ -19,6 +20,7 @@ open class SelectionCell: FormItemCell, NibLoadableCell {
 
     @IBOutlet var avatarConstraints: [NSLayoutConstraint]!
     @IBOutlet var leftTickConstraints: [NSLayoutConstraint]!
+    @IBOutlet var subtitleConstraints: [NSLayoutConstraint]!
 
     private let disposable = SerialDisposable()
     private var spec: SelectionCellViewSpec!
@@ -58,6 +60,17 @@ open class SelectionCell: FormItemCell, NibLoadableCell {
         label.text = viewModel.title
         spec.labelStyle?.apply(to: label)
 
+        if let subtitle = viewModel.subtitle {
+            subtitleLabel.text = subtitle
+            spec.subtitleStyle?.apply(to: subtitleLabel)
+            subtitleLabel.isHidden = false
+            NSLayoutConstraint.activate(subtitleConstraints)
+        } else {
+            subtitleLabel.text = nil
+            subtitleLabel.isHidden = true
+            NSLayoutConstraint.deactivate(subtitleConstraints)
+        }
+
         switch (group.hasDisclosureAction, spec.tick) {
         case (true, .some):
             style = .leftTickWithDetailDisclosure
@@ -93,6 +106,7 @@ open class SelectionCell: FormItemCell, NibLoadableCell {
 
         d += group
             .controlAvailability(for: viewModel.identifier, isFormEnabled: isFormEnabled)
+            .observe(on: UIScheduler())
             .startWithValues { [weak self] in self?.update(for: $0) }
 
         d += group.selected(forItemIdentifier: viewModel.identifier)

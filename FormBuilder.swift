@@ -249,13 +249,14 @@ extension FormBuilder {
 
         public static func multiselectionItem(
             title: String,
+            subtitle: String? = nil,
             icon: SignalProducer<UIImage, NoError>? = nil,
             identifier: Int,
             in group: SelectionCellGroupViewModel,
             spec: SelectionCellViewSpec
         ) -> Component {
             return Component {
-                return .multiselectionItem($0, title: title, icon: icon, identifier: identifier, in: group, spec: spec)
+                return .multiselectionItem($0, title: title, subtitle: subtitle, icon: icon, identifier: identifier, in: group, spec: spec)
             }
         }
 

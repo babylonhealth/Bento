@@ -393,6 +393,7 @@ extension FormBuilderV2 {
         public static func multiselectionItem(
             _ formId: Identifier,
             title: String,
+            subtitle: String? = nil,
             icon: SignalProducer<UIImage, NoError>? = nil,
             identifier: Int,
             in group: SelectionCellGroupViewModel,
@@ -400,6 +401,7 @@ extension FormBuilderV2 {
             ) -> Component {
             return Component(with: formId) { visualDependencies in
                 let viewModel = SelectionCellViewModel(title: title,
+                                                       subtitle: subtitle,
                                                        icon: icon,
                                                        identifier: identifier)
                 return .selection(viewModel, group: group, spec: spec)
