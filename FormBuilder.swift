@@ -111,7 +111,11 @@ extension FormBuilder {
                                       action: Action<Void, Void, NoError>,
                                       buttonMargins: CGFloat) -> Component {
             return Component {
-                return .cellButton($0, text: text, hasDynamicHeight: hasDynamicHeight, action: action, buttonMargins: buttonMargins)
+                return .cellButton($0,
+                                   text: text,
+                                   hasDynamicHeight: hasDynamicHeight,
+                                   action: action,
+                                   buttonMargins: buttonMargins)
             }
         }
 

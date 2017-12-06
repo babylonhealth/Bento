@@ -2,7 +2,6 @@ import ReactiveSwift
 import enum Result.NoError
 
 public struct FormBuilderV2<Identifier: Hashable> {
-
     let components: [Component]
 
     public static var empty: FormBuilderV2<Identifier> {
@@ -46,7 +45,6 @@ public struct FormBuilderV2<Identifier: Hashable> {
 }
 
 extension FormBuilderV2 {
-
     public struct Component {
         fileprivate let id: Identifier?
         fileprivate let builder: (VisualDependenciesProtocol) -> FormComponent
@@ -154,7 +152,7 @@ extension FormBuilderV2 {
             allowsYieldingOfFocus: Bool = true,
             editingDidEndAction: Action<String?, Void, NoError>? = nil,
             deleteAction: Action<Void, Void, NoError>? = nil
-        ) -> Component {
+            ) -> Component {
             return Component(with: id) { visualDependencies in
                 return .textInput(
                     TextInputCellViewModel(icon: icon,
@@ -233,7 +231,7 @@ extension FormBuilderV2 {
             inputTextAlignment: TextAlignment = .right,
             action: Action<Void, Void, NoError>,
             accessory: UITableViewCellAccessoryType = .disclosureIndicator
-        ) -> Component {
+            ) -> Component {
             return Component(with: id) { visualDependencies in
                 return .actionInput(
                     ActionInputCellViewModel(visualDependencies: visualDependencies,
@@ -381,9 +379,9 @@ extension FormBuilderV2 {
         public static func titledList(_ id: Identifier, title: String, items: [TitledListItem]) -> Component {
             return Component(with: id) { visualDependencies in
                 let listItemViewSpec = TitledListItemViewSpec(titleColor: .black,
-                                                          titleStyle: visualDependencies.styles.labelTextFootnote,
-                                                          descriptionColor: Colors.silverGrey,
-                                                          descriptionStyle: visualDependencies.styles.labelTextFootnote)
+                                                              titleStyle: visualDependencies.styles.labelTextFootnote,
+                                                              descriptionColor: Colors.silverGrey,
+                                                              descriptionStyle: visualDependencies.styles.labelTextFootnote)
                 return .titledList(TitledListCellViewModel(title: title,
                                                            items: items),
                                    TitledListCellViewSpec(titleColor: .black,
@@ -399,7 +397,7 @@ extension FormBuilderV2 {
             identifier: Int,
             in group: SelectionCellGroupViewModel,
             spec: SelectionCellViewSpec
-        ) -> Component {
+            ) -> Component {
             return Component(with: formId) { visualDependencies in
                 let viewModel = SelectionCellViewModel(title: title,
                                                        icon: icon,
