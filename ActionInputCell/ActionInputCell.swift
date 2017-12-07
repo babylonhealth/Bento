@@ -150,11 +150,14 @@ final class ActionInputCell: FormItemCell {
 
 extension ActionInputCell: DeletableCell {
     var canBeDeleted: Bool {
-        return viewModel.wasDeleted != nil
+        guard let action = viewModel.wasDeleted else { return false }
+
+        return action.isEnabled.value
     }
 
     public func delete() -> SignalProducer<Bool, NoError> {
-        guard let action = viewModel.wasDeleted else {
+        guard let action = viewModel.wasDeleted,
+            action.isEnabled.value else {
             return SignalProducer(value: false)
         }
 

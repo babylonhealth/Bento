@@ -141,12 +141,15 @@ extension TextInputCell: UITextFieldDelegate {
 
 extension TextInputCell: DeletableCell {
     var canBeDeleted: Bool {
-        return viewModel.isEnabled.value && viewModel.deleteAction != nil
+        guard let action = viewModel.deleteAction else { return false }
+
+        return viewModel.isEnabled.value && action.isEnabled.value
     }
 
     public func delete() -> SignalProducer<Bool, NoError> {
         guard let action = viewModel.deleteAction,
-              canBeDeleted else {
+            action.isEnabled.value,
+            viewModel.isEnabled.value else {
             return SignalProducer(value: false)
         }
 
