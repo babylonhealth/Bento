@@ -84,8 +84,7 @@ extension FormProperties where Error: ValidationErrorDescriptionProtocol {
 
     private func failureReason(_ formFields: [PropertyValidator<Error>]) -> String? {
         return formFields
-            .map { $0.status.value.error }
-            .flatMap { $0 }
+            .flatMap { $0.status.value.error }
             .map { $0.reason }
             .reduce { $0 + "\n" + $1 }
     }
