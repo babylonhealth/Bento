@@ -15,6 +15,7 @@ public enum DescriptionCellType {
     case captionText
     case centeredTitle
     case centeredTitleWithDisclosureIndicator
+    case centeredRedSubtitle
     case centeredSubtitle
     case centeredHeadline
     case centeredTime
