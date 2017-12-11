@@ -12,6 +12,12 @@ open class FormViewController<F: Form>: UIViewController, UITableViewDelegate {
     fileprivate let viewSpec: FormViewSpec
     private var keyboardChangeDisposable: Disposable?
 
+    public var focus: BindingTarget<()> {
+        return self.reactive.makeBindingTarget { base, _ in
+            base.focus()
+        }
+    }
+
     public init(form: F, viewSpec: FormViewSpec) {
         self.form = form
         self.viewSpec = viewSpec
