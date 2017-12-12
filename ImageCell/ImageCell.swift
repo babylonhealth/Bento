@@ -1,6 +1,7 @@
 import UIKit
 import ReactiveSwift
 import ReactiveCocoa
+import Result
 
 extension ImageCell: NibLoadableCell {}
 
@@ -8,6 +9,7 @@ final class ImageCell: FormCell {
 
     @IBOutlet weak var iconView: UIImageView!
     @IBOutlet weak var leftIconView: UIImageView!
+    @IBOutlet weak var rightIconView: UIImageView!
     @IBOutlet weak var imageHeight: NSLayoutConstraint!
     @IBOutlet weak var imageWidth: NSLayoutConstraint!
 
@@ -33,14 +35,8 @@ final class ImageCell: FormCell {
         self.imageWidth.constant = viewModel.imageSize.width
         self.imageHeight.constant = viewModel.imageSize.height
 
-        viewModel.leftIcon
-            .observe(on: UIScheduler())
-            .take(until: reactive.prepareForReuse)
-            .startWithValues { [weak leftIconView = self.leftIconView] image in
-                leftIconView?.image = image
-                leftIconView?.isHidden = image == nil
-            }
-
+        setup(leftIconView, viewModel.leftIcon)
+        setup(rightIconView, viewModel.rightIcon)
         setupImage(with: viewModel.imageAlignment)
     }
 
@@ -51,6 +47,17 @@ final class ImageCell: FormCell {
             self.iconView.layer.cornerRadius = self.iconView.frame.width / 2.0
         } else {
             self.iconView.layer.cornerRadius = 0.0
+        }
+    }
+
+    private func setup(_ iconView: UIImageView, _ icons: SignalProducer<UIImage, NoError>?) {
+        if let icons = icons {
+            iconView.isHidden = false
+            iconView.reactive.image <~ icons
+                .take(until: reactive.prepareForReuse)
+        } else {
+            iconView.isHidden = true
+            iconView.image = nil
         }
     }
 

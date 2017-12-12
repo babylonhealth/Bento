@@ -357,7 +357,7 @@ extension FormBuilderV2 {
             }
         }
 
-        public static func imageField(_ id: Identifier, image: SignalProducer<UIImage, NoError>, imageSize: CGSize, imageAlignment: CellElementAlignment = .centered, isRounded: Bool = false, selected: Action<Void, Void, NoError>? = nil, leftIcon: SignalProducer<UIImage?, NoError> = .empty) -> Component {
+        public static func imageField(_ id: Identifier, image: SignalProducer<UIImage, NoError>, imageSize: CGSize, imageAlignment: CellElementAlignment = .centered, isRounded: Bool = false, selected: Action<Void, Void, NoError>? = nil, leftIcon: SignalProducer<UIImage, NoError>? = nil, rightIcon: SignalProducer<UIImage, NoError>? = nil) -> Component {
             return Component(with: id) { visualDependencies in
                 return .image(ImageCellViewModel(image: image,
                                                  imageSize: imageSize,
@@ -365,7 +365,8 @@ extension FormBuilderV2 {
                                                  imageAlignment: imageAlignment,
                                                  isRounded: isRounded,
                                                  selected: selected,
-                                                 leftIcon: leftIcon))
+                                                 leftIcon: leftIcon,
+                                                 rightIcon: rightIcon))
             }
         }
 

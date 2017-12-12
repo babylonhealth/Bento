@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -28,12 +28,17 @@
                     <imageView verifyAmbiguity="off" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="M46-a1-DFg">
                         <rect key="frame" x="67" y="23.5" width="20" height="20"/>
                     </imageView>
+                    <imageView verifyAmbiguity="off" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bzG-FL-F0s">
+                        <rect key="frame" x="287" y="23" width="20" height="20"/>
+                    </imageView>
                 </subviews>
                 <constraints>
                     <constraint firstItem="iEj-5u-Vcj" firstAttribute="top" secondItem="9gF-FE-Zzd" secondAttribute="top" id="4B5-1W-rsZ"/>
                     <constraint firstItem="M46-a1-DFg" firstAttribute="bottom" secondItem="iEj-5u-Vcj" secondAttribute="bottom" id="GwQ-0E-nzK"/>
                     <constraint firstAttribute="bottom" secondItem="iEj-5u-Vcj" secondAttribute="bottom" id="SMm-Cv-8XM"/>
                     <constraint firstItem="M46-a1-DFg" firstAttribute="leading" secondItem="iEj-5u-Vcj" secondAttribute="leading" id="UH7-yO-acY"/>
+                    <constraint firstItem="bzG-FL-F0s" firstAttribute="trailing" secondItem="iEj-5u-Vcj" secondAttribute="trailing" id="lBG-pF-M3f"/>
+                    <constraint firstItem="bzG-FL-F0s" firstAttribute="bottom" secondItem="iEj-5u-Vcj" secondAttribute="bottom" id="uYk-LM-RPa"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
@@ -41,6 +46,7 @@
                 <outlet property="imageHeight" destination="bQy-QT-PbP" id="zbW-U2-lcc"/>
                 <outlet property="imageWidth" destination="Y7H-Ka-P1I" id="K6s-D1-xmk"/>
                 <outlet property="leftIconView" destination="M46-a1-DFg" id="XlI-Fj-x1E"/>
+                <outlet property="rightIconView" destination="bzG-FL-F0s" id="Ffv-27-Poe"/>
             </connections>
             <point key="canvasLocation" x="34.5" y="54"/>
         </tableViewCell>

@@ -10,7 +10,8 @@ public enum CellElementAlignment {
 
 final public class ImageCellViewModel {
     public let image: SignalProducer<UIImage, NoError>
-    public let leftIcon: SignalProducer<UIImage?, NoError>
+    public let leftIcon: SignalProducer<UIImage, NoError>?
+    public let rightIcon: SignalProducer<UIImage, NoError>?
     public let imageSize: CGSize
     public let visualDependencies: VisualDependenciesProtocol
     public let selectionStyle: UITableViewCellSelectionStyle
@@ -25,15 +26,17 @@ final public class ImageCellViewModel {
                 imageAlignment: CellElementAlignment,
                 isRounded: Bool,
                 selected: Action<Void, Void, NoError>? = nil,
-                leftIcon: SignalProducer<UIImage?, NoError> = .empty) {
+                leftIcon: SignalProducer<UIImage, NoError>? = nil,
+                rightIcon: SignalProducer<UIImage, NoError>? = nil) {
         self.image = image
-        self.leftIcon = leftIcon
         self.visualDependencies = visualDependencies
         self.selectionStyle = selectionStyle
         self.imageSize = imageSize
         self.imageAlignment = imageAlignment
         self.isRounded = isRounded
         self.selected = selected
+        self.leftIcon = leftIcon
+        self.rightIcon = rightIcon
     }
 
     public func applyBackgroundColor(to views: [UIView]) {

@@ -229,7 +229,7 @@ extension FormBuilder {
             }
         }
 
-        public static func imageField(image: SignalProducer<UIImage, NoError>, imageSize: CGSize, imageAlignment: CellElementAlignment = .centered, isRounded: Bool = false, selected: Action<Void, Void, NoError>? = nil, leftIcon: SignalProducer<UIImage?, NoError> = .empty) -> Component {
+        public static func imageField(image: SignalProducer<UIImage, NoError>, imageSize: CGSize, imageAlignment: CellElementAlignment = .centered, isRounded: Bool = false, selected: Action<Void, Void, NoError>? = nil, leftIcon: SignalProducer<UIImage, NoError>? = nil) -> Component {
             return Component {
                 return .imageField($0, image: image, imageSize: imageSize, imageAlignment: imageAlignment, isRounded: isRounded, selected: selected, leftIcon: leftIcon)
             }
