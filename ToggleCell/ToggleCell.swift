@@ -26,7 +26,8 @@ class ToggleCell: FormItemCell {
         toggle.reactive.isEnabled <~ viewModel.isEnabled.and(isFormEnabled).producer
             .take(until: reactive.prepareForReuse)
 
-        toggle.isOn = viewModel.isOn.value
+        toggle.reactive.isOn <~ viewModel.isOn.producer
+            .take(until: reactive.prepareForReuse)
 
         viewModel.isOn <~ toggle.reactive.isOnValues
             .take(until: reactive.prepareForReuse)
