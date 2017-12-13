@@ -234,18 +234,25 @@ public enum FormValidationRules {
 public struct PhoneProperty {
     private let combinedFields: ValidatingProperty<String, InvalidInput>
     public let countryCode: MutableProperty<String>
-    public let number = MutableProperty<String>("")
+    public let number: MutableProperty<String>
+
     public var validator: PropertyValidator<InvalidInput> {
         return combinedFields.validator
     }
-    public init(region: RegionDTO, invalidMessage: String) {
-        countryCode = MutableProperty(region.phoneCountryCode)
+
+    public init(countryCode: String, number: String, invalidMessage: String) {
+        self.countryCode = MutableProperty(countryCode)
+        self.number = MutableProperty(number)
         combinedFields = FormValidationRules.phoneNumberValidatingProperty(invalidMessage: invalidMessage)
 
-        combinedFields <~ Property.combineLatest(countryCode, number)
+        combinedFields <~ Property.combineLatest(self.countryCode, self.number)
             .producer
             .debounce(0.2, on: QueueScheduler(qos: .userInitiated))
             .map { [$0, $1].joined(separator: " ") }
+    }
+
+    public init(region: RegionDTO, invalidMessage: String) {
+        self.init(countryCode: region.phoneCountryCode, number: "", invalidMessage: invalidMessage)
     }
 }
 
