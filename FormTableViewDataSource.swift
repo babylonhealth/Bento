@@ -256,16 +256,20 @@ public final class FormTableViewDataSource<Identifier: Hashable>: NSObject, UITa
                 // Dismiss any first responder to avoid view corruption.
                 tableView.endEditing(true)
 
-                tableView.transition(to: current.style) {
-                    let changeset = Changeset(previous: self.items,
+                tableView.transition(to: current.style) { willReload in
+                    // Update the cached items.
+                    let previousItems = self.items
+                    self.items = current.items
+
+                    if willReload { return }
+
+                    let changeset = Changeset(previous: previousItems,
                                               current: current.items,
                                               identifier: DiffIdentifier.init,
                                               areEqual: { $0.component == $1.component })
 
                     var indexPathsForWorkaround = [IndexPath]()
 
-                    // Update the cached items.
-                    self.items = current.items
 
                     tableView.beginUpdates()
 

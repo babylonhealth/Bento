@@ -40,10 +40,12 @@ open class FormTableView: UITableView {
         }
     }
 
-    private let animator = UIViewPropertyAnimator(duration: 0.2, curve: .easeInOut, animations: nil)
+    private let fadeOut = UIViewPropertyAnimator(duration: 0.15, curve: .easeInOut, animations: nil)
+    private let fadeIn = UIViewPropertyAnimator(duration: 0.15, curve: .easeInOut, animations: nil)
+
     private var isTransitioning: Bool = false
     private var transitionTargetStyle: FormStyle!
-    private var transitionDidComplete: (() -> Void)? = nil
+    private var transitionDidComplete: ((_ willReload: Bool) -> Void)? = nil
 
     private var deltaForUpdatingContentOffset: CGPoint?
 
@@ -66,15 +68,17 @@ open class FormTableView: UITableView {
     /// `FormTableView` to purge all existing items as part of the form style
     /// transition.
     ///
+    /// The table view might inform the completion callback with an asserted
+    /// flag of its intent to reload afterwards. The callback is advised to
+    /// update the data source and avoid calling any UITableView method.
+    ///
     /// - parameters:
     ///   - style: The target form style.
     ///   - completion: The completion callback to invoke when the target form
     ///                 style has been applied.
-    public func transition(to style: FormStyle, completion: @escaping () -> Void) {
-        let shouldAnimate = formStyle != style
-
-        if shouldAnimate.isFalse && transitionDidComplete.isNil {
-            completion()
+    public func transition(to style: FormStyle, completion: @escaping (_ willReload: Bool) -> Void) {
+        if formStyle == style && style.alwaysFades.isFalse && isTransitioning.isFalse {
+            completion(false)
             return
         }
 
@@ -85,27 +89,50 @@ open class FormTableView: UITableView {
             isTransitioning = true
 
             // Quickly fade out the UITableView to prepare for a form style change.
-            animator.addAnimations { self.alpha = 0.0 }
+            fadeOut.addAnimations { self.alpha = 0.0 }
 
-            animator.addCompletion { _ in
+            fadeOut.addCompletion { _ in
                 // Clear the table view content immediately.
                 (self.dataSource as? FormTableViewDataSourceProtocol)?.removeAll()
                 self.reloadData()
                 self.layoutIfNeeded()
-
-                self.alpha = 1.0
 
                 // The form style should only be updated after the table view
                 // has faded out.
                 self.formStyle = self.transitionTargetStyle
                 self.updateScrollViewParameters()
 
-                self.transitionDidComplete?()
-                self.transitionDidComplete = nil
-                self.isTransitioning = false
+                if self.formStyle.alwaysFades {
+                    // Inform the callback to update the data source without
+                    // triggering any animation.
+                    self.transitionDidComplete?(true)
+                    self.transitionDidComplete = nil
+                    self.reloadData()
+
+                    // Fade in the UITableView.
+                    self.fadeIn.addAnimations { self.alpha = 1.0 }
+                    self.fadeIn.addCompletion { _ in
+                        self.isTransitioning = false
+
+                        // Start a transition if a transition attempt is
+                        // recorded during the fading in animation.
+                        if let completion = self.transitionDidComplete {
+                            self.transition(to: self.transitionTargetStyle,
+                                            completion: completion)
+                        }
+                    }
+                    self.fadeIn.startAnimation()
+                } else {
+                    self.alpha = 1.0
+
+                    // Hand over an empty UITableView to the callback.
+                    self.transitionDidComplete?(false)
+                    self.transitionDidComplete = nil
+                    self.isTransitioning = false
+                }
             }
 
-            animator.startAnimation()
+            fadeOut.startAnimation()
         }
     }
 
@@ -128,6 +155,17 @@ open class FormTableView: UITableView {
         if let delta = deltaForUpdatingContentOffset {
             deltaForUpdatingContentOffset = nil
             contentOffset = CGPoint(x: -delta.x, y: -delta.y)
+        }
+    }
+}
+
+fileprivate extension FormStyle {
+    var alwaysFades: Bool {
+        switch self {
+        case .centerYAligned:
+            return true
+        case .topYAligned:
+            return false
         }
     }
 }
