@@ -68,9 +68,9 @@ final class ActionInputCell: FormItemCell {
         var deactivatingConstraints: [NSLayoutConstraint] = []
 
         switch viewModel.inputTextAlignment {
-        case .left, .center:
+        case .leading, .center:
             activatingConstraints.append(titleLabelMinWidthConstraint)
-        case .right:
+        case .trailing:
             deactivatingConstraints.append(titleLabelMinWidthConstraint)
         }
 

@@ -1,5 +1,54 @@
 import ReactiveSwift
 import enum Result.NoError
+import BabylonFoundation
+
+public enum DescriptionStyle {
+    case header
+    case headline
+    case link
+    case footer
+    case alert
+    case caption
+    case centeredTitle
+    case centeredSubtitle(Appearance)
+    case centeredHeadline
+    case centeredTime
+
+    fileprivate var textStyle: DescriptionTextStyle {
+        switch self {
+        case .header, .headline, .link, .footer:
+            return .system(.footnote)
+        case .alert:
+            return .system(.headline)
+        case .caption:
+            return .system(.body)
+        case .centeredTitle:
+            return .system(.title3)
+        case .centeredSubtitle:
+            return .system(.body)
+        case .centeredHeadline:
+            return .system(.headline)
+        case .centeredTime:
+            return .monospacedDigit(50.0)
+        }
+    }
+
+    fileprivate var textAlignment: TextAlignment {
+        switch self {
+        case .centeredTitle, .centeredSubtitle, .centeredTime, .centeredHeadline, .caption, .link:
+            return .center
+        default:
+            return .leading
+        }
+    }
+}
+
+extension DescriptionStyle {
+    public enum Appearance {
+        case standard
+        case destructive
+    }
+}
 
 public struct FormBuilderV2<Identifier: Hashable> {
     let components: [Component]
@@ -61,16 +110,31 @@ extension FormBuilderV2 {
         }
 
         public static func header(_ id: Identifier, text: String) -> Component {
-            return description(id, .header, text: text)
+            return description(id, style: .header, text: text)
         }
 
         public static func headline(_ id: Identifier, text: String) -> Component {
-            return description(id, .headline, text: text)
+            return description(id, style: .headline, text: text)
         }
 
-        public static func description(_ id: Identifier, _ type: DescriptionCellType, horizontalLayout: DescriptionHorizontalLayout = .fill, text: String, selected: Action<Void, Void, NoError>? = nil) -> Component {
+        public static func description(
+            _ id: Identifier,
+            style: DescriptionStyle,
+            text: String,
+            horizontalLayout: DescriptionHorizontalLayout = .fill,
+            selected: Action<Void, Void, NoError>? = nil,
+            showsDisclosureIndicator: Bool = false
+        ) -> Component {
             return Component(with: id) { visualDependencies in
-                return .description(.init(text: text, type: type, horizontalLayout: horizontalLayout, visualDependencies: visualDependencies, selected: selected))
+                return DescriptionCellViewModel(text: text,
+                                                style: style.textStyle,
+                                                weight: nil,
+                                                color: visualDependencies.styles.textColor(for: style),
+                                                alignment: style.textAlignment,
+                                                horizontalLayout: horizontalLayout,
+                                                selected: selected,
+                                                showsDisclosureIndicator: showsDisclosureIndicator)
+                    |> FormComponent.description
             }
         }
 
@@ -228,7 +292,7 @@ extension FormBuilderV2 {
             _ id: Identifier,
             title: String,
             value: Property<String>? = nil,
-            inputTextAlignment: TextAlignment = .right,
+            inputTextAlignment: TextAlignment = .trailing,
             action: Action<Void, Void, NoError>,
             accessory: UITableViewCellAccessoryType = .disclosureIndicator
             ) -> Component {
@@ -252,7 +316,7 @@ extension FormBuilderV2 {
                     ActionInputCellViewModel(visualDependencies: visualDependencies,
                                              title: title,
                                              input: nil,
-                                             inputTextAlignment: .left,
+                                             inputTextAlignment: .leading,
                                              selected: action,
                                              accessory: .none,
                                              titleStyle: style))
@@ -271,7 +335,7 @@ extension FormBuilderV2 {
                                              icon: icon,
                                              title: title,
                                              input: value,
-                                             inputTextAlignment: .right,
+                                             inputTextAlignment: .trailing,
                                              selected: action,
                                              titleStyle: titleStyle))
             }
@@ -296,7 +360,7 @@ extension FormBuilderV2 {
                                              iconStyle: .largeRoundAvatar,
                                              title: title,
                                              input: input,
-                                             inputTextAlignment: .left,
+                                             inputTextAlignment: .leading,
                                              selected: action,
                                              deleted: deleted,
                                              accessory: accessory,

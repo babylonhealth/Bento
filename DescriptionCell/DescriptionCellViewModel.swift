@@ -2,76 +2,41 @@ import UIKit
 import ReactiveSwift
 import Result
 
+public enum DescriptionHorizontalLayout {
+    case fill
+    case centeredProportional(Float)
+}
+
+public enum DescriptionTextStyle {
+    case system(UIFontTextStyle)
+    case monospacedDigit(Float)
+}
+
 public final class DescriptionCellViewModel {
     public let text: String
-    public let selected: Action<Void, Void, NoError>?
-    public let type: DescriptionCellType
+    public let style: DescriptionTextStyle
+    public let weight: UIFont.Weight?
+    public let color: UIColor
+    public let alignment: TextAlignment
     public let horizontalLayout: DescriptionHorizontalLayout
-    public let visualDependencies: VisualDependenciesProtocol
-    public let selectionStyle: UITableViewCellSelectionStyle
-    public let backgroundColorStyle: UIViewStyle<UIView>
+    public let selected: Action<Void, Void, NoError>?
+    public let showsDisclosureIndicator: Bool
 
     public init(text: String,
-                type: DescriptionCellType,
+                style: DescriptionTextStyle,
+                weight: UIFont.Weight? = nil,
+                color: UIColor = .black,
+                alignment: TextAlignment = .leading,
                 horizontalLayout: DescriptionHorizontalLayout = .fill,
-                visualDependencies: VisualDependenciesProtocol,
-                selectionStyle: UITableViewCellSelectionStyle = .none,
-                backgroundColorStyle: UIViewStyle<UIView>? = nil,
-                selected: Action<Void, Void, NoError>? = nil) {
+                selected: Action<Void, Void, NoError>? = nil,
+                showsDisclosureIndicator: Bool = false) {
         self.text = text
-        self.selected = selected
-        self.type = type
+        self.style = style
+        self.weight = weight
+        self.color = color
+        self.alignment = alignment
         self.horizontalLayout = horizontalLayout
-        self.visualDependencies = visualDependencies
-        self.selectionStyle = selectionStyle
-        self.backgroundColorStyle = backgroundColorStyle ?? visualDependencies.styles.backgroundTransparentColor
-    }
-
-    public func applyStyle(to label: UILabel) {
-        switch type {
-        case .header:
-            visualDependencies.styles.labelFormHeader.apply(to: label)
-        case .headline:
-            visualDependencies.styles.labelFormHeadline.apply(to: label)
-        case .link:
-            visualDependencies.styles.labelFormLink.apply(to: label)
-        case .footer:
-            visualDependencies.styles.labelFormFooter.apply(to: label)
-        case .alert:
-            visualDependencies.styles.labelFormAlert.apply(to: label)
-        case .captionText:
-            visualDependencies.styles.labelFormCaption.apply(to: label)
-        case .centeredTitle, .centeredTitleWithDisclosureIndicator:
-            visualDependencies.styles.labelFormCenterTitleValue.apply(to: label)
-        case .centeredHeadline:
-            visualDependencies.styles.labelFormCenterHeadlineValue.apply(to: label)
-        case .centeredTime:
-            visualDependencies.styles.labelFormCenterTimeValue.apply(to: label)
-        case .centeredSubtitle:
-            visualDependencies.styles.labelFormCenterSubtitleValue.apply(to: label)
-        case .centeredRedSubtitle:
-            visualDependencies.styles.labelFormCenterRedSubtitleValue.apply(to: label)
-        case let .custom(labelStyle):
-            labelStyle.apply(to: label)
-        }
-    }
-
-    public func applyText(to label: UILabel) {
-        if case .centeredTitleWithDisclosureIndicator = type {
-            let attachment = NSTextAttachment()
-            attachment.image = visualDependencies.styles.disclosureIndicator
-
-            let text = NSMutableAttributedString(string: self.text)
-            text.append(NSAttributedString(string: " "))
-            text.append(NSAttributedString(attachment: attachment))
-
-            label.attributedText = text
-        } else {
-            label.text = text
-        }
-    }
-
-    public func applyBackgroundColor(to views: [UIView]) {
-        self.backgroundColorStyle.apply(to: views)
+        self.selected = selected
+        self.showsDisclosureIndicator = showsDisclosureIndicator
     }
 }

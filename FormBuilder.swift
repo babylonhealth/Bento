@@ -78,8 +78,8 @@ extension FormBuilder {
             return Component { .headline($0, text: text) }
         }
 
-        public static func description(_ type: DescriptionCellType, text: String, selected: Action<Void, Void, NoError>? = nil) -> Component {
-            return Component { .description($0, type, text: text, selected: selected) }
+        public static func description(_ style: DescriptionStyle, text: String, selected: Action<Void, Void, NoError>? = nil, showsDisclosureIndicator: Bool = false) -> Component {
+            return Component { .description($0, style: style, text: text, selected: selected, showsDisclosureIndicator: showsDisclosureIndicator) }
         }
 
         public static func actionDescription(_ description: NSAttributedString, action: Action<Void, Void, NoError>) -> Component {
@@ -164,7 +164,7 @@ extension FormBuilder {
             }
         }
 
-        public static func selectionField(title: String, value: Property<String>? = nil, inputTextAlignment: TextAlignment = .right, action: Action<Void, Void, NoError>, accessory: UITableViewCellAccessoryType = .disclosureIndicator) -> Component {
+        public static func selectionField(title: String, value: Property<String>? = nil, inputTextAlignment: TextAlignment = .trailing, action: Action<Void, Void, NoError>, accessory: UITableViewCellAccessoryType = .disclosureIndicator) -> Component {
             return Component {
                 return .selectionField($0, title: title, value: value, inputTextAlignment: inputTextAlignment, action: action, accessory: accessory)
             }
