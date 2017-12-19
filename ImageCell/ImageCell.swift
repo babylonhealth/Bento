@@ -44,7 +44,7 @@ final class ImageCell: FormCell {
         super.layoutSubviews()
 
         if viewModel.isRounded {
-            self.iconView.layer.cornerRadius = self.iconView.frame.width / 2.0
+            self.iconView.layer.cornerRadius = viewModel.imageSize.width / 2.0
         } else {
             self.iconView.layer.cornerRadius = 0.0
         }
