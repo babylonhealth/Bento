@@ -107,7 +107,18 @@ public final class FormTableViewDataSource<Identifier: Hashable>: NSObject, UITa
     }
 
     public func removeAll() {
-        self.items = []
+        items = []
+    }
+
+    internal func deleteRowForSwipeAction(
+        at indexPath: IndexPath,
+        contextCompletion: ((Bool) -> Void)? = nil,
+        completion: @escaping () -> Void
+    ) {
+        items.remove(at: indexPath.row)
+        tableView?.deleteRowForSwipeAction(at: indexPath,
+                                           contextCompletion: contextCompletion,
+                                           completion: completion)
     }
 
     private func configureCell<Cell: FormCell & ReusableCell>(at indexPath: IndexPath, strategy: GetCellStrategy, in tableView: UITableView, with id: Identifier?) throws -> Cell {

@@ -155,14 +155,14 @@ extension ActionInputCell: DeletableCell {
         return action.isEnabled.value
     }
 
-    public func delete() -> SignalProducer<Bool, NoError> {
+    public func delete() -> SignalProducer<Never, NoError> {
         guard let action = viewModel.wasDeleted,
-            action.isEnabled.value else {
-            return SignalProducer(value: false)
+              action.isEnabled.value else {
+            return .empty
         }
 
         return action.apply()
-            .map { _ in true }
+            .ignoreValues()
             .ignoreError()
     }
 }

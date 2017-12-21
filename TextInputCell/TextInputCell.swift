@@ -146,15 +146,15 @@ extension TextInputCell: DeletableCell {
         return viewModel.isEnabled.value && action.isEnabled.value
     }
 
-    public func delete() -> SignalProducer<Bool, NoError> {
+    public func delete() -> SignalProducer<Never, NoError> {
         guard let action = viewModel.deleteAction,
             action.isEnabled.value,
             viewModel.isEnabled.value else {
-            return SignalProducer(value: false)
+            return .empty
         }
 
         return action.apply()
-            .map { _ in true }
+            .ignoreValues()
             .ignoreError()
     }
 }

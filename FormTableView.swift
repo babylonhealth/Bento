@@ -112,14 +112,7 @@ open class FormTableView: UITableView {
                     // Fade in the UITableView.
                     self.fadeIn.addAnimations { self.alpha = 1.0 }
                     self.fadeIn.addCompletion { _ in
-                        self.isTransitioning = false
-
-                        // Start a transition if a transition attempt is
-                        // recorded during the fading in animation.
-                        if let completion = self.transitionDidComplete {
-                            self.transition(to: self.transitionTargetStyle,
-                                            completion: completion)
-                        }
+                        self.markTransitionAsCompleted()
                     }
                     self.fadeIn.startAnimation()
                 } else {
@@ -128,11 +121,42 @@ open class FormTableView: UITableView {
                     // Hand over an empty UITableView to the callback.
                     self.transitionDidComplete?(false)
                     self.transitionDidComplete = nil
-                    self.isTransitioning = false
+                    self.markTransitionAsCompleted()
                 }
             }
 
             fadeOut.startAnimation()
+        }
+    }
+
+    public func deleteRowForSwipeAction(
+        at indexPath: IndexPath,
+        contextCompletion: ((Bool) -> Void)? = nil,
+        completion: @escaping () -> Void
+    ) {
+        precondition(isTransitioning.isFalse)
+        isTransitioning = true
+
+        CATransaction.begin()
+        CATransaction.setCompletionBlock {
+            self.markTransitionAsCompleted()
+            completion()
+        }
+
+        deleteRows(at: [indexPath], with: .automatic)
+        contextCompletion?(true)
+
+        CATransaction.commit()
+    }
+
+    private func markTransitionAsCompleted() {
+        isTransitioning = false
+
+        // Start a transition if a transition attempt is
+        // recorded during the fading in animation.
+        if let style = transitionTargetStyle,
+           let completion = transitionDidComplete {
+            transition(to: style, completion: completion)
         }
     }
 
