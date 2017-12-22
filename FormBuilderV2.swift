@@ -343,7 +343,7 @@ extension FormBuilderV2 {
 
         public static func avatarSelectionField(_ id: Identifier,
                                                 icon: SignalProducer<UIImage, NoError>,
-                                                subIcon: UIImage?,
+                                                subIcon: UIImage? = nil,
                                                 title: Property<String>,
                                                 input: Property<String>? = nil,
                                                 isVertical: Bool = false,
