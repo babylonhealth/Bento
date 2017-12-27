@@ -12,6 +12,8 @@ open class FormViewController<F: Form>: UIViewController, UITableViewDelegate {
     fileprivate let viewSpec: FormViewSpec
     private var keyboardChangeDisposable: Disposable?
 
+    private var viewConstraints: [NSLayoutConstraint] = []
+
     public var focus: BindingTarget<()> {
         return self.reactive.makeBindingTarget { base, _ in
             base.focus()
@@ -94,12 +96,24 @@ open class FormViewController<F: Form>: UIViewController, UITableViewDelegate {
         tableView.backgroundColor = .clear
         viewSpec.style?.apply(to: view)
 
-        NSLayoutConstraint.activate([
+        activateViewConstraints([
             tableView.topAnchor.constraint(equalTo: view.topAnchor),
             tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
         ])
+    }
+
+    public func activateViewConstraints(_ constraints: [NSLayoutConstraint]) {
+        if !viewConstraints.isEmpty {
+            NSLayoutConstraint.deactivate(viewConstraints)
+        }
+
+        self.viewConstraints = constraints
+
+        if !constraints.isEmpty {
+            NSLayoutConstraint.activate(constraints)
+        }
     }
 
     private func setupRefreshControl(with action: ActionInput<Void>) {

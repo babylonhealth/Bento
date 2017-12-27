@@ -65,7 +65,8 @@ public final class ActionInputCellViewModel {
                             accessory: UITableViewCellAccessoryType = .disclosureIndicator,
                             hidesAccessoryWhenDisabled: Bool = true,
                             titleStyle: UIViewStyle<UILabel>? = nil,
-                            subtitleStyle: UIViewStyle<UILabel>? = nil) {
+                            subtitleStyle: UIViewStyle<UILabel>? = nil,
+                            isVertical: Bool = false) {
         self.init(visualDependencies: visualDependencies,
                   icon: icon,
                   subIcon: subIcon,
@@ -76,7 +77,8 @@ public final class ActionInputCellViewModel {
                   accessory: accessory,
                   hidesAccessoryWhenDisabled: hidesAccessoryWhenDisabled,
                   titleStyle: titleStyle,
-                  subtitleStyle: subtitleStyle)
+                  subtitleStyle: subtitleStyle,
+                  isVertical: isVertical)
     }
 
     func applyTitleStyle(to label: UILabel) {

@@ -292,6 +292,7 @@ extension FormBuilderV2 {
             _ id: Identifier,
             title: String,
             value: Property<String>? = nil,
+            isVertical: Bool = false,
             inputTextAlignment: TextAlignment = .trailing,
             action: Action<Void, Void, NoError>,
             accessory: UITableViewCellAccessoryType = .disclosureIndicator,
@@ -305,7 +306,8 @@ extension FormBuilderV2 {
                                              inputTextAlignment: inputTextAlignment,
                                              selected: action,
                                              accessory: accessory,
-                                             hidesAccessoryWhenDisabled: hidesAccessoryWhenDisabled))
+                                             hidesAccessoryWhenDisabled: hidesAccessoryWhenDisabled,
+                                             isVertical: isVertical))
             }
         }
 
