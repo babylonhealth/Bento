@@ -294,8 +294,9 @@ extension FormBuilderV2 {
             value: Property<String>? = nil,
             inputTextAlignment: TextAlignment = .trailing,
             action: Action<Void, Void, NoError>,
-            accessory: UITableViewCellAccessoryType = .disclosureIndicator
-            ) -> Component {
+            accessory: UITableViewCellAccessoryType = .disclosureIndicator,
+            hidesAccessoryWhenDisabled: Bool = true
+        ) -> Component {
             return Component(with: id) { visualDependencies in
                 return .actionInput(
                     ActionInputCellViewModel(visualDependencies: visualDependencies,
@@ -303,7 +304,8 @@ extension FormBuilderV2 {
                                              input: value,
                                              inputTextAlignment: inputTextAlignment,
                                              selected: action,
-                                             accessory: accessory))
+                                             accessory: accessory,
+                                             hidesAccessoryWhenDisabled: hidesAccessoryWhenDisabled))
             }
         }
 

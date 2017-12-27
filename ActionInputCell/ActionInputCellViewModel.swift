@@ -18,6 +18,7 @@ public final class ActionInputCellViewModel {
     let isSelected: Action<Void, Void, NoError>
     let wasDeleted: Action<Void, Void, NoError>?
     let accessory: UITableViewCellAccessoryType
+    let hidesAccessoryWhenDisabled: Bool
     let isVertical: Bool
     private let titleStyle: UIViewStyle<UILabel>?
     private let subtitleStyle: UIViewStyle<UILabel>?
@@ -32,6 +33,7 @@ public final class ActionInputCellViewModel {
                 selected: Action<Void, Void, NoError>,
                 deleted: Action<Void, Void, NoError>? = nil,
                 accessory: UITableViewCellAccessoryType = .disclosureIndicator,
+                hidesAccessoryWhenDisabled: Bool = true,
                 titleStyle: UIViewStyle<UILabel>? = nil,
                 subtitleStyle: UIViewStyle<UILabel>? = nil,
                 selectionStyle: UITableViewCellSelectionStyle = .gray,
@@ -46,6 +48,7 @@ public final class ActionInputCellViewModel {
         self.isSelected = selected
         self.wasDeleted = deleted
         self.accessory = accessory
+        self.hidesAccessoryWhenDisabled = hidesAccessoryWhenDisabled
         self.titleStyle = titleStyle
         self.subtitleStyle = subtitleStyle
         self.selectionStyle = selectionStyle
@@ -60,6 +63,7 @@ public final class ActionInputCellViewModel {
                             inputTextAlignment: TextAlignment = .leading,
                             selected: Action<Void, Void, NoError>,
                             accessory: UITableViewCellAccessoryType = .disclosureIndicator,
+                            hidesAccessoryWhenDisabled: Bool = true,
                             titleStyle: UIViewStyle<UILabel>? = nil,
                             subtitleStyle: UIViewStyle<UILabel>? = nil) {
         self.init(visualDependencies: visualDependencies,
@@ -70,6 +74,7 @@ public final class ActionInputCellViewModel {
                   inputTextAlignment: inputTextAlignment,
                   selected: selected,
                   accessory: accessory,
+                  hidesAccessoryWhenDisabled: hidesAccessoryWhenDisabled,
                   titleStyle: titleStyle,
                   subtitleStyle: subtitleStyle)
     }

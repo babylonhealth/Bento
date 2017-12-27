@@ -120,6 +120,7 @@ final class ActionInputCell: FormItemCell {
         NSLayoutConstraint.deactivate(deactivatingConstraints)
         NSLayoutConstraint.activate(activatingConstraints)
 
+        let hidesAccessoryWhenDisabled = viewModel.hidesAccessoryWhenDisabled
         let updateAccessoryView = { [weak self] (isExecuting: Bool, isEnabled: Bool) in
             let makeActivityIndicatorView: () -> UIActivityIndicatorView = {
                 let activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: .gray)
@@ -127,7 +128,7 @@ final class ActionInputCell: FormItemCell {
                 return activityIndicator
             }
             self?.accessoryView = isExecuting ? makeActivityIndicatorView() : nil
-            self?.accessoryType = isEnabled ? viewModel.accessory : .none
+            self?.accessoryType = isEnabled || hidesAccessoryWhenDisabled.isFalse ? viewModel.accessory : .none
         }
 
         SignalProducer.combineLatest(viewModel.isSelected.isExecuting,
