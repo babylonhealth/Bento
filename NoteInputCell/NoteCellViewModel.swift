@@ -7,11 +7,13 @@ import Result
 public final class NoteCellViewModel: FocusableFormComponent {
     let placeholder: String?
     let text: Property<String>
+    let richText: NSAttributedString?
     let visualDependencies: VisualDependenciesProtocol
 
-    public init(placeholder: String?, text: Property<String>, visualDependencies: VisualDependenciesProtocol) {
+    public init(placeholder: String?, text: Property<String>, richText: NSAttributedString?, visualDependencies: VisualDependenciesProtocol) {
         self.placeholder = placeholder
         self.text = text
+        self.richText = richText
         self.visualDependencies = visualDependencies
     }
 

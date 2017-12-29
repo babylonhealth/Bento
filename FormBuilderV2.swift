@@ -394,10 +394,11 @@ extension FormBuilderV2 {
             }
         }
 
-        public static func note(_ id: Identifier, _ text: Property<String>, placeholder: String? = nil) -> Component {
+        public static func note(_ id: Identifier, _ text: Property<String>, richText: NSAttributedString? = nil, placeholder: String? = nil) -> Component {
             return Component(with: id) { visualDependencies in
                 return .note(NoteCellViewModel(placeholder: placeholder,
                                                text: text,
+                                               richText: richText,
                                                visualDependencies: visualDependencies))
             }
         }

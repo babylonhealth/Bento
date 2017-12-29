@@ -66,17 +66,23 @@ final class NoteInputCell: FormItemCell {
                 .take(until: reactive.prepareForReuse)
         }
 
-        viewModel.textProducer
-            .take(until: reactive.prepareForReuse)
-            .observe(on: UIScheduler())
-            .startWithValues { [weak self] value in
-                guard let strongSelf = self else { return }
-                if !strongSelf.textView.isFirstResponder {
-                    strongSelf.textView.text = value
-                    // Update the text view as if the user has made changes to it.
-                    strongSelf.textViewDidChange(strongSelf.textView, isUserInteraction: false)
-                }
+        if let richText = viewModel.richText {
+            textView.attributedText = richText
+            textViewDidChange(textView, isUserInteraction: false)
+        } else {
+            viewModel.textProducer
+                .take(until: reactive.prepareForReuse)
+                .observe(on: UIScheduler())
+                .startWithValues { [weak self] value in
+                    guard let strongSelf = self else { return }
+                    if !strongSelf.textView.isFirstResponder {
+                        strongSelf.textView.text = value
+                        // Update the text view as if the user has made changes to it.
+                        strongSelf.textViewDidChange(strongSelf.textView, isUserInteraction: false)
+                    }
             }
+        }
+
 
         if let action = viewModel.addPhotosAction {
             addPhotosButton.reactive.pressed = CocoaAction(action)
@@ -175,6 +181,7 @@ internal protocol NoteInputCellViewModelProtocol: class {
     var isEnabled: Property<Bool> { get }
 
     var placeholder: String? { get }
+    var richText: NSAttributedString? { get }
     var autocapitalizationType: UITextAutocapitalizationType { get }
     var autocorrectionType: UITextAutocorrectionType { get }
     var keyboardType: UIKeyboardType { get }
@@ -189,6 +196,7 @@ internal protocol NoteInputCellViewModelProtocol: class {
 extension NoteInputCellViewModel: NoteInputCellViewModelProtocol {
     var textProducer: SignalProducer<String, NoError> { return text.producer }
     var textBindingTarget: BindingTarget<String>? { return text.bindingTarget }
+    var richText: NSAttributedString? { return nil }
 }
 
 extension NoteCellViewModel: NoteInputCellViewModelProtocol {
