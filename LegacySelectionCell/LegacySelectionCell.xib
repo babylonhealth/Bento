@@ -12,7 +12,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="104" id="5n6-bj-IFo" customClass="SelectionCell" customModule="BabylonUI">
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="104" id="5n6-bj-IFo" customClass="LegacySelectionCell" customModule="BabylonUI">
             <rect key="frame" x="0.0" y="0.0" width="375" height="104"/>
             <autoresizingMask key="autoresizingMask"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" tableViewCell="5n6-bj-IFo" id="J19-Oj-1id">
@@ -41,8 +41,11 @@
                             <constraint firstAttribute="width" constant="42" id="b1h-XC-HKy"/>
                         </constraints>
                     </imageView>
+                    <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="detailDisclosure" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wbI-cO-bgx">
+                        <rect key="frame" x="338" y="41" width="22" height="22"/>
+                    </button>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="jzr-m6-GEP" userLabel="rightTick">
-                        <rect key="frame" x="343" y="46" width="16" height="12"/>
+                        <rect key="frame" x="336" y="46" width="16" height="12"/>
                         <constraints>
                             <constraint firstAttribute="width" priority="750" constant="16" id="6Jj-f1-m2Q"/>
                             <constraint firstAttribute="height" relation="lessThanOrEqual" constant="16" id="QVm-HO-22B"/>
@@ -50,6 +53,9 @@
                             <constraint firstAttribute="height" priority="750" constant="12" id="yTC-5V-SIP"/>
                         </constraints>
                     </imageView>
+                    <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="gge-6i-uHN">
+                        <rect key="frame" x="331" y="42" width="20" height="20"/>
+                    </activityIndicatorView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="999" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vKl-dO-ikm" userLabel="Subtitle">
                         <rect key="frame" x="94" y="72.5" width="223" height="20.5"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -61,6 +67,7 @@
                     <constraint firstItem="3bT-3w-ieb" firstAttribute="top" relation="greaterThanOrEqual" secondItem="J19-Oj-1id" secondAttribute="topMargin" id="5du-TU-Uxu"/>
                     <constraint firstItem="O1i-Po-ZeL" firstAttribute="trailing" secondItem="3bT-3w-ieb" secondAttribute="leading" constant="-8" id="7Ma-Es-xvv"/>
                     <constraint firstItem="PdA-T5-JiS" firstAttribute="leading" secondItem="J19-Oj-1id" secondAttribute="leadingMargin" priority="475" id="BN8-sc-sXi"/>
+                    <constraint firstItem="wbI-cO-bgx" firstAttribute="centerY" secondItem="J19-Oj-1id" secondAttribute="centerY" id="HfM-Po-vPd"/>
                     <constraint firstAttribute="bottomMargin" secondItem="PdA-T5-JiS" secondAttribute="bottom" priority="950" id="Jd3-Bf-cdM"/>
                     <constraint firstItem="PdA-T5-JiS" firstAttribute="leading" secondItem="O1i-Po-ZeL" secondAttribute="trailing" priority="500" constant="9" id="KCN-hD-eCz"/>
                     <constraint firstItem="O1i-Po-ZeL" firstAttribute="centerY" secondItem="J19-Oj-1id" secondAttribute="centerY" id="Ml9-9S-18b"/>
@@ -72,16 +79,21 @@
                     <constraint firstItem="PdA-T5-JiS" firstAttribute="leading" secondItem="3bT-3w-ieb" secondAttribute="trailing" constant="12" id="dsH-0G-xcA"/>
                     <constraint firstAttribute="bottomMargin" relation="greaterThanOrEqual" secondItem="3bT-3w-ieb" secondAttribute="bottom" id="fZy-iB-2ut"/>
                     <constraint firstItem="jzr-m6-GEP" firstAttribute="centerY" secondItem="J19-Oj-1id" secondAttribute="centerY" id="gwp-1C-hcE"/>
+                    <constraint firstAttribute="trailing" secondItem="wbI-cO-bgx" secondAttribute="trailing" constant="15" id="jIt-aD-ygI"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="gge-6i-uHN" secondAttribute="trailing" constant="8" id="nQT-HV-Hte"/>
+                    <constraint firstItem="gge-6i-uHN" firstAttribute="centerY" secondItem="J19-Oj-1id" secondAttribute="centerY" id="pcn-W3-pGu"/>
                     <constraint firstAttribute="bottomMargin" secondItem="vKl-dO-ikm" secondAttribute="bottom" id="q7O-oW-N6o"/>
                     <constraint firstItem="vKl-dO-ikm" firstAttribute="trailing" secondItem="PdA-T5-JiS" secondAttribute="trailing" id="qYu-d5-hH3"/>
                     <constraint firstItem="3bT-3w-ieb" firstAttribute="leading" secondItem="J19-Oj-1id" secondAttribute="leadingMargin" priority="501" id="vPU-Z0-5qG"/>
                     <constraint firstItem="vKl-dO-ikm" firstAttribute="leading" secondItem="PdA-T5-JiS" secondAttribute="leading" id="vfR-it-fan"/>
-                    <constraint firstAttribute="trailingMargin" secondItem="jzr-m6-GEP" secondAttribute="trailing" id="w41-Ns-V9z"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="jzr-m6-GEP" secondAttribute="trailing" constant="7" id="w41-Ns-V9z"/>
                 </constraints>
             </tableViewCellContentView>
             <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
             <connections>
+                <outlet property="activityIndicator" destination="gge-6i-uHN" id="2CB-FB-pCC"/>
                 <outlet property="avatar" destination="3bT-3w-ieb" id="MD7-ic-LgX"/>
+                <outlet property="disclosure" destination="wbI-cO-bgx" id="qew-iW-JCT"/>
                 <outlet property="label" destination="PdA-T5-JiS" id="tic-pp-L43"/>
                 <outlet property="leftTick" destination="O1i-Po-ZeL" id="Epd-1m-dCx"/>
                 <outlet property="rightTick" destination="jzr-m6-GEP" id="gf7-xG-opk"/>

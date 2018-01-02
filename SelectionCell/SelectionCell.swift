@@ -4,17 +4,9 @@ import ReactiveCocoa
 import Result
 
 open class SelectionCell: FormItemCell, NibLoadableCell {
-    private enum Style {
-        case rightTick
-        case leftTickWithDetailDisclosure
-        case justDetailDisclosure
-    }
-
     @IBOutlet weak var avatar: UIImageView!
     @IBOutlet weak var label: UILabel!
     @IBOutlet weak var subtitleLabel: UILabel!
-    @IBOutlet weak var disclosure: UIButton!
-    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var leftTick: UIImageView!
     @IBOutlet weak var rightTick: UIImageView!
 
@@ -22,10 +14,8 @@ open class SelectionCell: FormItemCell, NibLoadableCell {
     @IBOutlet var leftTickConstraints: [NSLayoutConstraint]!
     @IBOutlet var subtitleConstraints: [NSLayoutConstraint]!
 
-    private let disposable = SerialDisposable()
-    private var spec: SelectionCellViewSpec!
-
-    private var style: Style!
+    private let disclosureButton = UIButton(type: .detailDisclosure)
+    private var viewModel: SelectionCellViewModel!
 
     override open var preferredSeparatorLeadingAnchor: NSLayoutXAxisAnchor {
         return label.leadingAnchor
@@ -33,10 +23,13 @@ open class SelectionCell: FormItemCell, NibLoadableCell {
 
     override open func awakeFromNib() {
         super.awakeFromNib()
-
-        style = .rightTick
         avatar.layer.masksToBounds = true
-        activityIndicator.isHidden = true
+    }
+
+    override open func prepareForReuse() {
+        super.prepareForReuse()
+        leftTick.image = nil
+        rightTick.image = nil
     }
 
     override open func layoutSubviews() {
@@ -44,25 +37,27 @@ open class SelectionCell: FormItemCell, NibLoadableCell {
         avatar.layer.cornerRadius = avatar.frame.size.width / 2.0
     }
 
-    func configure(for viewModel: SelectionCellViewModel, in group: SelectionCellGroupViewModel, spec: SelectionCellViewSpec) {
-        disposable.inner = nil
-        self.spec = spec
+    func setup(viewModel: SelectionCellViewModel) {
+        self.viewModel = viewModel
+
+        label.font = UIFont.preferredFont(forTextStyle: .body)
+        subtitleLabel.font = UIFont.preferredFont(forTextStyle: .body)
+        label.textColor = viewModel.titleColor
+        subtitleLabel.textColor = viewModel.subtitleColor
 
         switch viewModel.icon {
         case .some(let icon):
             NSLayoutConstraint.activate(avatarConstraints)
-            avatar.reactive.image <~ icon.take(until: reactive.prepareForReuse)
+            avatar.reactive.image <~ icon.producer.take(until: reactive.prepareForReuse)
         case .none:
             NSLayoutConstraint.deactivate(avatarConstraints)
             avatar.image = nil
         }
 
         label.text = viewModel.title
-        spec.labelStyle?.apply(to: label)
 
         if let subtitle = viewModel.subtitle {
             subtitleLabel.text = subtitle
-            spec.subtitleStyle?.apply(to: subtitleLabel)
             subtitleLabel.isHidden = false
             NSLayoutConstraint.activate(subtitleConstraints)
         } else {
@@ -71,96 +66,48 @@ open class SelectionCell: FormItemCell, NibLoadableCell {
             NSLayoutConstraint.deactivate(subtitleConstraints)
         }
 
-        switch (group.hasDisclosureAction, spec.tick) {
-        case (true, .some):
-            style = .leftTickWithDetailDisclosure
-        case (false, _):
-            style = .rightTick
-        case (true, .none):
-            style = .justDetailDisclosure
-        }
-
         // Both are hidden initially.
         leftTick.isHidden = true
         rightTick.isHidden = true
 
-        switch style! {
-        case .leftTickWithDetailDisclosure:
-            leftTick.image = spec.tick
-            leftTick.tintColor = spec.tickColor
-            disclosure.isHidden = false
-            NSLayoutConstraint.activate(leftTickConstraints)
-
-        case .rightTick:
-            rightTick.image = spec.tick
-            rightTick.tintColor = spec.tickColor
-            disclosure.isHidden = true
+        switch viewModel.style {
+        case .disclosureIndicator:
             NSLayoutConstraint.deactivate(leftTickConstraints)
+            accessoryType = viewModel.showsActivityIndicator
+                ? .none
+                : .disclosureIndicator
 
-        case .justDetailDisclosure:
-            disclosure.isHidden = false
-            NSLayoutConstraint.deactivate(leftTickConstraints)
+        case let .checkmark(isChecked):
+            let tickView: UIImageView
+
+            if let discloseDetails = viewModel.discloseDetails {
+                tickView = leftTick
+                NSLayoutConstraint.activate(leftTickConstraints)
+                disclosureButton.reactive.pressed = CocoaAction(discloseDetails)
+            } else {
+                tickView = rightTick
+                NSLayoutConstraint.deactivate(leftTickConstraints)
+                disclosureButton.reactive.pressed = nil
+            }
+
+            tickView.image = viewModel.checkmark
+            tickView.isHidden = viewModel.showsActivityIndicator || isChecked.isFalse
         }
 
-        let d = CompositeDisposable()
-
-        d += group
-            .controlAvailability(for: viewModel.identifier, isFormEnabled: isFormEnabled)
-            .observe(on: UIScheduler())
-            .startWithValues { [weak self] in self?.update(for: $0) }
-
-        d += group.selected(forItemIdentifier: viewModel.identifier)
-            <~ isCellSelected
-
-        d += group.disclosureButtonPressed(forItemIdentifier: viewModel.identifier)
-            <~ disclosure.reactive
-                .controlEvents(.primaryActionTriggered)
-                .discardValues()
-
-        disposable.inner = d
-    }
-
-    private func update(for status: SelectionCellStatus) {
-        switch status {
-        case let .disabled(selected):
-            isUserInteractionEnabled = false
-            activityIndicator.isHidden = true
-            disclosure.isHidden = style == .rightTick
-            disclosure.isEnabled = false
-            configureTick(isSelected: selected, isEnabled: false, isProcessing: false)
-            accessoryType = spec.accessoryType
-
-        case let .enabled(selected, isDisclosureEnabled):
-            isUserInteractionEnabled = true
-            activityIndicator.isHidden = true
-            disclosure.isHidden = style == .rightTick
-            disclosure.isEnabled = isDisclosureEnabled
-            configureTick(isSelected: selected, isEnabled: true, isProcessing: false)
-            accessoryType = spec.accessoryType
-
-        case let .processing(selected):
-            isUserInteractionEnabled = false
-            activityIndicator.isHidden = false
-            activityIndicator.startAnimating()
-            disclosure.isHidden = true
-            configureTick(isSelected: selected, isEnabled: false, isProcessing: true)
-            accessoryType = .none
+        if viewModel.showsActivityIndicator {
+            let view = UIActivityIndicatorView(activityIndicatorStyle: .gray)
+            view.startAnimating()
+            accessoryView = view
+        } else {
+            accessoryView = viewModel.discloseDetails.isNotNil ? disclosureButton : nil
         }
     }
 
-    private func configureTick(isSelected: Bool, isEnabled: Bool, isProcessing: Bool) {
-        switch style! {
-        case .leftTickWithDetailDisclosure:
-            leftTick.isHidden = !isSelected
-            leftTick.tintColor = isEnabled ? spec.tickColor : spec.disabledTickColor
+    open override func setSelected(_ selected: Bool, animated: Bool) {
+        super.setSelected(selected, animated: animated)
 
-        case .rightTick:
-            rightTick.isHidden = !(!isProcessing && isSelected)
-            rightTick.tintColor = isEnabled ? spec.tickColor : spec.disabledTickColor
-
-        case .justDetailDisclosure:
-            leftTick.isHidden = true
-            rightTick.isHidden = true
+        if selected {
+            viewModel?.select?.apply().start()
         }
     }
 }

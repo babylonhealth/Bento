@@ -30,12 +30,13 @@ public enum FormComponent {
     case actionDescription(ActionDescriptionCellViewModel)
     case toggle(ToggleCellViewModel)
     case segmentedInput(SegmentedCellViewModel)
-    case selection(SelectionCellViewModel, group: SelectionCellGroupViewModel, spec: SelectionCellViewSpec)
+    case selection(LegacySelectionCellViewModel, group: LegacySelectionCellGroupViewModel, spec: LegacySelectionCellViewSpec)
     case note(NoteCellViewModel)
     case noteInput(NoteInputCellViewModel)
     case image(ImageCellViewModel)
     case activityIndicator(ActivityIndicatorCellViewModel, ActivityIndicatorCellViewSpec)
     case titledList(TitledListCellViewModel, TitledListCellViewSpec)
+    case multiselect(SelectionCellViewModel)
 
     /// Indicates whether the component defines a section. `FormViewController` uses
     /// `definesSection` to determine the visibility of cell separators.
@@ -89,6 +90,8 @@ public enum FormComponent {
             return viewModel
         case let .titledList(viewModel, _):
             return viewModel
+        case let .multiselect(viewModel):
+            return viewModel
         }
     }
 }
@@ -133,6 +136,8 @@ extension FormComponent: Equatable {
             return lhsViewModel === rhsViewModel
         case let (.titledList(lhsViewModel, _), .titledList(rhsViewModel, _)):
             return lhsViewModel === rhsViewModel
+        case let (.multiselect(lhs), .multiselect(rhs)):
+            return lhs === rhs
         default:
             return false
         }

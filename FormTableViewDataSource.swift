@@ -205,7 +205,7 @@ public final class FormTableViewDataSource<Identifier: Hashable>: NSObject, UITa
             cell.setup(viewModel: viewModel, viewSpec: viewSpec)
             return cell
         case let .selection(selectionItem, group, spec):
-            let cell: SelectionCell = try configureCell(at: indexPath, strategy: strategy, in: tableView, with: item.id)
+            let cell: LegacySelectionCell = try configureCell(at: indexPath, strategy: strategy, in: tableView, with: item.id)
             cell.configure(for: selectionItem, in: group, spec: spec)
             return cell
         case .noteInput(let viewModel):
@@ -228,6 +228,10 @@ public final class FormTableViewDataSource<Identifier: Hashable>: NSObject, UITa
             let cell: TitledListCell = try configureCell(at: indexPath, strategy: strategy, in: tableView, with: item.id)
             cell.setup(viewModel: viewModel, viewSpec: viewSpec)
             return cell
+        case let .multiselect(viewModel):
+            let cell: SelectionCell = try configureCell(at: indexPath, strategy: strategy, in: tableView, with: item.id)
+            cell.setup(viewModel: viewModel)
+            return cell
         }
     }
 
@@ -245,13 +249,14 @@ public final class FormTableViewDataSource<Identifier: Hashable>: NSObject, UITa
         tableView.register(ActionDescriptionCell.self)
         tableView.register(ToggleCell.self)
         tableView.register(SegmentedCell.self)
-        tableView.register(SelectionCell.self)
+        tableView.register(LegacySelectionCell.self)
         tableView.register(NoteInputCell.self)
         tableView.register(TextOptionsCell.self)
         tableView.register(ImageOptionsCell.self)
         tableView.register(ImageCell.self)
         tableView.register(ActivityIndicatorCell.self)
         tableView.register(TitledListCell.self)
+        tableView.register(SelectionCell.self)
 
         tableView.dataSource = self
 

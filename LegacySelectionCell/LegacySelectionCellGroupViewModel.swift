@@ -3,7 +3,7 @@ import ReactiveSwift
 import ReactiveCocoa
 import Result
 
-public final class SelectionCellGroupViewModel {
+public final class LegacySelectionCellGroupViewModel {
     public var hasDisclosureAction: Bool {
         return discloseDetails != nil
     }

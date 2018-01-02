@@ -252,8 +252,8 @@ extension FormBuilder {
             subtitle: String? = nil,
             icon: SignalProducer<UIImage, NoError>? = nil,
             identifier: Int,
-            in group: SelectionCellGroupViewModel,
-            spec: SelectionCellViewSpec
+            in group: LegacySelectionCellGroupViewModel,
+            spec: LegacySelectionCellViewSpec
         ) -> Component {
             return Component {
                 return .multiselectionItem($0, title: title, subtitle: subtitle, icon: icon, identifier: identifier, in: group, spec: spec)

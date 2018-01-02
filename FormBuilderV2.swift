@@ -460,17 +460,43 @@ extension FormBuilderV2 {
             }
         }
 
+        public static func multiselectionField(
+            _ formId: Identifier,
+            style: SelectionCellViewModel.Style,
+            title: String,
+            subtitle: String? = nil,
+            icon: Property<UIImage>? = nil,
+            showsActivityIndicator: Bool = false,
+            select: Action<Void, Void, NoError>? = nil,
+            discloseDetails: Action<Void, Void, NoError>? = nil
+        ) -> Component {
+            return Component(with: formId) { visualDependencies in
+                return .multiselect(
+                    SelectionCellViewModel(style: style,
+                                           title: title,
+                                           subtitle: subtitle,
+                                           icon: icon,
+                                           checkmark: visualDependencies.styles.selectionTick,
+                                           showsActivityIndicator: showsActivityIndicator,
+                                           select: select,
+                                           discloseDetails: discloseDetails,
+                                           subtitleColor: visualDependencies.styles.appColors.formHeadlineTextColor,
+                                           disabledTickColor: visualDependencies.styles.appColors.disabledColor)
+                )
+            }
+        }
+
         public static func multiselectionItem(
             _ formId: Identifier,
             title: String,
             subtitle: String? = nil,
             icon: SignalProducer<UIImage, NoError>? = nil,
             identifier: Int,
-            in group: SelectionCellGroupViewModel,
-            spec: SelectionCellViewSpec
-            ) -> Component {
+            in group: LegacySelectionCellGroupViewModel,
+            spec: LegacySelectionCellViewSpec
+        ) -> Component {
             return Component(with: formId) { visualDependencies in
-                let viewModel = SelectionCellViewModel(title: title,
+                let viewModel = LegacySelectionCellViewModel(title: title,
                                                        subtitle: subtitle,
                                                        icon: icon,
                                                        identifier: identifier)
