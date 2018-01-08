@@ -5,7 +5,7 @@ public protocol DynamicHeightCellDelegate: class {
     /// Inform that the cell content height has changed due to user interaction.
     ///
     /// - warning: You **MUST** not call this during normal layout passes.
-    func dynamicHeightCellHeightDidChange(delta: CGFloat)
+    func dynamicHeightCellHeightDidChange(_ cell: FormCell)
 }
 
 public protocol DynamicHeightCell: class {

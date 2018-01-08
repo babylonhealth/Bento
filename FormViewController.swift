@@ -63,10 +63,12 @@ open class FormViewController<F: Form>: UIViewController, UITableViewDelegate {
                 guard let tableView = tableView else { return }
 
                 func animate() {
-                    // Treat the keyboard as hidden if the table view has been removed
-                    // from a `UIWindow`.
-                    let keyboardHeight = tableView.window.map { $0.frame.height - context.endFrame.minY } ?? 0
-                    tableView.keyboardHeight = keyboardHeight
+                    tableView.keyboardFrame = context.endFrame
+
+                    // We must force a layout pass so that UITableView would
+                    // put the then-visible cells onto the screen before the
+                    // keyboard dismissal animation begins.
+                    tableView.layoutIfNeeded()
                 }
 
                 UIView.animate(withDuration: context.animationDuration,
@@ -311,16 +313,14 @@ extension FormViewController: FocusableCellDelegate {
 }
 
 extension FormViewController: DynamicHeightCellDelegate {
-    public func dynamicHeightCellHeightDidChange(delta: CGFloat) {
+    public func dynamicHeightCellHeightDidChange(_ cell: FormCell) {
         UIView.setAnimationsEnabled(false)
         tableView.beginUpdates()
         tableView.endUpdates()
         UIView.setAnimationsEnabled(true)
 
-        if delta > 0.0 {
-            var contentOffset = tableView.contentOffset
-            contentOffset.y += delta
-            tableView.setContentOffset(contentOffset, animated: false)
+        if let indexPath = tableView.indexPath(for: cell) {
+            tableView.scrollToRow(at: indexPath, at: .bottom, animated: false)
         }
     }
 }

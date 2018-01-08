@@ -32,9 +32,9 @@ open class FormTableView: UITableView {
         }
     }
 
-    internal var keyboardHeight: CGFloat = 0.0 {
+    internal var keyboardFrame: CGRect = .zero {
         didSet {
-            if keyboardHeight != oldValue {
+            if keyboardFrame != oldValue {
                 setNeedsLayout()
             }
         }
@@ -170,9 +170,13 @@ open class FormTableView: UITableView {
             topInset = (preferredContentHeight - contentSize.height) * 0.5 + additionalContentInsets.top
         }
 
+        let viewFrame = convert(bounds, to: nil)
+        let boundedKeyboardHeight = viewFrame.intersection(keyboardFrame).height
+        let actualKeyboardInset = max(boundedKeyboardHeight - max(viewFrame.height - boundedKeyboardHeight - contentSize.height, 0), 0)
+
         contentInset = UIEdgeInsets(top: topInset,
                                     left: additionalContentInsets.left,
-                                    bottom: additionalContentInsets.bottom + keyboardHeight,
+                                    bottom: additionalContentInsets.bottom + actualKeyboardInset,
                                     right: additionalContentInsets.right)
         scrollIndicatorInsets = contentInset
 

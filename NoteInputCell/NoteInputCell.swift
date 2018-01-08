@@ -110,7 +110,7 @@ final class NoteInputCell: FormItemCell {
     }
 
     @discardableResult
-    fileprivate func updateContentViewHeight() -> CGFloat {
+    fileprivate func updateContentViewHeight() {
         let intrinsicContentSize = textView.sizeThatFits(CGSize(width: textView.frame.width,
                                                                 height: .greatestFiniteMagnitude))
         if intrinsicContentSize.height != textViewHeight.constant {
@@ -129,11 +129,7 @@ final class NoteInputCell: FormItemCell {
             textViewHeight.constant = intrinsicContentSize.height
             contentViewHeight.constant = max(minimumHeight,
                                              inset + intrinsicContentSize.height + layoutMargins.top + layoutMargins.bottom)
-
-            return textView.bounds.height - intrinsicContentSize.height
         }
-
-        return 0.0
     }
 
     override func systemLayoutSizeFitting(_ targetSize: CGSize,
@@ -157,10 +153,10 @@ extension NoteInputCell: DynamicHeightCell, UITextViewDelegate {
 
     func textViewDidChange(_ textView: UITextView, isUserInteraction: Bool) {
         placeholder.isHidden = textView.text != nil ? !textView.text.isEmpty : false
-        let delta = updateContentViewHeight()
+        updateContentViewHeight()
 
         if isUserInteraction {
-            heightDelegate?.dynamicHeightCellHeightDidChange(delta: delta)
+            heightDelegate?.dynamicHeightCellHeightDidChange(self)
         }
     }
 }
