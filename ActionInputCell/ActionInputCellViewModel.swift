@@ -20,6 +20,7 @@ public final class ActionInputCellViewModel {
     let accessory: UITableViewCellAccessoryType
     let hidesAccessoryWhenDisabled: Bool
     let isVertical: Bool
+    let isVerticallySpacious: Bool
     private let titleStyle: UIViewStyle<UILabel>?
     private let subtitleStyle: UIViewStyle<UILabel>?
 
@@ -37,7 +38,8 @@ public final class ActionInputCellViewModel {
                 titleStyle: UIViewStyle<UILabel>? = nil,
                 subtitleStyle: UIViewStyle<UILabel>? = nil,
                 selectionStyle: UITableViewCellSelectionStyle = .gray,
-                isVertical: Bool = false) {
+                isVertical: Bool = false,
+                isVerticallySpacious: Bool = false) {
         self.visualDependencies = visualDependencies
         self.icon = icon
         self.subIcon = subIcon
@@ -53,6 +55,7 @@ public final class ActionInputCellViewModel {
         self.subtitleStyle = subtitleStyle
         self.selectionStyle = selectionStyle
         self.isVertical = isVertical
+        self.isVerticallySpacious = isVerticallySpacious
     }
 
     public convenience init(visualDependencies: VisualDependenciesProtocol,

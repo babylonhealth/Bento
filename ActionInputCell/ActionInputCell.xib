@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -20,8 +20,8 @@
                 <rect key="frame" x="0.0" y="0.0" width="286" height="60.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="100" verticalHuggingPriority="100" horizontalCompressionResistancePriority="100" verticalCompressionResistancePriority="100" translatesAutoresizingMaskIntoConstraints="NO" id="fdD-vJ-F2N">
-                        <rect key="frame" x="19" y="11" width="39" height="39"/>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="900" verticalHuggingPriority="999" horizontalCompressionResistancePriority="900" verticalCompressionResistancePriority="999" translatesAutoresizingMaskIntoConstraints="NO" id="fdD-vJ-F2N">
+                        <rect key="frame" x="16" y="14.5" width="32" height="32"/>
                         <constraints>
                             <constraint firstAttribute="width" priority="998" constant="32" id="7sI-SY-ueM"/>
                             <constraint firstAttribute="width" priority="999" constant="42" id="DIX-vO-aSQ"/>
@@ -29,14 +29,14 @@
                         </constraints>
                     </imageView>
                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="100" verticalHuggingPriority="100" horizontalCompressionResistancePriority="100" verticalCompressionResistancePriority="100" translatesAutoresizingMaskIntoConstraints="NO" id="inf-WA-avm">
-                        <rect key="frame" x="46" y="37" width="15" height="16"/>
+                        <rect key="frame" x="36" y="33.5" width="15" height="16"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="15" id="Z6O-kc-ELA"/>
                             <constraint firstAttribute="height" constant="16" id="eZy-KQ-sos"/>
                         </constraints>
                     </imageView>
                     <stackView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="1000" verticalCompressionResistancePriority="999" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="nlC-mS-VnQ">
-                        <rect key="frame" x="68" y="11" width="210" height="39"/>
+                        <rect key="frame" x="58" y="11" width="220" height="39"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="800" verticalHuggingPriority="999" horizontalCompressionResistancePriority="350" verticalCompressionResistancePriority="999" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ViO-5T-VHS">
                                 <rect key="frame" x="0.0" y="9.5" width="125" height="20.5"/>
@@ -48,7 +48,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="700" verticalHuggingPriority="999" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="999" text="Input" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="du3-Ep-iDX">
-                                <rect key="frame" x="135" y="9.5" width="75" height="20.5"/>
+                                <rect key="frame" x="135" y="9.5" width="85" height="20.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
@@ -60,13 +60,14 @@
                     <constraint firstAttribute="bottomMargin" relation="greaterThanOrEqual" secondItem="fdD-vJ-F2N" secondAttribute="bottom" id="2E1-cd-haq"/>
                     <constraint firstItem="fdD-vJ-F2N" firstAttribute="centerY" secondItem="nlC-mS-VnQ" secondAttribute="centerY" id="8ih-IF-tcH"/>
                     <constraint firstAttribute="trailingMargin" secondItem="nlC-mS-VnQ" secondAttribute="trailing" id="8vb-zf-TDZ"/>
+                    <constraint firstItem="fdD-vJ-F2N" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="E3a-CC-uQ2"/>
                     <constraint firstItem="nlC-mS-VnQ" firstAttribute="leading" secondItem="fdD-vJ-F2N" secondAttribute="trailing" constant="10" id="GvH-49-3sV"/>
                     <constraint firstItem="fdD-vJ-F2N" firstAttribute="top" relation="greaterThanOrEqual" secondItem="H2p-sc-9uM" secondAttribute="topMargin" id="HJ2-Yv-l0k"/>
                     <constraint firstAttribute="bottomMargin" secondItem="nlC-mS-VnQ" secondAttribute="bottom" id="IKS-Op-zVq"/>
                     <constraint firstItem="nlC-mS-VnQ" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" id="O7D-cu-bIT"/>
+                    <constraint firstItem="nlC-mS-VnQ" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" priority="999" id="QDl-Aw-4R4"/>
                     <constraint firstItem="inf-WA-avm" firstAttribute="leading" secondItem="fdD-vJ-F2N" secondAttribute="trailing" constant="-12" id="f8E-Z2-SDB"/>
                     <constraint firstItem="inf-WA-avm" firstAttribute="bottom" secondItem="fdD-vJ-F2N" secondAttribute="bottom" constant="3" id="h8z-C0-LRd"/>
-                    <constraint firstItem="nlC-mS-VnQ" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="52" id="uHw-kU-j1D"/>
                 </constraints>
             </tableViewCellContentView>
             <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
@@ -75,13 +76,14 @@
                 <outlet property="largeRoundAvatarWidthConstraint" destination="DIX-vO-aSQ" id="aLX-qJ-urn"/>
                 <outlet property="miniatureIconWidthConstraint" destination="7sI-SY-ueM" id="43I-Pr-UVi"/>
                 <outlet property="stackView" destination="nlC-mS-VnQ" id="4Sl-10-IV7"/>
-                <outlet property="stackViewLeadingConstraint" destination="uHw-kU-j1D" id="6cJ-Yq-v0P"/>
                 <outlet property="subIconView" destination="inf-WA-avm" id="CcI-Hf-XxG"/>
                 <outlet property="subtitleLabel" destination="du3-Ep-iDX" id="ZdN-6Q-ids"/>
                 <outlet property="titleLabel" destination="ViO-5T-VHS" id="BKR-gh-dOG"/>
                 <outlet property="titleLabelMinWidthConstraint" destination="phn-c3-YLs" id="RaR-TI-vnX"/>
                 <outletCollection property="largeRoundAvatarVerticalMarginConstraints" destination="2E1-cd-haq" collectionClass="NSMutableArray" id="ffC-PJ-Qpm"/>
                 <outletCollection property="largeRoundAvatarVerticalMarginConstraints" destination="HJ2-Yv-l0k" collectionClass="NSMutableArray" id="lod-wX-kxt"/>
+                <outletCollection property="iconViewHorizontalConstraints" destination="E3a-CC-uQ2" collectionClass="NSMutableArray" id="Rfn-yd-Cl3"/>
+                <outletCollection property="iconViewHorizontalConstraints" destination="GvH-49-3sV" collectionClass="NSMutableArray" id="aNN-b9-qom"/>
             </connections>
             <point key="canvasLocation" x="-592" y="-328.5"/>
         </tableViewCell>

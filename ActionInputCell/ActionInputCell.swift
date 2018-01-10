@@ -8,7 +8,7 @@ extension ActionInputCell: NibLoadableCell {}
 final class ActionInputCell: FormItemCell {
     fileprivate var viewModel: ActionInputCellViewModel!
 
-    @IBOutlet var stackViewLeadingConstraint: NSLayoutConstraint!
+    @IBOutlet var iconViewHorizontalConstraints: [NSLayoutConstraint]!
     @IBOutlet var miniatureIconWidthConstraint: NSLayoutConstraint!
     @IBOutlet var largeRoundAvatarWidthConstraint: NSLayoutConstraint!
     @IBOutlet var largeRoundAvatarVerticalMarginConstraints: [NSLayoutConstraint]!
@@ -64,6 +64,10 @@ final class ActionInputCell: FormItemCell {
             self.stackView.spacing = 10
         }
 
+        contentView.layoutMargins = viewModel.isVerticallySpacious
+            ? UIEdgeInsets(top: 16.0, left: 16.0, bottom: 16.0, right: 16.0)
+            : UIEdgeInsets(top: 8.0, left: 16.0, bottom: 8.0, right: 16.0)
+
         var activatingConstraints: [NSLayoutConstraint] = []
         var deactivatingConstraints: [NSLayoutConstraint] = []
 
@@ -87,9 +91,9 @@ final class ActionInputCell: FormItemCell {
             deactivatingConstraints.append(miniatureIconWidthConstraint)
             activatingConstraints.append(largeRoundAvatarWidthConstraint)
             activatingConstraints.append(contentsOf: largeRoundAvatarVerticalMarginConstraints)
+            activatingConstraints.append(contentsOf: iconViewHorizontalConstraints)
 
             iconView.layer.cornerRadius = largeRoundAvatarWidthConstraint.constant / 2.0
-            stackViewLeadingConstraint.constant = largeRoundAvatarWidthConstraint.constant + stackView.spacing
             iconView.isHidden = false
             iconView.contentMode = .scaleAspectFill
             iconView.reactive.image <~ icon
@@ -110,10 +114,10 @@ final class ActionInputCell: FormItemCell {
                 iconView.reactive.image <~ icon
                     .observe(on: UIScheduler())
                     .take(until: reactive.prepareForReuse)
-                stackViewLeadingConstraint.constant = miniatureIconWidthConstraint.constant + stackView.spacing
+                activatingConstraints.append(contentsOf: iconViewHorizontalConstraints)
             } else {
                 iconView.isHidden = true
-                stackViewLeadingConstraint.constant = 0
+                deactivatingConstraints.append(contentsOf: iconViewHorizontalConstraints)
             }
         }
 

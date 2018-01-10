@@ -351,6 +351,7 @@ extension FormBuilderV2 {
                                                 title: Property<String>,
                                                 input: Property<String>? = nil,
                                                 isVertical: Bool = false,
+                                                isVerticallySpacious: Bool = false,
                                                 action: Action<Void, Void, NoError>,
                                                 deleted: Action<Void, Void, NoError>? = nil,
                                                 accessory: UITableViewCellAccessoryType = .disclosureIndicator,
@@ -370,7 +371,8 @@ extension FormBuilderV2 {
                                              accessory: accessory,
                                              subtitleStyle: subtitleStyle,
                                              selectionStyle: selectionStyle,
-                                             isVertical: isVertical)
+                                             isVertical: isVertical,
+                                             isVerticallySpacious: isVerticallySpacious)
                 )
             }
         }
