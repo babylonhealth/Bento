@@ -18,8 +18,10 @@ final class ActionInputCell: FormItemCell {
     @IBOutlet weak var subtitleLabel: UILabel!
     @IBOutlet weak var iconView: UIImageView!
     @IBOutlet weak var subIconView: UIImageView!
-    
+    @IBOutlet weak var statusIconView: UIImageView!
+
     @IBOutlet var titleLabelMinWidthConstraint: NSLayoutConstraint!
+    @IBOutlet var statusIconPresenceConstraints: [NSLayoutConstraint]!
 
     override var canBecomeFirstResponder: Bool {
         return true
@@ -140,6 +142,15 @@ final class ActionInputCell: FormItemCell {
             .observe(on: UIScheduler())
             .take(until: reactive.prepareForReuse)
             .startWithValues(updateAccessoryView)
+
+        statusIconView.isHidden = viewModel.statusIcon.isNil
+        statusIconView.image = viewModel.statusIcon
+
+        if viewModel.statusIcon.isNil {
+            NSLayoutConstraint.deactivate(statusIconPresenceConstraints)
+        } else {
+            NSLayoutConstraint.activate(statusIconPresenceConstraints)
+        }
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

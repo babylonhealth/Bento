@@ -10,6 +10,7 @@ public final class ActionInputCellViewModel {
     private let visualDependencies: VisualDependenciesProtocol
     let icon: SignalProducer<UIImage, NoError>?
     let subIcon: UIImage?
+    let statusIcon: UIImage?
     let iconStyle: IconStyle
     let title: Property<String>
     let input: Property<String>?
@@ -26,8 +27,9 @@ public final class ActionInputCellViewModel {
 
     public init(visualDependencies: VisualDependenciesProtocol,
                 icon: SignalProducer<UIImage, NoError>? = nil,
-                subIcon: UIImage? = nil,
                 iconStyle: IconStyle = .miniature,
+                subIcon: UIImage? = nil,
+                statusIcon: UIImage? = nil,
                 title: Property<String>,
                 input: Property<String>? = nil,
                 inputTextAlignment: TextAlignment = .leading,
@@ -42,8 +44,9 @@ public final class ActionInputCellViewModel {
                 isVerticallySpacious: Bool = false) {
         self.visualDependencies = visualDependencies
         self.icon = icon
-        self.subIcon = subIcon
         self.iconStyle = iconStyle
+        self.subIcon = subIcon
+        self.statusIcon = statusIcon
         self.title = title
         self.inputTextAlignment = inputTextAlignment
         self.input = input

@@ -10,7 +10,7 @@ public enum DescriptionStyle {
     case alert
     case caption
     case centeredTitle
-    case centeredSubtitle(Appearance)
+    case centeredSubtitle(DescriptionAppearance)
     case centeredHeadline
     case centeredTime
 
@@ -43,11 +43,9 @@ public enum DescriptionStyle {
     }
 }
 
-extension DescriptionStyle {
-    public enum Appearance {
-        case standard
-        case destructive
-    }
+public enum DescriptionAppearance {
+    case standard
+    case destructive
 }
 
 public struct FormBuilderV2<Identifier: Hashable> {
@@ -348,6 +346,7 @@ extension FormBuilderV2 {
         public static func avatarSelectionField(_ id: Identifier,
                                                 icon: SignalProducer<UIImage, NoError>,
                                                 subIcon: UIImage? = nil,
+                                                statusIcon: UIImage? = nil,
                                                 title: Property<String>,
                                                 input: Property<String>? = nil,
                                                 isVertical: Bool = false,
@@ -355,20 +354,34 @@ extension FormBuilderV2 {
                                                 action: Action<Void, Void, NoError>,
                                                 deleted: Action<Void, Void, NoError>? = nil,
                                                 accessory: UITableViewCellAccessoryType = .disclosureIndicator,
+                                                titleAppearance: DescriptionAppearance = .standard,
                                                 subtitleStyle: UIViewStyle<UILabel>? = nil,
                                                 selectionStyle: UITableViewCellSelectionStyle = .gray) -> Component {
             return Component(with: id) { visualDependencies in
+                let titleStyle: UIViewStyle<UILabel>?
+
+                switch titleAppearance {
+                case .standard:
+                    titleStyle = nil
+                case .destructive:
+                    let color = visualDependencies.styles.appColors.destructiveActionColor
+                    titleStyle = visualDependencies.styles.labelFormFieldTitle
+                        .composing { $0.textColor = color }
+                }
+
                 return .actionInput(
                     ActionInputCellViewModel(visualDependencies: visualDependencies,
                                              icon: icon,
-                                             subIcon: subIcon,
                                              iconStyle: .largeRoundAvatar,
+                                             subIcon: subIcon,
+                                             statusIcon: statusIcon,
                                              title: title,
                                              input: input,
                                              inputTextAlignment: .leading,
                                              selected: action,
                                              deleted: deleted,
                                              accessory: accessory,
+                                             titleStyle: titleStyle,
                                              subtitleStyle: subtitleStyle,
                                              selectionStyle: selectionStyle,
                                              isVertical: isVertical,

@@ -55,16 +55,22 @@
                             </label>
                         </subviews>
                     </stackView>
+                    <imageView verifyAmbiguity="ignoreSizes" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="1000" verticalHuggingPriority="999" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="999" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="oMY-u1-95G" userLabel="Status Icon">
+                        <rect key="frame" x="268" y="11" width="18" height="39"/>
+                    </imageView>
                 </subviews>
                 <constraints>
                     <constraint firstAttribute="bottomMargin" relation="greaterThanOrEqual" secondItem="fdD-vJ-F2N" secondAttribute="bottom" id="2E1-cd-haq"/>
                     <constraint firstItem="fdD-vJ-F2N" firstAttribute="centerY" secondItem="nlC-mS-VnQ" secondAttribute="centerY" id="8ih-IF-tcH"/>
-                    <constraint firstAttribute="trailingMargin" secondItem="nlC-mS-VnQ" secondAttribute="trailing" id="8vb-zf-TDZ"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="nlC-mS-VnQ" secondAttribute="trailing" priority="999" id="8vb-zf-TDZ"/>
+                    <constraint firstItem="oMY-u1-95G" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="Br2-AR-rXd"/>
                     <constraint firstItem="fdD-vJ-F2N" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="E3a-CC-uQ2"/>
                     <constraint firstItem="nlC-mS-VnQ" firstAttribute="leading" secondItem="fdD-vJ-F2N" secondAttribute="trailing" constant="10" id="GvH-49-3sV"/>
                     <constraint firstItem="fdD-vJ-F2N" firstAttribute="top" relation="greaterThanOrEqual" secondItem="H2p-sc-9uM" secondAttribute="topMargin" id="HJ2-Yv-l0k"/>
                     <constraint firstAttribute="bottomMargin" secondItem="nlC-mS-VnQ" secondAttribute="bottom" id="IKS-Op-zVq"/>
                     <constraint firstItem="nlC-mS-VnQ" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" id="O7D-cu-bIT"/>
+                    <constraint firstItem="nlC-mS-VnQ" firstAttribute="trailing" secondItem="oMY-u1-95G" secondAttribute="leading" constant="10" id="QHV-kc-0Tp"/>
+                    <constraint firstAttribute="trailing" secondItem="oMY-u1-95G" secondAttribute="trailing" id="js4-Cp-bnh"/>
                     <constraint firstItem="nlC-mS-VnQ" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" priority="999" id="QDl-Aw-4R4"/>
                     <constraint firstItem="inf-WA-avm" firstAttribute="leading" secondItem="fdD-vJ-F2N" secondAttribute="trailing" constant="-12" id="f8E-Z2-SDB"/>
                     <constraint firstItem="inf-WA-avm" firstAttribute="bottom" secondItem="fdD-vJ-F2N" secondAttribute="bottom" constant="3" id="h8z-C0-LRd"/>
@@ -76,12 +82,15 @@
                 <outlet property="largeRoundAvatarWidthConstraint" destination="DIX-vO-aSQ" id="aLX-qJ-urn"/>
                 <outlet property="miniatureIconWidthConstraint" destination="7sI-SY-ueM" id="43I-Pr-UVi"/>
                 <outlet property="stackView" destination="nlC-mS-VnQ" id="4Sl-10-IV7"/>
+                <outlet property="statusIconView" destination="oMY-u1-95G" id="vBg-fO-XRW"/>
                 <outlet property="subIconView" destination="inf-WA-avm" id="CcI-Hf-XxG"/>
                 <outlet property="subtitleLabel" destination="du3-Ep-iDX" id="ZdN-6Q-ids"/>
                 <outlet property="titleLabel" destination="ViO-5T-VHS" id="BKR-gh-dOG"/>
                 <outlet property="titleLabelMinWidthConstraint" destination="phn-c3-YLs" id="RaR-TI-vnX"/>
                 <outletCollection property="largeRoundAvatarVerticalMarginConstraints" destination="2E1-cd-haq" collectionClass="NSMutableArray" id="ffC-PJ-Qpm"/>
                 <outletCollection property="largeRoundAvatarVerticalMarginConstraints" destination="HJ2-Yv-l0k" collectionClass="NSMutableArray" id="lod-wX-kxt"/>
+                <outletCollection property="statusIconPresenceConstraints" destination="QHV-kc-0Tp" collectionClass="NSMutableArray" id="pXW-fF-Qw2"/>
+                <outletCollection property="statusIconPresenceConstraints" destination="js4-Cp-bnh" collectionClass="NSMutableArray" id="q8K-eG-KIQ"/>
                 <outletCollection property="iconViewHorizontalConstraints" destination="E3a-CC-uQ2" collectionClass="NSMutableArray" id="Rfn-yd-Cl3"/>
                 <outletCollection property="iconViewHorizontalConstraints" destination="GvH-49-3sV" collectionClass="NSMutableArray" id="aNN-b9-qom"/>
             </connections>
