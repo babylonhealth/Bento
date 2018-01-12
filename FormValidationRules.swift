@@ -178,6 +178,10 @@ public enum FormValidationRules {
         return makeValidatingProperty(regex: noValidation(), initialValue: initialValue, invalidMessage: "")
     }
 
+    public static func noValidationValidatingProperty<U>(initialValue: U) -> ValidatingProperty<U, InvalidInput> {
+        return ValidatingProperty(initialValue) { _ in .valid }
+    }
+
     public static func nonOptionalValidatingProperty<T>(initialValue: T? = nil, invalidMessage: String) -> ValidatingProperty<T?, InvalidInput> {
 
         func evaluate(_ input: T?) -> Bool {
