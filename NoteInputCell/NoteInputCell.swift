@@ -83,7 +83,6 @@ final class NoteInputCell: FormItemCell {
             }
         }
 
-
         if let action = viewModel.addPhotosAction {
             addPhotosButton.reactive.pressed = CocoaAction(action)
             addPhotosButton.isHidden = false
@@ -109,9 +108,13 @@ final class NoteInputCell: FormItemCell {
         super.layoutSubviews()
     }
 
-    @discardableResult
     fileprivate func updateContentViewHeight() {
-        let intrinsicContentSize = textView.sizeThatFits(CGSize(width: textView.frame.width,
+        let width = contentView.frame.width
+            - layoutMargins.left
+            - layoutMargins.right
+            - (addPhotosButton.isHidden ? 0 : addPhotosButtonTextViewSpacing.constant + addPhotosButton.frame.width)
+
+        let intrinsicContentSize = textView.sizeThatFits(CGSize(width: width,
                                                                 height: .greatestFiniteMagnitude))
         if intrinsicContentSize.height != textViewHeight.constant {
             // Offset the content height so that when its text view grows beyond the

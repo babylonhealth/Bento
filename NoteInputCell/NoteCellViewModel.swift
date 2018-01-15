@@ -1,5 +1,6 @@
 import ReactiveSwift
 import Result
+import UIKit
 
 /// Display a multi-line, read-only note.
 ///
@@ -7,13 +8,23 @@ import Result
 public final class NoteCellViewModel: FocusableFormComponent {
     let placeholder: String?
     let text: Property<String>
-    let richText: NSAttributedString?
+    private let originalRichText: NSAttributedString?
     let visualDependencies: VisualDependenciesProtocol
+
+    var richText: NSAttributedString? {
+        return originalRichText.map { text in
+            // `NSAttributedString` overrides the style. 🤷‍♂️
+            let string = NSMutableAttributedString(attributedString: text)
+            string.setAttributes([.font: UIFont.preferredFont(forTextStyle: .body)],
+                                 range: NSRange(location: 0, length: string.length))
+            return string
+        }
+    }
 
     public init(placeholder: String?, text: Property<String>, richText: NSAttributedString?, visualDependencies: VisualDependenciesProtocol) {
         self.placeholder = placeholder
         self.text = text
-        self.richText = richText
+        self.originalRichText = richText
         self.visualDependencies = visualDependencies
     }
 
