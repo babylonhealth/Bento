@@ -1,21 +1,22 @@
-public class AnyRenderable {
+class AnyRenderable {
 
     let reuseIdentifier: String
-    private let renderingGenerator: () -> UIView
-    private let updatingGenerator: (UIView) -> Void
+    let generator: () -> UIView
+    private let _render: (UIView) -> Void
 
     init<R: Renderable>(renderable: R) {
         self.reuseIdentifier = renderable.reuseIdentifier
-        self.renderingGenerator = { renderable.render() }
-        self.updatingGenerator = { (view) in renderable.update(view: (view as! R.View)) }
+        self.generator = {
+            switch renderable.strategy {
+            case .`class`: return R.View.init()
+            case .nib: return R.View.loadFromNib()
+            }
+        }
+        self._render = { (view) in renderable.render(in: (view as! R.View)) }
     }
 
-    func render() -> UIView {
-        return renderingGenerator()
-    }
-
-    func update(view: UIView) {
-        updatingGenerator(view)
+    func render(in view: UIView) {
+        _render(view)
     }
 }
 
@@ -24,7 +25,7 @@ public struct FormItem<Identifier: Hashable> {
     public let id: Identifier?
 
     /// The form component backing `self`.
-    public let component: AnyRenderable
+    let component: AnyRenderable
 
     /// Initialise a form item.
     ///
@@ -32,7 +33,7 @@ public struct FormItem<Identifier: Hashable> {
     ///   - id: The identifier of the item. `nil` is provisioned for empty spaces and
     ///         should generally be avoided.
     ///   - component: The form component backing the item.
-    public init(id: Identifier?, component: AnyRenderable) {
+    init(id: Identifier?, component: AnyRenderable) {
         self.id = id
         self.component = component
     }

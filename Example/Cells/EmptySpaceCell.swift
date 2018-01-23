@@ -7,18 +7,12 @@ final class EmptySpaceCell: UIView {
 
 final class EmptySpaceComponent: Renderable {
     private let height: CGFloat
-    
+
     init(height: CGFloat) {
         self.height = height
     }
-    
-    func render() -> EmptySpaceCell {
-        let cell = EmptySpaceCell.loadFromNib()
-        cell.heightConstraint.constant = height
-        return cell
-    }
 
-    func update(view: EmptySpaceCell) {
+    func render(in view: EmptySpaceCell) {
         view.heightConstraint.constant = height
     }
 }

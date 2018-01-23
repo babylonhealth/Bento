@@ -22,12 +22,18 @@ class ToggleCell: UITableViewCell {
     }
 }
 
+extension Renderable {
+    var strategy: RenderingStrategy {
+        return .nib
+    }
+}
+
 class ToggleComponent: Renderable {
     private let isOn: Bool
     private let title: String?
     private let icon: UIImage?
     private let onToggle: ((Bool) -> Void)?
-    
+
     init(isOn: Bool,
          title: String? = nil,
          icon: UIImage? = nil,
@@ -38,18 +44,7 @@ class ToggleComponent: Renderable {
         self.onToggle = onToggle
     }
 
-    func render() -> ToggleCell {
-        let cell = ToggleCell.loadFromNib()
-        
-        cell.iconView.image = icon
-        cell.titleLabel.text = title
-        cell.toggle.isOn = isOn
-        cell.onToggle = onToggle
-        
-        return cell
-    }
-
-    func update(view: ToggleCell) {
+    func render(in view: ToggleCell) {
         view.iconView.image = icon
         view.titleLabel.text = title
         view.toggle.isOn = isOn

@@ -22,11 +22,14 @@ public final class FormTableViewDataSource<Identifier: Hashable>: NSObject, UITa
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let component = items[indexPath.row].component
         if let cell = tableView.dequeueReusableCell(withIdentifier: component.reuseIdentifier) as? TableViewCell {
+            let componentView: UIView
             if let containedView = cell.containedView {
-                component.update(view: containedView)
+                componentView = containedView
             } else {
-                cell.install(view: component.render())
+                componentView = component.generator()
+                cell.install(view: componentView)
             }
+            component.render(in: componentView)
             return cell
         } else {
             tableView.register(TableViewCell.self, forCellReuseIdentifier: component.reuseIdentifier)
@@ -55,9 +58,11 @@ public final class FormTableViewDataSource<Identifier: Hashable>: NSObject, UITa
          changeset.mutations.lazy.map { ($0, $0) }]
             .joined()
             .forEach { source, destination in
-                guard let cell = tableView.cellForRow(at: [0, source]) as? TableViewCell else { fatalError() }
-                self.items[destination].component
-                    .update(view: cell.contentView.subviews.first!)
+                guard
+                    let cell = tableView.cellForRow(at: [0, source]) as? TableViewCell,
+                    let componentView = cell.containedView
+                    else { fatalError() }
+                self.items[destination].component.render(in: componentView)
             }
         tableView.endUpdates()
     }
@@ -98,6 +103,8 @@ class TableViewCell: UITableViewCell {
     var containedView: UIView? = nil
 
     func install(view: UIView) {
+        self.containedView = view
+
         contentView.addSubview(view)
 
         NSLayoutConstraint.activate([

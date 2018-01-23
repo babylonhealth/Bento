@@ -2,8 +2,8 @@ import Foundation
 
 public protocol Renderable: class {
     associatedtype View: UIView
-    func render() -> View
-    func update(view: View)
+    var strategy: RenderingStrategy { get }
+    func render(in view: View)
 }
 
 public extension Renderable {
@@ -12,7 +12,7 @@ public extension Renderable {
     }
 }
 
-protocol SomeProtocol {
-    var onRendering: () -> UIView { get }
-    //var onUpdate: (UIView) -> Void { get }
+public enum RenderingStrategy {
+    case `class`
+    case nib
 }

@@ -10,7 +10,7 @@ class IconTextComponent: Renderable {
     private let title: String?
     private let image: UIImage?
     private let renderer: ((IconTextCell) -> Void)?
-    
+
     init(image: UIImage? = nil,
          title: String? = nil,
          iconImage: UIImage? = nil) {
@@ -24,19 +24,8 @@ class IconTextComponent: Renderable {
         self.image = nil
         self.title = nil
     }
-    
-    func render() -> IconTextCell {
-        let cell = IconTextCell.loadFromNib()
-        
-        cell.titleLabel.text = title
-        cell.iconView.image = image
-        
-        renderer?(cell)
-        
-        return cell
-    }
 
-    func update(view: IconTextCell) {
+    func render(in view: IconTextCell) {
         view.titleLabel.text = title
         view.iconView.image = image
     }
