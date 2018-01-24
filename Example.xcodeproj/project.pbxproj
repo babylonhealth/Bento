@@ -20,13 +20,13 @@
 		58BA757D201630D30050D5F1 /* FormItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58BA7573201630D30050D5F1 /* FormItem.swift */; };
 		58BA7584201633CC0050D5F1 /* Renderable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58BA7583201633CC0050D5F1 /* Renderable.swift */; };
 		58BA7586201634120050D5F1 /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58BA7585201634120050D5F1 /* Helpers.swift */; };
-		58E98E4F2016436E00F78BAE /* Component.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58E98E4E2016436E00F78BAE /* Component.swift */; };
 		58E98E5B2016571F00F78BAE /* IconTextCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 58E98E552016571F00F78BAE /* IconTextCell.xib */; };
 		58E98E5C2016571F00F78BAE /* ToggleCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 58E98E562016571F00F78BAE /* ToggleCell.xib */; };
 		58E98E5D2016571F00F78BAE /* ToggleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58E98E572016571F00F78BAE /* ToggleCell.swift */; };
 		58E98E5E2016571F00F78BAE /* EmptySpaceCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 58E98E582016571F00F78BAE /* EmptySpaceCell.xib */; };
 		58E98E5F2016571F00F78BAE /* EmptySpaceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58E98E592016571F00F78BAE /* EmptySpaceCell.swift */; };
 		58E98E602016571F00F78BAE /* IconTextCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58E98E5A2016571F00F78BAE /* IconTextCell.swift */; };
+		58E98E63201889B900F78BAE /* AnyRenderable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58E98E62201889B900F78BAE /* AnyRenderable.swift */; };
 		B9C557FE8D42BCB9CF36F50D /* Pods_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D4B544CA77089EE732C95DFA /* Pods_Example.framework */; };
 		E5B6E9AD43F8F8043874B7AA /* Pods_FormsKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D8F70F2914E4B36CCB7DB090 /* Pods_FormsKit.framework */; };
 /* End PBXBuildFile section */
@@ -72,13 +72,13 @@
 		58BA7573201630D30050D5F1 /* FormItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormItem.swift; sourceTree = "<group>"; };
 		58BA7583201633CC0050D5F1 /* Renderable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Renderable.swift; sourceTree = "<group>"; };
 		58BA7585201634120050D5F1 /* Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helpers.swift; sourceTree = "<group>"; };
-		58E98E4E2016436E00F78BAE /* Component.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Component.swift; sourceTree = "<group>"; };
 		58E98E552016571F00F78BAE /* IconTextCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IconTextCell.xib; sourceTree = "<group>"; };
 		58E98E562016571F00F78BAE /* ToggleCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ToggleCell.xib; sourceTree = "<group>"; };
 		58E98E572016571F00F78BAE /* ToggleCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToggleCell.swift; sourceTree = "<group>"; };
 		58E98E582016571F00F78BAE /* EmptySpaceCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EmptySpaceCell.xib; sourceTree = "<group>"; };
 		58E98E592016571F00F78BAE /* EmptySpaceCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmptySpaceCell.swift; sourceTree = "<group>"; };
 		58E98E5A2016571F00F78BAE /* IconTextCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IconTextCell.swift; sourceTree = "<group>"; };
+		58E98E62201889B900F78BAE /* AnyRenderable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnyRenderable.swift; sourceTree = "<group>"; };
 		77E28B37FE8E44DC77929DD8 /* Pods-FormsKit.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FormsKit.release.xcconfig"; path = "Pods/Target Support Files/Pods-FormsKit/Pods-FormsKit.release.xcconfig"; sourceTree = "<group>"; };
 		9DCDD776FBC4BC33B6A0B451 /* Pods-Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Example.release.xcconfig"; path = "Pods/Target Support Files/Pods-Example/Pods-Example.release.xcconfig"; sourceTree = "<group>"; };
 		9E43D0D1EDE6C25D9A736A5C /* Pods-Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Example.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Example/Pods-Example.debug.xcconfig"; sourceTree = "<group>"; };
@@ -154,12 +154,11 @@
 		58BA756B201630710050D5F1 /* Forms */ = {
 			isa = PBXGroup;
 			children = (
+				58E98E612018898700F78BAE /* Randerable */,
 				58BA756D201630D20050D5F1 /* FormBuilder.swift */,
 				58BA7573201630D30050D5F1 /* FormItem.swift */,
 				58BA756F201630D30050D5F1 /* FormTableViewDataSource.swift */,
-				58BA7583201633CC0050D5F1 /* Renderable.swift */,
 				58BA7585201634120050D5F1 /* Helpers.swift */,
-				58E98E4E2016436E00F78BAE /* Component.swift */,
 			);
 			path = Forms;
 			sourceTree = "<group>";
@@ -175,6 +174,15 @@
 				58E98E562016571F00F78BAE /* ToggleCell.xib */,
 			);
 			path = Cells;
+			sourceTree = "<group>";
+		};
+		58E98E612018898700F78BAE /* Randerable */ = {
+			isa = PBXGroup;
+			children = (
+				58BA7583201633CC0050D5F1 /* Renderable.swift */,
+				58E98E62201889B900F78BAE /* AnyRenderable.swift */,
+			);
+			path = Randerable;
 			sourceTree = "<group>";
 		};
 		7D7D5AFB203495BA731D7A3E /* Frameworks */ = {
@@ -421,7 +429,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				58BA7577201630D30050D5F1 /* FormBuilder.swift in Sources */,
-				58E98E4F2016436E00F78BAE /* Component.swift in Sources */,
+				58E98E63201889B900F78BAE /* AnyRenderable.swift in Sources */,
 				58BA7579201630D30050D5F1 /* FormTableViewDataSource.swift in Sources */,
 				58BA7586201634120050D5F1 /* Helpers.swift in Sources */,
 				58BA757D201630D30050D5F1 /* FormItem.swift in Sources */,

@@ -33,12 +33,8 @@ public final class FormTableViewDataSource<Identifier: Hashable>: NSObject, UITa
             return cell
         } else {
             tableView.register(TableViewCell.self, forCellReuseIdentifier: component.reuseIdentifier)
-//            let cell = tableView.dequeueReusableCell(withIdentifier: component.reuseIdentifier, for: indexPath) as! TableViewCell
-//            cell.install(view: component.render())
             return self.tableView(tableView, cellForRowAt: indexPath)
         }
-
-//        return items[indexPath.row].component.render()
     }
 
     public func update(with newItems: [FormItem<Identifier>]) {
@@ -67,25 +63,11 @@ public final class FormTableViewDataSource<Identifier: Hashable>: NSObject, UITa
         tableView.endUpdates()
     }
 
-//    public func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-//        guard let component = items[indexPath.row].component as? Component else {
-//            return
-//        }
-//        component.componentWillMount()
-//    }
-//
-//    public func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-//        guard let component = items[indexPath.row].component as? Component else {
-//            return
-//        }
-//        component.componentWillUnmount()
-//    }
-
     private struct DiffIdentifier: Hashable {
-        private let id: Identifier?
+        private let id: Identifier
 
         var hashValue: Int {
-            return id?.hashValue ?? 0
+            return id.hashValue
         }
 
         init(_ item: FormItem<Identifier>) {

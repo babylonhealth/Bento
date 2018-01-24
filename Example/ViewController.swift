@@ -52,10 +52,6 @@ class ViewController: UIViewController {
         renderState()
     }
 
-    private func render(state: State) {
-
-    }
-
     private func renderState() {
         switch self.state {
         case .airplaneMode:
@@ -75,6 +71,9 @@ class ViewController: UIViewController {
                     })
                 |-+ ViewController.space(30)
                 |-+ ViewController.iconText(id: "wifi",
+                                            icon: #imageLiteral(resourceName: "wifi"),
+                                            text: "WIFI on")
+                |-+ ViewController.iconText(id: "wifi1",
                                             icon: #imageLiteral(resourceName: "wifi"),
                                             text: "WIFI on")
 
