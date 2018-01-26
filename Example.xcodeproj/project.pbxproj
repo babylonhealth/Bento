@@ -12,12 +12,10 @@
 		5829D26E200FB092001E020D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5829D26C200FB092001E020D /* Main.storyboard */; };
 		5829D270200FB092001E020D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5829D26F200FB092001E020D /* Assets.xcassets */; };
 		5829D273200FB092001E020D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5829D271200FB092001E020D /* LaunchScreen.storyboard */; };
+		587F0718201B355800ACD219 /* TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 587F0717201B355800ACD219 /* TableViewCell.swift */; };
 		58BA75602016303B0050D5F1 /* FormsKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 58BA755E2016303B0050D5F1 /* FormsKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		58BA75632016303B0050D5F1 /* FormsKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 58BA755C2016303B0050D5F1 /* FormsKit.framework */; };
 		58BA75642016303B0050D5F1 /* FormsKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 58BA755C2016303B0050D5F1 /* FormsKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		58BA7577201630D30050D5F1 /* FormBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58BA756D201630D20050D5F1 /* FormBuilder.swift */; };
-		58BA7579201630D30050D5F1 /* FormTableViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58BA756F201630D30050D5F1 /* FormTableViewDataSource.swift */; };
-		58BA757D201630D30050D5F1 /* FormItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58BA7573201630D30050D5F1 /* FormItem.swift */; };
 		58BA7584201633CC0050D5F1 /* Renderable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58BA7583201633CC0050D5F1 /* Renderable.swift */; };
 		58BA7586201634120050D5F1 /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58BA7585201634120050D5F1 /* Helpers.swift */; };
 		58E98E5B2016571F00F78BAE /* IconTextCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 58E98E552016571F00F78BAE /* IconTextCell.xib */; };
@@ -27,6 +25,11 @@
 		58E98E5F2016571F00F78BAE /* EmptySpaceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58E98E592016571F00F78BAE /* EmptySpaceCell.swift */; };
 		58E98E602016571F00F78BAE /* IconTextCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58E98E5A2016571F00F78BAE /* IconTextCell.swift */; };
 		58E98E63201889B900F78BAE /* AnyRenderable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58E98E62201889B900F78BAE /* AnyRenderable.swift */; };
+		A95093AEEEEAA34BE4938AEF /* SectionNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9509B08868B7300457C3FE2 /* SectionNode.swift */; };
+		A95093B3B7AD6DC69644BCA6 /* SectionedFormAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9509BC2762C8B4277B973D8 /* SectionedFormAdapter.swift */; };
+		A9509880661501C40B50E453 /* TableViewHeaderFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A950970749997A21E1BF7777 /* TableViewHeaderFooterView.swift */; };
+		A9509C4FC3664040FF3649CD /* Node.swift in Sources */ = {isa = PBXBuildFile; fileRef = A95093DB10046D731018127D /* Node.swift */; };
+		A9509FB12CAD89179FAA03B0 /* Form.swift in Sources */ = {isa = PBXBuildFile; fileRef = A950967CC717BBF3B02B766D /* Form.swift */; };
 		B9C557FE8D42BCB9CF36F50D /* Pods_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D4B544CA77089EE732C95DFA /* Pods_Example.framework */; };
 		E5B6E9AD43F8F8043874B7AA /* Pods_FormsKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D8F70F2914E4B36CCB7DB090 /* Pods_FormsKit.framework */; };
 /* End PBXBuildFile section */
@@ -64,12 +67,10 @@
 		5829D26F200FB092001E020D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		5829D272200FB092001E020D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		5829D274200FB092001E020D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		587F0717201B355800ACD219 /* TableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewCell.swift; sourceTree = "<group>"; };
 		58BA755C2016303B0050D5F1 /* FormsKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = FormsKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		58BA755E2016303B0050D5F1 /* FormsKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FormsKit.h; sourceTree = "<group>"; };
 		58BA755F2016303B0050D5F1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		58BA756D201630D20050D5F1 /* FormBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormBuilder.swift; sourceTree = "<group>"; };
-		58BA756F201630D30050D5F1 /* FormTableViewDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormTableViewDataSource.swift; sourceTree = "<group>"; };
-		58BA7573201630D30050D5F1 /* FormItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormItem.swift; sourceTree = "<group>"; };
 		58BA7583201633CC0050D5F1 /* Renderable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Renderable.swift; sourceTree = "<group>"; };
 		58BA7585201634120050D5F1 /* Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helpers.swift; sourceTree = "<group>"; };
 		58E98E552016571F00F78BAE /* IconTextCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IconTextCell.xib; sourceTree = "<group>"; };
@@ -82,6 +83,11 @@
 		77E28B37FE8E44DC77929DD8 /* Pods-FormsKit.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FormsKit.release.xcconfig"; path = "Pods/Target Support Files/Pods-FormsKit/Pods-FormsKit.release.xcconfig"; sourceTree = "<group>"; };
 		9DCDD776FBC4BC33B6A0B451 /* Pods-Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Example.release.xcconfig"; path = "Pods/Target Support Files/Pods-Example/Pods-Example.release.xcconfig"; sourceTree = "<group>"; };
 		9E43D0D1EDE6C25D9A736A5C /* Pods-Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Example.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Example/Pods-Example.debug.xcconfig"; sourceTree = "<group>"; };
+		A95093DB10046D731018127D /* Node.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Node.swift; sourceTree = "<group>"; };
+		A950967CC717BBF3B02B766D /* Form.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Form.swift; sourceTree = "<group>"; };
+		A950970749997A21E1BF7777 /* TableViewHeaderFooterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewHeaderFooterView.swift; sourceTree = "<group>"; };
+		A9509B08868B7300457C3FE2 /* SectionNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SectionNode.swift; sourceTree = "<group>"; };
+		A9509BC2762C8B4277B973D8 /* SectionedFormAdapter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SectionedFormAdapter.swift; sourceTree = "<group>"; };
 		D4B544CA77089EE732C95DFA /* Pods_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D8F70F2914E4B36CCB7DB090 /* Pods_FormsKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FormsKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -141,6 +147,15 @@
 			path = Example;
 			sourceTree = "<group>";
 		};
+		587F0716201B354900ACD219 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				587F0717201B355800ACD219 /* TableViewCell.swift */,
+				A950970749997A21E1BF7777 /* TableViewHeaderFooterView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		58BA755D2016303B0050D5F1 /* FormsKit */ = {
 			isa = PBXGroup;
 			children = (
@@ -154,11 +169,11 @@
 		58BA756B201630710050D5F1 /* Forms */ = {
 			isa = PBXGroup;
 			children = (
+				587F0716201B354900ACD219 /* Views */,
 				58E98E612018898700F78BAE /* Randerable */,
-				58BA756D201630D20050D5F1 /* FormBuilder.swift */,
-				58BA7573201630D30050D5F1 /* FormItem.swift */,
-				58BA756F201630D30050D5F1 /* FormTableViewDataSource.swift */,
 				58BA7585201634120050D5F1 /* Helpers.swift */,
+				A95095B51B6349DC59C77D6D /* Form */,
+				A950945F6360B851C3E87B61 /* Adapters */,
 			);
 			path = Forms;
 			sourceTree = "<group>";
@@ -203,6 +218,24 @@
 				77E28B37FE8E44DC77929DD8 /* Pods-FormsKit.release.xcconfig */,
 			);
 			name = Pods;
+			sourceTree = "<group>";
+		};
+		A950945F6360B851C3E87B61 /* Adapters */ = {
+			isa = PBXGroup;
+			children = (
+				A9509BC2762C8B4277B973D8 /* SectionedFormAdapter.swift */,
+			);
+			path = Adapters;
+			sourceTree = "<group>";
+		};
+		A95095B51B6349DC59C77D6D /* Form */ = {
+			isa = PBXGroup;
+			children = (
+				A950967CC717BBF3B02B766D /* Form.swift */,
+				A95093DB10046D731018127D /* Node.swift */,
+				A9509B08868B7300457C3FE2 /* SectionNode.swift */,
+			);
+			path = Form;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -428,12 +461,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				58BA7577201630D30050D5F1 /* FormBuilder.swift in Sources */,
 				58E98E63201889B900F78BAE /* AnyRenderable.swift in Sources */,
-				58BA7579201630D30050D5F1 /* FormTableViewDataSource.swift in Sources */,
 				58BA7586201634120050D5F1 /* Helpers.swift in Sources */,
-				58BA757D201630D30050D5F1 /* FormItem.swift in Sources */,
 				58BA7584201633CC0050D5F1 /* Renderable.swift in Sources */,
+				A9509FB12CAD89179FAA03B0 /* Form.swift in Sources */,
+				A9509C4FC3664040FF3649CD /* Node.swift in Sources */,
+				587F0718201B355800ACD219 /* TableViewCell.swift in Sources */,
+				A95093B3B7AD6DC69644BCA6 /* SectionedFormAdapter.swift in Sources */,
+				A9509880661501C40B50E453 /* TableViewHeaderFooterView.swift in Sources */,
+				A95093AEEEEAA34BE4938AEF /* SectionNode.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
