@@ -14,3 +14,14 @@ public extension NibLoadable where Self: UIView {
     }
 }
 extension UIView: NibLoadable {}
+
+extension UIView {
+    func pinToEdges(of view: UIView) {
+        NSLayoutConstraint.activate([
+            view.topAnchor.constraint(equalTo: topAnchor),
+            view.leftAnchor.constraint(equalTo: leftAnchor),
+            view.bottomAnchor.constraint(equalTo: bottomAnchor),
+            view.rightAnchor.constraint(equalTo: rightAnchor)
+        ])
+    }
+}

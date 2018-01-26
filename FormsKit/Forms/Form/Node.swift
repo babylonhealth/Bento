@@ -1,4 +1,4 @@
-public struct FormItem<Identifier: Hashable> {
+public struct Node<Identifier: Hashable> {
     let id: Identifier
     let component: AnyRenderable
 
