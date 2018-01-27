@@ -52,11 +52,11 @@ public func |-+<SectionId, RowId>(lhs: Form<SectionId, RowId>, rhs: Section<Sect
 }
 
 public func |--+<SectionId, RowId>(lhs: Section<SectionId, RowId>, rhs: Node<RowId>) -> Section<SectionId, RowId> {
-    return Section(header: lhs.header, footer: lhs.footer, rows: lhs.rows + [rhs])
+    return Section(id: lhs.id, header: lhs.header, footer: lhs.footer, rows: lhs.rows + [rhs])
 }
 
 public func |--*<SectionId, RowId>(lhs: Section<SectionId, RowId>, rhs: [Node<RowId>]) -> Section<SectionId, RowId> {
-    return Section(header: lhs.header, footer: lhs.footer, rows: lhs.rows + rhs)
+    return Section(id: lhs.id, header: lhs.header, footer: lhs.footer, rows: lhs.rows + rhs)
 }
 
 public func |--+<Identifier>(lhs: Node<Identifier>, rhs: Node<Identifier>) -> [Node<Identifier>] {
