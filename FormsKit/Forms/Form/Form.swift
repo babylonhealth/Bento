@@ -14,13 +14,16 @@ public struct Form<SectionId: Hashable, RowId: Hashable> {
 }
 
 public struct Section<SectionId: Hashable, RowId: Hashable> {
-    fileprivate let header: SectionNode<SectionId>
-    fileprivate let footer: SectionNode<SectionId>
+    let id: SectionId?
+    fileprivate let header: SectionNode
+    fileprivate let footer: SectionNode
     fileprivate let rows: [Node<RowId>]
 
-    public init(header: SectionNode<SectionId> = .empty,
-                footer: SectionNode<SectionId> = .empty,
+    public init(id: SectionId? = nil,
+                header: SectionNode = .empty,
+                footer: SectionNode = .empty,
                 rows: [Node<RowId>] = []) {
+        self.id = id
         self.header = header
         self.footer = footer
         self.rows = rows

@@ -156,8 +156,8 @@ class ViewController: UIViewController {
     private static func section() -> Section<SectionId, RowId> {
         let headerComponent = EmptySpaceComponent(height: 30)
         let footerComponent = EmptySpaceComponent(height: 30)
-        let headerNode = SectionNode<SectionId>(component: headerComponent)
-        let footerNode = SectionNode<SectionId>(component: footerComponent)
+        let headerNode = SectionNode(component: headerComponent)
+        let footerNode = SectionNode(component: footerComponent)
         return Section(header: headerNode,
                        footer: footerNode)
     }
