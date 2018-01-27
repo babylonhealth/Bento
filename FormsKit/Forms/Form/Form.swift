@@ -47,6 +47,24 @@ public struct Section<SectionId: Hashable, RowId: Hashable> {
     }
 }
 
+extension Section: Collection {
+    public var startIndex: Int {
+        return rows.startIndex
+    }
+    
+    public var endIndex: Int {
+        return rows.endIndex
+    }
+    
+    public func index(after i: Int) -> Int {
+        return rows.index(after: i)
+    }
+    
+    public subscript(position: Int) -> Node<RowId> {
+        return rows[position]
+    }
+}
+
 public func |-+<SectionId, RowId>(lhs: Form<SectionId, RowId>, rhs: Section<SectionId, RowId>) -> Form<SectionId, RowId> {
     return Form(sections: lhs.sections + [rhs])
 }
