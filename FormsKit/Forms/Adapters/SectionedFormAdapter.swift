@@ -1,6 +1,6 @@
 import UIKit
 
-public final class SectionedFormAdapter<SectionId: Hashable, RowId: Hashable>
+final class SectionedFormAdapter<SectionId: Hashable, RowId: Hashable>
     : NSObject,
       UITableViewDataSource,
       UITableViewDelegate {
@@ -15,29 +15,29 @@ public final class SectionedFormAdapter<SectionId: Hashable, RowId: Hashable>
         tableView.delegate = self
     }
 
-    public func update(sections:[Section<SectionId, RowId>]) {
+    func update(sections:[Section<SectionId, RowId>]) {
 //        TODO: Add diffing
         self.sections = sections
         tableView?.reloadData()
     }
 
-    public func numberOfSections(in tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return sections.count
     }
 
-    public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return sections[section].rowsCount
     }
 
-    public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        return sections[indexPath.section].renderTableCell(in: tableView, for: indexPath)
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        return sections[indexPath.section].renderCell(in: tableView, at: indexPath.row)
     }
 
-    public func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        return sections[section].renderTableHeader(in: tableView, for: section)
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        return sections[section].renderHeader(in: tableView)
     }
 
-    public func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        return sections[section].renderTableFooter(in: tableView, for: section)
+    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        return sections[section].renderFooter(in: tableView)
     }
 }
