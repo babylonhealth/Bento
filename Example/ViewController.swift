@@ -8,7 +8,8 @@ class ViewController: UIViewController {
     }
 
     enum SectionId: Hashable {
-        case emptySection
+        case first
+        case second
     }
 
     enum RowId: Hashable {
@@ -60,7 +61,7 @@ class ViewController: UIViewController {
         switch self.state {
         case .airplaneMode:
             let form = Form<SectionId, RowId>.empty
-                |-+ ViewController.section()
+                |-+ ViewController.section(id: .first, headerHeight: 100, footerHeight: 50)
                 |--+ ViewController.toggle(id: "airplane",
                                            isOn: true,
                                            title: "Airplane mode",
@@ -72,7 +73,10 @@ class ViewController: UIViewController {
                                                    self.state = State.wifi(true)
                                                }
                                            })
-                |-+ ViewController.section()
+                |--+ ViewController.iconText(id: "wifi",
+                                             icon: #imageLiteral(resourceName:"wifi"),
+                                             text: "WIFI On")
+                |-+ ViewController.section(id: .first, headerHeight: 30, footerHeight: 50)
                 |--+ ViewController.toggle(id: "airplane",
                                            isOn: true,
                                            title: "Airplane mode",
@@ -91,7 +95,7 @@ class ViewController: UIViewController {
             dataSource.update(sections: form.sections)
         case .wifi:
             let form = Form<SectionId, RowId>.empty
-                |-+ ViewController.section()
+                |-+ ViewController.section(id: .first, headerHeight: 30, footerHeight: 50)
                 |--+ ViewController.toggle(id: "airplane",
                                            isOn: false,
                                            title: "Airplane mode",
@@ -106,7 +110,7 @@ class ViewController: UIViewController {
                 |--+ ViewController.iconText(id: "wifi",
                                              icon: #imageLiteral(resourceName:"wifi"),
                                              text: "WIFI OFF")
-                |-+ ViewController.section()
+                |-+ ViewController.section(id: .first, headerHeight: 50, footerHeight: 30)
                 |--+ ViewController.toggle(id: "airplane",
                                            isOn: false,
                                            title: "Airplane mode",
@@ -118,9 +122,6 @@ class ViewController: UIViewController {
                                                    self.state = State.wifi(true)
                                                }
                                            })
-                |--+ ViewController.iconText(id: "wifi",
-                                             icon: #imageLiteral(resourceName:"wifi"),
-                                             text: "WIFI OFF")
 
             dataSource.update(sections: form.sections)
         }
@@ -153,12 +154,15 @@ class ViewController: UIViewController {
         return Node(id: RowId.note(id), component: component)
     }
 
-    private static func section() -> Section<SectionId, RowId> {
-        let headerComponent = EmptySpaceComponent(height: 30)
-        let footerComponent = EmptySpaceComponent(height: 30)
+    private static func section(id: SectionId,
+                                headerHeight: CGFloat,
+                                footerHeight: CGFloat) -> Section<SectionId, RowId> {
+        let headerComponent = EmptySpaceComponent(height: headerHeight)
+        let footerComponent = EmptySpaceComponent(height: footerHeight)
         let headerNode = SectionNode(component: headerComponent)
         let footerNode = SectionNode(component: footerComponent)
-        return Section(header: headerNode,
+        return Section(id: id,
+                       header: headerNode,
                        footer: footerNode)
     }
 }

@@ -14,5 +14,6 @@ final class EmptySpaceComponent: Renderable {
 
     func render(in view: EmptySpaceCell) {
         view.heightConstraint.constant = height
+        view.backgroundColor = .red
     }
 }

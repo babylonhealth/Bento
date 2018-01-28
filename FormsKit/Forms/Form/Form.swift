@@ -14,12 +14,12 @@ public struct Form<SectionId: Hashable, RowId: Hashable> {
 }
 
 public struct Section<SectionId: Hashable, RowId: Hashable> {
-    let id: SectionId?
+    let id: SectionId
     fileprivate let header: SectionNode
     fileprivate let footer: SectionNode
     fileprivate let rows: [Node<RowId>]
 
-    public init(id: SectionId? = nil,
+    public init(id: SectionId,
                 header: SectionNode = .empty,
                 footer: SectionNode = .empty,
                 rows: [Node<RowId>] = []) {
@@ -29,14 +29,14 @@ public struct Section<SectionId: Hashable, RowId: Hashable> {
         self.rows = rows
     }
 
-    public static var empty: Section {
-        return Section(header: .empty, footer: .empty, rows: [])
-    }
-
     var rowsCount: Int {
         return rows.count
     }
-
+    
+    func render(view: UIView, at index: Int) {
+        rows[index].component.render(in: view)
+    }
+    
     func renderTableHeader(in tableView: UITableView, for section: Int) -> UIView? {
         return header.render(in: tableView, for: section)
     }
@@ -65,6 +65,14 @@ extension Section: Collection {
     
     public subscript(position: Int) -> Node<RowId> {
         return rows[position]
+    }
+}
+
+extension Section: CustomStringConvertible {
+    public var description: String {
+        return "Section" + rows.reduce("") { (acum, node) in
+            return " " + acum + "\(node.id)"
+        }
     }
 }
 

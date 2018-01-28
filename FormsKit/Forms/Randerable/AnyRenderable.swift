@@ -15,6 +15,10 @@ final class AnyRenderable {
         }
         self.render = { (view) in renderable.render(in: (view as! R.View)) }
     }
+    
+    func render(in view: UIView) {
+        self.render(view)
+    }
 
     func renderCell(in tableView: UITableView, for indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier) as? TableViewCell else {
