@@ -1,7 +1,7 @@
 import UIKit
 import FlexibleDiff
 
-public final class SectionedFormAdapter<SectionId: Hashable, RowId: Hashable>
+final class SectionedFormAdapter<SectionId: Hashable, RowId: Hashable>
     : NSObject,
       UITableViewDataSource,
       UITableViewDelegate {
@@ -22,17 +22,17 @@ public final class SectionedFormAdapter<SectionId: Hashable, RowId: Hashable>
         }
         let diff = SectionedChangeset(previous: self.sections,
                                       current: sections,
-                                      sectionIdentifier: { element in
-                                          return element.id
+                                      sectionIdentifier: { (section: Section<SectionId, RowId>) -> SectionId in
+                                          return section.id
                                       },
-                                      areSectionsEqual: { (v, v1) in
-                                          return v.id == v1.id
+                                      areSectionsEqual: { (section1: Section<SectionId, RowId>, section2: Section<SectionId, RowId>) -> Bool in
+                                          return section1.isEqualTo(section2)
                                       },
-                                      elementIdentifier: { element in
-                                          return element.id
+                                      elementIdentifier: { (row: Node<RowId>) -> RowId in
+                                          return row.id
                                       },
-                                      areElementsEqual: { (v, v1) in
-                                          return v.component === v1.component
+                                      areElementsEqual: { (row1: Node<RowId>, row2: Node<RowId>) -> Bool in
+                                          return row1.isEqual(to: row2)
                                       })
         self.sections = sections
         tableView.beginUpdates()
@@ -49,12 +49,8 @@ public final class SectionedFormAdapter<SectionId: Hashable, RowId: Hashable>
                 value.changeset.mutations.lazy.map { ($0, $0) }]
                 .joined()
                 .forEach { source, destination in
-                    let idexPath: IndexPath = [value.source, source]
-                    guard
-                        let cell = tableView.cellForRow(at: idexPath) as? TableViewCell,
-                        let componentView = cell.containedView
-                        else { fatalError() }
-                    self.sections[value.source].render(view: componentView, at: source)
+                    let indexPath: IndexPath = [value.source, source]
+                    self.sections[value.source].updateNode(in: tableView, at: indexPath)
                 }
         }
         tableView.endUpdates()
@@ -69,14 +65,14 @@ public final class SectionedFormAdapter<SectionId: Hashable, RowId: Hashable>
     }
 
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        return sections[indexPath.section].renderTableCell(in: tableView, for: indexPath)
+        return sections[indexPath.section].renderCell(in: tableView, at: indexPath.row)
     }
 
     public func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        return sections[section].renderTableHeader(in: tableView, for: section)
+        return sections[section].renderHeader(in: tableView)
     }
 
     public func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        return sections[section].renderTableFooter(in: tableView, for: section)
+        return sections[section].renderFooter(in: tableView)
     }
 }

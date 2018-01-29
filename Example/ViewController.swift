@@ -43,7 +43,6 @@ class ViewController: UIViewController {
     }
 
     @IBOutlet weak var tableView: UITableView!
-    private lazy var dataSource = SectionedFormAdapter<SectionId, RowId>(with: self.tableView)
 
     private var state = State.airplaneMode {
         didSet {
@@ -92,7 +91,7 @@ class ViewController: UIViewController {
                                              icon: #imageLiteral(resourceName:"wifi"),
                                              text: "WIFI on")
 
-            dataSource.update(sections: form.sections)
+            form.render(in: tableView)
         case .wifi:
             let form = Form<SectionId, RowId>.empty
                 |-+ ViewController.section(id: .first, headerHeight: 30, footerHeight: 50)
@@ -123,12 +122,11 @@ class ViewController: UIViewController {
                                                }
                                            })
 
-            dataSource.update(sections: form.sections)
+            form.render(in: tableView)
         }
     }
 
     private func setupTableView() {
-        self.tableView.dataSource = dataSource
         tableView.estimatedSectionFooterHeight = 18
         tableView.estimatedSectionHeaderHeight = 18
         tableView.sectionHeaderHeight = UITableViewAutomaticDimension
@@ -159,8 +157,8 @@ class ViewController: UIViewController {
                                 footerHeight: CGFloat) -> Section<SectionId, RowId> {
         let headerComponent = EmptySpaceComponent(height: headerHeight)
         let footerComponent = EmptySpaceComponent(height: footerHeight)
-        let headerNode = SectionNode(component: headerComponent)
-        let footerNode = SectionNode(component: footerComponent)
+        let headerNode = HeaderFooterNode(component: headerComponent)
+        let footerNode = HeaderFooterNode(component: footerComponent)
         return Section(id: id,
                        header: headerNode,
                        footer: footerNode)
