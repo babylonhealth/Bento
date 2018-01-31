@@ -32,10 +32,6 @@ class ViewController: UIViewController {
         renderState()
     }
 
-    @IBAction func togglePressed(sender: UISwitch) {
-        print("Toggle pressed", sender.isOn)
-    }
-
     private func renderState() {
         switch self.state {
         case .airplaneMode:
@@ -57,7 +53,7 @@ class ViewController: UIViewController {
                                            })
                 |--+ ViewController.iconText(icon: #imageLiteral(resourceName:"wifi"),
                                              text: "WIFI On")
-                |-+ ViewController.section(id: .first,
+                |-+ ViewController.section(id: .second,
                                            headerHeight: 30,
                                            footerHeight: 50,
                                            headerColor: .purple,
@@ -93,7 +89,7 @@ class ViewController: UIViewController {
                                                    self.state = State.wifi(true)
                                                }
                                            })
-                |-+ ViewController.section(id: .first,
+                |-+ ViewController.section(id: .second,
                                            headerHeight: 20,
                                            footerHeight: 20,
                                            headerColor: .orange,
@@ -145,10 +141,8 @@ class ViewController: UIViewController {
                                 footerColor: UIColor) -> Section<SectionId, RowId> {
         let headerComponent = EmptySpaceComponent(height: headerHeight, color: headerColor)
         let footerComponent = EmptySpaceComponent(height: footerHeight, color: footerColor)
-        let headerNode = HeaderFooterNode(component: headerComponent)
-        let footerNode = HeaderFooterNode(component: footerComponent)
         return Section(id: id,
-                       header: headerNode,
-                       footer: footerNode)
+                       header: headerComponent,
+                       footer: footerComponent)
     }
 }
