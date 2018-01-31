@@ -60,7 +60,11 @@ class ViewController: UIViewController {
         switch self.state {
         case .airplaneMode:
             let form = Form<SectionId, RowId>.empty
-                |-+ ViewController.section(id: .first, headerHeight: 100, footerHeight: 50)
+                |-+ ViewController.section(id: .first,
+                                           headerHeight: 20,
+                                           footerHeight: 20,
+                                           headerColor: .red,
+                                           footerColor: .green)
                 |--+ ViewController.toggle(id: "airplane",
                                            isOn: true,
                                            title: "Airplane mode",
@@ -75,7 +79,11 @@ class ViewController: UIViewController {
                 |--+ ViewController.iconText(id: "wifi",
                                              icon: #imageLiteral(resourceName:"wifi"),
                                              text: "WIFI On")
-                |-+ ViewController.section(id: .first, headerHeight: 30, footerHeight: 50)
+                |-+ ViewController.section(id: .first,
+                                           headerHeight: 30,
+                                           footerHeight: 50,
+                                           headerColor: .purple,
+                                           footerColor: .magenta)
                 |--+ ViewController.toggle(id: "airplane",
                                            isOn: true,
                                            title: "Airplane mode",
@@ -94,7 +102,11 @@ class ViewController: UIViewController {
             form.render(in: tableView)
         case .wifi:
             let form = Form<SectionId, RowId>.empty
-                |-+ ViewController.section(id: .first, headerHeight: 30, footerHeight: 50)
+                |-+ ViewController.section(id: .first,
+                                           headerHeight: 20,
+                                           footerHeight: 20,
+                                           headerColor: .black,
+                                           footerColor: .cyan)
                 |--+ ViewController.toggle(id: "airplane",
                                            isOn: false,
                                            title: "Airplane mode",
@@ -106,10 +118,11 @@ class ViewController: UIViewController {
                                                    self.state = State.wifi(true)
                                                }
                                            })
-                |--+ ViewController.iconText(id: "wifi",
-                                             icon: #imageLiteral(resourceName:"wifi"),
-                                             text: "WIFI OFF")
-                |-+ ViewController.section(id: .first, headerHeight: 50, footerHeight: 30)
+                |-+ ViewController.section(id: .first,
+                                           headerHeight: 20,
+                                           footerHeight: 20,
+                                           headerColor: .orange,
+                                           footerColor: .yellow)
                 |--+ ViewController.toggle(id: "airplane",
                                            isOn: false,
                                            title: "Airplane mode",
@@ -154,9 +167,11 @@ class ViewController: UIViewController {
 
     private static func section(id: SectionId,
                                 headerHeight: CGFloat,
-                                footerHeight: CGFloat) -> Section<SectionId, RowId> {
-        let headerComponent = EmptySpaceComponent(height: headerHeight)
-        let footerComponent = EmptySpaceComponent(height: footerHeight)
+                                footerHeight: CGFloat,
+                                headerColor: UIColor,
+                                footerColor: UIColor) -> Section<SectionId, RowId> {
+        let headerComponent = EmptySpaceComponent(height: headerHeight, color: headerColor)
+        let footerComponent = EmptySpaceComponent(height: footerHeight, color: footerColor)
         let headerNode = HeaderFooterNode(component: headerComponent)
         let footerNode = HeaderFooterNode(component: footerComponent)
         return Section(id: id,
