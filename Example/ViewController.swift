@@ -85,7 +85,7 @@ class ViewController: UIViewController {
                                            })
                 |--+ ViewController.iconText(id: "wifi",
                                              icon: #imageLiteral(resourceName:"wifi"),
-                                             text: "WIFI on")
+                                             text: "WIFI OFF")
         form.render(in: tableView)
         case .wifi:
             let form = Form<SectionId, RowId>.empty
@@ -103,7 +103,7 @@ class ViewController: UIViewController {
                                            })
                 |--+ ViewController.iconText(id: "wifi",
                                              icon: #imageLiteral(resourceName:"wifi"),
-                                             text: "WIFI OFF")
+                                             text: "WIFI ON")
                 |-+ ViewController.section()
                 |--+ ViewController.toggle(id: "airplane",
                                            isOn: false,
@@ -118,7 +118,7 @@ class ViewController: UIViewController {
                                            })
                 |--+ ViewController.iconText(id: "wifi",
                                              icon: #imageLiteral(resourceName:"wifi"),
-                                             text: "WIFI OFF")
+                                             text: "WIFI ON")
         form.render(in: tableView)
         }
     }
@@ -143,7 +143,7 @@ class ViewController: UIViewController {
     }
 
     private static func iconText(id: String, icon: UIImage?, text: String?) -> Node<RowId> {
-        let component = IconTextComponent(image: nil,
+        let component = IconTextComponent(image: icon,
                                           title: text)
 
         return Node(id: RowId.note(id), component: component)
