@@ -11,7 +11,7 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   FlexibleDiff:
-    :commit: ed2984e8f523d93eba566fbb5ca57b2534cbb64e
+    :commit: f61d3b16dda32ae51be9edbe21974bce8ecbb20b
     :git: https://github.com/RACCommunity/FlexibleDiff.git
 
 SPEC CHECKSUMS:

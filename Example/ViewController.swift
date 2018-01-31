@@ -145,10 +145,8 @@ class ViewController: UIViewController {
                                 footerColor: UIColor) -> Section<SectionId, RowId> {
         let headerComponent = EmptySpaceComponent(height: headerHeight, color: headerColor)
         let footerComponent = EmptySpaceComponent(height: footerHeight, color: footerColor)
-        let headerNode = HeaderFooterNode(component: headerComponent)
-        let footerNode = HeaderFooterNode(component: footerComponent)
         return Section(id: id,
-                       header: headerNode,
-                       footer: footerNode)
+                       header: headerComponent,
+                       footer: footerComponent)
     }
 }

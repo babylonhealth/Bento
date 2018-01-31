@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		515F94097C1F82B7E5C2DE0C /* Section.swift in Sources */ = {isa = PBXBuildFile; fileRef = 515F9EAF847DD1D68DE3A48C /* Section.swift */; };
+		581ED7802022043D00EC9584 /* Diff.swift in Sources */ = {isa = PBXBuildFile; fileRef = 581ED77F2022043D00EC9584 /* Diff.swift */; };
 		5829D269200FB092001E020D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5829D268200FB092001E020D /* AppDelegate.swift */; };
 		5829D26B200FB092001E020D /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5829D26A200FB092001E020D /* ViewController.swift */; };
 		5829D26E200FB092001E020D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5829D26C200FB092001E020D /* Main.storyboard */; };
@@ -62,6 +63,7 @@
 /* Begin PBXFileReference section */
 		05B3CD14D77ABE4568F782C7 /* Pods-FormsKit.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FormsKit.debug.xcconfig"; path = "Pods/Target Support Files/Pods-FormsKit/Pods-FormsKit.debug.xcconfig"; sourceTree = "<group>"; };
 		515F9EAF847DD1D68DE3A48C /* Section.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Section.swift; sourceTree = "<group>"; };
+		581ED77F2022043D00EC9584 /* Diff.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Diff.swift; sourceTree = "<group>"; };
 		5829D265200FB092001E020D /* Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5829D268200FB092001E020D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5829D26A200FB092001E020D /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -115,6 +117,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		581ED77E2022041C00EC9584 /* Diff */ = {
+			isa = PBXGroup;
+			children = (
+				581ED77F2022043D00EC9584 /* Diff.swift */,
+			);
+			path = Diff;
+			sourceTree = "<group>";
+		};
 		5829D25C200FB092001E020D = {
 			isa = PBXGroup;
 			children = (
@@ -171,6 +181,7 @@
 		58BA756B201630710050D5F1 /* Forms */ = {
 			isa = PBXGroup;
 			children = (
+				581ED77E2022041C00EC9584 /* Diff */,
 				587F0716201B354900ACD219 /* Views */,
 				58E98E612018898700F78BAE /* Randerable */,
 				58BA7585201634120050D5F1 /* Helpers.swift */,
@@ -467,6 +478,7 @@
 				58E98E63201889B900F78BAE /* AnyRenderable.swift in Sources */,
 				58BA7586201634120050D5F1 /* Helpers.swift in Sources */,
 				58BA7584201633CC0050D5F1 /* Renderable.swift in Sources */,
+				581ED7802022043D00EC9584 /* Diff.swift in Sources */,
 				A9509FB12CAD89179FAA03B0 /* Form.swift in Sources */,
 				A9509C4FC3664040FF3649CD /* Node.swift in Sources */,
 				587F0718201B355800ACD219 /* TableViewCell.swift in Sources */,

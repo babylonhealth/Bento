@@ -39,3 +39,12 @@ extension UITableView {
         return adapter
     }
 }
+
+extension Optional {
+    func zip<T, R>(with other: T?, _ selector: (Wrapped, T) -> R) -> Optional<R> {
+        guard let unwrapped = self, let other = other else {
+            return nil
+        }
+        return selector(unwrapped, other)
+    }
+}
