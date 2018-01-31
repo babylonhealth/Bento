@@ -12,7 +12,7 @@ public struct Node<Identifier: Hashable> {
     }
 
     func isEqual(to other: Node) -> Bool {
-        return component === component
+        return component === other.component
     }
 
     func update(view: UIView) {
