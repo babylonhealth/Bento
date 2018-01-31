@@ -1,12 +1,12 @@
 public struct Section<SectionId: Hashable, RowId: Hashable> {
     let id: SectionId?
-    fileprivate let header: HeaderFooterNode
-    fileprivate let footer: HeaderFooterNode
+    fileprivate let header: HeaderFooterNode?
+    fileprivate let footer: HeaderFooterNode?
     fileprivate let rows: [Node<RowId>]
 
     public init(id: SectionId? = nil,
-                header: HeaderFooterNode = .empty,
-                footer: HeaderFooterNode = .empty,
+                header: HeaderFooterNode? = nil,
+                footer: HeaderFooterNode? = nil,
                 rows: [Node<RowId>] = []) {
         self.id = id
         self.header = header
@@ -15,7 +15,7 @@ public struct Section<SectionId: Hashable, RowId: Hashable> {
     }
 
     public static var empty: Section {
-        return Section(header: .empty, footer: .empty, rows: [])
+        return Section(rows: [])
     }
 
     var rowsCount: Int {
@@ -23,11 +23,11 @@ public struct Section<SectionId: Hashable, RowId: Hashable> {
     }
 
     func renderHeader(in tableView: UITableView) -> UIView? {
-        return header.render(in: tableView)
+        return header?.render(in: tableView)
     }
 
     func renderFooter(in tableView: UITableView) -> UIView? {
-        return footer.render(in: tableView)
+        return footer?.render(in: tableView)
     }
 
     func renderCell(in tableView: UITableView, at index: Int) -> UITableViewCell {
