@@ -13,33 +13,9 @@ class ViewController: UIViewController {
     }
 
     enum RowId: Hashable {
-        case space(CGFloat)
-        case note(String)
-        case toggle(String)
-
-        var hashValue: Int {
-            switch self {
-            case .note(let id):
-                return id.hashValue
-            case .toggle(let id):
-                return id.hashValue
-            case .space(let height):
-                return height.hashValue
-            }
-        }
-
-        static func ==(lhs: ViewController.RowId, rhs: ViewController.RowId) -> Bool {
-            switch (lhs, rhs) {
-            case let (.note(lhsValue), .note(rhsValue)):
-                return lhsValue == rhsValue
-            case let (.toggle(lhsValue), .toggle(rhsValue)):
-                return lhsValue == rhsValue
-            case let (.space(lhsValue), .space(rhsValue)):
-                return lhsValue == rhsValue
-            default:
-                return false
-            }
-        }
+        case space
+        case note
+        case toggle
     }
 
     @IBOutlet weak var tableView: UITableView!
@@ -56,6 +32,10 @@ class ViewController: UIViewController {
         renderState()
     }
 
+    @IBAction func togglePressed(sender: UISwitch) {
+        print("Toggle pressed", sender.isOn)
+    }
+
     private func renderState() {
         switch self.state {
         case .airplaneMode:
@@ -65,8 +45,7 @@ class ViewController: UIViewController {
                                            footerHeight: 20,
                                            headerColor: .red,
                                            footerColor: .green)
-                |--+ ViewController.toggle(id: "airplane",
-                                           isOn: true,
+                |--+ ViewController.toggle(isOn: true,
                                            title: "Airplane mode",
                                            icon: #imageLiteral(resourceName:"plane"),
                                            onToggle: { isOn in
@@ -76,16 +55,14 @@ class ViewController: UIViewController {
                                                    self.state = State.wifi(true)
                                                }
                                            })
-                |--+ ViewController.iconText(id: "wifi",
-                                             icon: #imageLiteral(resourceName:"wifi"),
+                |--+ ViewController.iconText(icon: #imageLiteral(resourceName:"wifi"),
                                              text: "WIFI On")
                 |-+ ViewController.section(id: .first,
                                            headerHeight: 30,
                                            footerHeight: 50,
                                            headerColor: .purple,
                                            footerColor: .magenta)
-                |--+ ViewController.toggle(id: "airplane",
-                                           isOn: true,
+                |--+ ViewController.toggle(isOn: true,
                                            title: "Airplane mode",
                                            icon: #imageLiteral(resourceName:"plane"),
                                            onToggle: { isOn in
@@ -95,8 +72,7 @@ class ViewController: UIViewController {
                                                    self.state = State.wifi(true)
                                                }
                                            })
-                |--+ ViewController.iconText(id: "wifi",
-                                             icon: #imageLiteral(resourceName:"wifi"),
+                |--+ ViewController.iconText(icon: #imageLiteral(resourceName:"wifi"),
                                              text: "WIFI on")
 
             form.render(in: tableView)
@@ -107,8 +83,7 @@ class ViewController: UIViewController {
                                            footerHeight: 20,
                                            headerColor: .black,
                                            footerColor: .cyan)
-                |--+ ViewController.toggle(id: "airplane",
-                                           isOn: false,
+                |--+ ViewController.toggle(isOn: false,
                                            title: "Airplane mode",
                                            icon: #imageLiteral(resourceName:"plane"),
                                            onToggle: { isOn in
@@ -123,8 +98,7 @@ class ViewController: UIViewController {
                                            footerHeight: 20,
                                            headerColor: .orange,
                                            footerColor: .yellow)
-                |--+ ViewController.toggle(id: "airplane",
-                                           isOn: false,
+                |--+ ViewController.toggle(isOn: false,
                                            title: "Airplane mode",
                                            icon: #imageLiteral(resourceName:"plane"),
                                            onToggle: { isOn in
@@ -146,8 +120,7 @@ class ViewController: UIViewController {
         tableView.sectionFooterHeight = UITableViewAutomaticDimension
     }
 
-    private static func toggle(id: String,
-                               isOn: Bool,
+    private static func toggle(isOn: Bool,
                                title: String? = nil,
                                icon: UIImage? = nil,
                                onToggle: ((Bool) -> Void)?) -> Node<RowId> {
@@ -155,14 +128,14 @@ class ViewController: UIViewController {
                                         title: title,
                                         icon: icon,
                                         onToggle: onToggle)
-        return Node(id: RowId.toggle(id), component: component)
+        return Node(id: RowId.toggle, component: component)
     }
 
-    private static func iconText(id: String, icon: UIImage?, text: String?) -> Node<RowId> {
+    private static func iconText(icon: UIImage?, text: String?) -> Node<RowId> {
         let component = IconTextComponent(image: nil,
                                           title: text)
 
-        return Node(id: RowId.note(id), component: component)
+        return Node(id: RowId.note, component: component)
     }
 
     private static func section(id: SectionId,
