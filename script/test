@@ -1,0 +1,29 @@
+#!/bin/bash
+
+if [[ "$1" == "macosx" ]]; then
+  XCODE_ACTION="build"
+fi
+
+if [[ "$1" == "iphonesimulator" || "$1" == "appletvsimulator" ]]; then
+  XCODE_ACTION="build-for-testing test-without-building"
+fi
+
+if [[ -n "$4" ]]; then
+  XCODE_ACTION="$4"
+fi
+
+set -o pipefail
+xcodebuild $XCODE_ACTION \
+    -workspace Example.xcworkspace \
+    -scheme "$3" \
+    -sdk "$1" \
+    -destination "$2" \
+    -configuration Release \
+    ENABLE_TESTABILITY=YES \
+    GCC_GENERATE_DEBUGGING_SYMBOLS=NO \
+    RUN_CLANG_STATIC_ANALYZER=NO | bundle exec xcpretty
+result=$?
+
+if [ "$result" -ne 0 ]; then
+    exit $result
+fi
