@@ -1,12 +1,10 @@
 import UIKit
 import FormsKit
 
-class ToggleCell: UITableViewCell {
+class ToggleCell: UIView {
     @IBOutlet weak var iconView: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var toggle: UISwitch!
-    @IBOutlet weak var iconWidthConstraint: NSLayoutConstraint!
-    @IBOutlet weak var iconLabelSpacingConstraint: NSLayoutConstraint!
     
     var onToggle: ((Bool) -> Void)?
     

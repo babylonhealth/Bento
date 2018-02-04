@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="7po-j5-OIv" customClass="ButtonComponentView" customModule="Example" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="34"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nEd-Zf-Z8D">
+                    <rect key="frame" x="16" y="2" width="343" height="30"/>
+                    <state key="normal" title="Button"/>
+                    <connections>
+                        <action selector="buttonPressed:" destination="7po-j5-OIv" eventType="touchUpInside" id="WYE-87-uXh"/>
+                    </connections>
+                </button>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="nEd-Zf-Z8D" secondAttribute="bottom" constant="2" id="8CM-cw-d34"/>
+                <constraint firstItem="nEd-Zf-Z8D" firstAttribute="top" secondItem="7po-j5-OIv" secondAttribute="top" constant="2" id="Btk-Ek-Sq1"/>
+                <constraint firstItem="dhz-Jm-9Hd" firstAttribute="trailing" secondItem="nEd-Zf-Z8D" secondAttribute="trailing" constant="16" id="LFN-8Q-RXp"/>
+                <constraint firstItem="nEd-Zf-Z8D" firstAttribute="leading" secondItem="dhz-Jm-9Hd" secondAttribute="leading" constant="16" id="Lhk-ic-YmL"/>
+            </constraints>
+            <viewLayoutGuide key="safeArea" id="dhz-Jm-9Hd"/>
+            <connections>
+                <outlet property="button" destination="nEd-Zf-Z8D" id="TsV-RV-9Yd"/>
+            </connections>
+            <point key="canvasLocation" x="13" y="45"/>
+        </view>
+    </objects>
+</document>

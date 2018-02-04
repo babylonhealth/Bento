@@ -1,5 +1,5 @@
 PODS:
-  - FlexibleDiff (0.0.1)
+  - FlexibleDiff (0.0.3)
 
 DEPENDENCIES:
   - FlexibleDiff (from `https://github.com/RACCommunity/FlexibleDiff.git`, branch `sectioned-diffing`)
@@ -11,11 +11,11 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   FlexibleDiff:
-    :commit: f61d3b16dda32ae51be9edbe21974bce8ecbb20b
+    :commit: 5edfd7f597dd7ddf391238d8a0e468722ac92117
     :git: https://github.com/RACCommunity/FlexibleDiff.git
 
 SPEC CHECKSUMS:
-  FlexibleDiff: 48c762a802e9433bda618cf7f27b77bb74574dd8
+  FlexibleDiff: 11756a751062f462b3faae170abef7084c8b0c98
 
 PODFILE CHECKSUM: 1d297b934653bce0251a5b8bb4bd12f9063fdd92
 
