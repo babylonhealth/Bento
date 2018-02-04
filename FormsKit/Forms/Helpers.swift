@@ -17,6 +17,7 @@ extension UIView: NibLoadable {}
 
 extension UIView {
     func pinToEdges(of view: UIView) {
+        translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             view.topAnchor.constraint(equalTo: topAnchor),
             view.leftAnchor.constraint(equalTo: leftAnchor),
