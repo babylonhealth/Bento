@@ -1,8 +1,14 @@
 PODS:
   - FlexibleDiff (0.0.3)
+  - ReactiveFeedback (0.2.0):
+    - ReactiveSwift (~> 3.0)
+  - ReactiveSwift (3.1.0):
+    - Result (~> 3.2)
+  - Result (3.2.4)
 
 DEPENDENCIES:
   - FlexibleDiff (from `https://github.com/RACCommunity/FlexibleDiff.git`, branch `sectioned-diffing`)
+  - ReactiveFeedback
 
 EXTERNAL SOURCES:
   FlexibleDiff:
@@ -16,7 +22,10 @@ CHECKOUT OPTIONS:
 
 SPEC CHECKSUMS:
   FlexibleDiff: 11756a751062f462b3faae170abef7084c8b0c98
+  ReactiveFeedback: 082fab9a6d520d30fac366ec23817bfbd3a9214d
+  ReactiveSwift: 5b26d2e988fe0eed2daf48c4054d1de74db50184
+  Result: d2d07204ce72856f1fd9130bbe42c35a7b0fea10
 
-PODFILE CHECKSUM: 1d297b934653bce0251a5b8bb4bd12f9063fdd92
+PODFILE CHECKSUM: d725cdd7609501a87f08dcb9775e318c2ad222e7
 
 COCOAPODS: 1.4.0

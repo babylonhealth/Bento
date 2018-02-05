@@ -13,9 +13,9 @@ final class ButtonComponent: Renderable {
     private let buttonTitle: String
     private let onBattonPressed: () -> Void
     
-    init(buttonTitle: String, onBattonPressed: @escaping () -> Void) {
+    init(buttonTitle: String, onButtonPressed: @escaping () -> Void) {
         self.buttonTitle = buttonTitle
-        self.onBattonPressed = onBattonPressed
+        self.onBattonPressed = onButtonPressed
     }
     
     func render(in view: ButtonComponentView) {
