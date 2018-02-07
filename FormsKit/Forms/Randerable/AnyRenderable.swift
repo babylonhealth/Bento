@@ -1,10 +1,9 @@
 import UIKit
 
 final class AnyRenderable {
-
     let reuseIdentifier: String
-    let generator: () -> UIView
-    private let _render: (UIView) -> Void
+    private let generator: () -> UIView
+    private let render: (UIView) -> Void
 
     init<R: Renderable>(renderable: R) {
         self.reuseIdentifier = renderable.reuseIdentifier
@@ -14,10 +13,14 @@ final class AnyRenderable {
             case .nib: return R.View.loadFromNib()
             }
         }
-        self._render = { (view) in renderable.render(in: (view as! R.View)) }
+        self.render = { (view) in renderable.render(in: (view as! R.View)) }
     }
 
-    func render(in view: UIView) {
-        _render(view)
+    func render(view: UIView) {
+        self.render(view)
+    }
+
+    func generateView() -> UIView {
+        return generator()
     }
 }
