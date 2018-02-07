@@ -1,12 +1,12 @@
 Pod::Spec.new do |s|
 
-  s.name          = "FormsKit"
+  s.name          = "Forms"
   s.version       = "0.1"
   s.summary       = "Component based abstraction on top of UITableView and UICollectionView"
 
   s.description   = <<-DESC
                     Component-based abstraction on top of UITableView and UICollectionView.  
-                    Provides a declarative way to build UITableView and UICollectionView
+                    Provides a declarative way to render data in UITableView and UICollectionView
                     DESC
 
   s.homepage      = "https://github.com/Babylonpartners/FormsKit"
