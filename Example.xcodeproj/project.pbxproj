@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		515F94097C1F82B7E5C2DE0C /* Section.swift in Sources */ = {isa = PBXBuildFile; fileRef = 515F9EAF847DD1D68DE3A48C /* Section.swift */; };
+		581C0B282024A7100088EBE8 /* FormsKitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 581C0B272024A7100088EBE8 /* FormsKitTests.swift */; };
 		5829D269200FB092001E020D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5829D268200FB092001E020D /* AppDelegate.swift */; };
 		5829D26B200FB092001E020D /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5829D26A200FB092001E020D /* ViewController.swift */; };
 		5829D26E200FB092001E020D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5829D26C200FB092001E020D /* Main.storyboard */; };
@@ -37,6 +38,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		581C0B2A2024A7100088EBE8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5829D25D200FB092001E020D /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5829D264200FB092001E020D;
+			remoteInfo = Example;
+		};
 		58BA75612016303B0050D5F1 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 5829D25D200FB092001E020D /* Project object */;
@@ -63,6 +71,9 @@
 /* Begin PBXFileReference section */
 		05B3CD14D77ABE4568F782C7 /* Pods-FormsKit.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FormsKit.debug.xcconfig"; path = "Pods/Target Support Files/Pods-FormsKit/Pods-FormsKit.debug.xcconfig"; sourceTree = "<group>"; };
 		515F9EAF847DD1D68DE3A48C /* Section.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Section.swift; sourceTree = "<group>"; };
+		581C0B252024A7100088EBE8 /* FormsKitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FormsKitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		581C0B272024A7100088EBE8 /* FormsKitTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormsKitTests.swift; sourceTree = "<group>"; };
+		581C0B292024A7100088EBE8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5829D265200FB092001E020D /* Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5829D268200FB092001E020D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5829D26A200FB092001E020D /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -97,6 +108,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		581C0B222024A7100088EBE8 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		5829D262200FB092001E020D /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -125,11 +143,21 @@
 			path = Diff;
 			sourceTree = "<group>";
 		};
+		581C0B262024A7100088EBE8 /* FormsKitTests */ = {
+			isa = PBXGroup;
+			children = (
+				581C0B272024A7100088EBE8 /* FormsKitTests.swift */,
+				581C0B292024A7100088EBE8 /* Info.plist */,
+			);
+			path = FormsKitTests;
+			sourceTree = "<group>";
+		};
 		5829D25C200FB092001E020D = {
 			isa = PBXGroup;
 			children = (
 				5829D267200FB092001E020D /* Example */,
 				58BA755D2016303B0050D5F1 /* FormsKit */,
+				581C0B262024A7100088EBE8 /* FormsKitTests */,
 				5829D266200FB092001E020D /* Products */,
 				8A668AF20B1285F69E250C39 /* Pods */,
 				7D7D5AFB203495BA731D7A3E /* Frameworks */,
@@ -141,6 +169,7 @@
 			children = (
 				5829D265200FB092001E020D /* Example.app */,
 				58BA755C2016303B0050D5F1 /* FormsKit.framework */,
+				581C0B252024A7100088EBE8 /* FormsKitTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -266,6 +295,24 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
+		581C0B242024A7100088EBE8 /* FormsKitTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 581C0B2E2024A7100088EBE8 /* Build configuration list for PBXNativeTarget "FormsKitTests" */;
+			buildPhases = (
+				581C0B212024A7100088EBE8 /* Sources */,
+				581C0B222024A7100088EBE8 /* Frameworks */,
+				581C0B232024A7100088EBE8 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				581C0B2B2024A7100088EBE8 /* PBXTargetDependency */,
+			);
+			name = FormsKitTests;
+			productName = FormsKitTests;
+			productReference = 581C0B252024A7100088EBE8 /* FormsKitTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		5829D264200FB092001E020D /* Example */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 5829D277200FB092001E020D /* Build configuration list for PBXNativeTarget "Example" */;
@@ -318,6 +365,10 @@
 				LastUpgradeCheck = 0920;
 				ORGANIZATIONNAME = babylonhealth;
 				TargetAttributes = {
+					581C0B242024A7100088EBE8 = {
+						CreatedOnToolsVersion = 9.2;
+						ProvisioningStyle = Automatic;
+					};
 					5829D264200FB092001E020D = {
 						CreatedOnToolsVersion = 9.2;
 						ProvisioningStyle = Automatic;
@@ -344,11 +395,19 @@
 			targets = (
 				5829D264200FB092001E020D /* Example */,
 				58BA755B2016303B0050D5F1 /* FormsKit */,
+				581C0B242024A7100088EBE8 /* FormsKitTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		581C0B232024A7100088EBE8 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		5829D263200FB092001E020D /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -459,6 +518,14 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		581C0B212024A7100088EBE8 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				581C0B282024A7100088EBE8 /* FormsKitTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		5829D261200FB092001E020D /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -492,6 +559,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		581C0B2B2024A7100088EBE8 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 5829D264200FB092001E020D /* Example */;
+			targetProxy = 581C0B2A2024A7100088EBE8 /* PBXContainerItemProxy */;
+		};
 		58BA75622016303B0050D5F1 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 58BA755B2016303B0050D5F1 /* FormsKit */;
@@ -519,6 +591,32 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		581C0B2C2024A7100088EBE8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = FormsKitTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.babylonhealth.FormsKitTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		581C0B2D2024A7100088EBE8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = FormsKitTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.babylonhealth.FormsKitTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 		5829D275200FB092001E020D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -712,6 +810,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		581C0B2E2024A7100088EBE8 /* Build configuration list for PBXNativeTarget "FormsKitTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				581C0B2C2024A7100088EBE8 /* Debug */,
+				581C0B2D2024A7100088EBE8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		5829D260200FB092001E020D /* Build configuration list for PBXProject "Example" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
