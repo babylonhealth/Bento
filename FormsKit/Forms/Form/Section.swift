@@ -36,12 +36,6 @@ public struct Section<SectionId: Hashable, RowId: Hashable> {
         return rows.count
     }
 
-    func updateNode(in tableView: UITableView, at indexPath: IndexPath) {
-        guard let cell = tableView.cellForRow(at: indexPath) as? TableViewCell,
-            let containedView = cell.containedView else { return }
-        rows[indexPath.row].update(view: containedView)
-    }
-
     func updateHeader(view: UIView) {
         guard let headerView = view as? TableViewHeaderFooterView,
             let contentView = headerView.containedView else { return }
@@ -60,10 +54,6 @@ public struct Section<SectionId: Hashable, RowId: Hashable> {
 
     func renderFooter(in tableView: UITableView) -> UIView? {
         return footer?.render(in: tableView)
-    }
-
-    func renderCell(in tableView: UITableView, at index: Int) -> UITableViewCell {
-        return rows[index].renderCell(in: tableView)
     }
 }
 

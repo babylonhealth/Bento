@@ -46,8 +46,8 @@ struct SectionDiff<SectionId: Hashable, RowId: Hashable> {
     }
 
     private func apply(sectionMutations: [SectionedChangeset.MutatedSection],
-               to tableView: UITableView,
-               with animation: UITableViewRowAnimation) {
+                       to tableView: UITableView,
+                       with animation: UITableViewRowAnimation) {
         for sectionMutation in sectionMutations {
             tableView.deleteRows(at: sectionMutation.deletedIndexPaths, with: animation)
             tableView.insertRows(at: sectionMutation.insertedIndexPaths, with: animation)
@@ -57,8 +57,8 @@ struct SectionDiff<SectionId: Hashable, RowId: Hashable> {
                 sectionMutation.changeset.mutations.lazy.map { ($0, $0) }]
                 .joined()
                 .forEach { source, destination in
-                    let indexPath: IndexPath = [sectionMutation.source, source]
-                    newSections[sectionMutation.destination].updateNode(in: tableView, at: indexPath)
+                    guard let cell = tableView.cellForRow(at: [sectionMutation.source, source]) else { return }
+                    newSections[sectionMutation.destination][destination].render(in: cell)
                 }
         }
     }

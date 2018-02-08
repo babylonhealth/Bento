@@ -86,6 +86,8 @@ class ViewController: UIViewController {
                 |-+ ViewController.section(id: .second,
                                            headerSpec: EmptySpaceComponent.Spec(height: 20, color: .orange),
                                            footerSpec: EmptySpaceComponent.Spec(height: 20, color: .yellow))
+                |--+ ViewController.iconText(icon: #imageLiteral(resourceName:"wifi"),
+                                             text: "WIFI Off")
                 |--+ ViewController.toggle(isOn: true,
                                            title: "Airplane mode",
                                            icon: #imageLiteral(resourceName:"plane"),

@@ -16,6 +16,7 @@ final class SectionedFormAdapter<SectionId: Hashable, RowId: Hashable>
         tableView.delegate = self
     }
 
+
     func update(sections: [Section<SectionId, RowId>]) {
         guard let tableView = tableView else {
             return
@@ -34,7 +35,7 @@ final class SectionedFormAdapter<SectionId: Hashable, RowId: Hashable>
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        return sections[indexPath.section].renderCell(in: tableView, at: indexPath.row)
+        return node(at: indexPath).renderCell(in: tableView)
     }
 
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -43,5 +44,9 @@ final class SectionedFormAdapter<SectionId: Hashable, RowId: Hashable>
 
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         return sections[section].renderFooter(in: tableView)
+    }
+
+    private func node(at indexPath: IndexPath) -> Node<RowId> {
+        return sections[indexPath.section][indexPath.row]
     }
 }

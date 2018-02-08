@@ -15,8 +15,10 @@ public struct Node<Identifier: Hashable> {
         return component === other.component
     }
 
-    func update(view: UIView) {
-        component.render(in: view)
+    func render(in cell: UITableViewCell) {
+        guard let cell = cell as? TableViewCell,
+              let contentView = cell.containedView else { return }
+        component.render(in: contentView)
     }
 
     func renderCell(in tableView: UITableView) -> UITableViewCell {
