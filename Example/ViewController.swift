@@ -34,14 +34,12 @@ class ViewController: UIViewController {
 
     private func renderState() {
         switch self.state {
-        case .airplaneMode:
+        case .wifi:
             let form = Form<SectionId, RowId>.empty
                 |-+ ViewController.section(id: .first,
-                                           headerHeight: 20,
-                                           footerHeight: 20,
-                                           headerColor: .red,
-                                           footerColor: .green)
-                |--+ ViewController.toggle(isOn: true,
+                                           headerSpec: EmptySpaceComponent.Spec(height: 40, color: .red),
+                                           footerSpec: EmptySpaceComponent.Spec(height: 100, color: .green))
+                |--+ ViewController.toggle(isOn: false,
                                            title: "Airplane mode",
                                            icon: #imageLiteral(resourceName:"plane"),
                                            onToggle: { isOn in
@@ -54,11 +52,9 @@ class ViewController: UIViewController {
                 |--+ ViewController.iconText(icon: #imageLiteral(resourceName:"wifi"),
                                              text: "WIFI On")
                 |-+ ViewController.section(id: .second,
-                                           headerHeight: 30,
-                                           footerHeight: 50,
-                                           headerColor: .purple,
-                                           footerColor: .magenta)
-                |--+ ViewController.toggle(isOn: true,
+                                           headerSpec: EmptySpaceComponent.Spec(height: 30, color: .purple),
+                                           footerSpec: EmptySpaceComponent.Spec(height: 50, color: .magenta))
+                |--+ ViewController.toggle(isOn: false,
                                            title: "Airplane mode",
                                            icon: #imageLiteral(resourceName:"plane"),
                                            onToggle: { isOn in
@@ -69,17 +65,15 @@ class ViewController: UIViewController {
                                                }
                                            })
                 |--+ ViewController.iconText(icon: #imageLiteral(resourceName:"wifi"),
-                                             text: "WIFI on")
+                                             text: "WIFI On")
 
             form.render(in: tableView)
-        case .wifi:
+        case .airplaneMode:
             let form = Form<SectionId, RowId>.empty
                 |-+ ViewController.section(id: .first,
-                                           headerHeight: 20,
-                                           footerHeight: 20,
-                                           headerColor: .black,
-                                           footerColor: .cyan)
-                |--+ ViewController.toggle(isOn: false,
+                                           headerSpec: EmptySpaceComponent.Spec(height: 20, color: .black),
+                                           footerSpec: EmptySpaceComponent.Spec(height: 20, color: .cyan))
+                |--+ ViewController.toggle(isOn: true,
                                            title: "Airplane mode",
                                            icon: #imageLiteral(resourceName:"plane"),
                                            onToggle: { isOn in
@@ -90,11 +84,9 @@ class ViewController: UIViewController {
                                                }
                                            })
                 |-+ ViewController.section(id: .second,
-                                           headerHeight: 20,
-                                           footerHeight: 20,
-                                           headerColor: .orange,
-                                           footerColor: .yellow)
-                |--+ ViewController.toggle(isOn: false,
+                                           headerSpec: EmptySpaceComponent.Spec(height: 20, color: .orange),
+                                           footerSpec: EmptySpaceComponent.Spec(height: 20, color: .yellow))
+                |--+ ViewController.toggle(isOn: true,
                                            title: "Airplane mode",
                                            icon: #imageLiteral(resourceName:"plane"),
                                            onToggle: { isOn in
@@ -128,19 +120,17 @@ class ViewController: UIViewController {
     }
 
     private static func iconText(icon: UIImage?, text: String?) -> Node<RowId> {
-        let component = IconTextComponent(image: nil,
+        let component = IconTextComponent(image: icon,
                                           title: text)
 
         return Node(id: RowId.note, component: component)
     }
 
     private static func section(id: SectionId,
-                                headerHeight: CGFloat,
-                                footerHeight: CGFloat,
-                                headerColor: UIColor,
-                                footerColor: UIColor) -> Section<SectionId, RowId> {
-        let headerComponent = EmptySpaceComponent(height: headerHeight, color: headerColor)
-        let footerComponent = EmptySpaceComponent(height: footerHeight, color: footerColor)
+                                headerSpec: EmptySpaceComponent.Spec,
+                                footerSpec: EmptySpaceComponent.Spec) -> Section<SectionId, RowId> {
+        let headerComponent = EmptySpaceComponent(spec: headerSpec)
+        let footerComponent = EmptySpaceComponent(spec: footerSpec)
         return Section(id: id,
                        header: headerComponent,
                        footer: footerComponent)

@@ -38,10 +38,7 @@ public struct Section<SectionId: Hashable, RowId: Hashable> {
 
     func updateNode(in tableView: UITableView, at indexPath: IndexPath) {
         guard let cell = tableView.cellForRow(at: indexPath) as? TableViewCell,
-            let containedView = cell.containedView else {
-                assertionFailure()
-                return
-        }
+            let containedView = cell.containedView else { return }
         rows[indexPath.row].update(view: containedView)
     }
 
