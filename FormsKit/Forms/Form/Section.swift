@@ -2,9 +2,9 @@ import UIKit
 
 public struct Section<SectionId: Hashable, RowId: Hashable> {
     let id: SectionId
-    fileprivate let header: HeaderFooterNode?
-    fileprivate let footer: HeaderFooterNode?
-    fileprivate let rows: [Node<RowId>]
+    let header: HeaderFooterNode?
+    let footer: HeaderFooterNode?
+    let rows: [Node<RowId>]
 
     public init<Header: Renderable, Footer: Renderable>(id: SectionId,
                                                         header: Header? = nil,
@@ -30,30 +30,6 @@ public struct Section<SectionId: Hashable, RowId: Hashable> {
         let areHeadersEqual = header.zip(with: other.header, ==) ?? false
         let areFootersEqual = footer.zip(with: other.footer, ==) ?? false
         return areHeadersEqual && areFootersEqual
-    }
-
-    var rowsCount: Int {
-        return rows.count
-    }
-
-    func updateHeader(view: UIView) {
-        guard let headerView = view as? TableViewHeaderFooterView,
-            let contentView = headerView.containedView else { return }
-        header?.update(view: contentView)
-    }
-
-    func updateFooter(view: UIView) {
-        guard let headerView = view as? TableViewHeaderFooterView,
-            let contentView = headerView.containedView else { return }
-        footer?.update(view: contentView)
-    }
-
-    func renderHeader(in tableView: UITableView) -> UIView? {
-        return header?.render(in: tableView)
-    }
-
-    func renderFooter(in tableView: UITableView) -> UIView? {
-        return footer?.render(in: tableView)
     }
 }
 

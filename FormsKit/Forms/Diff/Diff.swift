@@ -25,6 +25,7 @@ struct SectionDiff<SectionId: Hashable, RowId: Hashable> {
                                       areElementsEqual: { (row1: Node<RowId>, row2: Node<RowId>) -> Bool in
                                           return row1.isEqual(to: row2)
                                       })
+//        print(diff)
         apply(diff: diff, to: tableView)
     }
 
@@ -46,8 +47,8 @@ struct SectionDiff<SectionId: Hashable, RowId: Hashable> {
     }
 
     private func apply(sectionMutations: [SectionedChangeset.MutatedSection],
-                       to tableView: UITableView,
-                       with animation: UITableViewRowAnimation) {
+               to tableView: UITableView,
+               with animation: UITableViewRowAnimation) {
         for sectionMutation in sectionMutations {
             tableView.deleteRows(at: sectionMutation.deletedIndexPaths, with: animation)
             tableView.insertRows(at: sectionMutation.insertedIndexPaths, with: animation)
@@ -57,8 +58,8 @@ struct SectionDiff<SectionId: Hashable, RowId: Hashable> {
                 sectionMutation.changeset.mutations.lazy.map { ($0, $0) }]
                 .joined()
                 .forEach { source, destination in
-                    guard let cell = tableView.cellForRow(at: [sectionMutation.source, source]) else { return }
-                    newSections[sectionMutation.destination][destination].render(in: cell)
+                    let indexPath: IndexPath = [sectionMutation.source, source]
+                    newSections[sectionMutation.destination].updateNode(in: tableView, at: indexPath)
                 }
         }
     }

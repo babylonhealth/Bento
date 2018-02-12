@@ -67,7 +67,7 @@ class ViewController: UIViewController {
                 |--+ ViewController.iconText(icon: #imageLiteral(resourceName:"wifi"),
                                              text: "WIFI On")
 
-            form.render(in: tableView)
+            tableView.render(form: form)
         case .airplaneMode:
             let form = Form<SectionId, RowId>.empty
                 |-+ ViewController.section(id: .first,
@@ -99,7 +99,7 @@ class ViewController: UIViewController {
                                                }
                                            })
 
-            form.render(in: tableView)
+            tableView.render(form: form)
         }
     }
 
