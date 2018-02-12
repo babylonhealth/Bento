@@ -11,7 +11,7 @@ public struct Node<Identifier: Hashable> {
         self.init(id: id, component: AnyRenderable(renderable: component))
     }
 
-    func isEqual(to other: Node) -> Bool {
+    func equals(to other: Node) -> Bool {
         return component === other.component
     }
 }

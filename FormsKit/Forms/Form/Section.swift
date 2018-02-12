@@ -26,7 +26,7 @@ public struct Section<SectionId: Hashable, RowId: Hashable> {
         self.rows = rows
     }
 
-    func isEqualTo(_ other: Section) -> Bool {
+    func equals(_ other: Section) -> Bool {
         let areHeadersEqual = header.zip(with: other.header, ==) ?? false
         let areFootersEqual = footer.zip(with: other.footer, ==) ?? false
         return areHeadersEqual && areFootersEqual

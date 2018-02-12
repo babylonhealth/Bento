@@ -17,13 +17,13 @@ struct TableViewSectionDiff<SectionId: Hashable, RowId: Hashable> {
                                           return section.id
                                       },
                                       areSectionsEqual: { (section1: Section<SectionId, RowId>, section2: Section<SectionId, RowId>) -> Bool in
-                                          return section1.isEqualTo(section2)
+                                          return section1.equals(section2)
                                       },
                                       elementIdentifier: { (row: Node<RowId>) -> RowId in
                                           return row.id
                                       },
                                       areElementsEqual: { (row1: Node<RowId>, row2: Node<RowId>) -> Bool in
-                                          return row1.isEqual(to: row2)
+                                          return row1.equals(to: row2)
                                       })
         apply(diff: diff, to: tableView)
     }
