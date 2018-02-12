@@ -7,12 +7,38 @@ public struct Section<SectionId: Hashable, RowId: Hashable> {
     let rows: [Node<RowId>]
 
     public init<Header: Renderable, Footer: Renderable>(id: SectionId,
-                                                        header: Header? = nil,
-                                                        footer: Footer? = nil,
+                                                        header: Header,
+                                                        footer: Footer,
                                                         rows: [Node<RowId>] = []) {
         self.id = id
-        self.header = header.map(HeaderFooterNode.init)
-        self.footer = footer.map(HeaderFooterNode.init)
+        self.header = HeaderFooterNode(component: header)
+        self.footer = HeaderFooterNode(component: footer)
+        self.rows = rows
+    }
+
+    public init<Header: Renderable>(id: SectionId,
+                                    header: Header,
+                                    rows: [Node<RowId>] = []) {
+        self.id = id
+        self.header = HeaderFooterNode(component: header)
+        self.footer = nil
+        self.rows = rows
+    }
+
+    public init<Footer: Renderable>(id: SectionId,
+                                    footer: Footer,
+                                    rows: [Node<RowId>] = []) {
+        self.id = id
+        self.header = nil
+        self.footer = HeaderFooterNode(component: footer)
+        self.rows = rows
+    }
+
+    public init(id: SectionId,
+                rows: [Node<RowId>] = []) {
+        self.id = id
+        self.header = nil
+        self.footer = nil
         self.rows = rows
     }
 
