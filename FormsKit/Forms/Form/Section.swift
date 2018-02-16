@@ -2,9 +2,9 @@ import UIKit
 
 public struct Section<SectionId: Hashable, RowId: Hashable> {
     let id: SectionId
-    fileprivate let header: HeaderFooterNode?
-    fileprivate let footer: HeaderFooterNode?
-    fileprivate let rows: [Node<RowId>]
+    let header: HeaderFooterNode?
+    let footer: HeaderFooterNode?
+    let rows: [Node<RowId>]
 
     public init<Header: Renderable, Footer: Renderable>(id: SectionId,
                                                         header: Header,
@@ -15,7 +15,7 @@ public struct Section<SectionId: Hashable, RowId: Hashable> {
         self.footer = HeaderFooterNode(component: footer)
         self.rows = rows
     }
-    
+
     public init<Header: Renderable>(id: SectionId,
                                     header: Header,
                                     rows: [Node<RowId>] = []) {
@@ -24,7 +24,7 @@ public struct Section<SectionId: Hashable, RowId: Hashable> {
         self.footer = nil
         self.rows = rows
     }
-    
+
     public init<Footer: Renderable>(id: SectionId,
                                     footer: Footer,
                                     rows: [Node<RowId>] = []) {
@@ -33,7 +33,7 @@ public struct Section<SectionId: Hashable, RowId: Hashable> {
         self.footer = HeaderFooterNode(component: footer)
         self.rows = rows
     }
-    
+
     public init(id: SectionId,
                 rows: [Node<RowId>] = []) {
         self.id = id
@@ -52,47 +52,10 @@ public struct Section<SectionId: Hashable, RowId: Hashable> {
         self.rows = rows
     }
 
-    func isEqualTo(_ other: Section) -> Bool {
+    func equals(_ other: Section) -> Bool {
         let areHeadersEqual = header.zip(with: other.header, ==) ?? false
         let areFootersEqual = footer.zip(with: other.footer, ==) ?? false
         return areHeadersEqual && areFootersEqual
-    }
-
-    var rowsCount: Int {
-        return rows.count
-    }
-
-    func updateNode(in tableView: UITableView, at indexPath: IndexPath) {
-        guard let cell = tableView.cellForRow(at: indexPath) as? TableViewCell,
-            let containedView = cell.containedView else {
-                assertionFailure()
-                return
-        }
-        rows[indexPath.row].update(view: containedView)
-    }
-
-    func updateHeader(view: UIView) {
-        guard let headerView = view as? TableViewHeaderFooterView,
-            let contentView = headerView.containedView else { return }
-        header?.update(view: contentView)
-    }
-
-    func updateFooter(view: UIView) {
-        guard let headerView = view as? TableViewHeaderFooterView,
-            let contentView = headerView.containedView else { return }
-        footer?.update(view: contentView)
-    }
-
-    func renderHeader(in tableView: UITableView) -> UIView? {
-        return header?.render(in: tableView)
-    }
-
-    func renderFooter(in tableView: UITableView) -> UIView? {
-        return footer?.render(in: tableView)
-    }
-
-    func renderCell(in tableView: UITableView, at index: Int) -> UITableViewCell {
-        return rows[index].renderCell(in: tableView)
     }
 }
 
@@ -111,12 +74,6 @@ extension Section: Collection {
 
     public subscript(position: Int) -> Node<RowId> {
         return rows[position]
-    }
-}
-
-extension Section: CustomStringConvertible {
-    public var description: String {
-        return "Section: \(id) rows: \(rows)\n"
     }
 }
 

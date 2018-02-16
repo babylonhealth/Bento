@@ -120,26 +120,26 @@ final class BookAppointmentViewModel {
         private func renderLoading() -> Form<SectionId, RowId> {
             return Form<SectionId, RowId>.empty
                 |-+ Section(id: SectionId.user,
-                            header: EmptySpaceComponent(height: 24, color: .clear))
+                            header: EmptySpaceComponent(spec: EmptySpaceComponent.Spec(height: 20, color: .clear)))
                 |--+ Node(id: RowId.user,
                           component: IconTitleDetailsComponent(icon: #imageLiteral(resourceName:"chuck_norris_walker"),
                                                                title: "\(patient.firstName) \(patient.lastName)",
                             subtitle: ""))
                 |-+ Section(id: SectionId.consultantDate,
-                            header: EmptySpaceComponent(height: 24, color: .clear))
+                            header: EmptySpaceComponent(spec: EmptySpaceComponent.Spec(height: 20, color: .clear)))
                 |--+ Node(id: RowId.loading, component: LoadingIndicatorComponent(isLoading: true))
         }
 
         private func render(appointment: Appointment) -> Form<SectionId, RowId> {
             return Form<SectionId, RowId>.empty
                 |-+ Section(id: SectionId.user,
-                            header: EmptySpaceComponent(height: 24, color: .clear))
+                            header: EmptySpaceComponent(spec: EmptySpaceComponent.Spec(height: 20, color: .clear)))
                 |--+ Node(id: RowId.user,
                           component: IconTitleDetailsComponent(icon: #imageLiteral(resourceName:"chuck_norris_walker"),
                                                                title: "\(patient.firstName) \(patient.lastName)",
                                                                subtitle: ""))
                 |-+ Section(id: SectionId.consultantDate,
-                            header: EmptySpaceComponent(height: 24, color: .clear))
+                            header: EmptySpaceComponent(spec: EmptySpaceComponent.Spec(height: 20, color: .clear)))
                 |--+ Node(id: RowId.consultant,
                           component: IconTitleDetailsComponent(icon: #imageLiteral(resourceName:"consultantIcon"),
                                                                title: "Consultant type",
@@ -149,14 +149,14 @@ final class BookAppointmentViewModel {
                                                                title: "Date & time",
                                                                subtitle: dateFormatter.string(from: appointment.date)))
                 |-+ Section(id: SectionId.audioVideo,
-                            header: EmptySpaceComponent(height: 24, color: .clear))
+                            header: EmptySpaceComponent(spec: EmptySpaceComponent.Spec(height: 20, color: .clear)))
                 |--+ Node(id: RowId.audioVideo,
                           component: SegmetControlComponent(firstIcon: #imageLiteral(resourceName:"video"),
                                                             secondIcon: #imageLiteral(resourceName:"phone"),
                                                             selectedIndex: appointment.appointmentType == .video ? 0 : 1,
                                                             onSegmentSelected: { print("Selected index", $0) }))
                 |-+ Section(id: SectionId.audioVideo,
-                            header: EmptySpaceComponent(height: 24, color: .clear))
+                            header: EmptySpaceComponent(spec: EmptySpaceComponent.Spec(height: 20, color: .clear)))
                 |-+ Section(id: SectionId.audioVideo,
                             header: ButtonComponent(buttonTitle: "Book",
                                                     onButtonPressed: {
@@ -204,11 +204,5 @@ extension DateFormatter {
     convenience init(format: String) {
         self.init()
         self.dateFormat = format
-    }
-}
-
-extension UITableView {
-    func render<SectionId, RowId>(form: Form<SectionId, RowId>) {
-        form.render(in: self)
     }
 }
