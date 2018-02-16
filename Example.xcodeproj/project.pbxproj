@@ -23,6 +23,9 @@
 		5829D26E200FB092001E020D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5829D26C200FB092001E020D /* Main.storyboard */; };
 		5829D270200FB092001E020D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5829D26F200FB092001E020D /* Assets.xcassets */; };
 		5829D273200FB092001E020D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5829D271200FB092001E020D /* LaunchScreen.storyboard */; };
+		586584122037352C006DFD34 /* MoviesListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 586584112037352C006DFD34 /* MoviesListViewController.swift */; };
+		5865841620373E1B006DFD34 /* MovieComponentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5865841520373E1B006DFD34 /* MovieComponentView.swift */; };
+		5865841820373E8D006DFD34 /* MovieComponentView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5865841720373E8D006DFD34 /* MovieComponentView.xib */; };
 		587F0718201B355800ACD219 /* TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 587F0717201B355800ACD219 /* TableViewCell.swift */; };
 		58BA75602016303B0050D5F1 /* FormsKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 58BA755E2016303B0050D5F1 /* FormsKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		58BA75632016303B0050D5F1 /* FormsKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 58BA755C2016303B0050D5F1 /* FormsKit.framework */; };
@@ -89,6 +92,9 @@
 		5829D26F200FB092001E020D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		5829D272200FB092001E020D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		5829D274200FB092001E020D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		586584112037352C006DFD34 /* MoviesListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoviesListViewController.swift; sourceTree = "<group>"; };
+		5865841520373E1B006DFD34 /* MovieComponentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieComponentView.swift; sourceTree = "<group>"; };
+		5865841720373E8D006DFD34 /* MovieComponentView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MovieComponentView.xib; sourceTree = "<group>"; };
 		587F0717201B355800ACD219 /* TableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewCell.swift; sourceTree = "<group>"; };
 		58BA755C2016303B0050D5F1 /* FormsKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = FormsKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		58BA755E2016303B0050D5F1 /* FormsKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FormsKit.h; sourceTree = "<group>"; };
@@ -170,6 +176,7 @@
 				5829D268200FB092001E020D /* AppDelegate.swift */,
 				5829D26A200FB092001E020D /* ViewController.swift */,
 				25224C7C20265B5300B740CC /* BookAppointmentViewController.swift */,
+				586584112037352C006DFD34 /* MoviesListViewController.swift */,
 				5829D26C200FB092001E020D /* Main.storyboard */,
 				5829D26F200FB092001E020D /* Assets.xcassets */,
 				5829D271200FB092001E020D /* LaunchScreen.storyboard */,
@@ -227,6 +234,8 @@
 				25224C8B20266F9E00B740CC /* ButtonComponentView.xib */,
 				581C0B372028B2770088EBE8 /* LoadingIndicatorView.swift */,
 				581C0B352028B1B00088EBE8 /* LoadingIndicatorView.xib */,
+				5865841520373E1B006DFD34 /* MovieComponentView.swift */,
+				5865841720373E8D006DFD34 /* MovieComponentView.xib */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -387,6 +396,7 @@
 				5829D26E200FB092001E020D /* Main.storyboard in Resources */,
 				58E98E5C2016571F00F78BAE /* ToggleCell.xib in Resources */,
 				58E98E5B2016571F00F78BAE /* IconTextCell.xib in Resources */,
+				5865841820373E8D006DFD34 /* MovieComponentView.xib in Resources */,
 				581C0B362028B1B00088EBE8 /* LoadingIndicatorView.xib in Resources */,
 				25224C8C20266F9E00B740CC /* ButtonComponentView.xib in Resources */,
 				25224C8820266A2800B740CC /* SegmetControlView.xib in Resources */,
@@ -459,6 +469,8 @@
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-Example/Pods-Example-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/FlexibleDiff/FlexibleDiff.framework",
+				"${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework",
+				"${BUILT_PRODUCTS_DIR}/ReactiveCocoa/ReactiveCocoa.framework",
 				"${BUILT_PRODUCTS_DIR}/ReactiveFeedback/ReactiveFeedback.framework",
 				"${BUILT_PRODUCTS_DIR}/ReactiveSwift/ReactiveSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/Result/Result.framework",
@@ -466,6 +478,8 @@
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FlexibleDiff.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Kingfisher.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ReactiveCocoa.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ReactiveFeedback.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ReactiveSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Result.framework",
@@ -501,6 +515,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5829D26B200FB092001E020D /* ViewController.swift in Sources */,
+				5865841620373E1B006DFD34 /* MovieComponentView.swift in Sources */,
 				581C0B382028B2770088EBE8 /* LoadingIndicatorView.swift in Sources */,
 				25224C8A20266F7B00B740CC /* ButtonComponentView.swift in Sources */,
 				58E98E5D2016571F00F78BAE /* ToggleCell.swift in Sources */,
@@ -508,6 +523,7 @@
 				25224C8620266A0E00B740CC /* SegmetControlView.swift in Sources */,
 				5829D269200FB092001E020D /* AppDelegate.swift in Sources */,
 				58E98E602016571F00F78BAE /* IconTextCell.swift in Sources */,
+				586584122037352C006DFD34 /* MoviesListViewController.swift in Sources */,
 				25224C7D20265B5300B740CC /* BookAppointmentViewController.swift in Sources */,
 				25224C8220265F6F00B740CC /* IconTitleDetailsView.swift in Sources */,
 			);

@@ -39,7 +39,38 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Z8Y-ft-kkq" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-335.19999999999999" y="292.80359820089956"/>
+            <point key="canvasLocation" x="-332" y="-39"/>
+        </scene>
+        <!--Item-->
+        <scene sceneID="sTv-Y1-NuI">
+            <objects>
+                <viewController id="PRy-Vb-AeU" customClass="MoviesListViewController" customModule="Example" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="I0i-Rp-zgu">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="xTR-mu-uQj">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="618"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="wq0-Nx-ZID" firstAttribute="top" secondItem="xTR-mu-uQj" secondAttribute="top" constant="20" id="5uz-xV-GoE"/>
+                            <constraint firstItem="wq0-Nx-ZID" firstAttribute="trailing" secondItem="xTR-mu-uQj" secondAttribute="trailing" id="QRz-to-WMi"/>
+                            <constraint firstItem="xTR-mu-uQj" firstAttribute="leading" secondItem="wq0-Nx-ZID" secondAttribute="leading" id="QxS-jL-Fp3"/>
+                            <constraint firstItem="wq0-Nx-ZID" firstAttribute="bottom" secondItem="xTR-mu-uQj" secondAttribute="bottom" id="mlG-J5-rqM"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="wq0-Nx-ZID"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Item" id="dQy-mc-Vp6"/>
+                    <connections>
+                        <outlet property="tableView" destination="xTR-mu-uQj" id="vCX-TK-4pu"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="tF8-NG-Drt" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-332" y="653.52323838080963"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="TYg-2B-yFr">
@@ -53,6 +84,7 @@
                     <connections>
                         <segue destination="Jbv-fa-nMA" kind="relationship" relationship="viewControllers" id="cX3-vF-hPE"/>
                         <segue destination="Oya-eA-AAR" kind="relationship" relationship="viewControllers" id="LZH-43-MBN"/>
+                        <segue destination="PRy-Vb-AeU" kind="relationship" relationship="viewControllers" id="wEh-Q6-b9y"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zmd-KD-IGq" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -88,7 +120,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="G1c-W3-cMi" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-335" y="-493"/>
+            <point key="canvasLocation" x="-332" y="-710"/>
         </scene>
     </scenes>
 </document>

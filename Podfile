@@ -6,6 +6,8 @@ target 'Example' do
   use_frameworks!
   pod "FlexibleDiff", :git => 'https://github.com/RACCommunity/FlexibleDiff.git', :branch => 'sectioned-diffing'
   pod "ReactiveFeedback"
+  pod "ReactiveCocoa"
+  pod "Kingfisher"
 end
 
 target 'FormsKit' do
