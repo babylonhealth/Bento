@@ -13,8 +13,13 @@ final class MoviesListViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        viewModel.form.producer.startWithValues(tableView.render)
+        
+        tableView.sectionHeaderHeight = 0
+        tableView.sectionFooterHeight = 0
+        viewModel.form.producer.take(first: 1).startWithValues(tableView.render)
+        viewModel.form.producer.skip(first: 1).startWithValues { [tableView] in
+            tableView?.render(form: $0, animated: false)
+        }
         viewModel.nearBottomBinding <~ tableView!.rac_nearBottomSignal
         viewModel.retryBinding <~ retrySignal
         viewModel.errors.producer
@@ -102,7 +107,7 @@ final class PaginationViewModel {
                     .map(Event.response)
                     .flatMapError { error in
                         SignalProducer(value: Event.failed(error))
-                    }.observe(on: UIScheduler())
+                    }
             }
         }
 
@@ -196,6 +201,8 @@ final class PaginationViewModel {
                 return context.batch.page + 1
             case .refreshed(context:let context):
                 return context.batch.page + 1
+            case .initial:
+                return 1
             default:
                 return nil
             }
@@ -361,7 +368,7 @@ extension URLSession {
     func fetchMovies(page: Int) -> SignalProducer<Results, NSError> {
         return SignalProducer.init({ (observer, lifetime) in
             let url = URL(string: "https://api.themoviedb.org/3/discover/movie?api_key=\(shouldFail ? apiKey : correctKey)&sort_by=popularity.desc&page=\(page)")!
-            switchFail()
+//            switchFail()
             let task = self.dataTask(with: url, completionHandler: { (data, response, error) in
                 if let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 401 {
                     let error = NSError(domain: "come.reactivefeedback",

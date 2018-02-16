@@ -20,6 +20,29 @@ public func |-+<SectionId, RowId>(lhs: Form<SectionId, RowId>, rhs: Section<Sect
 extension UITableView {
     public func render<SectionId, RowId>(form: Form<SectionId, RowId>) {
         let adapter: SectionedFormAdapter<SectionId, RowId> = getAdapter()
-        adapter.update(sections: form.sections)
+        let animation = TableViewAnimation(sectionInsertion: .fade,
+                                           sectionDeletion: .fade,
+                                           rowDeletion: .fade,
+                                           rowInsertion: .fade)
+        adapter.update(sections: form.sections, with: animation)
+    }
+
+    public func render<SectionId, RowId>(form: Form<SectionId, RowId>, animated: Bool = true) {
+        let adapter: SectionedFormAdapter<SectionId, RowId> = getAdapter()
+        if animated {
+            let animation = TableViewAnimation(sectionInsertion: .fade,
+                                               sectionDeletion: .fade,
+                                               rowDeletion: .fade,
+                                               rowInsertion: .fade)
+            adapter.update(sections: form.sections, with: animation)
+        } else {
+            adapter.update(sections: form.sections)
+        }
+    }
+
+    public func render<SectionId, RowId>(form: Form<SectionId, RowId>, with animation: TableViewAnimation) {
+        let adapter: SectionedFormAdapter<SectionId, RowId> = getAdapter()
+
+        adapter.update(sections: form.sections, with: animation)
     }
 }

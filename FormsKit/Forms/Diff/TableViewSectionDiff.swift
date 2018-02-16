@@ -4,10 +4,14 @@ import FlexibleDiff
 struct TableViewSectionDiff<SectionId: Hashable, RowId: Hashable> {
     private let oldSections: [Section<SectionId, RowId>]
     private let newSections: [Section<SectionId, RowId>]
+    private let animation: TableViewAnimation
 
-    init(oldSections: [Section<SectionId, RowId>], newSections: [Section<SectionId, RowId>]) {
+    init(oldSections: [Section<SectionId, RowId>],
+         newSections: [Section<SectionId, RowId>],
+         animation: TableViewAnimation) {
         self.oldSections = oldSections
         self.newSections = newSections
+        self.animation = animation
     }
 
     func apply(to tableView: UITableView) {
@@ -40,19 +44,19 @@ struct TableViewSectionDiff<SectionId: Hashable, RowId: Hashable> {
                 update(view: footerView, with: node)
             }
         }
-        tableView.insertSections(diff.sections.inserts, with: .fade)
-        tableView.deleteSections(diff.sections.removals, with: .fade)
-        apply(sectionMutations: diff.mutatedSections, to: tableView, with: .fade)
+        tableView.insertSections(diff.sections.inserts, with: animation.sectionInsertion)
+        tableView.deleteSections(diff.sections.removals, with: animation.sectionDeletion)
+        apply(sectionMutations: diff.mutatedSections, to: tableView, with: animation)
         tableView.moveSections(diff.sections.moves)
         tableView.endUpdates()
     }
 
     private func apply(sectionMutations: [SectionedChangeset.MutatedSection],
                        to tableView: UITableView,
-                       with animation: UITableViewRowAnimation) {
+                       with animation: TableViewAnimation) {
         for sectionMutation in sectionMutations {
-            tableView.deleteRows(at: sectionMutation.deletedIndexPaths, with: animation)
-            tableView.insertRows(at: sectionMutation.insertedIndexPaths, with: animation)
+            tableView.deleteRows(at: sectionMutation.deletedIndexPaths, with: animation.rowDeletion)
+            tableView.insertRows(at: sectionMutation.insertedIndexPaths, with: animation.rowInsertion)
             tableView.perform(moves: sectionMutation.movedIndexPaths)
             [sectionMutation.changeset.moves.lazy
                 .flatMap { $0.isMutated ? ($0.source, $0.destination) : nil },

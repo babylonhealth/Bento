@@ -1,6 +1,23 @@
 import UIKit
 import FlexibleDiff
 
+public struct TableViewAnimation {
+    let sectionInsertion: UITableViewRowAnimation
+    let sectionDeletion: UITableViewRowAnimation
+    let rowDeletion: UITableViewRowAnimation
+    let rowInsertion: UITableViewRowAnimation
+
+    public init(sectionInsertion: UITableViewRowAnimation,
+                sectionDeletion: UITableViewRowAnimation,
+                rowDeletion: UITableViewRowAnimation,
+                rowInsertion: UITableViewRowAnimation) {
+        self.sectionInsertion = sectionInsertion
+        self.sectionDeletion = sectionDeletion
+        self.rowDeletion = rowDeletion
+        self.rowInsertion = rowInsertion
+    }
+}
+
 final class SectionedFormAdapter<SectionId: Hashable, RowId: Hashable>
     : NSObject,
       UITableViewDataSource,
@@ -17,13 +34,20 @@ final class SectionedFormAdapter<SectionId: Hashable, RowId: Hashable>
     }
 
 
-    func update(sections: [Section<SectionId, RowId>]) {
+    func update(sections: [Section<SectionId, RowId>], with animation: TableViewAnimation) {
         guard let tableView = tableView else {
             return
         }
-        let diff = TableViewSectionDiff(oldSections: self.sections, newSections: sections)
+        let diff = TableViewSectionDiff(oldSections: self.sections,
+                                        newSections: sections,
+                                        animation: animation)
         self.sections = sections
         diff.apply(to: tableView)
+    }
+
+    func update(sections: [Section<SectionId, RowId>]) {
+        self.sections = sections
+        tableView?.reloadData()
     }
 
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -55,21 +79,21 @@ final class SectionedFormAdapter<SectionId: Hashable, RowId: Hashable>
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         return sections[section].header
             .map {
-                return self.render(node: $0, in: tableView)
-            }
+            return self.render(node: $0, in: tableView)
+        }
     }
 
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         return sections[section].footer
             .map {
-                return self.render(node: $0, in: tableView)
-            }
+            return self.render(node: $0, in: tableView)
+        }
     }
 
     private func node(at indexPath: IndexPath) -> Node<RowId> {
         return sections[indexPath.section][indexPath.row]
     }
-    
+
     private func render(node: HeaderFooterNode, in tableView: UITableView) -> UIView {
         guard let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: node.component.reuseIdentifier) as? TableViewHeaderFooterView else {
             tableView.register(TableViewHeaderFooterView.self, forHeaderFooterViewReuseIdentifier: node.component.reuseIdentifier)
