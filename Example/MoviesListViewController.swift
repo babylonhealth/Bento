@@ -13,7 +13,7 @@ final class MoviesListViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         tableView.sectionHeaderHeight = 0
         tableView.sectionFooterHeight = 0
         viewModel.form.producer.take(first: 1).startWithValues(tableView.render)
@@ -22,11 +22,6 @@ final class MoviesListViewController: UIViewController {
         }
         viewModel.nearBottomBinding <~ tableView!.rac_nearBottomSignal
         viewModel.retryBinding <~ retrySignal
-        viewModel.errors.producer
-            .skipNil()
-            .startWithValues { [weak self] in
-                self?.showAlert(for: $0)
-            }
     }
 
     func showAlert(for error: NSError) {
@@ -49,11 +44,8 @@ final class PaginationViewModel {
     }
     private let nearBottomObserver: Signal<Void, NoError>.Observer
     private let retryObserver: Signal<Void, NoError>.Observer
-
     private let stateProperty: Property<State>
     private let renderer = Renderer()
-    let errors: Property<NSError?>
-    let refreshing: Property<Bool>
     let form: Property<Form<Renderer.SectionId, Int>>
 
     var nearBottomBinding: BindingTarget<Void> {
@@ -72,10 +64,10 @@ final class PaginationViewModel {
         let (nearBottomSignal, nearBottomObserver) = Signal<Void, NoError>.pipe()
         let (retrySignal, retryObserver) = Signal<Void, NoError>.pipe()
         let feedbacks = [
-            Feedbacks.loadNextFeedback(for: nearBottomSignal),
-            Feedbacks.pagingFeedback(),
-            Feedbacks.retryFeedback(for: retrySignal),
-            Feedbacks.retryPagingFeedback()
+            PaginationViewModel.whenPaging(nearBottomSignal: nearBottomSignal),
+            PaginationViewModel.pagingFeedback(),
+            PaginationViewModel.whenError(retrySignal: retrySignal),
+            PaginationViewModel.whenRetry()
         ]
 
         self.stateProperty = Property(initial: State.initial,
@@ -87,44 +79,48 @@ final class PaginationViewModel {
                                  .filterMap { $0.newMovies }
                                  .map(renderer.render))
 
-        self.errors = stateProperty.map { $0.lastError }
-        self.refreshing = stateProperty.map { $0.isRefreshing }
         self.nearBottomObserver = nearBottomObserver
         self.retryObserver = retryObserver
     }
 
-    enum Feedbacks {
-        static func loadNextFeedback(for nearBottomSignal: Signal<Void, NoError>) -> Feedback<State, Event> {
-            return Feedback(predicate: { !$0.paging }) { _ in
-                nearBottomSignal
-                    .map { Event.startLoadingNextPage }
+    static func whenPaging(nearBottomSignal: Signal<Void, NoError>) -> Feedback<State, Event> {
+        return Feedback { state -> Signal<Event, NoError> in
+            if case .paging = state {
+                return .empty
             }
+            return nearBottomSignal
+                .map { _ in
+                    return Event.startLoadingNextPage
+                }
         }
+    }
 
-        static func pagingFeedback() -> Feedback<State, Event> {
-            return Feedback<State, Event>(query: { $0.nextPage }) { (nextPage) -> SignalProducer<Event, NoError> in
-                URLSession.shared.fetchMovies(page: nextPage)
-                    .map(Event.response)
-                    .flatMapError { error in
-                        SignalProducer(value: Event.failed(error))
-                    }
-            }
+
+    static func pagingFeedback() -> Feedback<State, Event> {
+        return Feedback<State, Event>(query: { $0.nextPage }) { (nextPage) -> SignalProducer<Event, NoError> in
+            URLSession.shared.fetchMovies(page: nextPage)
+                .map(Event.response)
+                .flatMapError { error in
+                    SignalProducer(value: Event.failed(error))
+                }
         }
+    }
 
-        static func retryFeedback(for retrySignal: Signal<Void, NoError>) -> Feedback<State, Event> {
-            return Feedback<State, Event>(query: { $0.lastError }) { _ -> Signal<Event, NoError> in
-                retrySignal.map { Event.retry }
-            }
+    static func whenError(retrySignal: Signal<Void, NoError>) -> Feedback<State, Event> {
+        return Feedback { state -> Signal<Event, NoError> in
+            guard case .error = state else { return .empty }
+            return retrySignal.map { Event.retry }
         }
+    }
 
-        static func retryPagingFeedback() -> Feedback<State, Event> {
-            return Feedback<State, Event>(query: { $0.retryPage }) { (nextPage) -> SignalProducer<Event, NoError> in
-                URLSession.shared.fetchMovies(page: nextPage)
-                    .map(Event.response)
-                    .flatMapError { error in
-                        SignalProducer(value: Event.failed(error))
-                    }.observe(on: UIScheduler())
-            }
+    static func whenRetry() -> Feedback<State, Event> {
+        return Feedback { state -> SignalProducer<Event, NoError> in
+            guard case .retry(let context) = state else { return .empty }
+            return URLSession.shared.fetchMovies(page: context.batch.page + 1)
+                .map(Event.response)
+                .flatMapError { error in
+                    return SignalProducer(value: Event.failed(error))
+                }
         }
     }
 
@@ -178,23 +174,6 @@ final class PaginationViewModel {
             }
         }
 
-        var movies: [Movie] {
-            return context.movies
-        }
-
-        var batch: Results {
-            return context.batch
-        }
-
-        var refreshPage: Int? {
-            switch self {
-            case .refreshing:
-                return nil
-            default:
-                return 1
-            }
-        }
-
         var nextPage: Int? {
             switch self {
             case .paging(context:let context):
@@ -205,42 +184,6 @@ final class PaginationViewModel {
                 return 1
             default:
                 return nil
-            }
-        }
-
-        var retryPage: Int? {
-            switch self {
-            case .retry(context:let context):
-                return context.batch.page + 1
-            default:
-                return nil
-            }
-        }
-
-        var lastError: NSError? {
-            switch self {
-            case .error(error:let error, context:_):
-                return error
-            default:
-                return nil
-            }
-        }
-
-        var isRefreshing: Bool {
-            switch self {
-            case .refreshing:
-                return true
-            default:
-                return false
-            }
-        }
-
-        var paging: Bool {
-            switch self {
-            case .paging:
-                return true
-            default:
-                return false
             }
         }
 
