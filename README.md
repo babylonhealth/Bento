@@ -143,4 +143,10 @@ Feature | Status
 
 ### Contribute
 
-TODO
+Contributions are very welcome and highly appreciated ❤️  
+
+How to contribute: 
+
+- If you have any questions feel free to create  an issue with a `question` label
+- If you have a feature request create an issue with a `Feature request` label
+- If you found a bug feel free to create an issue with a `bug` label or open a PR with a fix.
