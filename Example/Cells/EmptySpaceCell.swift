@@ -6,13 +6,22 @@ final class EmptySpaceCell: UIView {
 }
 
 final class EmptySpaceComponent: Renderable {
-    private let height: CGFloat
+    struct Spec {
+        let height: CGFloat
+        let color: UIColor
+    }
+    private let spec: Spec
 
-    init(height: CGFloat) {
-        self.height = height
+    init(spec: Spec) {
+        self.spec = spec
     }
 
     func render(in view: EmptySpaceCell) {
-        view.heightConstraint.constant = height
+        let animation = CABasicAnimation(keyPath: "backgroundColor")
+        animation.fromValue = view.layer.backgroundColor
+        animation.toValue = spec.color.cgColor
+        view.heightConstraint.constant = spec.height
+        view.layer.add(animation, forKey: nil)
+        view.layer.backgroundColor = spec.color.cgColor
     }
 }

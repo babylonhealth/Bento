@@ -1,6 +1,6 @@
 public struct Node<Identifier: Hashable> {
     let id: Identifier
-    private let component: AnyRenderable
+    let component: AnyRenderable
 
     init(id: Identifier, component: AnyRenderable) {
         self.id = id
@@ -11,20 +11,8 @@ public struct Node<Identifier: Hashable> {
         self.init(id: id, component: AnyRenderable(renderable: component))
     }
 
-    func renderCell(in tableView: UITableView) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: component.reuseIdentifier) as? TableViewCell else {
-            tableView.register(TableViewCell.self, forCellReuseIdentifier: component.reuseIdentifier)
-            return renderCell(in: tableView)
-        }
-        let componentView: UIView
-        if let containedView = cell.containedView {
-            componentView = containedView
-        } else {
-            componentView = component.generateView()
-            cell.install(view: componentView)
-        }
-        component.render(view: componentView)
-        return cell
+    func equals(to other: Node) -> Bool {
+        return component === other.component
     }
 }
 

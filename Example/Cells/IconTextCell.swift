@@ -9,20 +9,11 @@ final class IconTextCell: UITableViewCell {
 class IconTextComponent: Renderable {
     private let title: String?
     private let image: UIImage?
-    private let renderer: ((IconTextCell) -> Void)?
 
     init(image: UIImage? = nil,
-         title: String? = nil,
-         iconImage: UIImage? = nil) {
+         title: String? = nil) {
         self.image = image
         self.title = title
-        self.renderer = nil
-    }
-    
-    init(renderer: @escaping (IconTextCell) -> Void) {
-        self.renderer = renderer
-        self.image = nil
-        self.title = nil
     }
 
     func render(in view: IconTextCell) {

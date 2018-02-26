@@ -47,8 +47,8 @@ class ToggleComponent: Renderable {
     func render(in view: ToggleCell) {
         view.iconView.image = icon
         view.titleLabel.text = title
-        view.toggle.isOn = isOn
         view.onToggle = onToggle
+        view.toggle.setOn(isOn, animated: true)
     }
 
 }

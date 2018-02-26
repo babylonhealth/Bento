@@ -4,13 +4,13 @@
 target 'Example' do
   # Comment the next line if you're not using Swift and don't want to use dynamic frameworks
   use_frameworks!
-  pod "FlexibleDiff"
+  pod "FlexibleDiff", :git => 'https://github.com/RACCommunity/FlexibleDiff.git', :branch => 'sectioned-diffing'
 end
 
 target 'FormsKit' do
   # Comment the next line if you're not using Swift and don't want to use dynamic frameworks
   use_frameworks!
 
-  pod "FlexibleDiff"
+  pod "FlexibleDiff", :git => 'https://github.com/RACCommunity/FlexibleDiff.git', :branch => 'sectioned-diffing'
 
 end

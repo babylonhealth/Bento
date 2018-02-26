@@ -14,6 +14,7 @@
 		5829D26E200FB092001E020D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5829D26C200FB092001E020D /* Main.storyboard */; };
 		5829D270200FB092001E020D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5829D26F200FB092001E020D /* Assets.xcassets */; };
 		5829D273200FB092001E020D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5829D271200FB092001E020D /* LaunchScreen.storyboard */; };
+		58467B03202B33F200577C77 /* TableViewSectionDiff.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58467B02202B33F200577C77 /* TableViewSectionDiff.swift */; };
 		587F0718201B355800ACD219 /* TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 587F0717201B355800ACD219 /* TableViewCell.swift */; };
 		58BA75602016303B0050D5F1 /* FormsKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 58BA755E2016303B0050D5F1 /* FormsKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		58BA75632016303B0050D5F1 /* FormsKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 58BA755C2016303B0050D5F1 /* FormsKit.framework */; };
@@ -80,6 +81,7 @@
 		5829D26F200FB092001E020D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		5829D272200FB092001E020D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		5829D274200FB092001E020D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		58467B02202B33F200577C77 /* TableViewSectionDiff.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewSectionDiff.swift; sourceTree = "<group>"; };
 		587F0717201B355800ACD219 /* TableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewCell.swift; sourceTree = "<group>"; };
 		58BA755C2016303B0050D5F1 /* FormsKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = FormsKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		58BA755E2016303B0050D5F1 /* FormsKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FormsKit.h; sourceTree = "<group>"; };
@@ -142,6 +144,14 @@
 			path = FormsKitTests;
 			sourceTree = "<group>";
 		};
+		581ED77E2022041C00EC9584 /* Diff */ = {
+			isa = PBXGroup;
+			children = (
+				58467B02202B33F200577C77 /* TableViewSectionDiff.swift */,
+			);
+			path = Diff;
+			sourceTree = "<group>";
+		};
 		5829D25C200FB092001E020D = {
 			isa = PBXGroup;
 			children = (
@@ -200,6 +210,7 @@
 		58BA756B201630710050D5F1 /* Forms */ = {
 			isa = PBXGroup;
 			children = (
+				581ED77E2022041C00EC9584 /* Diff */,
 				587F0716201B354900ACD219 /* Views */,
 				58E98E612018898700F78BAE /* Randerable */,
 				58BA7585201634120050D5F1 /* Helpers.swift */,
@@ -535,6 +546,7 @@
 				58BA7586201634120050D5F1 /* Helpers.swift in Sources */,
 				58BA7584201633CC0050D5F1 /* Renderable.swift in Sources */,
 				A9509FB12CAD89179FAA03B0 /* Form.swift in Sources */,
+				58467B03202B33F200577C77 /* TableViewSectionDiff.swift in Sources */,
 				A9509C4FC3664040FF3649CD /* Node.swift in Sources */,
 				587F0718201B355800ACD219 /* TableViewCell.swift in Sources */,
 				A95093B3B7AD6DC69644BCA6 /* SectionedFormAdapter.swift in Sources */,

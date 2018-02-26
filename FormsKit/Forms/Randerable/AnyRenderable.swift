@@ -15,8 +15,8 @@ final class AnyRenderable {
         }
         self.render = { (view) in renderable.render(in: (view as! R.View)) }
     }
-
-    func render(view: UIView) {
+    
+    func render(in view: UIView) {
         self.render(view)
     }
 

@@ -1,12 +1,22 @@
 PODS:
-  - FlexibleDiff (0.0.2)
+  - FlexibleDiff (0.0.3)
 
 DEPENDENCIES:
-  - FlexibleDiff
+  - FlexibleDiff (from `https://github.com/RACCommunity/FlexibleDiff.git`, branch `sectioned-diffing`)
+
+EXTERNAL SOURCES:
+  FlexibleDiff:
+    :branch: sectioned-diffing
+    :git: https://github.com/RACCommunity/FlexibleDiff.git
+
+CHECKOUT OPTIONS:
+  FlexibleDiff:
+    :commit: 5edfd7f597dd7ddf391238d8a0e468722ac92117
+    :git: https://github.com/RACCommunity/FlexibleDiff.git
 
 SPEC CHECKSUMS:
-  FlexibleDiff: 954b553aa4f2e0ad49f01bd885eeee0a1d591804
+  FlexibleDiff: 11756a751062f462b3faae170abef7084c8b0c98
 
-PODFILE CHECKSUM: b66ef169abf11199db468eea433a30dd7f959e79
+PODFILE CHECKSUM: 1d297b934653bce0251a5b8bb4bd12f9063fdd92
 
 COCOAPODS: 1.4.0
