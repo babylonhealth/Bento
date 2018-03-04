@@ -2,11 +2,11 @@
 
 `Forms` is a Swift library for building component-based interfaces on top of `UITableView` or `UICollectionView`*
 
-- **Declarative:** `Forms` provides painless approach for building `UI{Table/Collection}View` interfaces. 
+- **Declarative:** `Forms` provides a painless approach for building `UI{Table/Collection}View` interfaces
 - **Diffing:** Forms reload your UI with beautiful animations when your data changes
-- **Component-based:**  Desing reusable components and share your custom UI across multiple screens of your app
+- **Component-based:**  Design reusable components and share your custom UI across multiple screens of your app
 
-In our experience, it makes UI related code easier to build and maintain.  Our aim is to make `UI = f(state)` which makes `Forms` perfect fit for Reactive Programming
+In our experience it makes UI-related code easier to build and maintain.  Our aim is to make `UI = f(state)`, which makes `Forms` a perfect fit for Reactive Programming
 
 ## Content
 
@@ -19,7 +19,7 @@ In our experience, it makes UI related code easier to build and maintain.  Our a
 - [Contribute](#contribute)
 
 ### What's it like?
-When you want to build a `Form` what you need to care about is only `Section` and `Node`.
+When building a `Form`, all you need to care about are `Section`s and `Node`s.
 
 
 ```swift
@@ -41,7 +41,7 @@ tableView.render(form: form)
 
 #### Form
 
-The form is a fundamental component of the `Forms` library, essentially it's virtual representation of the `UI{Table/Collection}View` content. It has two generic parameters `Form<SectionId, RowId>`. `SectionId` and `RowId` are unique identifiers of the `Section<SectionId>` and the `Node<RowId>` which are used by the [diffing engine](https://github.com/RACCommunity/FlexibleDiff) to perform animated changes of `UI{Table/Collection}View` content.
+The form is a fundamental component of the library, essentially a virtual representation of the `UI{Table/Collection}View` content. It has two generic parameters - `SectionId` and `RowId` - which are unique identifiers for  `Section<SectionId>` and `Node<RowId>`, used by the [diffing engine](https://github.com/RACCommunity/FlexibleDiff) to perform animated changes of the `UI{Table/Collection}View` content.
 
 #### Sections and Nodes
 
