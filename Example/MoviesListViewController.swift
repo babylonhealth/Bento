@@ -20,6 +20,7 @@ final class MoviesListViewController: UIViewController {
         viewModel.form.producer.skip(first: 1).startWithValues { [tableView] in
             tableView?.render(form: $0, animated: false)
         }
+
         viewModel.nearBottomBinding <~ tableView!.rac_nearBottomSignal
         viewModel.retryBinding <~ retrySignal
     }
@@ -39,64 +40,44 @@ final class MoviesListViewController: UIViewController {
 
 final class PaginationViewModel {
     private let token = Lifetime.Token()
-    private var lifetime: Lifetime {
-        return Lifetime(token)
-    }
-    private let nearBottomObserver: Signal<Void, NoError>.Observer
-    private let retryObserver: Signal<Void, NoError>.Observer
-    private let stateProperty: Property<State>
-    private let renderer = Renderer()
-    let form: Property<Form<Renderer.SectionId, Int>>
+    private let lifetime: Lifetime
+    private let state: Property<State>
+    private let renderer = PaginationViewModel.Renderer()
 
-    var nearBottomBinding: BindingTarget<Void> {
-        return BindingTarget(lifetime: lifetime) { value in
-            self.nearBottomObserver.send(value: value)
-        }
-    }
-
-    var retryBinding: BindingTarget<Void> {
-        return BindingTarget(lifetime: lifetime) { value in
-            self.retryObserver.send(value: value)
-        }
-    }
+    let form: Property<Form<Renderer.SectionId, Renderer.RowId>>
+    let nearBottomBinding: BindingTarget<Void>
+    let retryBinding: BindingTarget<Void>
 
     init() {
         let (nearBottomSignal, nearBottomObserver) = Signal<Void, NoError>.pipe()
         let (retrySignal, retryObserver) = Signal<Void, NoError>.pipe()
+
         let feedbacks = [
             PaginationViewModel.whenPaging(nearBottomSignal: nearBottomSignal),
             PaginationViewModel.pagingFeedback(),
             PaginationViewModel.whenError(retrySignal: retrySignal),
             PaginationViewModel.whenRetry()
         ]
-
-        self.stateProperty = Property(initial: State.initial,
-                                      reduce: State.reduce,
-                                      feedbacks: feedbacks)
-
-        self.form = Property(initial: Form.empty,
-                             then: stateProperty.producer
-                                 .filterMap { $0.newMovies }
-                                 .map(renderer.render))
-
-        self.nearBottomObserver = nearBottomObserver
-        self.retryObserver = retryObserver
+        self.lifetime = Lifetime(token)
+        self.nearBottomBinding = BindingTarget(lifetime: lifetime, action: nearBottomObserver.send)
+        self.retryBinding = BindingTarget(lifetime: lifetime, action: retryObserver.send)
+        self.state = Property(initial: State.initial,
+                              reduce: State.reduce,
+                              feedbacks: feedbacks)
+        self.form = Property(initial: Form.empty, then: state.producer.filterMap(renderer.render))
     }
 
-    static func whenPaging(nearBottomSignal: Signal<Void, NoError>) -> Feedback<State, Event> {
+    private static func whenPaging(nearBottomSignal: Signal<Void, NoError>) -> Feedback<State, Event> {
         return Feedback { state -> Signal<Event, NoError> in
             if case .paging = state {
                 return .empty
             }
             return nearBottomSignal
-                .map { _ in
-                    return Event.startLoadingNextPage
-                }
+                .map { Event.startLoadingNextPage }
         }
     }
 
-
-    static func pagingFeedback() -> Feedback<State, Event> {
+    private static func pagingFeedback() -> Feedback<State, Event> {
         return Feedback<State, Event>(query: { $0.nextPage }) { (nextPage) -> SignalProducer<Event, NoError> in
             URLSession.shared.fetchMovies(page: nextPage)
                 .map(Event.response)
@@ -106,14 +87,14 @@ final class PaginationViewModel {
         }
     }
 
-    static func whenError(retrySignal: Signal<Void, NoError>) -> Feedback<State, Event> {
+    private static func whenError(retrySignal: Signal<Void, NoError>) -> Feedback<State, Event> {
         return Feedback { state -> Signal<Event, NoError> in
             guard case .error = state else { return .empty }
             return retrySignal.map { Event.retry }
         }
     }
 
-    static func whenRetry() -> Feedback<State, Event> {
+    private static func whenRetry() -> Feedback<State, Event> {
         return Feedback { state -> SignalProducer<Event, NoError> in
             guard case .retry(let context) = state else { return .empty }
             return URLSession.shared.fetchMovies(page: context.batch.page + 1)
@@ -137,35 +118,25 @@ final class PaginationViewModel {
         case initial
         case paging(context: Context)
         case loadedPage(context: Context)
-        case refreshing(context: Context)
-        case refreshed(context: Context)
         case error(error: NSError, context: Context)
         case retry(context: Context)
 
         var newMovies: [Movie]? {
             switch self {
-            case .paging(context:let context):
-                return context.movies
             case .loadedPage(context:let context):
-                return context.movies
-            case .refreshed(context:let context):
                 return context.movies
             default:
                 return nil
             }
         }
 
-        var context: Context {
+        private var context: Context {
             switch self {
             case .initial:
                 return Context.empty
             case .paging(context:let context):
                 return context
             case .loadedPage(context:let context):
-                return context
-            case .refreshing(context:let context):
-                return context
-            case .refreshed(context:let context):
                 return context
             case .error(error:_, context:let context):
                 return context
@@ -178,8 +149,6 @@ final class PaginationViewModel {
             switch self {
             case .paging(context:let context):
                 return context.batch.page + 1
-            case .refreshed(context:let context):
-                return context.batch.page + 1
             case .initial:
                 return 1
             default:
@@ -189,6 +158,8 @@ final class PaginationViewModel {
 
         static func reduce(state: State, event: Event) -> State {
             switch event {
+            case .reload:
+                return initial
             case .startLoadingNextPage:
                 return .paging(context: state.context)
             case .response(let batch):
@@ -205,6 +176,7 @@ final class PaginationViewModel {
     }
 
     enum Event {
+        case reload
         case startLoadingNextPage
         case response(Results)
         case failed(NSError)
@@ -212,19 +184,62 @@ final class PaginationViewModel {
     }
 
     final class Renderer {
-        enum SectionId {
-            case noId
+        func render(state: State) -> Form<SectionId, RowId>? {
+            switch state {
+            case .initial:
+                return renderLoading()
+            case .loadedPage(let context):
+                return render(movies: context.movies)
+            default:
+                return nil
+            }
         }
 
-        func render(movies: [Movie]) -> Form<SectionId, Int> {
+        private func render(movies: [Movie]) -> Form<SectionId, RowId> {
             let rows = movies.map { movie in
-                return Node(id: movie.id,
+                return Node(id: RowId.movie(movie),
                             component: MovieComponent(movie: movie))
             }
             return Form.empty
                 |-+ Section(id: SectionId.noId)
                 |--* rows
         }
+
+        private func renderLoading() -> Form<SectionId, RowId> {
+            return Form<SectionId, RowId>.empty
+                |-+ Section(id: SectionId.noId)
+                |--+ Node(id: RowId.loading, component: LoadingIndicatorComponent(isLoading: true))
+        }
+
+        enum SectionId {
+            case noId
+        }
+
+        enum RowId: Hashable {
+            case loading
+            case movie(Movie)
+
+            var hashValue: Int {
+                switch self {
+                case .loading:
+                    return -1
+                case .movie(let movie):
+                    return movie.hashValue
+                }
+            }
+
+            static func ==(lhs: RowId, rhs: RowId) -> Bool {
+                switch (lhs, rhs) {
+                case let (.movie(lhsMovie), .movie(rhsMovie)):
+                    return lhsMovie == rhsMovie
+                case (.loading, .loading):
+                    return true
+                default:
+                    return false
+                }
+            }
+        }
+
     }
 }
 
@@ -279,7 +294,7 @@ struct Results: Codable {
     }
 }
 
-struct Movie: Codable {
+struct Movie: Codable, Hashable {
     let id: Int
     let overview: String
     let title: String
@@ -298,6 +313,17 @@ struct Movie: Codable {
         case overview
         case title
         case posterPath = "poster_path"
+    }
+
+    var hashValue: Int {
+        return id.hashValue ^ overview.hashValue ^ title.hashValue ^ (posterPath ?? "").hashValue
+    }
+
+    static func ==(lhs: Movie, rhs: Movie) -> Bool {
+        return lhs.id == rhs.id &&
+            lhs.overview == rhs.overview &&
+            lhs.title == rhs.title &&
+            lhs.posterPath == rhs.posterPath
     }
 }
 
