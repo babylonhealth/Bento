@@ -24,15 +24,20 @@ final class BookAppointmentViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
 
     lazy var viewModel = BookAppointmentViewModel(renderer: BookAppointmentViewModel.Renderer(patient: Patient(id: "1",
-                                                                                                          firstName: "Chuck",
-                                                                                                          lastName: "Norris")))
+                                                                                                               firstName: "Chuck",
+                                                                                                               lastName: "Norris")))
 
     override func viewDidLoad() {
         super.viewDidLoad()
         setupTableView()
-        self.viewModel.form
+        viewModel.form
             .producer
             .startWithValues(tableView.render)
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        viewModel.reload()
     }
 
     private func setupTableView() {
@@ -45,13 +50,23 @@ final class BookAppointmentViewController: UIViewController {
 
 final class BookAppointmentViewModel {
     private let state: Property<State>
+    private let reloadObserver: Signal<Void, NoError>.Observer
     let form: Property<Form<Renderer.SectionId, Renderer.RowId>>
 
     init(renderer: Renderer) {
+        let (reloadSignal, reloadObserver) = Signal<Void, NoError>.pipe()
         self.state = Property(initial: State.loading,
                               reduce: BookAppointmentViewModel.reduce,
-                              feedbacks: BookAppointmentViewModel.whenLoading())
-        self.form = state.map(renderer.render)
+                              feedbacks: [
+                                  BookAppointmentViewModel.whenLoading(),
+                                  BookAppointmentViewModel.reload(with: reloadSignal)
+                              ])
+        self.reloadObserver = reloadObserver
+        self.form = state.map { return renderer.render(state: $0, onBook: reloadObserver.send(value:)) }
+    }
+
+    func reload() {
+        reloadObserver.send(value: ())
     }
 
     enum State {
@@ -60,6 +75,7 @@ final class BookAppointmentViewModel {
     }
 
     enum Event {
+        case reload
         case loaded(Appointment)
     }
 
@@ -67,6 +83,14 @@ final class BookAppointmentViewModel {
         switch event {
         case let .loaded(appointment):
             return State.loaded(appointment)
+        case .reload:
+            return State.loading
+        }
+    }
+
+    private static func reload(with trigger: Signal<Void, NoError>) -> Feedback<State, Event> {
+        return Feedback { _ in
+            return trigger.map { Event.reload }
         }
     }
 
@@ -108,12 +132,12 @@ final class BookAppointmentViewModel {
             case loading
         }
 
-        func render(state: State) -> Form<SectionId, RowId> {
+        func render(state: State, onBook: @escaping () -> Void) -> Form<SectionId, RowId> {
             switch state {
             case .loading:
                 return renderLoading()
             case let .loaded(appointment):
-                return render(appointment: appointment)
+                return render(appointment: appointment, onBook: onBook)
             }
         }
 
@@ -124,13 +148,13 @@ final class BookAppointmentViewModel {
                 |--+ Node(id: RowId.user,
                           component: IconTitleDetailsComponent(icon: #imageLiteral(resourceName:"chuck_norris_walker"),
                                                                title: "\(patient.firstName) \(patient.lastName)",
-                            subtitle: ""))
+                                                               subtitle: ""))
                 |-+ Section(id: SectionId.consultantDate,
                             header: EmptySpaceComponent(spec: EmptySpaceComponent.Spec(height: 20, color: .clear)))
                 |--+ Node(id: RowId.loading, component: LoadingIndicatorComponent(isLoading: true))
         }
 
-        private func render(appointment: Appointment) -> Form<SectionId, RowId> {
+        private func render(appointment: Appointment, onBook: @escaping () -> Void) -> Form<SectionId, RowId> {
             return Form<SectionId, RowId>.empty
                 |-+ Section(id: SectionId.user,
                             header: EmptySpaceComponent(spec: EmptySpaceComponent.Spec(height: 20, color: .clear)))
@@ -159,9 +183,7 @@ final class BookAppointmentViewModel {
                             header: EmptySpaceComponent(spec: EmptySpaceComponent.Spec(height: 20, color: .clear)))
                 |-+ Section(id: SectionId.audioVideo,
                             header: ButtonComponent(buttonTitle: "Book",
-                                                    onButtonPressed: {
-                                                        print("Book an Appointment")
-                                                    }))
+                                                    onButtonPressed: onBook))
         }
 
         private func render(consultantType: ConsultantType) -> String {
