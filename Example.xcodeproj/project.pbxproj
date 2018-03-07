@@ -212,7 +212,7 @@
 			children = (
 				581ED77E2022041C00EC9584 /* Diff */,
 				587F0716201B354900ACD219 /* Views */,
-				58E98E612018898700F78BAE /* Randerable */,
+				58E98E612018898700F78BAE /* Renderable */,
 				58BA7585201634120050D5F1 /* Helpers.swift */,
 				A95095B51B6349DC59C77D6D /* Form */,
 				A950945F6360B851C3E87B61 /* Adapters */,
@@ -233,13 +233,13 @@
 			path = Cells;
 			sourceTree = "<group>";
 		};
-		58E98E612018898700F78BAE /* Randerable */ = {
+		58E98E612018898700F78BAE /* Renderable */ = {
 			isa = PBXGroup;
 			children = (
 				58BA7583201633CC0050D5F1 /* Renderable.swift */,
 				58E98E62201889B900F78BAE /* AnyRenderable.swift */,
 			);
-			path = Randerable;
+			path = Renderable;
 			sourceTree = "<group>";
 		};
 		7D7D5AFB203495BA731D7A3E /* Frameworks */ = {
