@@ -70,19 +70,19 @@ final class SectionedFormAdapter<SectionId: Hashable, RowId: Hashable>
         return sections[indexPath.section][indexPath.row]
     }
     
-    private func render(node: HeaderFooterNode, in tableView: UITableView) -> UIView {
-        guard let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: node.component.reuseIdentifier) as? TableViewHeaderFooterView else {
-            tableView.register(TableViewHeaderFooterView.self, forHeaderFooterViewReuseIdentifier: node.component.reuseIdentifier)
+    private func render(node: AnyRenderable, in tableView: UITableView) -> UIView {
+        guard let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: node.reuseIdentifier) as? TableViewHeaderFooterView else {
+            tableView.register(TableViewHeaderFooterView.self, forHeaderFooterViewReuseIdentifier: node.reuseIdentifier)
             return render(node: node, in: tableView)
         }
         let componentView: UIView
         if let containedView = header.containedView {
             componentView = containedView
         } else {
-            componentView = node.component.generateView()
+            componentView = node.generateView()
             header.install(view: componentView)
         }
-        node.component.render(in: componentView)
+        node.render(in: componentView)
         return header
     }
 }

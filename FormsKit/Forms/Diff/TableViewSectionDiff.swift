@@ -65,10 +65,10 @@ struct TableViewSectionDiff<SectionId: Hashable, RowId: Hashable> {
         }
     }
 
-    private func update(view: UIView, with node: HeaderFooterNode) {
+    private func update(view: UIView, with node: AnyRenderable) {
         guard let headerFooterView = view as? TableViewHeaderFooterView,
               let containedView = headerFooterView.containedView else { return }
-        node.component.render(in: containedView)
+        node.render(in: containedView)
     }
 
     private func update(cell: UITableViewCell, with node: Node<RowId>) {

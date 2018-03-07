@@ -7,7 +7,11 @@ public struct Node<Identifier: Hashable> {
         self.component = component
     }
 
-    public init<R: Renderable>(id: Identifier, component: R) {
+    public init<R: Renderable>(id: Identifier, component: R) where R.View: UIView {
+        self.init(id: id, component: AnyRenderable(renderable: component))
+    }
+
+    public init<R: Renderable>(id: Identifier, component: R) where R.View: UIView & NibLoadable {
         self.init(id: id, component: AnyRenderable(renderable: component))
     }
 

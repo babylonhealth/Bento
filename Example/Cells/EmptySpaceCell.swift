@@ -1,7 +1,7 @@
 import UIKit
 import FormsKit
 
-final class EmptySpaceCell: UIView {
+final class EmptySpaceCell: UIView, NibLoadable {
     @IBOutlet weak var heightConstraint: NSLayoutConstraint!
 }
 

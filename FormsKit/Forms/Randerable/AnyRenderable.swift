@@ -5,15 +5,28 @@ final class AnyRenderable {
     private let generator: () -> UIView
     private let render: (UIView) -> Void
 
-    init<R: Renderable>(renderable: R) {
+    init<R: Renderable>(renderable: R) where R.View: UIView & NibLoadable {
         self.reuseIdentifier = renderable.reuseIdentifier
-        self.generator = {
-            switch renderable.strategy {
-            case .`class`: return R.View()
-            case .nib: return R.View.loadFromNib()
+        self.generator = R.View.loadFromNib
+        self.render = { view in
+            guard let view = view as? R.View else {
+                assertionFailure()
+                return
             }
+            renderable.render(in: view)
         }
-        self.render = { (view) in renderable.render(in: (view as! R.View)) }
+    }
+
+    init<R: Renderable>(renderable: R) where R.View: UIView {
+        self.reuseIdentifier = renderable.reuseIdentifier
+        self.generator = R.View.init
+        self.render = { view in
+            guard let view = view as? R.View else {
+                assertionFailure()
+                return
+            }
+            renderable.render(in: view)
+        }
     }
     
     func render(in view: UIView) {

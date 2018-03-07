@@ -2,35 +2,88 @@ import UIKit
 
 public struct Section<SectionId: Hashable, RowId: Hashable> {
     let id: SectionId
-    let header: HeaderFooterNode?
-    let footer: HeaderFooterNode?
+    let header: AnyRenderable?
+    let footer: AnyRenderable?
     let rows: [Node<RowId>]
 
     public init<Header: Renderable, Footer: Renderable>(id: SectionId,
                                                         header: Header,
                                                         footer: Footer,
-                                                        rows: [Node<RowId>] = []) {
+                                                        rows: [Node<RowId>] = [])
+        where Header.View: UIView, Footer.View: UIView {
         self.id = id
-        self.header = HeaderFooterNode(component: header)
-        self.footer = HeaderFooterNode(component: footer)
+        self.header = AnyRenderable(renderable: header)
+        self.footer = AnyRenderable(renderable: footer)
+        self.rows = rows
+    }
+
+    public init<Header: Renderable, Footer: Renderable>(id: SectionId,
+                                                        header: Header,
+                                                        footer: Footer,
+                                                        rows: [Node<RowId>] = [])
+        where Header.View: UIView & NibLoadable, Footer.View: UIView & NibLoadable {
+        self.id = id
+        self.header = AnyRenderable(renderable: header)
+        self.footer = AnyRenderable(renderable: footer)
+        self.rows = rows
+    }
+
+    public init<Header: Renderable, Footer: Renderable>(id: SectionId,
+                                                        header: Header,
+                                                        footer: Footer,
+                                                        rows: [Node<RowId>] = [])
+        where Header.View: UIView, Footer.View: UIView & NibLoadable {
+            self.id = id
+            self.header = AnyRenderable(renderable: header)
+            self.footer = AnyRenderable(renderable: footer)
+            self.rows = rows
+    }
+
+    public init<Header: Renderable, Footer: Renderable>(id: SectionId,
+                                                        header: Header,
+                                                        footer: Footer,
+                                                        rows: [Node<RowId>] = [])
+        where Header.View: UIView & NibLoadable, Footer.View: UIView {
+            self.id = id
+            self.header = AnyRenderable(renderable: header)
+            self.footer = AnyRenderable(renderable: footer)
+            self.rows = rows
+    }
+
+    public init<Header: Renderable>(id: SectionId,
+                                    header: Header,
+                                    rows: [Node<RowId>] = []) where Header.View: UIView {
+        self.id = id
+        self.header = AnyRenderable(renderable: header)
+        self.footer = nil
         self.rows = rows
     }
 
     public init<Header: Renderable>(id: SectionId,
                                     header: Header,
-                                    rows: [Node<RowId>] = []) {
+                                    rows: [Node<RowId>] = []) where Header.View: UIView & NibLoadable  {
         self.id = id
-        self.header = HeaderFooterNode(component: header)
+        self.header = AnyRenderable(renderable: header)
         self.footer = nil
+        self.rows = rows
+    }
+
+
+    public init<Footer: Renderable>(id: SectionId,
+                                    footer: Footer,
+                                    rows: [Node<RowId>] = []) where Footer.View: UIView {
+        self.id = id
+        self.header = nil
+        self.footer = AnyRenderable(renderable: footer)
         self.rows = rows
     }
 
     public init<Footer: Renderable>(id: SectionId,
                                     footer: Footer,
-                                    rows: [Node<RowId>] = []) {
+                                    rows: [Node<RowId>] = []) where Footer.View: UIView & NibLoadable {
         self.id = id
         self.header = nil
-        self.footer = HeaderFooterNode(component: footer)
+        self.footer = AnyRenderable(renderable: footer)
         self.rows = rows
     }
 
@@ -43,8 +96,8 @@ public struct Section<SectionId: Hashable, RowId: Hashable> {
     }
 
     init(id: SectionId,
-         header: HeaderFooterNode?,
-         footer: HeaderFooterNode?,
+         header: AnyRenderable?,
+         footer: AnyRenderable?,
          rows: [Node<RowId>]) {
         self.id = id
         self.header = header
@@ -53,9 +106,9 @@ public struct Section<SectionId: Hashable, RowId: Hashable> {
     }
 
     func equals(_ other: Section) -> Bool {
-        let areHeadersEqual = header.zip(with: other.header, ==) ?? false
-        let areFootersEqual = footer.zip(with: other.footer, ==) ?? false
-        return areHeadersEqual && areFootersEqual
+        let areHeadersEqual = header.zip(with: other.header, ===)
+        let areFootersEqual = footer.zip(with: other.footer, ===)
+        return (areHeadersEqual ?? false) && (areFootersEqual ?? false)
     }
 }
 

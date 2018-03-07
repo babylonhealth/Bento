@@ -1,7 +1,7 @@
 import UIKit
 import FormsKit
 
-final class IconTextCell: UITableViewCell {
+final class IconTextCell: UIView, NibLoadable {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var iconView: UIImageView!
 }
