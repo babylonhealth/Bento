@@ -4,6 +4,7 @@ infix operator |-+: AdditionPrecedence
 infix operator |--+: MultiplicationPrecedence
 infix operator |--*: MultiplicationPrecedence
 infix operator |--?: MultiplicationPrecedence
+infix operator <>: BitwiseShiftPrecedence
 
 public struct Form<SectionId: Hashable, RowId: Hashable> {
     public let sections: [Section<SectionId, RowId>]
