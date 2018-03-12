@@ -8,6 +8,10 @@ infix operator |--?: MultiplicationPrecedence
 public struct Form<SectionId: Hashable, RowId: Hashable> {
     public let sections: [Section<SectionId, RowId>]
 
+    public init(sections: [Section<SectionId, RowId>]) {
+        self.sections = sections
+    }
+
     public static var empty: Form {
         return Form(sections: [])
     }
