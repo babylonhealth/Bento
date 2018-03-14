@@ -66,6 +66,14 @@ final class SectionedFormAdapter<SectionId: Hashable, RowId: Hashable>
             }
     }
 
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return sections[section].header == nil ? CGFloat.leastNonzeroMagnitude : UITableViewAutomaticDimension
+    }
+
+    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return sections[section].footer == nil ? CGFloat.leastNonzeroMagnitude : UITableViewAutomaticDimension
+    }
+
     private func node(at indexPath: IndexPath) -> Node<RowId> {
         return sections[indexPath.section][indexPath.row]
     }
