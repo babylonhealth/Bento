@@ -75,7 +75,7 @@ final class SectionedFormAdapter<SectionId: Hashable, RowId: Hashable>
     }
 
     private func node(at indexPath: IndexPath) -> Node<RowId> {
-        return sections[indexPath.section][indexPath.row]
+        return sections[indexPath.section].rows[indexPath.row]
     }
     
     private func render(node: AnyRenderable, in tableView: UITableView) -> UIView {

@@ -53,28 +53,10 @@ public struct Section<SectionId: Hashable, RowId: Hashable> {
         self.rows = rows
     }
 
-    func equals(_ other: Section) -> Bool {
+    func equals(to other: Section) -> Bool {
         let areHeadersEqual = header.zip(with: other.header, ===)
         let areFootersEqual = footer.zip(with: other.footer, ===)
         return (areHeadersEqual ?? false) && (areFootersEqual ?? false)
-    }
-}
-
-extension Section: Collection {
-    public var startIndex: Int {
-        return rows.startIndex
-    }
-
-    public var endIndex: Int {
-        return rows.endIndex
-    }
-
-    public func index(after i: Int) -> Int {
-        return rows.index(after: i)
-    }
-
-    public subscript(position: Int) -> Node<RowId> {
-        return rows[position]
     }
 }
 
