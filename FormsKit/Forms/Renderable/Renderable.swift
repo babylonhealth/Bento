@@ -1,8 +1,9 @@
 import UIKit
 
 public protocol Renderable: class {
-    associatedtype View: UIView
-    var strategy: RenderingStrategy { get }
+    associatedtype View
+
+    func generate() -> View
     func render(in view: View)
 }
 
@@ -12,7 +13,14 @@ public extension Renderable {
     }
 }
 
-public enum RenderingStrategy {
-    case `class`
-    case nib
+public extension Renderable where View: UIView {
+    func generate() -> View {
+        return View()
+    }
+}
+
+public extension Renderable where View: UIView & NibLoadable {
+    func generate() -> View {
+        return View.loadFromNib()
+    }
 }
