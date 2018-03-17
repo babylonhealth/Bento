@@ -8,11 +8,11 @@ public struct Node<Identifier: Hashable> {
     }
 
     public init<R: Renderable>(id: Identifier, component: R) where R.View: UIView {
-        self.init(id: id, component: AnyRenderable(renderable: component))
+        self.init(id: id, component: AnyRenderable(component))
     }
 
     func equals(to other: Node) -> Bool {
-        return component === other.component
+        return component == other.component
     }
 }
 

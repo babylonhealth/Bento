@@ -36,15 +36,16 @@ final class SectionedFormAdapter<SectionId: Hashable, RowId: Hashable>
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let component = node(at: indexPath).component
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: component.reuseIdentifier) as? TableViewCell else {
-            tableView.register(TableViewCell.self, forCellReuseIdentifier: component.reuseIdentifier)
+        let reuseIdentifier = component.reuseIdentifier
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier) as? TableViewCell else {
+            tableView.register(TableViewCell.self, forCellReuseIdentifier: reuseIdentifier)
             return self.tableView(tableView, cellForRowAt: indexPath)
         }
         let componentView: UIView
         if let containedView = cell.containedView {
             componentView = containedView
         } else {
-            componentView = component.generateView()
+            componentView = component.generate()
             cell.install(view: componentView)
         }
         component.render(in: componentView)
@@ -87,7 +88,7 @@ final class SectionedFormAdapter<SectionId: Hashable, RowId: Hashable>
         if let containedView = header.containedView {
             componentView = containedView
         } else {
-            componentView = node.generateView()
+            componentView = node.generate()
             header.install(view: componentView)
         }
         node.render(in: componentView)

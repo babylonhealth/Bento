@@ -12,8 +12,8 @@ public struct Section<SectionId: Hashable, RowId: Hashable> {
                                                         rows: [Node<RowId>] = [])
         where Header.View: UIView, Footer.View: UIView {
         self.id = id
-        self.header = AnyRenderable(renderable: header)
-        self.footer = AnyRenderable(renderable: footer)
+        self.header = AnyRenderable(header)
+        self.footer = AnyRenderable(footer)
         self.rows = rows
     }
 
@@ -21,7 +21,7 @@ public struct Section<SectionId: Hashable, RowId: Hashable> {
                                     header: Header,
                                     rows: [Node<RowId>] = []) where Header.View: UIView {
         self.id = id
-        self.header = AnyRenderable(renderable: header)
+        self.header = AnyRenderable(header)
         self.footer = nil
         self.rows = rows
     }
@@ -31,7 +31,7 @@ public struct Section<SectionId: Hashable, RowId: Hashable> {
                                     rows: [Node<RowId>] = []) where Footer.View: UIView {
         self.id = id
         self.header = nil
-        self.footer = AnyRenderable(renderable: footer)
+        self.footer = AnyRenderable(footer)
         self.rows = rows
     }
 
@@ -54,8 +54,8 @@ public struct Section<SectionId: Hashable, RowId: Hashable> {
     }
 
     func equals(to other: Section) -> Bool {
-        let areHeadersEqual = header.zip(with: other.header, ===)
-        let areFootersEqual = footer.zip(with: other.footer, ===)
+        let areHeadersEqual = header.zip(with: other.header, ==)
+        let areFootersEqual = footer.zip(with: other.footer, ==)
         return (areHeadersEqual ?? false) && (areFootersEqual ?? false)
     }
 }
