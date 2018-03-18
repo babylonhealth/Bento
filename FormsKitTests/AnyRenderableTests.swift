@@ -41,24 +41,6 @@ class AnyRenderableTests: XCTestCase {
     }
 }
 
-private struct TestCustomEqualityRenderable: Renderable {
-    typealias View = UIView
-
-    let value: Int
-
-    func render(in view: UIView) {}
-
-    static func == (lhs: TestCustomEqualityRenderable, rhs: TestCustomEqualityRenderable) -> Bool {
-        return lhs.value == rhs.value
-    }
-}
-
-private final class TestDefaultEqualityRenderable: Renderable {
-    typealias View = UIView
-
-    func render(in view: UIView) {}
-}
-
 private class TestView: UIView {
     var hasInvoked = false
 }

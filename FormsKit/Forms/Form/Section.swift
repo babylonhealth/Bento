@@ -1,6 +1,6 @@
 import UIKit
 
-public struct Section<SectionId: Hashable, RowId: Hashable> {
+public struct Section<SectionId: Hashable, RowId: Hashable>: Equatable {
     let id: SectionId
     let header: AnyRenderable?
     let footer: AnyRenderable?
@@ -53,10 +53,14 @@ public struct Section<SectionId: Hashable, RowId: Hashable> {
         self.rows = rows
     }
 
-    func equals(to other: Section) -> Bool {
-        let areHeadersEqual = header.zip(with: other.header, ==)
-        let areFootersEqual = footer.zip(with: other.footer, ==)
-        return (areHeadersEqual ?? false) && (areFootersEqual ?? false)
+    public static func hasEqualMetadata(_ lhs: Section, _ rhs: Section) -> Bool {
+        return lhs.header == rhs.header && lhs.footer == rhs.footer
+    }
+
+    public static func == (lhs: Section, rhs: Section) -> Bool {
+        return lhs.id == rhs.id
+            && hasEqualMetadata(lhs, rhs)
+            && lhs.rows == rhs.rows
     }
 }
 
