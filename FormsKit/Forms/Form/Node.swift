@@ -1,4 +1,4 @@
-public struct Node<Identifier: Hashable> {
+public struct Node<Identifier: Hashable>: Equatable {
     let id: Identifier
     let component: AnyRenderable
 
@@ -8,11 +8,11 @@ public struct Node<Identifier: Hashable> {
     }
 
     public init<R: Renderable>(id: Identifier, component: R) where R.View: UIView {
-        self.init(id: id, component: AnyRenderable(renderable: component))
+        self.init(id: id, component: AnyRenderable(component))
     }
 
-    func equals(to other: Node) -> Bool {
-        return component === other.component
+    public static func == (lhs: Node, rhs: Node) -> Bool {
+        return lhs.id == rhs.id && lhs.component == rhs.component
     }
 }
 

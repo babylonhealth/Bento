@@ -1,10 +1,18 @@
 import UIKit
 
-public protocol Renderable: class {
+public protocol Renderable: Equatable {
     associatedtype View
+
+    var reuseIdentifier: String { get }
 
     func generate() -> View
     func render(in view: View)
+}
+
+public extension Renderable where Self: AnyObject {
+    static func == (lhs: Self, rhs: Self) -> Bool {
+        return lhs === rhs
+    }
 }
 
 public extension Renderable {
