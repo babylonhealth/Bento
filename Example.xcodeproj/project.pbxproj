@@ -106,6 +106,7 @@
 		58FC4421207CF29F00DA3614 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		58FC442C207CF2F500DA3614 /* Bento.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Bento.podspec; sourceTree = "<group>"; };
 		58FC442E207CF37700DA3614 /* script */ = {isa = PBXFileReference; lastKnownFileType = folder; path = script; sourceTree = "<group>"; };
+		58FC4435207CF7F100DA3614 /* circle.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = circle.yml; sourceTree = "<group>"; };
 		669406B2CB5D5B435C8E0C3D /* Pods_Bento.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Bento.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6EAC305899441AD3C9360A66 /* Pods-BentoTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BentoTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-BentoTests/Pods-BentoTests.release.xcconfig"; sourceTree = "<group>"; };
 		9A3EF77F205D866F00D043AC /* AnyRenderableTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnyRenderableTests.swift; sourceTree = "<group>"; };
@@ -165,6 +166,7 @@
 		5829D25C200FB092001E020D = {
 			isa = PBXGroup;
 			children = (
+				58FC4435207CF7F100DA3614 /* circle.yml */,
 				58FC442C207CF2F500DA3614 /* Bento.podspec */,
 				58FC442E207CF37700DA3614 /* script */,
 				5829D267200FB092001E020D /* Example */,

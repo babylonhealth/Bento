@@ -3,5 +3,5 @@ machine:
     version: "9.2"
 test:
   override:
-    - script/test iphonesimulator "platform=iOS Simulator,name=iPhone 6,OS=11.2" FormsKit
+    - script/test iphonesimulator "platform=iOS Simulator,name=iPhone 6,OS=11.2" Bento
     - script/test iphonesimulator "platform=iOS Simulator,name=iPhone 6,OS=11.2" Example build
