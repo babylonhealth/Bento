@@ -1,3 +1,5 @@
+import UIKit
+
 public struct Node<Identifier: Hashable>: Equatable {
     let id: Identifier
     let component: AnyRenderable

@@ -1,7 +1,7 @@
 import Nimble
 import XCTest
 import UIKit
-@testable import FormsKit
+@testable import Bento
 
 class SectionTests: XCTestCase {
     func testMetadataEqualitySelfEquality() {

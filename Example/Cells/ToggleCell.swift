@@ -1,5 +1,5 @@
 import UIKit
-import FormsKit
+import Bento
 
 class ToggleCell: UIView, NibLoadable {
     @IBOutlet weak var iconView: UIImageView!

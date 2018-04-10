@@ -1,5 +1,5 @@
 import UIKit
-@testable import FormsKit
+@testable import Bento
 
 struct TestCustomEqualityRenderable: Renderable {
     typealias View = UIView

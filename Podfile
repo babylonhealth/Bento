@@ -5,9 +5,9 @@ pod "FlexibleDiff", :git => 'https://github.com/RACCommunity/FlexibleDiff.git', 
 target 'Example' do
 end
 
-target 'FormsKit' do
+target 'Bento' do
 end
 
-target 'FormsKitTests' do
+target 'BentoTests' do
   pod 'Nimble'
 end
