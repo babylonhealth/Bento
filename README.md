@@ -2,13 +2,13 @@
 
 > #### is a single-portion take-out or home-packed meal common in Japanese cuisine. A traditional bento holds rice or noodles, fish or meat, with pickled and cooked vegetables, in a box.
 
-**Bento** is a Swift library for building component-based interfaces on top of `UITableView` or `UICollectionView`*
+**Bento** is a Swift library for building component-based interfaces on top of `UITableView`.
 
-- **Declarative:**  provides a painless approach for building `UI{Table/Collection}View` interfaces
+- **Declarative:**  provides a painless approach for building `UITableView` interfaces
 - **Diffing:** reloads your UI with beautiful animations when your data changes
 - **Component-based:**  Design reusable components and share your custom UI across multiple screens of your app
 
-In our experience it makes UI-related code easier to build and maintain.  Our aim is to make `UI = f(state)`, which makes `Bento` a perfect fit for Reactive Programming
+In our experience it makes UI-related code easier to build and maintain.  Our aim is to make `UI = f(state)`, which makes `Bento` a perfect fit for Reactive Programming.
 
 ## Content 📋
 
@@ -21,8 +21,8 @@ In our experience it makes UI-related code easier to build and maintain.  Our ai
 - [Contribute](#contribute)
 
 ### What's it like? 🧐
-When building a `Bento`, all you need to care about are `Bento`s and `Node`s.
 
+When building a `Bento`, all you need to care about are `Bento`s and `Node`s.
 
 ```swift
 let bento = Bento<SectionId, RowId>.empty
@@ -40,15 +40,14 @@ tableView.render(bento)
 
 #### Bento 🍱
 
-The bento is a fundamental component of the library, essentially a virtual representation of the `UI{Table/Collection}View` content. It has two generic parameters - `SectionId` and `RowId` - which are unique identifiers for  `Section<SectionId>` and `Node<RowId>`, used by the [diffing engine](https://github.com/RACCommunity/FlexibleDiff) to perform animated changes of the `UI{Table/Collection}View` content.
+`Bento` is a fundamental component of the library, essentially a virtual representation of the `UITableView` content. It has two generic parameters - `SectionId` and `RowId` - which are unique identifiers for  `Section<SectionId>` and `Node<RowId>`, used by the [diffing engine](https://github.com/RACCommunity/FlexibleDiff) to perform animated changes of the `UITableView` content.
 
 #### Sections and Nodes 🏗
 
-A `Section` and a `Node` are building blocks of the `Bento`.
+A `Section` and a `Node` are building blocks of the `Bento`:
 
-The `Section` is an abstraction of `UI{Table/Collection}View` section, it defines whether there going to be any header or footer.
-
-The `Node` is an abstraction of `UI{Table/Collection}View` row, it defines how it going be rendered.
+- The `Section` is an abstraction of `UITableView`'s section, which defines whether there is going to be any header or footer.
+- The `Node` is an abstraction of `UITableView`'s row, it defines how it going be rendered.
 
 ```swift
 struct Section<SectionId: Hashable, RowId: Hashable> {
@@ -65,7 +64,7 @@ public struct Node<Identifier: Hashable> {
 ```
 
 #### Identity 🎫
-Identity is one of the key concepts in the `Bento` library. Which is used by the diffing algorithm to perform changes.
+Identity is one of the key concepts,  which is used by the diffing algorithm to perform changes.
 
  > For general business concerns, full inequality of two instances does not necessarily mean inequality in term of identity — it just means the data being held has changed if the identity of both instances is the same.
  
@@ -75,7 +74,7 @@ There are `SectionId` and `RowId` which are defining identity of  the `Section` 
 
 #### Renderable 🖼
 
-`Renderable` is something similar to the [Component](https://reactjs.org/docs/react-component.html) in the [React](https://github.com/facebook/react). It's an abstraction of the real `UI{Table/Collection}ViewCell` that is going to be displayed. The idea is to make it possible to develop small independent components that can be reused across many parts of your app
+`Renderable` is something similar to a [Component](https://reactjs.org/docs/react-component.html) in [React](https://github.com/facebook/react). It's an abstraction of the real `UITableViewCell` that is going to be displayed. The idea is to make it possible to develop small independent components that can be reused across many parts of your app.
 
 ```swift
 public protocol Renderable: class {
@@ -103,7 +102,7 @@ class IconTextComponent: Renderable {
 
 #### Bento's arithmetics 💡
 
-There are several custom operators to work with `Bento`. They provide a syntax sugar to build a `Bento`. The pseudo code looks something like:
+There are several custom operators to work with `Bento`, they provide syntax sugar to build it:
 
 ```swift
 infix operator <>: BitwiseShiftPrecedence
