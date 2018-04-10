@@ -1,10 +1,25 @@
 import UIKit
 
-infix operator |-+: AdditionPrecedence
-infix operator |--+: MultiplicationPrecedence
-infix operator |--*: MultiplicationPrecedence
-infix operator |--?: MultiplicationPrecedence
-infix operator <>: BitwiseShiftPrecedence
+precedencegroup ComposingPrecedence {
+    associativity: left
+    higherThan: NodeConcatenationPrecedence
+}
+
+precedencegroup NodeConcatenationPrecedence {
+    associativity: left
+    higherThan: SectionConcatenationPrecedence
+}
+
+precedencegroup SectionConcatenationPrecedence {
+    associativity: left
+    higherThan: AdditionPrecedence
+}
+
+infix operator |-+: SectionConcatenationPrecedence
+infix operator |--+: NodeConcatenationPrecedence
+infix operator |--*: NodeConcatenationPrecedence
+infix operator |--?: NodeConcatenationPrecedence
+infix operator <>: ComposingPrecedence
 
 public struct Bento<SectionId: Hashable, RowId: Hashable> {
     public let sections: [Section<SectionId, RowId>]
