@@ -6,24 +6,24 @@ infix operator |--*: MultiplicationPrecedence
 infix operator |--?: MultiplicationPrecedence
 infix operator <>: BitwiseShiftPrecedence
 
-public struct Form<SectionId: Hashable, RowId: Hashable> {
+public struct Bento<SectionId: Hashable, RowId: Hashable> {
     public let sections: [Section<SectionId, RowId>]
 
     public init(sections: [Section<SectionId, RowId>]) {
         self.sections = sections
     }
 
-    public static var empty: Form {
-        return Form(sections: [])
+    public static var empty: Bento {
+        return Bento(sections: [])
     }
 }
 
-public func |-+<SectionId, RowId>(lhs: Form<SectionId, RowId>, rhs: Section<SectionId, RowId>) -> Form<SectionId, RowId> {
-    return Form(sections: lhs.sections + [rhs])
+public func |-+<SectionId, RowId>(lhs: Bento<SectionId, RowId>, rhs: Section<SectionId, RowId>) -> Bento<SectionId, RowId> {
+    return Bento(sections: lhs.sections + [rhs])
 }
 
 extension UITableView {
-    public func render<SectionId, RowId>(form: Form<SectionId, RowId>) {
+    public func render<SectionId, RowId>(form: Bento<SectionId, RowId>) {
         let adapter: SectionedFormAdapter<SectionId, RowId> = getAdapter()
         adapter.update(sections: form.sections)
     }

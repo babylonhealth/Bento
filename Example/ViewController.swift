@@ -35,7 +35,7 @@ class ViewController: UIViewController {
     private func renderState() {
         switch self.state {
         case .wifi:
-            let form = Form<SectionId, RowId>.empty
+            let bento = Bento<SectionId, RowId>.empty
                 |-+ ViewController.section(id: .first,
                                            //headerSpec: EmptySpaceComponent.Spec(height: 40, color: .red),
                                            footerSpec: EmptySpaceComponent.Spec(height: 100, color: .green))
@@ -67,9 +67,9 @@ class ViewController: UIViewController {
                 |--+ ViewController.iconText(icon: #imageLiteral(resourceName:"wifi"),
                                              text: "WIFI On")
 
-            tableView.render(form: form)
+            tableView.render(form: bento)
         case .airplaneMode:
-            let form = Form<SectionId, RowId>.empty
+            let form = Bento<SectionId, RowId>.empty
                 |-+ ViewController.section(id: .first,
                                            headerSpec: EmptySpaceComponent.Spec(height: 20, color: .black),
                                            footerSpec: EmptySpaceComponent.Spec(height: 20, color: .cyan))

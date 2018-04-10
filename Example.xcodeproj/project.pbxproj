@@ -39,7 +39,7 @@
 		A95093B3B7AD6DC69644BCA6 /* SectionedFormAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9509BC2762C8B4277B973D8 /* SectionedFormAdapter.swift */; };
 		A9509880661501C40B50E453 /* TableViewHeaderFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A950970749997A21E1BF7777 /* TableViewHeaderFooterView.swift */; };
 		A9509C4FC3664040FF3649CD /* Node.swift in Sources */ = {isa = PBXBuildFile; fileRef = A95093DB10046D731018127D /* Node.swift */; };
-		A9509FB12CAD89179FAA03B0 /* Form.swift in Sources */ = {isa = PBXBuildFile; fileRef = A950967CC717BBF3B02B766D /* Form.swift */; };
+		A9509FB12CAD89179FAA03B0 /* Bento.swift in Sources */ = {isa = PBXBuildFile; fileRef = A950967CC717BBF3B02B766D /* Bento.swift */; };
 		B9C557FE8D42BCB9CF36F50D /* Pods_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D4B544CA77089EE732C95DFA /* Pods_Example.framework */; };
 /* End PBXBuildFile section */
 
@@ -118,7 +118,7 @@
 		9DCDD776FBC4BC33B6A0B451 /* Pods-Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Example.release.xcconfig"; path = "Pods/Target Support Files/Pods-Example/Pods-Example.release.xcconfig"; sourceTree = "<group>"; };
 		9E43D0D1EDE6C25D9A736A5C /* Pods-Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Example.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Example/Pods-Example.debug.xcconfig"; sourceTree = "<group>"; };
 		A95093DB10046D731018127D /* Node.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Node.swift; sourceTree = "<group>"; };
-		A950967CC717BBF3B02B766D /* Form.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Form.swift; sourceTree = "<group>"; };
+		A950967CC717BBF3B02B766D /* Bento.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Bento.swift; sourceTree = "<group>"; };
 		A950970749997A21E1BF7777 /* TableViewHeaderFooterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewHeaderFooterView.swift; sourceTree = "<group>"; };
 		A9509BC2762C8B4277B973D8 /* SectionedFormAdapter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SectionedFormAdapter.swift; sourceTree = "<group>"; };
 		CEAFF72B4ED185325805F614 /* Pods-BentoTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BentoTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-BentoTests/Pods-BentoTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -298,7 +298,7 @@
 		A95095B51B6349DC59C77D6D /* Bento */ = {
 			isa = PBXGroup;
 			children = (
-				A950967CC717BBF3B02B766D /* Form.swift */,
+				A950967CC717BBF3B02B766D /* Bento.swift */,
 				A95093DB10046D731018127D /* Node.swift */,
 				515F9EAF847DD1D68DE3A48C /* Section.swift */,
 				5857BEC92056F02C0085EB9C /* If.swift */,
@@ -621,7 +621,7 @@
 				58BA7586201634120050D5F1 /* Helpers.swift in Sources */,
 				58BA7584201633CC0050D5F1 /* Renderable.swift in Sources */,
 				5857BECA2056F02C0085EB9C /* If.swift in Sources */,
-				A9509FB12CAD89179FAA03B0 /* Form.swift in Sources */,
+				A9509FB12CAD89179FAA03B0 /* Bento.swift in Sources */,
 				58467B03202B33F200577C77 /* TableViewSectionDiff.swift in Sources */,
 				A9509C4FC3664040FF3649CD /* Node.swift in Sources */,
 				587F0718201B355800ACD219 /* TableViewCell.swift in Sources */,
