@@ -1,55 +1,66 @@
-public struct Section<SectionId: Hashable, RowId: Hashable> {
-    let id: SectionId?
-    fileprivate let header: HeaderFooterNode?
-    fileprivate let footer: HeaderFooterNode?
-    fileprivate let rows: [Node<RowId>]
+import UIKit
 
-    public init(id: SectionId? = nil,
-                header: HeaderFooterNode? = nil,
-                footer: HeaderFooterNode? = nil,
+public struct Section<SectionId: Hashable, RowId: Hashable>: Equatable {
+    let id: SectionId
+    let header: AnyRenderable?
+    let footer: AnyRenderable?
+    let rows: [Node<RowId>]
+
+    public init<Header: Renderable, Footer: Renderable>(id: SectionId,
+                                                        header: Header,
+                                                        footer: Footer,
+                                                        rows: [Node<RowId>] = [])
+        where Header.View: UIView, Footer.View: UIView {
+        self.id = id
+        self.header = AnyRenderable(header)
+        self.footer = AnyRenderable(footer)
+        self.rows = rows
+    }
+
+    public init<Header: Renderable>(id: SectionId,
+                                    header: Header,
+                                    rows: [Node<RowId>] = []) where Header.View: UIView {
+        self.id = id
+        self.header = AnyRenderable(header)
+        self.footer = nil
+        self.rows = rows
+    }
+
+    public init<Footer: Renderable>(id: SectionId,
+                                    footer: Footer,
+                                    rows: [Node<RowId>] = []) where Footer.View: UIView {
+        self.id = id
+        self.header = nil
+        self.footer = AnyRenderable(footer)
+        self.rows = rows
+    }
+
+    public init(id: SectionId,
                 rows: [Node<RowId>] = []) {
+        self.id = id
+        self.header = nil
+        self.footer = nil
+        self.rows = rows
+    }
+
+    init(id: SectionId,
+         header: AnyRenderable?,
+         footer: AnyRenderable?,
+         rows: [Node<RowId>]) {
         self.id = id
         self.header = header
         self.footer = footer
         self.rows = rows
     }
 
-    public static var empty: Section {
-        return Section(rows: [])
+    public static func hasEqualMetadata(_ lhs: Section, _ rhs: Section) -> Bool {
+        return lhs.header == rhs.header && lhs.footer == rhs.footer
     }
 
-    var rowsCount: Int {
-        return rows.count
-    }
-
-    func renderHeader(in tableView: UITableView) -> UIView? {
-        return header?.render(in: tableView)
-    }
-
-    func renderFooter(in tableView: UITableView) -> UIView? {
-        return footer?.render(in: tableView)
-    }
-
-    func renderCell(in tableView: UITableView, at index: Int) -> UITableViewCell {
-        return rows[index].renderCell(in: tableView)
-    }
-}
-
-extension Section: Collection {
-    public var startIndex: Int {
-        return rows.startIndex
-    }
-
-    public var endIndex: Int {
-        return rows.endIndex
-    }
-
-    public func index(after i: Int) -> Int {
-        return rows.index(after: i)
-    }
-
-    public subscript(position: Int) -> Node<RowId> {
-        return rows[position]
+    public static func == (lhs: Section, rhs: Section) -> Bool {
+        return lhs.id == rhs.id
+            && hasEqualMetadata(lhs, rhs)
+            && lhs.rows == rhs.rows
     }
 }
 

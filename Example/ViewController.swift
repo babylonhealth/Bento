@@ -8,7 +8,8 @@ class ViewController: UIViewController {
     }
 
     enum SectionId: Hashable {
-        case emptySection
+        case first
+        case second
     }
 
     enum RowId: Hashable {
@@ -33,36 +34,11 @@ class ViewController: UIViewController {
 
     private func renderState() {
         switch self.state {
-        case .airplaneMode:
-            let form = Form<SectionId, RowId>.empty
-                |-+ ViewController.section()
-                |--+ ViewController.toggle(isOn: true,
-                                           title: "Airplane mode",
-                                           icon: #imageLiteral(resourceName:"plane"),
-                                           onToggle: { isOn in
-                                               if isOn {
-                                                   self.state = State.airplaneMode
-                                               } else {
-                                                   self.state = State.wifi(true)
-                                               }
-                                           })
-                |-+ ViewController.section()
-                |--+ ViewController.toggle(isOn: true,
-                                           title: "Airplane mode",
-                                           icon: #imageLiteral(resourceName:"plane"),
-                                           onToggle: { isOn in
-                                               if isOn {
-                                                   self.state = State.airplaneMode
-                                               } else {
-                                                   self.state = State.wifi(true)
-                                               }
-                                           })
-                |--+ ViewController.iconText(icon: #imageLiteral(resourceName:"wifi"),
-                                             text: "WIFI OFF")
-        form.render(in: tableView)
         case .wifi:
             let form = Form<SectionId, RowId>.empty
-                |-+ ViewController.section()
+                |-+ ViewController.section(id: .first,
+                                           //headerSpec: EmptySpaceComponent.Spec(height: 40, color: .red),
+                                           footerSpec: EmptySpaceComponent.Spec(height: 100, color: .green))
                 |--+ ViewController.toggle(isOn: false,
                                            title: "Airplane mode",
                                            icon: #imageLiteral(resourceName:"plane"),
@@ -74,8 +50,10 @@ class ViewController: UIViewController {
                                                }
                                            })
                 |--+ ViewController.iconText(icon: #imageLiteral(resourceName:"wifi"),
-                                             text: "WIFI ON")
-                |-+ ViewController.section()
+                                             text: "WIFI On")
+                |-+ ViewController.section(id: .second,
+                                           headerSpec: EmptySpaceComponent.Spec(height: 30, color: .purple))/*,
+                                           footerSpec: EmptySpaceComponent.Spec(height: 50, color: .magenta))*/
                 |--+ ViewController.toggle(isOn: false,
                                            title: "Airplane mode",
                                            icon: #imageLiteral(resourceName:"plane"),
@@ -87,8 +65,41 @@ class ViewController: UIViewController {
                                                }
                                            })
                 |--+ ViewController.iconText(icon: #imageLiteral(resourceName:"wifi"),
-                                             text: "WIFI ON")
-        form.render(in: tableView)
+                                             text: "WIFI On")
+
+            tableView.render(form: form)
+        case .airplaneMode:
+            let form = Form<SectionId, RowId>.empty
+                |-+ ViewController.section(id: .first,
+                                           headerSpec: EmptySpaceComponent.Spec(height: 20, color: .black),
+                                           footerSpec: EmptySpaceComponent.Spec(height: 20, color: .cyan))
+                |--+ ViewController.toggle(isOn: true,
+                                           title: "Airplane mode",
+                                           icon: #imageLiteral(resourceName:"plane"),
+                                           onToggle: { isOn in
+                                               if isOn {
+                                                   self.state = State.airplaneMode
+                                               } else {
+                                                   self.state = State.wifi(true)
+                                               }
+                                           })
+                |-+ ViewController.section(id: .second,
+                                           headerSpec: EmptySpaceComponent.Spec(height: 20, color: .orange),
+                                           footerSpec: EmptySpaceComponent.Spec(height: 20, color: .yellow))
+                |--+ ViewController.iconText(icon: #imageLiteral(resourceName:"wifi"),
+                                             text: "WIFI Off")
+                |--+ ViewController.toggle(isOn: true,
+                                           title: "Airplane mode",
+                                           icon: #imageLiteral(resourceName:"plane"),
+                                           onToggle: { isOn in
+                                               if isOn {
+                                                   self.state = State.airplaneMode
+                                               } else {
+                                                   self.state = State.wifi(true)
+                                               }
+                                           })
+
+            tableView.render(form: form)
         }
     }
 
@@ -117,12 +128,27 @@ class ViewController: UIViewController {
         return Node(id: RowId.note, component: component)
     }
 
-    private static func section() -> Section<SectionId, RowId> {
-        let headerComponent = EmptySpaceComponent(height: 30)
-        let footerComponent = EmptySpaceComponent(height: 30)
-        let headerNode = HeaderFooterNode(component: headerComponent)
-        let footerNode = HeaderFooterNode(component: footerComponent)
-        return Section(header: headerNode,
-                       footer: footerNode)
+    private static func section(id: SectionId,
+                                headerSpec: EmptySpaceComponent.Spec,
+                                footerSpec: EmptySpaceComponent.Spec) -> Section<SectionId, RowId> {
+        let headerComponent = EmptySpaceComponent(spec: headerSpec)
+        let footerComponent = EmptySpaceComponent(spec: footerSpec)
+        return Section(id: id,
+                       header: headerComponent,
+                       footer: footerComponent)
+    }
+
+    private static func section(id: SectionId,
+                                footerSpec: EmptySpaceComponent.Spec) -> Section<SectionId, RowId> {
+        let footerComponent = EmptySpaceComponent(spec: footerSpec)
+        return Section(id: id, footer: footerComponent)
+    }
+
+
+    private static func section(id: SectionId,
+                                headerSpec: EmptySpaceComponent.Spec) -> Section<SectionId, RowId> {
+        let headerComponent = EmptySpaceComponent(spec: headerSpec)
+        return Section(id: id,
+                       header: headerComponent)
     }
 }

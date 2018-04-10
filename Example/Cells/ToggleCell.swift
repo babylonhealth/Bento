@@ -1,12 +1,10 @@
 import UIKit
 import FormsKit
 
-class ToggleCell: UITableViewCell {
+class ToggleCell: UIView, NibLoadable {
     @IBOutlet weak var iconView: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var toggle: UISwitch!
-    @IBOutlet weak var iconWidthConstraint: NSLayoutConstraint!
-    @IBOutlet weak var iconLabelSpacingConstraint: NSLayoutConstraint!
     
     var onToggle: ((Bool) -> Void)?
     
@@ -19,12 +17,6 @@ class ToggleCell: UITableViewCell {
     
     @objc private func onToggleChange() {
         onToggle?(toggle.isOn)
-    }
-}
-
-extension Renderable {
-    var strategy: RenderingStrategy {
-        return .nib
     }
 }
 
@@ -47,8 +39,8 @@ class ToggleComponent: Renderable {
     func render(in view: ToggleCell) {
         view.iconView.image = icon
         view.titleLabel.text = title
-        view.toggle.isOn = isOn
         view.onToggle = onToggle
+        view.toggle.setOn(isOn, animated: true)
     }
 
 }

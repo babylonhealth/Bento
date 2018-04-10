@@ -4,20 +4,27 @@ infix operator |-+: AdditionPrecedence
 infix operator |--+: MultiplicationPrecedence
 infix operator |--*: MultiplicationPrecedence
 infix operator |--?: MultiplicationPrecedence
+infix operator <>: BitwiseShiftPrecedence
 
 public struct Form<SectionId: Hashable, RowId: Hashable> {
-    fileprivate let sections: [Section<SectionId, RowId>]
+    public let sections: [Section<SectionId, RowId>]
+
+    public init(sections: [Section<SectionId, RowId>]) {
+        self.sections = sections
+    }
 
     public static var empty: Form {
         return Form(sections: [])
-    }
-
-    public func render(in tableView: UITableView) {
-        let adapter: SectionedFormAdapter<SectionId, RowId> = tableView.getAdapter()
-        adapter.update(sections: sections)
     }
 }
 
 public func |-+<SectionId, RowId>(lhs: Form<SectionId, RowId>, rhs: Section<SectionId, RowId>) -> Form<SectionId, RowId> {
     return Form(sections: lhs.sections + [rhs])
+}
+
+extension UITableView {
+    public func render<SectionId, RowId>(form: Form<SectionId, RowId>) {
+        let adapter: SectionedFormAdapter<SectionId, RowId> = getAdapter()
+        adapter.update(sections: form.sections)
+    }
 }

@@ -13,10 +13,10 @@ public extension NibLoadable where Self: UIView {
         return nib.instantiate(withOwner: nil, options: nil).first as! Self
     }
 }
-extension UIView: NibLoadable {}
 
 extension UIView {
     func pinToEdges(of view: UIView) {
+        translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             view.topAnchor.constraint(equalTo: topAnchor),
             view.leftAnchor.constraint(equalTo: leftAnchor),
@@ -37,5 +37,14 @@ extension UITableView {
             return getAdapter()
         }
         return adapter
+    }
+}
+
+extension Optional {
+    func zip<T, R>(with other: T?, _ selector: (Wrapped, T) -> R) -> Optional<R> {
+        guard let unwrapped = self, let other = other else {
+            return nil
+        }
+        return selector(unwrapped, other)
     }
 }
