@@ -18,7 +18,7 @@ final class MoviesListViewController: UIViewController {
         tableView.sectionFooterHeight = 0
         viewModel.form.producer.take(first: 1).startWithValues(tableView.render)
         viewModel.form.producer.skip(first: 1).startWithValues { [tableView] in
-            tableView?.render(form: $0, animated: false)
+            tableView?.render($0, animated: false)
         }
 
         viewModel.nearBottomBinding <~ tableView!.rac_nearBottomSignal
