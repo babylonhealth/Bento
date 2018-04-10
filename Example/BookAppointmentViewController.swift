@@ -1,5 +1,5 @@
 import UIKit
-import FormsKit
+import Bento
 import ReactiveSwift
 import ReactiveFeedback
 import enum Result.NoError
@@ -51,7 +51,7 @@ final class BookAppointmentViewController: UIViewController {
 final class BookAppointmentViewModel {
     private let state: Property<State>
     private let reloadObserver: Signal<Void, NoError>.Observer
-    let form: Property<Form<Renderer.SectionId, Renderer.RowId>>
+    let form: Property<Bento<Renderer.SectionId, Renderer.RowId>>
 
     init(renderer: Renderer) {
         let (reloadSignal, reloadObserver) = Signal<Void, NoError>.pipe()
@@ -132,7 +132,7 @@ final class BookAppointmentViewModel {
             case loading
         }
 
-        func render(state: State, onBook: @escaping () -> Void) -> Form<SectionId, RowId> {
+        func render(state: State, onBook: @escaping () -> Void) -> Bento<SectionId, RowId> {
             switch state {
             case .loading:
                 return renderLoading()
@@ -141,8 +141,8 @@ final class BookAppointmentViewModel {
             }
         }
 
-        private func renderLoading() -> Form<SectionId, RowId> {
-            return Form<SectionId, RowId>.empty
+        private func renderLoading() -> Bento<SectionId, RowId> {
+            return Bento<SectionId, RowId>.empty
                 |-+ Section(id: SectionId.user,
                             header: EmptySpaceComponent(spec: EmptySpaceComponent.Spec(height: 20, color: .clear)))
                 |--+ Node(id: RowId.user,
@@ -154,8 +154,8 @@ final class BookAppointmentViewModel {
                 |--+ Node(id: RowId.loading, component: LoadingIndicatorComponent(isLoading: true))
         }
 
-        private func render(appointment: Appointment, onBook: @escaping () -> Void) -> Form<SectionId, RowId> {
-            return Form<SectionId, RowId>.empty
+        private func render(appointment: Appointment, onBook: @escaping () -> Void) -> Bento<SectionId, RowId> {
+            return Bento<SectionId, RowId>.empty
                 |-+ Section(id: SectionId.user,
                             header: EmptySpaceComponent(spec: EmptySpaceComponent.Spec(height: 20, color: .clear)))
                 |--+ Node(id: RowId.user,

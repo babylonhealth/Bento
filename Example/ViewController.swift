@@ -1,5 +1,5 @@
 import UIKit
-import FormsKit
+import Bento
 
 class ViewController: UIViewController {
     enum State {
@@ -35,9 +35,9 @@ class ViewController: UIViewController {
     private func renderState() {
         switch self.state {
         case .wifi:
-            let form = Form<SectionId, RowId>.empty
+            let bento = Bento<SectionId, RowId>.empty
                 |-+ ViewController.section(id: .first,
-                                           headerSpec: EmptySpaceComponent.Spec(height: 40, color: .red),
+                                           //headerSpec: EmptySpaceComponent.Spec(height: 40, color: .red),
                                            footerSpec: EmptySpaceComponent.Spec(height: 100, color: .green))
                 |--+ ViewController.toggle(isOn: false,
                                            title: "Airplane mode",
@@ -52,8 +52,8 @@ class ViewController: UIViewController {
                 |--+ ViewController.iconText(icon: #imageLiteral(resourceName:"wifi"),
                                              text: "WIFI On")
                 |-+ ViewController.section(id: .second,
-                                           headerSpec: EmptySpaceComponent.Spec(height: 30, color: .purple),
-                                           footerSpec: EmptySpaceComponent.Spec(height: 50, color: .magenta))
+                                           headerSpec: EmptySpaceComponent.Spec(height: 30, color: .purple))/*,
+                                           footerSpec: EmptySpaceComponent.Spec(height: 50, color: .magenta))*/
                 |--+ ViewController.toggle(isOn: false,
                                            title: "Airplane mode",
                                            icon: #imageLiteral(resourceName:"plane"),
@@ -67,9 +67,9 @@ class ViewController: UIViewController {
                 |--+ ViewController.iconText(icon: #imageLiteral(resourceName:"wifi"),
                                              text: "WIFI On")
 
-            tableView.render(form: form)
+            tableView.render(form: bento)
         case .airplaneMode:
-            let form = Form<SectionId, RowId>.empty
+            let form = Bento<SectionId, RowId>.empty
                 |-+ ViewController.section(id: .first,
                                            headerSpec: EmptySpaceComponent.Spec(height: 20, color: .black),
                                            footerSpec: EmptySpaceComponent.Spec(height: 20, color: .cyan))
@@ -136,5 +136,19 @@ class ViewController: UIViewController {
         return Section(id: id,
                        header: headerComponent,
                        footer: footerComponent)
+    }
+
+    private static func section(id: SectionId,
+                                footerSpec: EmptySpaceComponent.Spec) -> Section<SectionId, RowId> {
+        let footerComponent = EmptySpaceComponent(spec: footerSpec)
+        return Section(id: id, footer: footerComponent)
+    }
+
+
+    private static func section(id: SectionId,
+                                headerSpec: EmptySpaceComponent.Spec) -> Section<SectionId, RowId> {
+        let headerComponent = EmptySpaceComponent(spec: headerSpec)
+        return Section(id: id,
+                       header: headerComponent)
     }
 }

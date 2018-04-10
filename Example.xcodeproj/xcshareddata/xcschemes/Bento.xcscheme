@@ -15,8 +15,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "58BA755B2016303B0050D5F1"
-               BuildableName = "FormsKit.framework"
-               BlueprintName = "FormsKit"
+               BuildableName = "Bento.framework"
+               BlueprintName = "Bento"
                ReferencedContainer = "container:Example.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -33,9 +33,9 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "581C0B242024A7100088EBE8"
-               BuildableName = "FormsKitTests.xctest"
-               BlueprintName = "FormsKitTests"
+               BlueprintIdentifier = "58FC441C207CF29F00DA3614"
+               BuildableName = "BentoTests.xctest"
+               BlueprintName = "BentoTests"
                ReferencedContainer = "container:Example.xcodeproj">
             </BuildableReference>
          </TestableReference>
@@ -44,8 +44,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "58BA755B2016303B0050D5F1"
-            BuildableName = "FormsKit.framework"
-            BlueprintName = "FormsKit"
+            BuildableName = "Bento.framework"
+            BlueprintName = "Bento"
             ReferencedContainer = "container:Example.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -67,8 +67,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "58BA755B2016303B0050D5F1"
-            BuildableName = "FormsKit.framework"
-            BlueprintName = "FormsKit"
+            BuildableName = "Bento.framework"
+            BlueprintName = "Bento"
             ReferencedContainer = "container:Example.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -85,8 +85,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "58BA755B2016303B0050D5F1"
-            BuildableName = "FormsKit.framework"
-            BlueprintName = "FormsKit"
+            BuildableName = "Bento.framework"
+            BlueprintName = "Bento"
             ReferencedContainer = "container:Example.xcodeproj">
          </BuildableReference>
       </MacroExpansion>

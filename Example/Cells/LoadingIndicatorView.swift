@@ -1,7 +1,7 @@
 import UIKit
-import FormsKit
+import Bento
 
-final class LoadingIndicatorView: UIView {
+final class LoadingIndicatorView: UIView, NibLoadable{
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
 }
 

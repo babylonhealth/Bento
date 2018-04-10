@@ -1,7 +1,7 @@
 import UIKit
-import FormsKit
+import Bento
 
-class ToggleCell: UIView {
+class ToggleCell: UIView, NibLoadable {
     @IBOutlet weak var iconView: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var toggle: UISwitch!
@@ -17,12 +17,6 @@ class ToggleCell: UIView {
     
     @objc private func onToggleChange() {
         onToggle?(toggle.isOn)
-    }
-}
-
-extension Renderable {
-    var strategy: RenderingStrategy {
-        return .nib
     }
 }
 

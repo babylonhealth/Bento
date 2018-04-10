@@ -1,7 +1,7 @@
 import UIKit
-import FormsKit
+import Bento
 
-final class IconTitleDetailsView: UIView {
+final class IconTitleDetailsView: UIView, NibLoadable {
     @IBOutlet weak var iconImageView: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var subtitleLabel: UILabel!

@@ -4,7 +4,7 @@ import ReactiveCocoa
 import ReactiveFeedback
 import Result
 import Kingfisher
-import FormsKit
+import Bento
 
 final class MoviesListViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
@@ -44,7 +44,7 @@ final class PaginationViewModel {
     private let state: Property<State>
     private let renderer = PaginationViewModel.Renderer()
 
-    let form: Property<Form<Renderer.SectionId, Renderer.RowId>>
+    let form: Property<Bento<Renderer.SectionId, Renderer.RowId>>
     let nearBottomBinding: BindingTarget<Void>
     let retryBinding: BindingTarget<Void>
 
@@ -64,7 +64,7 @@ final class PaginationViewModel {
         self.state = Property(initial: State.initial,
                               reduce: State.reduce,
                               feedbacks: feedbacks)
-        self.form = Property(initial: Form.empty, then: state.producer.filterMap(renderer.render))
+        self.form = Property(initial: Bento.empty, then: state.producer.filterMap(renderer.render))
     }
 
     private static func whenPaging(nearBottomSignal: Signal<Void, NoError>) -> Feedback<State, Event> {
@@ -184,7 +184,7 @@ final class PaginationViewModel {
     }
 
     final class Renderer {
-        func render(state: State) -> Form<SectionId, RowId>? {
+        func render(state: State) -> Bento<SectionId, RowId>? {
             switch state {
             case .initial:
                 return renderLoading()
@@ -195,18 +195,18 @@ final class PaginationViewModel {
             }
         }
 
-        private func render(movies: [Movie]) -> Form<SectionId, RowId> {
+        private func render(movies: [Movie]) -> Bento<SectionId, RowId> {
             let rows = movies.map { movie in
                 return Node(id: RowId.movie(movie),
                             component: MovieComponent(movie: movie))
             }
-            return Form.empty
+            return Bento.empty
                 |-+ Section(id: SectionId.noId)
                 |--* rows
         }
 
-        private func renderLoading() -> Form<SectionId, RowId> {
-            return Form<SectionId, RowId>.empty
+        private func renderLoading() -> Bento<SectionId, RowId> {
+            return Bento<SectionId, RowId>.empty
                 |-+ Section(id: SectionId.noId)
                 |--+ Node(id: RowId.loading, component: LoadingIndicatorComponent(isLoading: true))
         }

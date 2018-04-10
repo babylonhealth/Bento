@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import FormsKit
+import Bento
 import Kingfisher
 
 final class MovieComponent: Renderable {
@@ -25,7 +25,7 @@ final class MovieComponent: Renderable {
     }
 }
 
-final class MovieComponentView: UIView {
+final class MovieComponentView: UIView, NibLoadable {
     @IBOutlet weak var title: UILabel!
     @IBOutlet weak var imageView: UIImageView!
 }

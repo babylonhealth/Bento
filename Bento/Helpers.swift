@@ -13,7 +13,6 @@ public extension NibLoadable where Self: UIView {
         return nib.instantiate(withOwner: nil, options: nil).first as! Self
     }
 }
-extension UIView: NibLoadable {}
 
 extension UIView {
     func pinToEdges(of view: UIView) {

@@ -1,7 +1,7 @@
 import UIKit
-import FormsKit
+import Bento
 
-final class ButtonComponentView: UIView {
+final class ButtonComponentView: UIView, NibLoadable {
     @IBOutlet weak var button: UIButton!
     var onButtonPressed: (() -> Void)?
     @IBAction func buttonPressed(_ sender: Any) {

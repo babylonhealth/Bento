@@ -17,18 +17,11 @@ struct TableViewSectionDiff<SectionId: Hashable, RowId: Hashable> {
     func apply(to tableView: UITableView) {
         let diff = SectionedChangeset(previous: oldSections,
                                       current: newSections,
-                                      sectionIdentifier: { (section: Section<SectionId, RowId>) -> SectionId in
-                                          return section.id
-                                      },
-                                      areSectionsEqual: { (section1: Section<SectionId, RowId>, section2: Section<SectionId, RowId>) -> Bool in
-                                          return section1.equals(section2)
-                                      },
-                                      elementIdentifier: { (row: Node<RowId>) -> RowId in
-                                          return row.id
-                                      },
-                                      areElementsEqual: { (row1: Node<RowId>, row2: Node<RowId>) -> Bool in
-                                          return row1.equals(to: row2)
-                                      })
+                                      sectionIdentifier: { $0.id },
+                                      areMetadataEqual: Section.hasEqualMetadata,
+                                      items: { $0.rows },
+                                      itemIdentifier: { $0.id },
+                                      areItemsEqual: ==)
         apply(diff: diff, to: tableView)
     }
 
@@ -64,15 +57,15 @@ struct TableViewSectionDiff<SectionId: Hashable, RowId: Hashable> {
                 .joined()
                 .forEach { source, destination in
                     guard let cell = tableView.cellForRow(at: [sectionMutation.source, source]) else { return }
-                    update(cell: cell, with: newSections[sectionMutation.destination][destination])
+                    update(cell: cell, with: newSections[sectionMutation.destination].rows[destination])
                 }
         }
     }
 
-    private func update(view: UIView, with node: HeaderFooterNode) {
+    private func update(view: UIView, with node: AnyRenderable) {
         guard let headerFooterView = view as? TableViewHeaderFooterView,
               let containedView = headerFooterView.containedView else { return }
-        node.component.render(in: containedView)
+        node.render(in: containedView)
     }
 
     private func update(cell: UITableViewCell, with node: Node<RowId>) {

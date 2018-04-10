@@ -1,7 +1,7 @@
 import UIKit
-import FormsKit
+import Bento
 
-final class SegmetControlView: UIView {
+final class SegmetControlView: UIView, NibLoadable {
     @IBOutlet weak var segmentedControl: UISegmentedControl!
     var onSegmentSelected: ((Int) -> Void)?
     
