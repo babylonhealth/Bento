@@ -23,8 +23,8 @@ public func |-+<SectionId, RowId>(lhs: Bento<SectionId, RowId>, rhs: Section<Sec
 }
 
 extension UITableView {
-    public func render<SectionId, RowId>(form: Bento<SectionId, RowId>) {
+    public func render<SectionId, RowId>(_ bento: Bento<SectionId, RowId>) {
         let adapter: SectionedFormAdapter<SectionId, RowId> = getAdapter()
-        adapter.update(sections: form.sections)
+        adapter.update(sections: bento.sections)
     }
 }
