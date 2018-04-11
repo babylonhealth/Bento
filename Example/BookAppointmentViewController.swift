@@ -30,7 +30,7 @@ final class BookAppointmentViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupTableView()
-        viewModel.form
+        viewModel.box
             .producer
             .startWithValues(tableView.render)
     }
@@ -51,7 +51,7 @@ final class BookAppointmentViewController: UIViewController {
 final class BookAppointmentViewModel {
     private let state: Property<State>
     private let reloadObserver: Signal<Void, NoError>.Observer
-    let form: Property<Box<Renderer.SectionId, Renderer.RowId>>
+    let box: Property<Box<Renderer.SectionId, Renderer.RowId>>
 
     init(renderer: Renderer) {
         let (reloadSignal, reloadObserver) = Signal<Void, NoError>.pipe()
@@ -62,7 +62,7 @@ final class BookAppointmentViewModel {
                                   BookAppointmentViewModel.reload(with: reloadSignal)
                               ])
         self.reloadObserver = reloadObserver
-        self.form = state.map { return renderer.render(state: $0, onBook: reloadObserver.send(value:)) }
+        self.box = state.map { return renderer.render(state: $0, onBook: reloadObserver.send(value:)) }
     }
 
     func reload() {

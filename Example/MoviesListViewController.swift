@@ -16,8 +16,8 @@ final class MoviesListViewController: UIViewController {
 
         tableView.sectionHeaderHeight = 0
         tableView.sectionFooterHeight = 0
-        viewModel.form.producer.take(first: 1).startWithValues(tableView.render)
-        viewModel.form.producer.skip(first: 1).startWithValues { [tableView] in
+        viewModel.box.producer.take(first: 1).startWithValues(tableView.render)
+        viewModel.box.producer.skip(first: 1).startWithValues { [tableView] in
             tableView?.render($0, animated: false)
         }
 
@@ -44,7 +44,7 @@ final class PaginationViewModel {
     private let state: Property<State>
     private let renderer = PaginationViewModel.Renderer()
 
-    let form: Property<Box<Renderer.SectionId, Renderer.RowId>>
+    let box: Property<Box<Renderer.SectionId, Renderer.RowId>>
     let nearBottomBinding: BindingTarget<Void>
     let retryBinding: BindingTarget<Void>
 
@@ -64,7 +64,7 @@ final class PaginationViewModel {
         self.state = Property(initial: State.initial,
                               reduce: State.reduce,
                               feedbacks: feedbacks)
-        self.form = Property(initial: Box.empty, then: state.producer.filterMap(renderer.render))
+        self.box = Property(initial: Box.empty, then: state.producer.filterMap(renderer.render))
     }
 
     private static func whenPaging(nearBottomSignal: Signal<Void, NoError>) -> Feedback<State, Event> {

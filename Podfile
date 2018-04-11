@@ -1,6 +1,6 @@
 use_frameworks!
 
-pod "FlexibleDiff", :git => 'https://github.com/RACCommunity/FlexibleDiff.git', :branch => 'sectioned-diffing'
+pod "FlexibleDiff", "= 0.0.5"
 
 target 'Example' do
     pod 'ReactiveFeedback'
