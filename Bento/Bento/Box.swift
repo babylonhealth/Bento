@@ -47,7 +47,7 @@ extension UITableView {
         adapter.update(sections: box.sections, with: animation)
     }
 
-    public func render<SectionId, RowId>(_ box: Box<SectionId, RowId>, animated: Bool = true) {
+    public func render<SectionId, RowId>(_ box: Box<SectionId, RowId>, animated: Bool) {
         let adapter: SectionedFormAdapter<SectionId, RowId> = getAdapter()
         if animated {
             let animation = TableViewAnimation(sectionInsertion: .fade,
