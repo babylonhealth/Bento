@@ -9,7 +9,7 @@
 - **Diffing:** reloads your UI with beautiful animations when your data changes
 - **Component-based:**  Design reusable components and share your custom UI across multiple screens of your app
 
-In our experience it makes UI-related code easier to build and maintain.  Our aim is to make `UI = f(state)`, which makes `Bento` a perfect fit for Reactive Programming.
+In our experience it makes UI-related code easier to build and maintain. Our aim is to make the UI a function of state (`UI = f(state)`), which makes `Bento` a perfect fit for Reactive Programming.
 
 ## Content 📋
 
@@ -68,15 +68,15 @@ public struct Node<Identifier: Hashable> {
 #### Identity 🎫
 Identity is one of the key concepts,  which is used by the diffing algorithm to perform changes.
 
- > For general business concerns, full inequality of two instances does not necessarily mean inequality in term of identity — it just means the data being held has changed if the identity of both instances is the same.
+ > For general business concerns, full inequality of two instances does not necessarily mean inequality in terms of identity — it just means the data being held has changed if the identity of both instances is the same.
  
- (More info [here](https://github.com/RACCommunity/FlexibleDiff))
+ (More info [here](https://github.com/RACCommunity/FlexibleDiff).)
 
 There are `SectionId` and `RowId` which are defining identity of  the `Section` and the `Row` respectively.
 
 #### Renderable 🖼
 
-`Renderable` is something similar to a [Component](https://reactjs.org/docs/react-component.html) in [React](https://github.com/facebook/react). It's an abstraction of the real `UITableViewCell` that is going to be displayed. The idea is to make it possible to develop small independent components that can be reused across many parts of your app.
+`Renderable` is similar to [React](https://github.com/facebook/react)'s [Component](https://reactjs.org/docs/react-component.html)s. It's an abstraction of the real `UITableViewCell` that is going to be displayed. The idea is to make it possible to develop small independent components that can be reused across many parts of your app.
 
 ```swift
 public protocol Renderable: class {
@@ -104,7 +104,7 @@ class IconTextComponent: Renderable {
 
 #### Bento's arithmetics 💡
 
-There are several custom operators to work with `Bento`, they provide syntax sugar to build it:
+There are several custom operators that provide syntax sugar to make it easier to build `Bento`s:
 
 ```swift
 infix operator <>: BitwiseShiftPrecedence
@@ -116,7 +116,7 @@ let beno = Bento.empty // 3
 	|--+ RowId.id <> Component() // 1
 ```
 
-As you can `<>` has a BitwiseShiftPrecedence, `|--+` has a `MultiplicationPrecedence` and `|-+` has an `AdditionPrecedence `, which means that Nodes will be computed first. The order of the expression above is:
+As you can see, `<>` has a BitwiseShiftPrecedence, `|--+` has a `MultiplicationPrecedence`, and `|-+` has an `AdditionPrecedence `, which means that Nodes will be computed first. The order of the expression above is:
 
 1.  `RowId.id <> Component()` => `Node`
 2. `Section() |--+ Node()` => `Section`
@@ -149,12 +149,12 @@ Feature | Status
 
 free functions as alternative to operators | ❌
 
-### Contribute ✍️
+### Contributing ✍️
 
-Contributions are very welcome and highly appreciated ❤️  
+Contributions are very welcome and highly appreciated! ❤️
 
 How to contribute: 
 
-- If you have any questions feel free to create  an issue with a `question` label
-- If you have a feature request create an issue with a `Feature request` label
+- If you have any questions feel free to create  an issue with a `question` label;
+- If you have a feature request create an issue with a `Feature request` label;
 - If you found a bug feel free to create an issue with a `bug` label or open a PR with a fix.
