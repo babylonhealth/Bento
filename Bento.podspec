@@ -9,7 +9,7 @@ Pod::Spec.new do |s|
                     Provides a declarative way to render data in UITableView and UICollectionView
                     DESC
 
-  s.homepage      = "https://github.com/Babylonpartners/FormsKit"
+  s.homepage      = "https://github.com/Babylonpartners/Bento"
   s.license       = { :type => "MIT", :file => "LICENSE" }
   s.author        = { "Babylon iOS" => "ios.development@babylonhealth.com" }
   s.ios.deployment_target = '9.0'
