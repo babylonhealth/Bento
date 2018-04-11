@@ -16,5 +16,5 @@ Pod::Spec.new do |s|
   s.source        = { :git => "https://github.com/Babylonpartners/Bento.git", :tag => "#{s.version}" }
   s.source_files  = 'Bento/*.swift', 'Bento/**/*.swift'
 
-  s.dependency "FlexibleDiff", "~> 0.0.1"
+  s.dependency "FlexibleDiff", "= 0.0.5"
 end
