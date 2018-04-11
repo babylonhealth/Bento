@@ -66,4 +66,3 @@ extension UITableView {
         adapter.update(sections: box.sections, with: animation)
     }
 }
-
