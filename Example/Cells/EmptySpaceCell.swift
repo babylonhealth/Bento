@@ -1,5 +1,5 @@
 import UIKit
-import FormsKit
+import Bento
 
 final class EmptySpaceCell: UIView, NibLoadable {
     @IBOutlet weak var heightConstraint: NSLayoutConstraint!

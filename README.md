@@ -1,3 +1,4 @@
+
 # [Bento](https://en.wikipedia.org/wiki/Bento) 🍱 弁当
 
 > #### is a single-portion take-out or home-packed meal common in Japanese cuisine. A traditional bento holds rice or noodles, fish or meat, with pickled and cooked vegetables, in a box.
@@ -62,6 +63,7 @@ public struct Node<Identifier: Hashable> {
     let component: AnyRenderable
 }
 ```
+
 
 #### Identity 🎫
 Identity is one of the key concepts,  which is used by the diffing algorithm to perform changes.
@@ -144,6 +146,7 @@ Feature | Status
 --- | ---
 `UITableView` | ✅ 
 `UICollectionView` | ❌
+
 free functions as alternative to operators | ❌
 
 ### Contributing ✍️

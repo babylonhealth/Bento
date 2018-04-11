@@ -1,5 +1,5 @@
 import UIKit
-import FormsKit
+import Bento
 
 class ViewController: UIViewController {
     enum State {
@@ -35,7 +35,7 @@ class ViewController: UIViewController {
     private func renderState() {
         switch self.state {
         case .wifi:
-            let form = Form<SectionId, RowId>.empty
+            let box = Box<SectionId, RowId>.empty
                 |-+ ViewController.section(id: .first,
                                            //headerSpec: EmptySpaceComponent.Spec(height: 40, color: .red),
                                            footerSpec: EmptySpaceComponent.Spec(height: 100, color: .green))
@@ -67,9 +67,9 @@ class ViewController: UIViewController {
                 |--+ ViewController.iconText(icon: #imageLiteral(resourceName:"wifi"),
                                              text: "WIFI On")
 
-            tableView.render(form: form)
+            tableView.render(box)
         case .airplaneMode:
-            let form = Form<SectionId, RowId>.empty
+            let box = Box<SectionId, RowId>.empty
                 |-+ ViewController.section(id: .first,
                                            headerSpec: EmptySpaceComponent.Spec(height: 20, color: .black),
                                            footerSpec: EmptySpaceComponent.Spec(height: 20, color: .cyan))
@@ -99,7 +99,7 @@ class ViewController: UIViewController {
                                                }
                                            })
 
-            tableView.render(form: form)
+            tableView.render(box)
         }
     }
 
@@ -118,14 +118,14 @@ class ViewController: UIViewController {
                                         title: title,
                                         icon: icon,
                                         onToggle: onToggle)
-        return Node(id: RowId.toggle, component: component)
+        return RowId.toggle <> component
     }
 
     private static func iconText(icon: UIImage?, text: String?) -> Node<RowId> {
         let component = IconTextComponent(image: icon,
                                           title: text)
 
-        return Node(id: RowId.note, component: component)
+        return RowId.note <> component
     }
 
     private static func section(id: SectionId,

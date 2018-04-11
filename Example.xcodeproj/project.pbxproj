@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0A5856497265C834BA23E39C /* Pods_Bento.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 669406B2CB5D5B435C8E0C3D /* Pods_Bento.framework */; };
 		515F94097C1F82B7E5C2DE0C /* Section.swift in Sources */ = {isa = PBXBuildFile; fileRef = 515F9EAF847DD1D68DE3A48C /* Section.swift */; };
 		5829D269200FB092001E020D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5829D268200FB092001E020D /* AppDelegate.swift */; };
 		5829D26B200FB092001E020D /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5829D26A200FB092001E020D /* ViewController.swift */; };
@@ -17,8 +18,6 @@
 		5857BECA2056F02C0085EB9C /* If.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5857BEC92056F02C0085EB9C /* If.swift */; };
 		587F0718201B355800ACD219 /* TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 587F0717201B355800ACD219 /* TableViewCell.swift */; };
 		58BA75602016303B0050D5F1 /* FormsKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 58BA755E2016303B0050D5F1 /* FormsKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		58BA75632016303B0050D5F1 /* FormsKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 58BA755C2016303B0050D5F1 /* FormsKit.framework */; };
-		58BA75642016303B0050D5F1 /* FormsKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 58BA755C2016303B0050D5F1 /* FormsKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		58BA7584201633CC0050D5F1 /* Renderable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58BA7583201633CC0050D5F1 /* Renderable.swift */; };
 		58BA7586201634120050D5F1 /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58BA7585201634120050D5F1 /* Helpers.swift */; };
 		58E98E5B2016571F00F78BAE /* IconTextCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 58E98E552016571F00F78BAE /* IconTextCell.xib */; };
@@ -28,65 +27,59 @@
 		58E98E5F2016571F00F78BAE /* EmptySpaceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58E98E592016571F00F78BAE /* EmptySpaceCell.swift */; };
 		58E98E602016571F00F78BAE /* IconTextCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58E98E5A2016571F00F78BAE /* IconTextCell.swift */; };
 		58E98E63201889B900F78BAE /* AnyRenderable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58E98E62201889B900F78BAE /* AnyRenderable.swift */; };
-		6EAC803BBFEC7CC4A214A9A8 /* Pods_FormsKitTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3378B758632CFCD21DE35F7E /* Pods_FormsKitTests.framework */; };
-		9A3EF780205D866F00D043AC /* AnyRenderableTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A3EF77F205D866F00D043AC /* AnyRenderableTests.swift */; };
-		9A7846F7205D896F00FA597E /* FormsKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 58BA755C2016303B0050D5F1 /* FormsKit.framework */; };
-		9A7846F9205D898600FA597E /* FormsKit.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 58BA755C2016303B0050D5F1 /* FormsKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		9A7846FB205D89C000FA597E /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A7846FA205D89C000FA597E /* XCTest.framework */; };
-		9A7846FD205EAF7C00FA597E /* NodeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A7846FC205EAF7C00FA597E /* NodeTests.swift */; };
-		9A7846FF205EAF8400FA597E /* SectionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A7846FE205EAF8400FA597E /* SectionTests.swift */; };
-		9A784701205EB5E000FA597E /* TestRenderable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A784700205EB5E000FA597E /* TestRenderable.swift */; };
-		9A784703205EB61D00FA597E /* TestId.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A784702205EB61D00FA597E /* TestId.swift */; };
+		58FC4427207CF2BB00DA3614 /* AnyRenderableTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A3EF77F205D866F00D043AC /* AnyRenderableTests.swift */; };
+		58FC4428207CF2BB00DA3614 /* TestId.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A784702205EB61D00FA597E /* TestId.swift */; };
+		58FC4429207CF2BB00DA3614 /* TestRenderable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A784700205EB5E000FA597E /* TestRenderable.swift */; };
+		58FC442A207CF2BB00DA3614 /* NodeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A7846FC205EAF7C00FA597E /* NodeTests.swift */; };
+		58FC442B207CF2BB00DA3614 /* SectionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A7846FE205EAF8400FA597E /* SectionTests.swift */; };
+		58FC442F207CF37700DA3614 /* script in Resources */ = {isa = PBXBuildFile; fileRef = 58FC442E207CF37700DA3614 /* script */; };
+		58FC4430207CF3CD00DA3614 /* Bento.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 58BA755C2016303B0050D5F1 /* Bento.framework */; };
+		58FC4431207CF3CD00DA3614 /* Bento.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 58BA755C2016303B0050D5F1 /* Bento.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		6F931C93E8302BAF822EF6CA /* Pods_BentoTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 22A31973BB9DF6DFF814E803 /* Pods_BentoTests.framework */; };
 		A95093B3B7AD6DC69644BCA6 /* SectionedFormAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9509BC2762C8B4277B973D8 /* SectionedFormAdapter.swift */; };
 		A9509880661501C40B50E453 /* TableViewHeaderFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A950970749997A21E1BF7777 /* TableViewHeaderFooterView.swift */; };
 		A9509C4FC3664040FF3649CD /* Node.swift in Sources */ = {isa = PBXBuildFile; fileRef = A95093DB10046D731018127D /* Node.swift */; };
-		A9509FB12CAD89179FAA03B0 /* Form.swift in Sources */ = {isa = PBXBuildFile; fileRef = A950967CC717BBF3B02B766D /* Form.swift */; };
+		A9509FB12CAD89179FAA03B0 /* Box.swift in Sources */ = {isa = PBXBuildFile; fileRef = A950967CC717BBF3B02B766D /* Box.swift */; };
 		B9C557FE8D42BCB9CF36F50D /* Pods_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D4B544CA77089EE732C95DFA /* Pods_Example.framework */; };
-		E5B6E9AD43F8F8043874B7AA /* Pods_FormsKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D8F70F2914E4B36CCB7DB090 /* Pods_FormsKit.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		58BA75612016303B0050D5F1 /* PBXContainerItemProxy */ = {
+		58FC4422207CF29F00DA3614 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5829D25D200FB092001E020D /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5829D264200FB092001E020D;
+			remoteInfo = Example;
+		};
+		58FC4432207CF3CD00DA3614 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 5829D25D200FB092001E020D /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 58BA755B2016303B0050D5F1;
-			remoteInfo = FormsKit;
+			remoteInfo = Bento;
 		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		58BA75682016303B0050D5F1 /* Embed Frameworks */ = {
+		58FC4434207CF3CE00DA3614 /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				58BA75642016303B0050D5F1 /* FormsKit.framework in Embed Frameworks */,
+				58FC4431207CF3CD00DA3614 /* Bento.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		9A7846F8205D897800FA597E /* CopyFiles */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				9A7846F9205D898600FA597E /* FormsKit.framework in CopyFiles */,
-			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		05B3CD14D77ABE4568F782C7 /* Pods-FormsKit.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FormsKit.debug.xcconfig"; path = "Pods/Target Support Files/Pods-FormsKit/Pods-FormsKit.debug.xcconfig"; sourceTree = "<group>"; };
-		06DD1BBB83A18804500212EF /* Pods-FormsKitTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FormsKitTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-FormsKitTests/Pods-FormsKitTests.debug.xcconfig"; sourceTree = "<group>"; };
+		0CD73CCD16DCAF7438ED8B3A /* Pods-Bento.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Bento.release.xcconfig"; path = "Pods/Target Support Files/Pods-Bento/Pods-Bento.release.xcconfig"; sourceTree = "<group>"; };
+		0EEA17DEEC6D16C7ED60C8EC /* Pods-Bento.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Bento.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Bento/Pods-Bento.debug.xcconfig"; sourceTree = "<group>"; };
+		22A31973BB9DF6DFF814E803 /* Pods_BentoTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BentoTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3378B758632CFCD21DE35F7E /* Pods_FormsKitTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FormsKitTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		39CF773E225BA61445E8B24D /* Pods-FormsKitTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FormsKitTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-FormsKitTests/Pods-FormsKitTests.release.xcconfig"; sourceTree = "<group>"; };
 		515F9EAF847DD1D68DE3A48C /* Section.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Section.swift; sourceTree = "<group>"; };
-		581C0B252024A7100088EBE8 /* FormsKitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FormsKitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		581C0B292024A7100088EBE8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5829D265200FB092001E020D /* Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5829D268200FB092001E020D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5829D26A200FB092001E020D /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -97,7 +90,7 @@
 		58467B02202B33F200577C77 /* TableViewSectionDiff.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewSectionDiff.swift; sourceTree = "<group>"; };
 		5857BEC92056F02C0085EB9C /* If.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = If.swift; sourceTree = "<group>"; };
 		587F0717201B355800ACD219 /* TableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewCell.swift; sourceTree = "<group>"; };
-		58BA755C2016303B0050D5F1 /* FormsKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = FormsKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		58BA755C2016303B0050D5F1 /* Bento.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Bento.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		58BA755E2016303B0050D5F1 /* FormsKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FormsKit.h; sourceTree = "<group>"; };
 		58BA755F2016303B0050D5F1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		58BA7583201633CC0050D5F1 /* Renderable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Renderable.swift; sourceTree = "<group>"; };
@@ -109,7 +102,13 @@
 		58E98E592016571F00F78BAE /* EmptySpaceCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmptySpaceCell.swift; sourceTree = "<group>"; };
 		58E98E5A2016571F00F78BAE /* IconTextCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IconTextCell.swift; sourceTree = "<group>"; };
 		58E98E62201889B900F78BAE /* AnyRenderable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnyRenderable.swift; sourceTree = "<group>"; };
-		77E28B37FE8E44DC77929DD8 /* Pods-FormsKit.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FormsKit.release.xcconfig"; path = "Pods/Target Support Files/Pods-FormsKit/Pods-FormsKit.release.xcconfig"; sourceTree = "<group>"; };
+		58FC441D207CF29F00DA3614 /* BentoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BentoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		58FC4421207CF29F00DA3614 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		58FC442C207CF2F500DA3614 /* Bento.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Bento.podspec; sourceTree = "<group>"; };
+		58FC442E207CF37700DA3614 /* script */ = {isa = PBXFileReference; lastKnownFileType = folder; path = script; sourceTree = "<group>"; };
+		58FC4435207CF7F100DA3614 /* circle.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = circle.yml; sourceTree = "<group>"; };
+		669406B2CB5D5B435C8E0C3D /* Pods_Bento.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Bento.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		6EAC305899441AD3C9360A66 /* Pods-BentoTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BentoTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-BentoTests/Pods-BentoTests.release.xcconfig"; sourceTree = "<group>"; };
 		9A3EF77F205D866F00D043AC /* AnyRenderableTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnyRenderableTests.swift; sourceTree = "<group>"; };
 		9A7846FA205D89C000FA597E /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Platforms/iPhoneOS.platform/Developer/Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		9A7846FC205EAF7C00FA597E /* NodeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeTests.swift; sourceTree = "<group>"; };
@@ -119,30 +118,21 @@
 		9DCDD776FBC4BC33B6A0B451 /* Pods-Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Example.release.xcconfig"; path = "Pods/Target Support Files/Pods-Example/Pods-Example.release.xcconfig"; sourceTree = "<group>"; };
 		9E43D0D1EDE6C25D9A736A5C /* Pods-Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Example.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Example/Pods-Example.debug.xcconfig"; sourceTree = "<group>"; };
 		A95093DB10046D731018127D /* Node.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Node.swift; sourceTree = "<group>"; };
-		A950967CC717BBF3B02B766D /* Form.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Form.swift; sourceTree = "<group>"; };
+		A950967CC717BBF3B02B766D /* Box.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Box.swift; sourceTree = "<group>"; };
 		A950970749997A21E1BF7777 /* TableViewHeaderFooterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewHeaderFooterView.swift; sourceTree = "<group>"; };
 		A9509BC2762C8B4277B973D8 /* SectionedFormAdapter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SectionedFormAdapter.swift; sourceTree = "<group>"; };
+		CEAFF72B4ED185325805F614 /* Pods-BentoTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BentoTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-BentoTests/Pods-BentoTests.debug.xcconfig"; sourceTree = "<group>"; };
 		D4B544CA77089EE732C95DFA /* Pods_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D8F70F2914E4B36CCB7DB090 /* Pods_FormsKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FormsKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		581C0B222024A7100088EBE8 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				9A7846FB205D89C000FA597E /* XCTest.framework in Frameworks */,
-				9A7846F7205D896F00FA597E /* FormsKit.framework in Frameworks */,
-				6EAC803BBFEC7CC4A214A9A8 /* Pods_FormsKitTests.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		5829D262200FB092001E020D /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				58BA75632016303B0050D5F1 /* FormsKit.framework in Frameworks */,
 				B9C557FE8D42BCB9CF36F50D /* Pods_Example.framework in Frameworks */,
+				58FC4430207CF3CD00DA3614 /* Bento.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -150,26 +140,21 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E5B6E9AD43F8F8043874B7AA /* Pods_FormsKit.framework in Frameworks */,
+				0A5856497265C834BA23E39C /* Pods_Bento.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		58FC441A207CF29F00DA3614 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6F931C93E8302BAF822EF6CA /* Pods_BentoTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		581C0B262024A7100088EBE8 /* FormsKitTests */ = {
-			isa = PBXGroup;
-			children = (
-				581C0B292024A7100088EBE8 /* Info.plist */,
-				9A3EF77F205D866F00D043AC /* AnyRenderableTests.swift */,
-				9A7846FC205EAF7C00FA597E /* NodeTests.swift */,
-				9A7846FE205EAF8400FA597E /* SectionTests.swift */,
-				9A784700205EB5E000FA597E /* TestRenderable.swift */,
-				9A784702205EB61D00FA597E /* TestId.swift */,
-			);
-			path = FormsKitTests;
-			sourceTree = "<group>";
-		};
 		581ED77E2022041C00EC9584 /* Diff */ = {
 			isa = PBXGroup;
 			children = (
@@ -181,9 +166,12 @@
 		5829D25C200FB092001E020D = {
 			isa = PBXGroup;
 			children = (
+				58FC4435207CF7F100DA3614 /* circle.yml */,
+				58FC442C207CF2F500DA3614 /* Bento.podspec */,
+				58FC442E207CF37700DA3614 /* script */,
 				5829D267200FB092001E020D /* Example */,
-				58BA755D2016303B0050D5F1 /* FormsKit */,
-				581C0B262024A7100088EBE8 /* FormsKitTests */,
+				58BA755D2016303B0050D5F1 /* Bento */,
+				58FC441E207CF29F00DA3614 /* BentoTests */,
 				5829D266200FB092001E020D /* Products */,
 				8A668AF20B1285F69E250C39 /* Pods */,
 				7D7D5AFB203495BA731D7A3E /* Frameworks */,
@@ -194,8 +182,8 @@
 			isa = PBXGroup;
 			children = (
 				5829D265200FB092001E020D /* Example.app */,
-				58BA755C2016303B0050D5F1 /* FormsKit.framework */,
-				581C0B252024A7100088EBE8 /* FormsKitTests.xctest */,
+				58BA755C2016303B0050D5F1 /* Bento.framework */,
+				58FC441D207CF29F00DA3614 /* BentoTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -223,27 +211,19 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
-		58BA755D2016303B0050D5F1 /* FormsKit */ = {
-			isa = PBXGroup;
-			children = (
-				58BA756B201630710050D5F1 /* Forms */,
-				58BA755E2016303B0050D5F1 /* FormsKit.h */,
-				58BA755F2016303B0050D5F1 /* Info.plist */,
-			);
-			path = FormsKit;
-			sourceTree = "<group>";
-		};
-		58BA756B201630710050D5F1 /* Forms */ = {
+		58BA755D2016303B0050D5F1 /* Bento */ = {
 			isa = PBXGroup;
 			children = (
 				581ED77E2022041C00EC9584 /* Diff */,
 				587F0716201B354900ACD219 /* Views */,
 				58E98E612018898700F78BAE /* Renderable */,
 				58BA7585201634120050D5F1 /* Helpers.swift */,
-				A95095B51B6349DC59C77D6D /* Form */,
+				A95095B51B6349DC59C77D6D /* Bento */,
 				A950945F6360B851C3E87B61 /* Adapters */,
+				58BA755E2016303B0050D5F1 /* FormsKit.h */,
+				58BA755F2016303B0050D5F1 /* Info.plist */,
 			);
-			path = Forms;
+			path = Bento;
 			sourceTree = "<group>";
 		};
 		58E98E542016570800F78BAE /* Cells */ = {
@@ -268,6 +248,19 @@
 			path = Renderable;
 			sourceTree = "<group>";
 		};
+		58FC441E207CF29F00DA3614 /* BentoTests */ = {
+			isa = PBXGroup;
+			children = (
+				9A3EF77F205D866F00D043AC /* AnyRenderableTests.swift */,
+				9A7846FC205EAF7C00FA597E /* NodeTests.swift */,
+				9A7846FE205EAF8400FA597E /* SectionTests.swift */,
+				9A784700205EB5E000FA597E /* TestRenderable.swift */,
+				9A784702205EB61D00FA597E /* TestId.swift */,
+				58FC4421207CF29F00DA3614 /* Info.plist */,
+			);
+			path = BentoTests;
+			sourceTree = "<group>";
+		};
 		7D7D5AFB203495BA731D7A3E /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -275,6 +268,8 @@
 				D4B544CA77089EE732C95DFA /* Pods_Example.framework */,
 				D8F70F2914E4B36CCB7DB090 /* Pods_FormsKit.framework */,
 				3378B758632CFCD21DE35F7E /* Pods_FormsKitTests.framework */,
+				669406B2CB5D5B435C8E0C3D /* Pods_Bento.framework */,
+				22A31973BB9DF6DFF814E803 /* Pods_BentoTests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -284,10 +279,10 @@
 			children = (
 				9E43D0D1EDE6C25D9A736A5C /* Pods-Example.debug.xcconfig */,
 				9DCDD776FBC4BC33B6A0B451 /* Pods-Example.release.xcconfig */,
-				05B3CD14D77ABE4568F782C7 /* Pods-FormsKit.debug.xcconfig */,
-				77E28B37FE8E44DC77929DD8 /* Pods-FormsKit.release.xcconfig */,
-				06DD1BBB83A18804500212EF /* Pods-FormsKitTests.debug.xcconfig */,
-				39CF773E225BA61445E8B24D /* Pods-FormsKitTests.release.xcconfig */,
+				0EEA17DEEC6D16C7ED60C8EC /* Pods-Bento.debug.xcconfig */,
+				0CD73CCD16DCAF7438ED8B3A /* Pods-Bento.release.xcconfig */,
+				CEAFF72B4ED185325805F614 /* Pods-BentoTests.debug.xcconfig */,
+				6EAC305899441AD3C9360A66 /* Pods-BentoTests.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -300,15 +295,15 @@
 			path = Adapters;
 			sourceTree = "<group>";
 		};
-		A95095B51B6349DC59C77D6D /* Form */ = {
+		A95095B51B6349DC59C77D6D /* Bento */ = {
 			isa = PBXGroup;
 			children = (
-				A950967CC717BBF3B02B766D /* Form.swift */,
+				A950967CC717BBF3B02B766D /* Box.swift */,
 				A95093DB10046D731018127D /* Node.swift */,
 				515F9EAF847DD1D68DE3A48C /* Section.swift */,
 				5857BEC92056F02C0085EB9C /* If.swift */,
 			);
-			path = Form;
+			path = Bento;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -325,27 +320,6 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		581C0B242024A7100088EBE8 /* FormsKitTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 581C0B2E2024A7100088EBE8 /* Build configuration list for PBXNativeTarget "FormsKitTests" */;
-			buildPhases = (
-				CB130D2BA6F10A54BC5D4EF0 /* [CP] Check Pods Manifest.lock */,
-				581C0B212024A7100088EBE8 /* Sources */,
-				581C0B222024A7100088EBE8 /* Frameworks */,
-				581C0B232024A7100088EBE8 /* Resources */,
-				9A7846F8205D897800FA597E /* CopyFiles */,
-				7BFAF670DCBF5B612A578E5D /* [CP] Embed Pods Frameworks */,
-				E534311926EE978AF64D012B /* [CP] Copy Pods Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = FormsKitTests;
-			productName = FormsKitTests;
-			productReference = 581C0B252024A7100088EBE8 /* FormsKitTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
 		5829D264200FB092001E020D /* Example */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 5829D277200FB092001E020D /* Build configuration list for PBXNativeTarget "Example" */;
@@ -354,23 +328,23 @@
 				5829D261200FB092001E020D /* Sources */,
 				5829D262200FB092001E020D /* Frameworks */,
 				5829D263200FB092001E020D /* Resources */,
-				58BA75682016303B0050D5F1 /* Embed Frameworks */,
 				F3A402B41E8435B72A4021ED /* [CP] Embed Pods Frameworks */,
 				6DB87146A951B53A1EF8B7E2 /* [CP] Copy Pods Resources */,
+				58FC4434207CF3CE00DA3614 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				58BA75622016303B0050D5F1 /* PBXTargetDependency */,
+				58FC4433207CF3CD00DA3614 /* PBXTargetDependency */,
 			);
 			name = Example;
 			productName = Example;
 			productReference = 5829D265200FB092001E020D /* Example.app */;
 			productType = "com.apple.product-type.application";
 		};
-		58BA755B2016303B0050D5F1 /* FormsKit */ = {
+		58BA755B2016303B0050D5F1 /* Bento */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 58BA75652016303B0050D5F1 /* Build configuration list for PBXNativeTarget "FormsKit" */;
+			buildConfigurationList = 58BA75652016303B0050D5F1 /* Build configuration list for PBXNativeTarget "Bento" */;
 			buildPhases = (
 				9BD93503D97BCFF5F3E85050 /* [CP] Check Pods Manifest.lock */,
 				58BA75572016303B0050D5F1 /* Sources */,
@@ -383,10 +357,31 @@
 			);
 			dependencies = (
 			);
-			name = FormsKit;
+			name = Bento;
 			productName = FormsKit;
-			productReference = 58BA755C2016303B0050D5F1 /* FormsKit.framework */;
+			productReference = 58BA755C2016303B0050D5F1 /* Bento.framework */;
 			productType = "com.apple.product-type.framework";
+		};
+		58FC441C207CF29F00DA3614 /* BentoTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 58FC4424207CF29F00DA3614 /* Build configuration list for PBXNativeTarget "BentoTests" */;
+			buildPhases = (
+				BDDFD27BED1DC7410CF781AB /* [CP] Check Pods Manifest.lock */,
+				58FC4419207CF29F00DA3614 /* Sources */,
+				58FC441A207CF29F00DA3614 /* Frameworks */,
+				58FC441B207CF29F00DA3614 /* Resources */,
+				DAC9DAFDC8FB92E3E44DF516 /* [CP] Embed Pods Frameworks */,
+				A465C0F64C1B229C7A6997E4 /* [CP] Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				58FC4423207CF29F00DA3614 /* PBXTargetDependency */,
+			);
+			name = BentoTests;
+			productName = BentoTests;
+			productReference = 58FC441D207CF29F00DA3614 /* BentoTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
 
@@ -398,10 +393,6 @@
 				LastUpgradeCheck = 0920;
 				ORGANIZATIONNAME = babylonhealth;
 				TargetAttributes = {
-					581C0B242024A7100088EBE8 = {
-						CreatedOnToolsVersion = 9.2;
-						ProvisioningStyle = Automatic;
-					};
 					5829D264200FB092001E020D = {
 						CreatedOnToolsVersion = 9.2;
 						ProvisioningStyle = Automatic;
@@ -410,6 +401,11 @@
 						CreatedOnToolsVersion = 9.2;
 						LastSwiftMigration = 0920;
 						ProvisioningStyle = Automatic;
+					};
+					58FC441C207CF29F00DA3614 = {
+						CreatedOnToolsVersion = 9.2;
+						ProvisioningStyle = Automatic;
+						TestTargetID = 5829D264200FB092001E020D;
 					};
 				};
 			};
@@ -427,24 +423,18 @@
 			projectRoot = "";
 			targets = (
 				5829D264200FB092001E020D /* Example */,
-				58BA755B2016303B0050D5F1 /* FormsKit */,
-				581C0B242024A7100088EBE8 /* FormsKitTests */,
+				58BA755B2016303B0050D5F1 /* Bento */,
+				58FC441C207CF29F00DA3614 /* BentoTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		581C0B232024A7100088EBE8 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		5829D263200FB092001E020D /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				58FC442F207CF37700DA3614 /* script in Resources */,
 				5829D273200FB092001E020D /* LaunchScreen.storyboard in Resources */,
 				5829D270200FB092001E020D /* Assets.xcassets in Resources */,
 				58E98E5E2016571F00F78BAE /* EmptySpaceCell.xib in Resources */,
@@ -455,6 +445,13 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		58BA755A2016303B0050D5F1 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		58FC441B207CF29F00DA3614 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -476,7 +473,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-FormsKit/Pods-FormsKit-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Bento/Pods-Bento-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		6DB87146A951B53A1EF8B7E2 /* [CP] Copy Pods Resources */ = {
@@ -494,26 +491,6 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Example/Pods-Example-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		7BFAF670DCBF5B612A578E5D /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-FormsKitTests/Pods-FormsKitTests-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/FlexibleDiff/FlexibleDiff.framework",
-				"${BUILT_PRODUCTS_DIR}/Nimble/Nimble.framework",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FlexibleDiff.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Nimble.framework",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-FormsKitTests/Pods-FormsKitTests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		9BD93503D97BCFF5F3E85050 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -525,32 +502,14 @@
 			);
 			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-FormsKit-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-Bento-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		CB130D2BA6F10A54BC5D4EF0 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-FormsKitTests-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		E534311926EE978AF64D012B /* [CP] Copy Pods Resources */ = {
+		A465C0F64C1B229C7A6997E4 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -562,7 +521,45 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-FormsKitTests/Pods-FormsKitTests-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-BentoTests/Pods-BentoTests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		BDDFD27BED1DC7410CF781AB /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-BentoTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		DAC9DAFDC8FB92E3E44DF516 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-BentoTests/Pods-BentoTests-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/FlexibleDiff/FlexibleDiff.framework",
+				"${BUILT_PRODUCTS_DIR}/Nimble/Nimble.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FlexibleDiff.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Nimble.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-BentoTests/Pods-BentoTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		F3A402B41E8435B72A4021ED /* [CP] Embed Pods Frameworks */ = {
@@ -604,18 +601,6 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		581C0B212024A7100088EBE8 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				9A784701205EB5E000FA597E /* TestRenderable.swift in Sources */,
-				9A3EF780205D866F00D043AC /* AnyRenderableTests.swift in Sources */,
-				9A7846FF205EAF8400FA597E /* SectionTests.swift in Sources */,
-				9A7846FD205EAF7C00FA597E /* NodeTests.swift in Sources */,
-				9A784703205EB61D00FA597E /* TestId.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		5829D261200FB092001E020D /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -636,7 +621,7 @@
 				58BA7586201634120050D5F1 /* Helpers.swift in Sources */,
 				58BA7584201633CC0050D5F1 /* Renderable.swift in Sources */,
 				5857BECA2056F02C0085EB9C /* If.swift in Sources */,
-				A9509FB12CAD89179FAA03B0 /* Form.swift in Sources */,
+				A9509FB12CAD89179FAA03B0 /* Box.swift in Sources */,
 				58467B03202B33F200577C77 /* TableViewSectionDiff.swift in Sources */,
 				A9509C4FC3664040FF3649CD /* Node.swift in Sources */,
 				587F0718201B355800ACD219 /* TableViewCell.swift in Sources */,
@@ -646,13 +631,30 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		58FC4419207CF29F00DA3614 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				58FC4427207CF2BB00DA3614 /* AnyRenderableTests.swift in Sources */,
+				58FC442A207CF2BB00DA3614 /* NodeTests.swift in Sources */,
+				58FC4428207CF2BB00DA3614 /* TestId.swift in Sources */,
+				58FC4429207CF2BB00DA3614 /* TestRenderable.swift in Sources */,
+				58FC442B207CF2BB00DA3614 /* SectionTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		58BA75622016303B0050D5F1 /* PBXTargetDependency */ = {
+		58FC4423207CF29F00DA3614 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 58BA755B2016303B0050D5F1 /* FormsKit */;
-			targetProxy = 58BA75612016303B0050D5F1 /* PBXContainerItemProxy */;
+			target = 5829D264200FB092001E020D /* Example */;
+			targetProxy = 58FC4422207CF29F00DA3614 /* PBXContainerItemProxy */;
+		};
+		58FC4433207CF3CD00DA3614 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 58BA755B2016303B0050D5F1 /* Bento */;
+			targetProxy = 58FC4432207CF3CD00DA3614 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -676,34 +678,6 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
-		581C0B2C2024A7100088EBE8 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 06DD1BBB83A18804500212EF /* Pods-FormsKitTests.debug.xcconfig */;
-			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
-				INFOPLIST_FILE = FormsKitTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.babylonhealth.FormsKitTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Debug;
-		};
-		581C0B2D2024A7100088EBE8 /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 39CF773E225BA61445E8B24D /* Pods-FormsKitTests.release.xcconfig */;
-			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
-				INFOPLIST_FILE = FormsKitTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.babylonhealth.FormsKitTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Release;
-		};
 		5829D275200FB092001E020D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -845,7 +819,7 @@
 		};
 		58BA75662016303B0050D5F1 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 05B3CD14D77ABE4568F782C7 /* Pods-FormsKit.debug.xcconfig */;
+			baseConfigurationReference = 0EEA17DEEC6D16C7ED60C8EC /* Pods-Bento.debug.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
@@ -855,7 +829,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = FormsKit/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/Bento/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.babylonhealth.FormsKit;
@@ -871,7 +845,7 @@
 		};
 		58BA75672016303B0050D5F1 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 77E28B37FE8E44DC77929DD8 /* Pods-FormsKit.release.xcconfig */;
+			baseConfigurationReference = 0CD73CCD16DCAF7438ED8B3A /* Pods-Bento.release.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
@@ -881,7 +855,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = FormsKit/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/Bento/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.babylonhealth.FormsKit;
@@ -894,18 +868,41 @@
 			};
 			name = Release;
 		};
+		58FC4425207CF29F00DA3614 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = CEAFF72B4ED185325805F614 /* Pods-BentoTests.debug.xcconfig */;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = BentoTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.babylonhealth.BentoTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Example.app/Example";
+			};
+			name = Debug;
+		};
+		58FC4426207CF29F00DA3614 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 6EAC305899441AD3C9360A66 /* Pods-BentoTests.release.xcconfig */;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = BentoTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.babylonhealth.BentoTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Example.app/Example";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		581C0B2E2024A7100088EBE8 /* Build configuration list for PBXNativeTarget "FormsKitTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				581C0B2C2024A7100088EBE8 /* Debug */,
-				581C0B2D2024A7100088EBE8 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 		5829D260200FB092001E020D /* Build configuration list for PBXProject "Example" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -924,11 +921,20 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		58BA75652016303B0050D5F1 /* Build configuration list for PBXNativeTarget "FormsKit" */ = {
+		58BA75652016303B0050D5F1 /* Build configuration list for PBXNativeTarget "Bento" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				58BA75662016303B0050D5F1 /* Debug */,
 				58BA75672016303B0050D5F1 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		58FC4424207CF29F00DA3614 /* Build configuration list for PBXNativeTarget "BentoTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				58FC4425207CF29F00DA3614 /* Debug */,
+				58FC4426207CF29F00DA3614 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
