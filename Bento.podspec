@@ -13,7 +13,7 @@ Pod::Spec.new do |s|
   s.license       = { :type => "MIT", :file => "LICENSE" }
   s.author        = { "Babylon iOS" => "ios.development@babylonhealth.com" }
   s.ios.deployment_target = '9.0'
-  s.source        = { :git => "https://github.com/Babylonpartners/FormsKit.git", :tag => "#{s.version}" }
+  s.source        = { :git => "https://github.com/Babylonpartners/Bento.git", :tag => "#{s.version}" }
   s.source_files  = 'Bento/*.swift', 'Bento/**/*.swift'
 
   s.dependency "FlexibleDiff", "~> 0.0.1"

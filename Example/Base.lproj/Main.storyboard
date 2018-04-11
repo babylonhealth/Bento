@@ -10,7 +10,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Item 2-->
+        <!--Book Appointment View Controller-->
         <scene sceneID="nB7-XK-XpC">
             <objects>
                 <viewController id="Oya-eA-AAR" customClass="BookAppointmentViewController" customModule="Example" customModuleProvider="target" sceneMemberID="viewController">
@@ -32,7 +32,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Tia-Gx-9Jx"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Item 2" id="LGC-Qf-JQl"/>
+                    <tabBarItem key="tabBarItem" systemItem="contacts" id="LGC-Qf-JQl"/>
                     <connections>
                         <outlet property="tableView" destination="N2c-mL-sRr" id="PCu-t1-3TF"/>
                     </connections>
@@ -41,7 +41,7 @@
             </objects>
             <point key="canvasLocation" x="-332" y="-39"/>
         </scene>
-        <!--Item-->
+        <!--Movies List View Controller-->
         <scene sceneID="sTv-Y1-NuI">
             <objects>
                 <viewController id="PRy-Vb-AeU" customClass="MoviesListViewController" customModule="Example" customModuleProvider="target" sceneMemberID="viewController">
@@ -63,7 +63,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="wq0-Nx-ZID"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Item" id="dQy-mc-Vp6"/>
+                    <tabBarItem key="tabBarItem" systemItem="featured" id="dQy-mc-Vp6"/>
                     <connections>
                         <outlet property="tableView" destination="xTR-mu-uQj" id="vCX-TK-4pu"/>
                     </connections>
@@ -91,7 +91,7 @@
             </objects>
             <point key="canvasLocation" x="-1285" y="-39"/>
         </scene>
-        <!--Item-->
+        <!--View Controller-->
         <scene sceneID="6aa-Rh-2lx">
             <objects>
                 <viewController id="Jbv-fa-nMA" customClass="ViewController" customModule="Example" customModuleProvider="target" sceneMemberID="viewController">
@@ -113,7 +113,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="37E-dG-ERZ"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Item" id="Z8n-vV-QTa"/>
+                    <tabBarItem key="tabBarItem" systemItem="more" id="Z8n-vV-QTa"/>
                     <connections>
                         <outlet property="tableView" destination="mxQ-pP-w3i" id="fNF-wh-2ng"/>
                     </connections>

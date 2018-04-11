@@ -44,7 +44,7 @@ final class PaginationViewModel {
     private let state: Property<State>
     private let renderer = PaginationViewModel.Renderer()
 
-    let form: Property<Bento<Renderer.SectionId, Renderer.RowId>>
+    let form: Property<Box<Renderer.SectionId, Renderer.RowId>>
     let nearBottomBinding: BindingTarget<Void>
     let retryBinding: BindingTarget<Void>
 
@@ -64,7 +64,7 @@ final class PaginationViewModel {
         self.state = Property(initial: State.initial,
                               reduce: State.reduce,
                               feedbacks: feedbacks)
-        self.form = Property(initial: Bento.empty, then: state.producer.filterMap(renderer.render))
+        self.form = Property(initial: Box.empty, then: state.producer.filterMap(renderer.render))
     }
 
     private static func whenPaging(nearBottomSignal: Signal<Void, NoError>) -> Feedback<State, Event> {
@@ -184,7 +184,7 @@ final class PaginationViewModel {
     }
 
     final class Renderer {
-        func render(state: State) -> Bento<SectionId, RowId>? {
+        func render(state: State) -> Box<SectionId, RowId>? {
             switch state {
             case .initial:
                 return renderLoading()
@@ -195,18 +195,18 @@ final class PaginationViewModel {
             }
         }
 
-        private func render(movies: [Movie]) -> Bento<SectionId, RowId> {
+        private func render(movies: [Movie]) -> Box<SectionId, RowId> {
             let rows = movies.map { movie in
                 return Node(id: RowId.movie(movie),
                             component: MovieComponent(movie: movie))
             }
-            return Bento.empty
+            return Box.empty
                 |-+ Section(id: SectionId.noId)
                 |--* rows
         }
 
-        private func renderLoading() -> Bento<SectionId, RowId> {
-            return Bento<SectionId, RowId>.empty
+        private func renderLoading() -> Box<SectionId, RowId> {
+            return Box<SectionId, RowId>.empty
                 |-+ Section(id: SectionId.noId)
                 |--+ Node(id: RowId.loading, component: LoadingIndicatorComponent(isLoading: true))
         }
