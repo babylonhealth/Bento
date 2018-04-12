@@ -111,7 +111,7 @@ infix operator <>: BitwiseShiftPrecedence
 infix operator |-+: AdditionPrecedence
 infix operator |--+: MultiplicationPrecedence
 
-let beno = Bento.empty // 3
+let bento = Bento.empty // 3
 	|-+ Section() // 2
 	|--+ RowId.id <> Component() // 1
 ```
