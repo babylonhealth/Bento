@@ -20,6 +20,7 @@
 		58BA75602016303B0050D5F1 /* FormsKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 58BA755E2016303B0050D5F1 /* FormsKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		58BA7584201633CC0050D5F1 /* Renderable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58BA7583201633CC0050D5F1 /* Renderable.swift */; };
 		58BA7586201634120050D5F1 /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58BA7585201634120050D5F1 /* Helpers.swift */; };
+		58D0F12D207F573B00A24E96 /* TableViewAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58D0F12C207F573B00A24E96 /* TableViewAnimation.swift */; };
 		58E98E5B2016571F00F78BAE /* IconTextCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 58E98E552016571F00F78BAE /* IconTextCell.xib */; };
 		58E98E5C2016571F00F78BAE /* ToggleCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 58E98E562016571F00F78BAE /* ToggleCell.xib */; };
 		58E98E5D2016571F00F78BAE /* ToggleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58E98E572016571F00F78BAE /* ToggleCell.swift */; };
@@ -95,6 +96,7 @@
 		58BA755F2016303B0050D5F1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		58BA7583201633CC0050D5F1 /* Renderable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Renderable.swift; sourceTree = "<group>"; };
 		58BA7585201634120050D5F1 /* Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helpers.swift; sourceTree = "<group>"; };
+		58D0F12C207F573B00A24E96 /* TableViewAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewAnimation.swift; sourceTree = "<group>"; };
 		58E98E552016571F00F78BAE /* IconTextCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IconTextCell.xib; sourceTree = "<group>"; };
 		58E98E562016571F00F78BAE /* ToggleCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ToggleCell.xib; sourceTree = "<group>"; };
 		58E98E572016571F00F78BAE /* ToggleCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToggleCell.swift; sourceTree = "<group>"; };
@@ -291,6 +293,7 @@
 			isa = PBXGroup;
 			children = (
 				A9509BC2762C8B4277B973D8 /* SectionedFormAdapter.swift */,
+				58D0F12C207F573B00A24E96 /* TableViewAnimation.swift */,
 			);
 			path = Adapters;
 			sourceTree = "<group>";
@@ -405,7 +408,6 @@
 					58FC441C207CF29F00DA3614 = {
 						CreatedOnToolsVersion = 9.2;
 						ProvisioningStyle = Automatic;
-						TestTargetID = 5829D264200FB092001E020D;
 					};
 				};
 			};
@@ -619,6 +621,7 @@
 			files = (
 				58E98E63201889B900F78BAE /* AnyRenderable.swift in Sources */,
 				58BA7586201634120050D5F1 /* Helpers.swift in Sources */,
+				58D0F12D207F573B00A24E96 /* TableViewAnimation.swift in Sources */,
 				58BA7584201633CC0050D5F1 /* Renderable.swift in Sources */,
 				5857BECA2056F02C0085EB9C /* If.swift in Sources */,
 				A9509FB12CAD89179FAA03B0 /* Box.swift in Sources */,
@@ -872,7 +875,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = CEAFF72B4ED185325805F614 /* Pods-BentoTests.debug.xcconfig */;
 			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = BentoTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -880,7 +882,6 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Example.app/Example";
 			};
 			name = Debug;
 		};
@@ -888,7 +889,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 6EAC305899441AD3C9360A66 /* Pods-BentoTests.release.xcconfig */;
 			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = BentoTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -896,7 +896,6 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Example.app/Example";
 			};
 			name = Release;
 		};

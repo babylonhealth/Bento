@@ -4,10 +4,14 @@ import FlexibleDiff
 struct TableViewSectionDiff<SectionId: Hashable, RowId: Hashable> {
     private let oldSections: [Section<SectionId, RowId>]
     private let newSections: [Section<SectionId, RowId>]
+    private let animation: TableViewAnimation
 
-    init(oldSections: [Section<SectionId, RowId>], newSections: [Section<SectionId, RowId>]) {
+    init(oldSections: [Section<SectionId, RowId>],
+         newSections: [Section<SectionId, RowId>],
+         animation: TableViewAnimation) {
         self.oldSections = oldSections
         self.newSections = newSections
+        self.animation = animation
     }
 
     func apply(to tableView: UITableView) {
@@ -25,48 +29,48 @@ struct TableViewSectionDiff<SectionId: Hashable, RowId: Hashable> {
         tableView.beginUpdates()
         for section in diff.sections.mutations {
             if let headerView = tableView.headerView(forSection: section),
-               let node = newSections[section].header {
+                let node = newSections[section].header {
                 update(view: headerView, with: node)
             }
             if let footerView = tableView.footerView(forSection: section),
-               let node = newSections[section].footer {
+                let node = newSections[section].footer {
                 update(view: footerView, with: node)
             }
         }
-        tableView.insertSections(diff.sections.inserts, with: .fade)
-        tableView.deleteSections(diff.sections.removals, with: .fade)
-        apply(sectionMutations: diff.mutatedSections, to: tableView, with: .fade)
+        tableView.insertSections(diff.sections.inserts, with: animation.sectionInsertion)
+        tableView.deleteSections(diff.sections.removals, with: animation.sectionDeletion)
+        apply(sectionMutations: diff.mutatedSections, to: tableView, with: animation)
         tableView.moveSections(diff.sections.moves)
         tableView.endUpdates()
     }
 
     private func apply(sectionMutations: [SectionedChangeset.MutatedSection],
                        to tableView: UITableView,
-                       with animation: UITableViewRowAnimation) {
+                       with animation: TableViewAnimation) {
         for sectionMutation in sectionMutations {
-            tableView.deleteRows(at: sectionMutation.deletedIndexPaths, with: animation)
-            tableView.insertRows(at: sectionMutation.insertedIndexPaths, with: animation)
+            tableView.deleteRows(at: sectionMutation.deletedIndexPaths, with: animation.rowDeletion)
+            tableView.insertRows(at: sectionMutation.insertedIndexPaths, with: animation.rowInsertion)
             tableView.perform(moves: sectionMutation.movedIndexPaths)
             [sectionMutation.changeset.moves.lazy
                 .flatMap { $0.isMutated ? ($0.source, $0.destination) : nil },
-                sectionMutation.changeset.mutations.lazy.map { ($0, $0) }]
+             sectionMutation.changeset.mutations.lazy.map { ($0, $0) }]
                 .joined()
                 .forEach { source, destination in
                     guard let cell = tableView.cellForRow(at: [sectionMutation.source, source]) else { return }
                     update(cell: cell, with: newSections[sectionMutation.destination].rows[destination])
-                }
+            }
         }
     }
 
     private func update(view: UIView, with node: AnyRenderable) {
         guard let headerFooterView = view as? TableViewHeaderFooterView,
-              let containedView = headerFooterView.containedView else { return }
+            let containedView = headerFooterView.containedView else { return }
         node.render(in: containedView)
     }
 
     private func update(cell: UITableViewCell, with node: Node<RowId>) {
         guard let cell = cell as? TableViewCell,
-              let contentView = cell.containedView else { return }
+            let contentView = cell.containedView else { return }
         node.component.render(in: contentView)
     }
 }
