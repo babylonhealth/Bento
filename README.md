@@ -139,7 +139,7 @@ As you can see, `<>` has a BitwiseShiftPrecedence, `|---+` has a `NodeConcatenat
 
 ### Examples 😎
 
-Sections | Appoitment | Movies
+Sections | Appointment | Movies
 --- | --- | ---
 ![](Resources/example1.gif) | ![](Resources/example2.gif) | ![](Resources/example3.gif)
 
