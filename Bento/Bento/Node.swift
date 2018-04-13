@@ -22,10 +22,10 @@ public func <> <RowId, R: Renderable>(id: RowId, component: R) -> Node<RowId> wh
     return Node(id: id, component: component)
 }
 
-public func |--+<Identifier>(lhs: Node<Identifier>, rhs: Node<Identifier>) -> [Node<Identifier>] {
+public func |---+<Identifier>(lhs: Node<Identifier>, rhs: Node<Identifier>) -> [Node<Identifier>] {
     return [lhs, rhs]
 }
 
-public func |--+<Identifier>(lhs: [Node<Identifier>], rhs: Node<Identifier>) -> [Node<Identifier>] {
+public func |---+<Identifier>(lhs: [Node<Identifier>], rhs: Node<Identifier>) -> [Node<Identifier>] {
     return lhs + [rhs]
 }
