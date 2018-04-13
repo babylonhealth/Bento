@@ -1,0 +1,9 @@
+machine:
+  xcode:
+    version: "9.2"
+test:
+  override:
+    - curl https://cocoapods-specs.circleci.com/fetch-cocoapods-repo-from-s3.sh | bash -s cf
+    - pod install --verbose
+    - script/test iphonesimulator "platform=iOS Simulator,name=iPhone 6,OS=11.2" Bento
+    - script/test iphonesimulator "platform=iOS Simulator,name=iPhone 6,OS=11.2" Example build
