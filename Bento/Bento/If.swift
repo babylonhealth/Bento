@@ -11,18 +11,18 @@ public struct If<T> {
     }
 }
 
-public func |--?<SectionId, RowId>(lhs: Section<SectionId, RowId>, rhs: If<Node<RowId>>) -> Section<SectionId, RowId> {
+public func |---?<SectionId, RowId>(lhs: Section<SectionId, RowId>, rhs: If<Node<RowId>>) -> Section<SectionId, RowId> {
     if rhs.condition() {
         return lhs
-            |--+ rhs.generator()
+            |---+ rhs.generator()
     }
     return lhs
 }
 
-public func |--?<SectionId, RowId>(lhs: Section<SectionId, RowId>, rhs: If<[Node<RowId>]>) -> Section<SectionId, RowId> {
+public func |---?<SectionId, RowId>(lhs: Section<SectionId, RowId>, rhs: If<[Node<RowId>]>) -> Section<SectionId, RowId> {
     if rhs.condition() {
         return lhs
-            |--* rhs.generator()
+            |---* rhs.generator()
     }
     return lhs
 }
