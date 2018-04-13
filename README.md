@@ -142,12 +142,11 @@ end
 
 ### State of the project 🤷‍♂️
 
-Feature | Status
---- | ---
-`UITableView` | ✅ 
-`UICollectionView` | ❌
-
-free functions as alternative to operators | ❌
+| Feature | Status |
+| --- | --- |
+| `UITableView` | ✅ |
+| `UICollectionView` | ❌ |
+| Free functions as alternative to operators | ❌ |
 
 ### Contributing ✍️
 
