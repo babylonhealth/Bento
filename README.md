@@ -29,10 +29,10 @@ When building a `Box`, all you need to care about are `Sections`s and `Node`s.
 let box = Box<SectionId, RowId>.empty
                 |-+ Section(id: SectionId.user,
                             header: EmptySpaceComponent(height: 24, color: .clear))
-                |--+ RowId.user <> IconTitleDetailsComponent(icon: image, title: patient.name)
+                |---+ RowId.user <> IconTitleDetailsComponent(icon: image, title: patient.name)
                 |-+ Section(id: SectionId.consultantDate,
                             header: EmptySpaceComponent(height: 24, color: .clear))
-                |--+ RowId.loading <> LoadingIndicatorComponent(isLoading: true)
+                |---+ RowId.loading <> LoadingIndicatorComponent(isLoading: true)
                 
 tableView.render(box)
 ```
@@ -107,19 +107,34 @@ class IconTextComponent: Renderable {
 There are several custom operators that provide syntax sugar to make it easier to build `Bento`s:
 
 ```swift
-infix operator <>: BitwiseShiftPrecedence
-infix operator |-+: AdditionPrecedence
-infix operator |--+: MultiplicationPrecedence
+precedencegroup ComposingPrecedence {
+    associativity: left
+    higherThan: NodeConcatenationPrecedence
+}
+
+precedencegroup NodeConcatenationPrecedence {
+    associativity: left
+    higherThan: SectionConcatenationPrecedence
+}
+
+precedencegroup SectionConcatenationPrecedence {
+    associativity: left
+    higherThan: AdditionPrecedence
+}
+
+infix operator <>: ComposingPrecedence
+infix operator |-+: SectionConcatenationPrecedence
+infix operator |--+: NodeConcatenationPrecedence
 
 let bento = Box.empty // 3
 	|-+ Section() // 2
-	|--+ RowId.id <> Component() // 1
+	|---+ RowId.id <> Component() // 1
 ```
 
-As you can see, `<>` has a BitwiseShiftPrecedence, `|--+` has a `MultiplicationPrecedence`, and `|-+` has an `AdditionPrecedence `, which means that Nodes will be computed first. The order of the expression above is:
+As you can see, `<>` has a BitwiseShiftPrecedence, `|---+` has a `NodeConcatenationPrecedence `, which is higher then `|-+`, `SectionConcatenationPrecedence`, which means that Nodes will be computed first. The order of the expression above is:
 
 1.  `RowId.id <> Component()` => `Node`
-2. `Section() |--+ Node()` => `Section`
+2. `Section() |---+ Node()` => `Section`
 3. `Box() |-+ Section()` => `Box`
 
 ### Examples 😎
