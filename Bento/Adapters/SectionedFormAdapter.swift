@@ -27,7 +27,6 @@ final class SectionedFormAdapter<SectionId: Hashable, RowId: Hashable>
         self.sections = sections
         diff.apply(to: tableView)
     }
-
     func update(sections: [Section<SectionId, RowId>]) {
         self.sections = sections
         tableView?.reloadData()
@@ -63,15 +62,15 @@ final class SectionedFormAdapter<SectionId: Hashable, RowId: Hashable>
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         return sections[section].header
             .map {
-            return self.render(node: $0, in: tableView)
-        }
+                return self.render(node: $0, in: tableView)
+            }
     }
 
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         return sections[section].footer
             .map {
-            return self.render(node: $0, in: tableView)
-        }
+                return self.render(node: $0, in: tableView)
+            }
     }
 
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
