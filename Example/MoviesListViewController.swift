@@ -197,18 +197,17 @@ final class PaginationViewModel {
 
         private func render(movies: [Movie]) -> Box<SectionId, RowId> {
             let rows = movies.map { movie in
-                return Node(id: RowId.movie(movie),
-                            component: MovieComponent(movie: movie))
+                return RowId.movie(movie) <> MovieComponent(movie: movie)
             }
             return Box.empty
                 |-+ Section(id: SectionId.noId)
-                |--* rows
+                |---* rows
         }
 
         private func renderLoading() -> Box<SectionId, RowId> {
             return Box<SectionId, RowId>.empty
                 |-+ Section(id: SectionId.noId)
-                |--+ Node(id: RowId.loading, component: LoadingIndicatorComponent(isLoading: true))
+                |---+ Node(id: RowId.loading, component: LoadingIndicatorComponent(isLoading: true))
         }
 
         enum SectionId {

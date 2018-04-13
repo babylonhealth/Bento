@@ -23,38 +23,38 @@ In our experience it makes UI-related code easier to build and maintain. Our aim
 
 ### What's it like? 🧐
 
-When building a `Bento`, all you need to care about are `Bento`s and `Node`s.
+When building a `Box`, all you need to care about are `Sections`s and `Node`s.
 
 ```swift
-let bento = Bento<SectionId, RowId>.empty
+let box = Box<SectionId, RowId>.empty
                 |-+ Section(id: SectionId.user,
                             header: EmptySpaceComponent(height: 24, color: .clear))
-                |--+ RowId.user <> IconTitleDetailsComponent(icon: image, title: patient.name)
+                |---+ RowId.user <> IconTitleDetailsComponent(icon: image, title: patient.name)
                 |-+ Section(id: SectionId.consultantDate,
                             header: EmptySpaceComponent(height: 24, color: .clear))
-                |--+ RowId.loading <> LoadingIndicatorComponent(isLoading: true)
+                |---+ RowId.loading <> LoadingIndicatorComponent(isLoading: true)
                 
-tableView.render(bento)
+tableView.render(box)
 ```
 
 ### How does it work? 🤔
 
-#### Bento 🍱
+#### Box 📦
 
-`Bento` is a fundamental component of the library, essentially a virtual representation of the `UITableView` content. It has two generic parameters - `SectionId` and `RowId` - which are unique identifiers for  `Section<SectionId>` and `Node<RowId>`, used by the [diffing engine](https://github.com/RACCommunity/FlexibleDiff) to perform animated changes of the `UITableView` content.
+`Box ` is a fundamental component of the library, essentially a virtual representation of the `UITableView` content. It has two generic parameters - `SectionId` and `RowId` - which are unique identifiers for  `Section<SectionId, RowId>` and `Node<RowId>`, used by the [diffing engine](https://github.com/RACCommunity/FlexibleDiff) to perform animated changes of the `UITableView` content.
 
 #### Sections and Nodes 🏗
 
-A `Section` and a `Node` are building blocks of the `Bento`:
+A `Section` and a `Node` are building blocks of the `Box`:
 
 - The `Section` is an abstraction of `UITableView`'s section, which defines whether there is going to be any header or footer.
-- The `Node` is an abstraction of `UITableView`'s row, it defines how it going be rendered.
+- The `Node` is an abstraction of `UITableView`'s row, it defines how it's going be rendered.
 
 ```swift
 struct Section<SectionId: Hashable, RowId: Hashable> {
     let id: SectionId
-    let header: HeaderFooterNode?
-    let footer: HeaderFooterNode?
+    let header: AnyRenderable?
+    let footer: AnyRenderable?
     let rows: [Node<RowId>]
 }
 
@@ -72,7 +72,7 @@ Identity is one of the key concepts,  which is used by the diffing algorithm to 
  
  (More info [here](https://github.com/RACCommunity/FlexibleDiff).)
 
-There are `SectionId` and `RowId` which are defining identity of  the `Section` and the `Row` respectively.
+There are `SectionId` and `RowId` which define identity of  the `Section` and the `Row` respectively.
 
 #### Renderable 🖼
 
@@ -107,20 +107,35 @@ class IconTextComponent: Renderable {
 There are several custom operators that provide syntax sugar to make it easier to build `Bento`s:
 
 ```swift
-infix operator <>: BitwiseShiftPrecedence
-infix operator |-+: AdditionPrecedence
-infix operator |--+: MultiplicationPrecedence
+precedencegroup ComposingPrecedence {
+    associativity: left
+    higherThan: NodeConcatenationPrecedence
+}
 
-let beno = Bento.empty // 3
+precedencegroup NodeConcatenationPrecedence {
+    associativity: left
+    higherThan: SectionConcatenationPrecedence
+}
+
+precedencegroup SectionConcatenationPrecedence {
+    associativity: left
+    higherThan: AdditionPrecedence
+}
+
+infix operator <>: ComposingPrecedence
+infix operator |-+: SectionConcatenationPrecedence
+infix operator |--+: NodeConcatenationPrecedence
+
+let bento = Box.empty // 3
 	|-+ Section() // 2
-	|--+ RowId.id <> Component() // 1
+	|---+ RowId.id <> Component() // 1
 ```
 
-As you can see, `<>` has a BitwiseShiftPrecedence, `|--+` has a `MultiplicationPrecedence`, and `|-+` has an `AdditionPrecedence `, which means that Nodes will be computed first. The order of the expression above is:
+As you can see, `<>` has a BitwiseShiftPrecedence, `|---+` has a `NodeConcatenationPrecedence `, which is higher then `|-+`, `SectionConcatenationPrecedence`, which means that Nodes will be computed first. The order of the expression above is:
 
 1.  `RowId.id <> Component()` => `Node`
-2. `Section() |--+ Node()` => `Section`
-3. `Bento() |-+ Section()` => `Bento`
+2. `Section() |---+ Node()` => `Section`
+3. `Box() |-+ Section()` => `Box`
 
 ### Examples 😎
 
@@ -146,8 +161,7 @@ Feature | Status
 --- | ---
 `UITableView` | ✅ 
 `UICollectionView` | ❌
-
-free functions as alternative to operators | ❌
+Free functions as alternative to the operators | ❌
 
 ### Contributing ✍️
 

@@ -4,7 +4,7 @@ import Bento
 class ViewController: UIViewController {
     enum State {
         case airplaneMode
-        case wifi(Bool)
+        case wifi
     }
 
     enum SectionId: Hashable {
@@ -33,71 +33,25 @@ class ViewController: UIViewController {
     }
 
     private func renderState() {
-        switch self.state {
-        case .wifi:
-            let box = Box<SectionId, RowId>.empty
-                |-+ ViewController.section(id: .first,
-                                           //headerSpec: EmptySpaceComponent.Spec(height: 40, color: .red),
-                                           footerSpec: EmptySpaceComponent.Spec(height: 100, color: .green))
-                |--+ ViewController.toggle(isOn: false,
-                                           title: "Airplane mode",
-                                           icon: #imageLiteral(resourceName:"plane"),
-                                           onToggle: { isOn in
-                                               if isOn {
-                                                   self.state = State.airplaneMode
-                                               } else {
-                                                   self.state = State.wifi(true)
-                                               }
-                                           })
-                |--+ ViewController.iconText(icon: #imageLiteral(resourceName:"wifi"),
-                                             text: "WIFI On")
-                |-+ ViewController.section(id: .second,
-                                           headerSpec: EmptySpaceComponent.Spec(height: 30, color: .purple))/*,
-                                           footerSpec: EmptySpaceComponent.Spec(height: 50, color: .magenta))*/
-                |--+ ViewController.toggle(isOn: false,
-                                           title: "Airplane mode",
-                                           icon: #imageLiteral(resourceName:"plane"),
-                                           onToggle: { isOn in
-                                               if isOn {
-                                                   self.state = State.airplaneMode
-                                               } else {
-                                                   self.state = State.wifi(true)
-                                               }
-                                           })
-                |--+ ViewController.iconText(icon: #imageLiteral(resourceName:"wifi"),
-                                             text: "WIFI On")
-
-            tableView.render(box)
+        switch state {
         case .airplaneMode:
             let box = Box<SectionId, RowId>.empty
-                |-+ ViewController.section(id: .first,
-                                           headerSpec: EmptySpaceComponent.Spec(height: 20, color: .black),
-                                           footerSpec: EmptySpaceComponent.Spec(height: 20, color: .cyan))
-                |--+ ViewController.toggle(isOn: true,
-                                           title: "Airplane mode",
-                                           icon: #imageLiteral(resourceName:"plane"),
-                                           onToggle: { isOn in
-                                               if isOn {
-                                                   self.state = State.airplaneMode
-                                               } else {
-                                                   self.state = State.wifi(true)
-                                               }
-                                           })
-                |-+ ViewController.section(id: .second,
-                                           headerSpec: EmptySpaceComponent.Spec(height: 20, color: .orange),
-                                           footerSpec: EmptySpaceComponent.Spec(height: 20, color: .yellow))
-                |--+ ViewController.iconText(icon: #imageLiteral(resourceName:"wifi"),
-                                             text: "WIFI Off")
-                |--+ ViewController.toggle(isOn: true,
-                                           title: "Airplane mode",
-                                           icon: #imageLiteral(resourceName:"plane"),
-                                           onToggle: { isOn in
-                                               if isOn {
-                                                   self.state = State.airplaneMode
-                                               } else {
-                                                   self.state = State.wifi(true)
-                                               }
-                                           })
+                |-+ renderFirstSection()
+                |---+ renderToggle()
+                |---+ renderIconText()
+                |-+ renderSecondSection()
+                |---+ renderIconText()
+                |---+ renderToggle()
+
+            tableView.render(box)
+        case .wifi:
+            let box = Box<SectionId, RowId>.empty
+                |-+ renderFirstSection()
+                |---+ renderIconText()
+                |---+ renderToggle()
+                |-+ renderSecondSection()
+                |---+ renderToggle()
+                |---+ renderIconText()
 
             tableView.render(box)
         }
@@ -110,45 +64,58 @@ class ViewController: UIViewController {
         tableView.sectionFooterHeight = UITableViewAutomaticDimension
     }
 
-    private static func toggle(isOn: Bool,
-                               title: String? = nil,
-                               icon: UIImage? = nil,
-                               onToggle: ((Bool) -> Void)?) -> Node<RowId> {
-        let component = ToggleComponent(isOn: isOn,
-                                        title: title,
-                                        icon: icon,
-                                        onToggle: onToggle)
+    private func renderFirstSection() -> Section<SectionId, RowId> {
+        switch state {
+        case .airplaneMode:
+            let headerSpec = EmptySpaceComponent.Spec(height: 20, color: .black)
+            let footerSpec = EmptySpaceComponent.Spec(height: 20, color: .cyan)
+            let headerComponent = EmptySpaceComponent(spec: headerSpec)
+            let footerComponent = EmptySpaceComponent(spec: footerSpec)
+
+            return Section(id: SectionId.first, header: headerComponent, footer: footerComponent)
+        case .wifi:
+            let footerSpec = EmptySpaceComponent.Spec(height: 100, color: .green)
+            let footerComponent = EmptySpaceComponent(spec: footerSpec)
+            return Section(id: SectionId.first, footer: footerComponent)
+        }
+    }
+
+    private func renderSecondSection() -> Section<SectionId, RowId> {
+        switch state {
+        case .airplaneMode:
+            let headerSpec = EmptySpaceComponent.Spec(height: 20, color: .orange)
+            let footerSpec = EmptySpaceComponent.Spec(height: 20, color: .yellow)
+            let headerComponent = EmptySpaceComponent(spec: headerSpec)
+            let footerComponent = EmptySpaceComponent(spec: footerSpec)
+
+            return Section(id: SectionId.first, header: headerComponent, footer: footerComponent)
+        case .wifi:
+            let headerSpec = EmptySpaceComponent.Spec(height: 30, color: .purple)
+            let headerComponent = EmptySpaceComponent(spec: headerSpec)
+            return Section(id: SectionId.first, header: headerComponent)
+        }
+    }
+
+    private func renderToggle() -> Node<RowId> {
+        let component = ToggleComponent(isOn: self.state == .airplaneMode,
+                                        title: "Airplane mode",
+                                        icon: #imageLiteral(resourceName:"plane"),
+                                        onToggle: { isOn in
+                                            if isOn {
+                                                self.state = State.airplaneMode
+                                            } else {
+                                                self.state = State.wifi
+                                            }
+                                        })
         return RowId.toggle <> component
     }
 
-    private static func iconText(icon: UIImage?, text: String?) -> Node<RowId> {
-        let component = IconTextComponent(image: icon,
-                                          title: text)
-
-        return RowId.note <> component
-    }
-
-    private static func section(id: SectionId,
-                                headerSpec: EmptySpaceComponent.Spec,
-                                footerSpec: EmptySpaceComponent.Spec) -> Section<SectionId, RowId> {
-        let headerComponent = EmptySpaceComponent(spec: headerSpec)
-        let footerComponent = EmptySpaceComponent(spec: footerSpec)
-        return Section(id: id,
-                       header: headerComponent,
-                       footer: footerComponent)
-    }
-
-    private static func section(id: SectionId,
-                                footerSpec: EmptySpaceComponent.Spec) -> Section<SectionId, RowId> {
-        let footerComponent = EmptySpaceComponent(spec: footerSpec)
-        return Section(id: id, footer: footerComponent)
-    }
-
-
-    private static func section(id: SectionId,
-                                headerSpec: EmptySpaceComponent.Spec) -> Section<SectionId, RowId> {
-        let headerComponent = EmptySpaceComponent(spec: headerSpec)
-        return Section(id: id,
-                       header: headerComponent)
+    private func renderIconText() -> Node<RowId> {
+        switch state {
+        case .airplaneMode:
+            return RowId.note <> IconTextComponent(image: #imageLiteral(resourceName: "wifi"), title: "WIFI Off")
+        case .wifi:
+            return RowId.note <> IconTextComponent(image: #imageLiteral(resourceName: "wifi"), title: "WIFI On")
+        }
     }
 }
