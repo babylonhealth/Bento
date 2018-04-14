@@ -131,9 +131,9 @@ let bento = Box.empty // 3
 	|---+ RowId.id <> Component() // 1
 ```
 
-As you can see, `<>` has a BitwiseShiftPrecedence, `|---+` has a `NodeConcatenationPrecedence `, which is higher then `|-+`, `SectionConcatenationPrecedence`, which means that Nodes will be computed first. The order of the expression above is:
+As you can see, `<>` has a `ComposingPrecedence`, `|---+` has a `NodeConcatenationPrecedence `, which is higher then `|-+`, `SectionConcatenationPrecedence`, which means that Nodes will be computed first. The order of the expression above is:
 
-1.  `RowId.id <> Component()` => `Node`
+1. `RowId.id <> Component()` => `Node`
 2. `Section() |---+ Node()` => `Section`
 3. `Box() |-+ Section()` => `Box`
 
@@ -161,6 +161,7 @@ Feature | Status
 --- | ---
 `UITableView` | ✅ 
 `UICollectionView` | ❌
+Carthage Support | ❌
 Free functions as alternative to the operators | ❌
 
 ### Contributing ✍️
