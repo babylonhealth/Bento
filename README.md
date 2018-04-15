@@ -139,7 +139,7 @@ As you can see, `<>` has a `ComposingPrecedence`, `|---+` has a `NodeConcatenati
 
 ### Examples 😎
 
-Sections | Appoitment | Movies
+Sections | Appointment | Movies
 --- | --- | ---
 ![](Resources/example1.gif) | ![](Resources/example2.gif) | ![](Resources/example3.gif)
 
