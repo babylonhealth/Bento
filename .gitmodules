@@ -1,0 +1,24 @@
+[submodule "Carthage/Checkouts/Nimble"]
+	path = Carthage/Checkouts/Nimble
+	url = https://github.com/Quick/Nimble.git
+[submodule "Carthage/Checkouts/ReactiveFeedback"]
+	path = Carthage/Checkouts/ReactiveFeedback
+	url = https://github.com/Babylonpartners/ReactiveFeedback.git
+[submodule "Carthage/Checkouts/Kingfisher"]
+	path = Carthage/Checkouts/Kingfisher
+	url = https://github.com/onevcat/Kingfisher.git
+[submodule "Carthage/Checkouts/ReactiveCocoa"]
+	path = Carthage/Checkouts/ReactiveCocoa
+	url = https://github.com/ReactiveCocoa/ReactiveCocoa.git
+[submodule "Carthage/Checkouts/FlexibleDiff"]
+	path = Carthage/Checkouts/FlexibleDiff
+	url = https://github.com/RACCommunity/FlexibleDiff.git
+[submodule "Carthage/Checkouts/ReactiveSwift"]
+	path = Carthage/Checkouts/ReactiveSwift
+	url = https://github.com/ReactiveCocoa/ReactiveSwift.git
+[submodule "Carthage/Checkouts/xcconfigs"]
+	path = Carthage/Checkouts/xcconfigs
+	url = https://github.com/jspahrsummers/xcconfigs.git
+[submodule "Carthage/Checkouts/Result"]
+	path = Carthage/Checkouts/Result
+	url = https://github.com/antitypical/Result.git

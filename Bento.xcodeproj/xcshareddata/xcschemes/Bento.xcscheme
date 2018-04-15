@@ -17,7 +17,7 @@
                BlueprintIdentifier = "58BA755B2016303B0050D5F1"
                BuildableName = "Bento.framework"
                BlueprintName = "Bento"
-               ReferencedContainer = "container:Example.xcodeproj">
+               ReferencedContainer = "container:Bento.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -36,7 +36,7 @@
                BlueprintIdentifier = "58FC441C207CF29F00DA3614"
                BuildableName = "BentoTests.xctest"
                BlueprintName = "BentoTests"
-               ReferencedContainer = "container:Example.xcodeproj">
+               ReferencedContainer = "container:Bento.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -46,7 +46,7 @@
             BlueprintIdentifier = "58BA755B2016303B0050D5F1"
             BuildableName = "Bento.framework"
             BlueprintName = "Bento"
-            ReferencedContainer = "container:Example.xcodeproj">
+            ReferencedContainer = "container:Bento.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -69,7 +69,7 @@
             BlueprintIdentifier = "58BA755B2016303B0050D5F1"
             BuildableName = "Bento.framework"
             BlueprintName = "Bento"
-            ReferencedContainer = "container:Example.xcodeproj">
+            ReferencedContainer = "container:Bento.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -87,7 +87,7 @@
             BlueprintIdentifier = "58BA755B2016303B0050D5F1"
             BuildableName = "Bento.framework"
             BlueprintName = "Bento"
-            ReferencedContainer = "container:Example.xcodeproj">
+            ReferencedContainer = "container:Bento.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </ProfileAction>
