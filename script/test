@@ -14,7 +14,7 @@ fi
 
 set -o pipefail
 xcodebuild $XCODE_ACTION \
-    -workspace Example.xcworkspace \
+    -workspace Bento.xcworkspace \
     -scheme "$3" \
     -sdk "$1" \
     -destination "$2" \

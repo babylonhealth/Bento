@@ -152,8 +152,25 @@ target 'MyApp' do
     pod 'Bento'
 end
 ```
-* Carthage (TODO)
+* Carthage
 
+```
+github "Babylonpartners/Bento"
+```
+
+### Development Installation 🛠
+
+If you want to clone the repo for contributing or for running the example app you will need to install its dependencies which are stored as git submodules:
+
+```
+git submodule update --init --recursive
+```
+
+Or, if you have Carthage installed, you can use it to do the same thing:
+
+```
+carthage checkout
+```
 
 ### State of the project 🤷‍♂️
 
@@ -161,12 +178,12 @@ Feature | Status
 --- | ---
 `UITableView` | ✅
 `UICollectionView` | ❌
-Carthage Support | ❌
-Free functions as an alternative to operators | ❌
+Carthage Support | ✅
+Free functions as alternative to the operators | ❌
 
 ### Contributing ✍️
 
-Contributions are very welcome and highly appreciated! ❤️ Here's how to do it: 
+Contributions are very welcome and highly appreciated! ❤️ Here's how to do it:
 
 - If you have any questions feel free to create an issue with a `question` label;
 - If you have a feature request you can create an issue with a `Feature request` label;
