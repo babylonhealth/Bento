@@ -1,11 +1,11 @@
 Pod::Spec.new do |s|
 
   s.name          = "Bento"
-  s.version       = "0.1"
+  s.version       = "0.2"
   s.summary       = "Component based abstraction on top of UITableView and UICollectionView"
 
   s.description   = <<-DESC
-                    Component-based abstraction on top of UITableView and UICollectionView.  
+                    Component-based abstraction on top of UITableView and UICollectionView.
                     Provides a declarative way to render data in UITableView and UICollectionView
                     DESC
 
