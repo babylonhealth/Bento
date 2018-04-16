@@ -47,7 +47,7 @@ tableView.render(box)
 
 `Section`s and `Node`s are building blocks of a `Box`:
 
-- `Section` is an abstraction of `UITableView`'s section which defines whether `header`s or `footer` should be shown.
+- `Section` is an abstraction of `UITableView`'s section which defines whether a header or footer should be shown.
 - `Node` is an abstraction of `UITableView`'s row which defines how the data is rendered.
 
 ```swift
