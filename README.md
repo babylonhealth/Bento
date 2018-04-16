@@ -9,7 +9,7 @@
 - **Diffing:** reloads your UI with beautiful animations when your data changes
 - **Component-based:**  Design reusable components and share your custom UI across multiple screens of your app
 
-In our experience it makes UI-related code easier to build and maintain. Our aim is to make the UI a function of state (`UI = f(state)`), which makes `Bento` a perfect fit for Reactive Programming.
+In our experience it makes UI-related code easier to build and maintain. Our aim is to make the UI a function of state (i.e: `UI = f(state)`), which makes `Bento` a perfect fit for Reactive Programming.
 
 ## Content 📋
 
@@ -45,10 +45,10 @@ tableView.render(box)
 
 #### Sections and Nodes 🏗
 
-A `Section` and a `Node` are building blocks of the `Box`:
+`Section`s and `Node`s are building blocks of a `Box`:
 
-- The `Section` is an abstraction of `UITableView`'s section, which defines whether there is going to be any header or footer.
-- The `Node` is an abstraction of `UITableView`'s row, it defines how it's going be rendered.
+- `Section` is an abstraction of `UITableView`'s section which defines whether a header or footer should be shown.
+- `Node` is an abstraction of `UITableView`'s row which defines how the data is rendered.
 
 ```swift
 struct Section<SectionId: Hashable, RowId: Hashable> {
@@ -66,17 +66,17 @@ public struct Node<Identifier: Hashable> {
 
 
 #### Identity 🎫
-Identity is one of the key concepts,  which is used by the diffing algorithm to perform changes.
+Identity, one of the key concepts, is used by the diffing algorithm to perform changes.
 
  > For general business concerns, full inequality of two instances does not necessarily mean inequality in terms of identity — it just means the data being held has changed if the identity of both instances is the same.
 
  (More info [here](https://github.com/RACCommunity/FlexibleDiff).)
 
-There are `SectionId` and `RowId` which define identity of  the `Section` and the `Row` respectively.
+`SectionId` and `RowId` define the identity of `Section` and `Row`, respectively.
 
 #### Renderable 🖼
 
-`Renderable` is similar to [React](https://github.com/facebook/react)'s [Component](https://reactjs.org/docs/react-component.html)s. It's an abstraction of the real `UITableViewCell` that is going to be displayed. The idea is to make it possible to develop small independent components that can be reused across many parts of your app.
+`Renderable` is similar to [React](https://github.com/facebook/react)'s [Component](https://reactjs.org/docs/react-component.html)s. It's an abstraction of the real `UITableViewCell` that is going to be displayed. The idea is to make it possible to create small independent components that can be reused across many parts of your app.
 
 ```swift
 public protocol Renderable: class {
@@ -162,14 +162,12 @@ Feature | Status
 `UITableView` | ✅
 `UICollectionView` | ❌
 Carthage Support | ❌
-Free functions as alternative to the operators | ❌
+Free functions as an alternative to operators | ❌
 
 ### Contributing ✍️
 
-Contributions are very welcome and highly appreciated! ❤️
+Contributions are very welcome and highly appreciated! ❤️ Here's how to do it: 
 
-How to contribute:
-
-- If you have any questions feel free to create  an issue with a `question` label;
-- If you have a feature request create an issue with a `Feature request` label;
+- If you have any questions feel free to create an issue with a `question` label;
+- If you have a feature request you can create an issue with a `Feature request` label;
 - If you found a bug feel free to create an issue with a `bug` label or open a PR with a fix.
