@@ -33,7 +33,7 @@ let box = Box<SectionId, RowId>.empty
                 |-+ Section(id: SectionId.consultantDate,
                             header: EmptySpaceComponent(height: 24, color: .clear))
                 |---+ RowId.loading <> LoadingIndicatorComponent(isLoading: true)
-                
+
 tableView.render(box)
 ```
 
@@ -69,7 +69,7 @@ public struct Node<Identifier: Hashable> {
 Identity, one of the key concepts, is used by the diffing algorithm to perform changes.
 
  > For general business concerns, full inequality of two instances does not necessarily mean inequality in terms of identity — it just means the data being held has changed if the identity of both instances is the same.
- 
+
  (More info [here](https://github.com/RACCommunity/FlexibleDiff).)
 
 `SectionId` and `RowId` define the identity of `Section` and `Row`, respectively.
@@ -81,7 +81,7 @@ Identity, one of the key concepts, is used by the diffing algorithm to perform c
 ```swift
 public protocol Renderable: class {
     associatedtype View: UIView
-    
+
     func render(in view: View)
 }
 
@@ -145,7 +145,7 @@ Sections | Appointment | Movies
 
 ### Installation 💾
 
-* Cocopods
+* Cocoapods
 
 ```ruby
 target 'MyApp' do
@@ -159,7 +159,7 @@ end
 
 Feature | Status
 --- | ---
-`UITableView` | ✅ 
+`UITableView` | ✅
 `UICollectionView` | ❌
 Carthage Support | ❌
 Free functions as an alternative to operators | ❌
