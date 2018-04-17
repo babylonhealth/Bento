@@ -47,6 +47,12 @@
 		58FC444A207CFBD700DA3614 /* MovieComponentView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 58FC4440207CFBD700DA3614 /* MovieComponentView.xib */; };
 		58FC444D207CFBE200DA3614 /* BookAppointmentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58FC444B207CFBE100DA3614 /* BookAppointmentViewController.swift */; };
 		58FC444E207CFBE200DA3614 /* MoviesListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58FC444C207CFBE200DA3614 /* MoviesListViewController.swift */; };
+		61B40919208523F60063DE25 /* IntroViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61B40916208523F50063DE25 /* IntroViewModel.swift */; };
+		61B4091A208523F60063DE25 /* IntroViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61B40917208523F50063DE25 /* IntroViewController.swift */; };
+		61B4091B208523F60063DE25 /* IntroViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 61B40918208523F50063DE25 /* IntroViewController.storyboard */; };
+		61B64B90208544CE0092082C /* IntroCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61B64B8F208544CE0092082C /* IntroCellViewModel.swift */; };
+		61B64BA42085FB810092082C /* IntroDefaultCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61B64BA32085FB810092082C /* IntroDefaultCollectionCell.swift */; };
+		61B64BA62085FCCF0092082C /* IntroDefautBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61B64BA52085FCCF0092082C /* IntroDefautBuilder.swift */; };
 		74208FA12083B1F00062CC8D /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 74208FA22083B1F00062CC8D /* Nimble.framework */; };
 		747523C72083A6660030CCAA /* FlexibleDiff.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 747523C82083A6660030CCAA /* FlexibleDiff.framework */; };
 		74C7FE982083A990005C8B53 /* Result.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 74C7FE972083A990005C8B53 /* Result.framework */; };
@@ -143,6 +149,12 @@
 		58FC4440207CFBD700DA3614 /* MovieComponentView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MovieComponentView.xib; sourceTree = "<group>"; };
 		58FC444B207CFBE100DA3614 /* BookAppointmentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookAppointmentViewController.swift; sourceTree = "<group>"; };
 		58FC444C207CFBE200DA3614 /* MoviesListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MoviesListViewController.swift; sourceTree = "<group>"; };
+		61B40916208523F50063DE25 /* IntroViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IntroViewModel.swift; sourceTree = "<group>"; };
+		61B40917208523F50063DE25 /* IntroViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IntroViewController.swift; sourceTree = "<group>"; };
+		61B40918208523F50063DE25 /* IntroViewController.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = IntroViewController.storyboard; sourceTree = "<group>"; };
+		61B64B8F208544CE0092082C /* IntroCellViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IntroCellViewModel.swift; sourceTree = "<group>"; };
+		61B64BA32085FB810092082C /* IntroDefaultCollectionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IntroDefaultCollectionCell.swift; sourceTree = "<group>"; };
+		61B64BA52085FCCF0092082C /* IntroDefautBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroDefautBuilder.swift; sourceTree = "<group>"; };
 		74208FA22083B1F00062CC8D /* Nimble.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Nimble.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		747523C82083A6660030CCAA /* FlexibleDiff.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = FlexibleDiff.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		74C7FE972083A990005C8B53 /* Result.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Result.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -235,6 +247,7 @@
 		5829D267200FB092001E020D /* Example */ = {
 			isa = PBXGroup;
 			children = (
+				61B40915208523CE0063DE25 /* CollectionViewExample */,
 				58E98E542016570800F78BAE /* Cells */,
 				58FC444B207CFBE100DA3614 /* BookAppointmentViewController.swift */,
 				58FC444C207CFBE200DA3614 /* MoviesListViewController.swift */,
@@ -315,6 +328,19 @@
 				58FC4421207CF29F00DA3614 /* Info.plist */,
 			);
 			path = BentoTests;
+			sourceTree = "<group>";
+		};
+		61B40915208523CE0063DE25 /* CollectionViewExample */ = {
+			isa = PBXGroup;
+			children = (
+				61B64BA32085FB810092082C /* IntroDefaultCollectionCell.swift */,
+				61B64B8F208544CE0092082C /* IntroCellViewModel.swift */,
+				61B40918208523F50063DE25 /* IntroViewController.storyboard */,
+				61B40917208523F50063DE25 /* IntroViewController.swift */,
+				61B40916208523F50063DE25 /* IntroViewModel.swift */,
+				61B64BA52085FCCF0092082C /* IntroDefautBuilder.swift */,
+			);
+			path = CollectionViewExample;
 			sourceTree = "<group>";
 		};
 		7D7D5AFB203495BA731D7A3E /* Frameworks */ = {
@@ -475,6 +501,7 @@
 				58E98E5E2016571F00F78BAE /* EmptySpaceCell.xib in Resources */,
 				58FC4448207CFBD700DA3614 /* IconTitleDetailsView.xib in Resources */,
 				5829D26E200FB092001E020D /* Main.storyboard in Resources */,
+				61B4091B208523F60063DE25 /* IntroViewController.storyboard in Resources */,
 				58E98E5C2016571F00F78BAE /* ToggleCell.xib in Resources */,
 				58E98E5B2016571F00F78BAE /* IconTextCell.xib in Resources */,
 				58FC4442207CFBD700DA3614 /* LoadingIndicatorView.xib in Resources */,
@@ -502,16 +529,21 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				61B64BA42085FB810092082C /* IntroDefaultCollectionCell.swift in Sources */,
+				61B64B90208544CE0092082C /* IntroCellViewModel.swift in Sources */,
 				5829D26B200FB092001E020D /* ViewController.swift in Sources */,
 				58FC4447207CFBD700DA3614 /* ButtonComponentView.swift in Sources */,
 				58FC4441207CFBD700DA3614 /* MovieComponentView.swift in Sources */,
+				61B40919208523F60063DE25 /* IntroViewModel.swift in Sources */,
 				58FC444D207CFBE200DA3614 /* BookAppointmentViewController.swift in Sources */,
 				58E98E5D2016571F00F78BAE /* ToggleCell.swift in Sources */,
 				58FC4445207CFBD700DA3614 /* LoadingIndicatorView.swift in Sources */,
 				58E98E5F2016571F00F78BAE /* EmptySpaceCell.swift in Sources */,
 				5829D269200FB092001E020D /* AppDelegate.swift in Sources */,
+				61B4091A208523F60063DE25 /* IntroViewController.swift in Sources */,
 				58FC4449207CFBD700DA3614 /* IconTitleDetailsView.swift in Sources */,
 				58FC4444207CFBD700DA3614 /* SegmetControlView.swift in Sources */,
+				61B64BA62085FCCF0092082C /* IntroDefautBuilder.swift in Sources */,
 				58E98E602016571F00F78BAE /* IconTextCell.swift in Sources */,
 				58FC444E207CFBE200DA3614 /* MoviesListViewController.swift in Sources */,
 			);
