@@ -15,7 +15,23 @@ public final class IntroViewController: UIViewController {
     @IBOutlet weak var mainViewFooterContainer: UIView!
 
     fileprivate var defaultCellBuilder = IntroDefaultBuilder()
-    let viewModel = IntroViewModel()
+
+    let content = [
+        IntroContent(image: UIImage(named: "bentobox-hero")!,
+                     title: "Bento Box Hero",
+                     body: "with Teriyaki Pineapple and Speckled Rice"),
+        IntroContent(image: UIImage(named: "jackfruit-stir-fry-hero")!,
+                     title: "Jackfruit Shiitake Stir-fry",
+                     body: "with Quinoa and Spinach"),
+        IntroContent(image: UIImage(named: "peanut-tofu-hero")!,
+                     title: "Crispy Peanut Tofu",
+                     body: "with Zucchini and Carrot Noodles"),
+        IntroContent(image: UIImage(named: "sushi-ritto-hero")!,
+                     title: "Sushi-rito",
+                     body: "with Roma Edamame Salad and Wasabi Aioli")
+    ]
+
+    lazy var viewModel = IntroViewModel(IntroRenderer(content))
 
     @IBOutlet weak var finishButtonVisibleConstraint: NSLayoutConstraint!
     @IBOutlet weak var finishButtonNotVisibleConstraint: NSLayoutConstraint!
@@ -23,7 +39,11 @@ public final class IntroViewController: UIViewController {
     //MARK: UIViewController lifecycle
     override public func viewDidLoad() {
         super.viewDidLoad()
-        self.setupPageControl()
+        //self.setupPageControl()
+
+        viewModel.box
+            .producer
+            .startWithValues(collectionView.render)
     }
 }
 
@@ -32,23 +52,6 @@ extension IntroViewController: UICollectionViewDelegateFlowLayout {
 
     public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return collectionView.bounds.size;
-    }
-}
-
-extension IntroViewController: UICollectionViewDataSource {
-    // MARK: UICollectionViewDataSource
-
-    public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return self.viewModel.content.count
-    }
-
-    public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-
-        let cellViewModel = IntroCellViewModel(content: self.viewModel.content[indexPath.row])
-
-        return defaultCellBuilder.makeCell(viewModel: cellViewModel,
-                                           collectionView: collectionView,
-                                           indexPath: indexPath)
     }
 }
 
@@ -65,10 +68,3 @@ extension IntroViewController: UIScrollViewDelegate {
     }
 }
 
-extension IntroViewController {
-    //MARK: Setup Components design
-    fileprivate func setupPageControl() {
-        self.pageControl.numberOfPages = self.viewModel.content.count
-        self.pageControl.pageIndicatorTintColor = UIColor.lightGray
-    }
-}

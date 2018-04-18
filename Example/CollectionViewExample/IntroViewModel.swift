@@ -1,6 +1,7 @@
 import UIKit
 import ReactiveSwift
 import Result
+import Bento
 
 public struct IntroContent {
     let image: UIImage
@@ -9,18 +10,18 @@ public struct IntroContent {
 }
 
 struct IntroViewModel {
-    let content = [
-        IntroContent(image: UIImage(named: "bentobox-hero")!,
-                     title: "Bento Box Hero",
-                     body: "with Teriyaki Pineapple and Speckled Rice"),
-        IntroContent(image: UIImage(named: "jackfruit-stir-fry-hero")!,
-                     title: "Jackfruit Shiitake Stir-fry",
-                     body: "with Quinoa and Spinach"),
-        IntroContent(image: UIImage(named: "peanut-tofu-hero")!,
-                     title: "Crispy Peanut Tofu",
-                     body: "with Zucchini and Carrot Noodles"),
-        IntroContent(image: UIImage(named: "sushi-ritto-hero")!,
-                     title: "Sushi-rito",
-                     body: "with Roma Edamame Salad and Wasabi Aioli")
-    ]
+
+    private let state: Property<State>
+    //private let reloadObserver: Signal<Void, NoError>.Observer
+    let box: Property<Box<IntroRenderer.SectionId, IntroRenderer.RowId>>
+
+    enum State {
+        case loading
+        case loaded(IntroContent)
+    }
+
+    init(_ renderer: IntroRenderer) {
+        state = Property(value: State.loading)
+        box = state.map { renderer.render(state: $0) }
+    }
 }
