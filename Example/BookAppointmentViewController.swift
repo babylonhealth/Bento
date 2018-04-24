@@ -4,7 +4,7 @@ import ReactiveSwift
 import ReactiveFeedback
 import enum Result.NoError
 
-final class BookAppointmentViewController: UIViewController {
+final class BookAppointmentViewController: InjectableViewController {
     enum SectionId {
         case user
         case consultantDate
@@ -33,6 +33,13 @@ final class BookAppointmentViewController: UIViewController {
         viewModel.box
             .producer
             .startWithValues(tableView.render)
+    }
+    
+    override func injectedReload() {
+        tableView.render(Box<SectionId, RowId>.empty, animated: false)
+        tableView.layoutIfNeeded()
+        super.injectedReload()
+        viewWillAppear(true)
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -98,7 +105,7 @@ final class BookAppointmentViewModel {
         return Feedback(effects: { (state) -> SignalProducer<Event, NoError> in
             guard case .loading = state else { return .empty }
             return SignalProducer
-                .timer(interval: .milliseconds(700), on: QueueScheduler.main)
+                .timer(interval: .seconds(5), on: QueueScheduler.main)
                 .map { date in
                     return Event.loaded(Appointment(consultantType: .GP,
                                                     date: date,

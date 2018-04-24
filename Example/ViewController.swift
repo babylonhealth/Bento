@@ -1,7 +1,66 @@
 import UIKit
 import Bento
 
-class ViewController: UIViewController {
+extension UIViewController { //5
+    @objc func injectedReload() {
+        for subview in self.view.subviews { //3
+            subview.removeFromSuperview()
+        }
+        
+        viewDidLoad() //4
+        view.setNeedsLayout()
+        view.layoutIfNeeded()
+    }
+}
+
+class InjectableViewController: UIViewController {
+    private static let injectNotificationName = NSNotification.Name(rawValue: "INJECTION_BUNDLE_NOTIFICATION")
+    private var observer: Any!
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        observer = NotificationCenter.default
+            .addObserver(forName: InjectableViewController.injectNotificationName,
+                         object: nil,
+                         queue: OperationQueue.main) { _ in
+                            self.injectedReload()
+            }
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        NotificationCenter.default.removeObserver(observer)
+    }
+}
+
+extension UIView {
+    public func add(to container: UIView) -> Self {
+        container.addSubview(self)
+        return self
+    }
+    
+    public func pinEdges(to view: UIView) {
+        self.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            topAnchor.constraint(equalTo: view.topAnchor)
+            ])
+    }
+    
+    public func pinEdges(to layoutGuide: UILayoutGuide, insets: UIEdgeInsets = .zero) {
+        NSLayoutConstraint.activate([
+            topAnchor.constraint(equalTo: layoutGuide.topAnchor, constant: insets.top),
+            bottomAnchor.constraint(equalTo: layoutGuide.bottomAnchor, constant: insets.bottom),
+            leadingAnchor.constraint(equalTo: layoutGuide.leadingAnchor, constant: insets.left),
+            trailingAnchor.constraint(equalTo: layoutGuide.trailingAnchor, constant: insets.right)
+            ])
+    }
+}
+
+class ViewController: InjectableViewController {
     enum State {
         case airplaneMode
         case wifi
@@ -18,7 +77,7 @@ class ViewController: UIViewController {
         case toggle
     }
 
-    @IBOutlet weak var tableView: UITableView!
+    private let tableView = UITableView(frame: .zero)
 
     private var state = State.airplaneMode {
         didSet {
@@ -30,6 +89,12 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         setupTableView()
         renderState()
+    }
+    
+    override func injectedReload() {
+        tableView.render(Box<SectionId, RowId>.empty, animated: false)
+        tableView.layoutIfNeeded()
+        super.injectedReload()
     }
 
     private func renderState() {
@@ -58,16 +123,18 @@ class ViewController: UIViewController {
     }
 
     private func setupTableView() {
+        tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.estimatedSectionFooterHeight = 18
         tableView.estimatedSectionHeaderHeight = 18
         tableView.sectionHeaderHeight = UITableViewAutomaticDimension
         tableView.sectionFooterHeight = UITableViewAutomaticDimension
+        tableView.add(to: view).pinEdges(to: view.safeAreaLayoutGuide)
     }
 
     private func renderFirstSection() -> Section<SectionId, RowId> {
         switch state {
         case .airplaneMode:
-            let headerSpec = EmptySpaceComponent.Spec(height: 20, color: .black)
+            let headerSpec = EmptySpaceComponent.Spec(height: 20, color: .red)
             let footerSpec = EmptySpaceComponent.Spec(height: 20, color: .cyan)
             let headerComponent = EmptySpaceComponent(spec: headerSpec)
             let footerComponent = EmptySpaceComponent(spec: footerSpec)

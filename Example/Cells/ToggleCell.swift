@@ -37,6 +37,7 @@ class ToggleComponent: Renderable {
     }
 
     func render(in view: ToggleCell) {
+        view.backgroundColor = .purple
         view.iconView.image = icon
         view.titleLabel.text = title
         view.onToggle = onToggle

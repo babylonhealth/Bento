@@ -98,25 +98,10 @@
                     <view key="view" contentMode="scaleToFill" id="9Lu-ly-ncS">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="mxQ-pP-w3i">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="618"/>
-                                <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
-                            </tableView>
-                        </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <constraints>
-                            <constraint firstItem="mxQ-pP-w3i" firstAttribute="leading" secondItem="37E-dG-ERZ" secondAttribute="leading" id="GGw-CO-GBz"/>
-                            <constraint firstItem="37E-dG-ERZ" firstAttribute="trailing" secondItem="mxQ-pP-w3i" secondAttribute="trailing" id="SPC-RP-WXw"/>
-                            <constraint firstItem="37E-dG-ERZ" firstAttribute="top" secondItem="mxQ-pP-w3i" secondAttribute="top" constant="20" id="TBG-hW-syw"/>
-                            <constraint firstItem="37E-dG-ERZ" firstAttribute="bottom" secondItem="mxQ-pP-w3i" secondAttribute="bottom" id="aAZ-d4-OEA"/>
-                        </constraints>
                         <viewLayoutGuide key="safeArea" id="37E-dG-ERZ"/>
                     </view>
                     <tabBarItem key="tabBarItem" systemItem="more" id="Z8n-vV-QTa"/>
-                    <connections>
-                        <outlet property="tableView" destination="mxQ-pP-w3i" id="fNF-wh-2ng"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="G1c-W3-cMi" sceneMemberID="firstResponder"/>
             </objects>

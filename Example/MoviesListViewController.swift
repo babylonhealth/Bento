@@ -6,7 +6,7 @@ import Result
 import Kingfisher
 import Bento
 
-final class MoviesListViewController: UIViewController {
+final class MoviesListViewController: InjectableViewController {
     @IBOutlet weak var tableView: UITableView!
     private lazy var viewModel = PaginationViewModel()
     private let (retrySignal, retryObserver) = Signal<Void, NoError>.pipe()
