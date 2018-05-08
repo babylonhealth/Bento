@@ -132,8 +132,8 @@ let bento = Box.empty // 3
 ```
 
 As you might have noticed:
-* <> has ComposingPrecedence;
-* |---+ has NodeConcatenationPrecedence
+* `<>` has `ComposingPrecedence`;
+* `|---+` has `NodeConcatenationPrecedence`
 
 `<> / NodeConcatenationPrecedence` is higher than `|-+ / SectionConcatenationPrecedence`, meaning Nodes will be computed first. 
 
