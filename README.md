@@ -27,12 +27,12 @@ When building a `Box`, all you need to care about are `Sections`s and `Node`s.
 
 ```swift
 let box = Box<SectionId, RowId>.empty
-                |-+ Section(id: SectionId.user,
-                            header: EmptySpaceComponent(height: 24, color: .clear))
-                |---+ RowId.user <> IconTitleDetailsComponent(icon: image, title: patient.name)
-                |-+ Section(id: SectionId.consultantDate,
-                            header: EmptySpaceComponent(height: 24, color: .clear))
-                |---+ RowId.loading <> LoadingIndicatorComponent(isLoading: true)
+|-+ Section(id: SectionId.user,
+header: EmptySpaceComponent(height: 24, color: .clear))
+|---+ RowId.user <> IconTitleDetailsComponent(icon: image, title: patient.name)
+|-+ Section(id: SectionId.consultantDate,
+header: EmptySpaceComponent(height: 24, color: .clear))
+|---+ RowId.loading <> LoadingIndicatorComponent(isLoading: true)
 
 tableView.render(box)
 ```
@@ -52,15 +52,15 @@ tableView.render(box)
 
 ```swift
 struct Section<SectionId: Hashable, RowId: Hashable> {
-    let id: SectionId
-    let header: AnyRenderable?
-    let footer: AnyRenderable?
-    let rows: [Node<RowId>]
+let id: SectionId
+let header: AnyRenderable?
+let footer: AnyRenderable?
+let rows: [Node<RowId>]
 }
 
 public struct Node<Identifier: Hashable> {
-    let id: Identifier
-    let component: AnyRenderable
+let id: Identifier
+let component: AnyRenderable
 }
 ```
 
@@ -68,9 +68,9 @@ public struct Node<Identifier: Hashable> {
 #### Identity 🎫
 Identity, one of the key concepts, is used by the diffing algorithm to perform changes.
 
- > For general business concerns, full inequality of two instances does not necessarily mean inequality in terms of identity — it just means the data being held has changed if the identity of both instances is the same.
+> For general business concerns, full inequality of two instances does not necessarily mean inequality in terms of identity — it just means the data being held has changed if the identity of both instances is the same.
 
- (More info [here](https://github.com/RACCommunity/FlexibleDiff).)
+(More info [here](https://github.com/RACCommunity/FlexibleDiff).)
 
 `SectionId` and `RowId` define the identity of `Section` and `Row`, respectively.
 
@@ -80,25 +80,25 @@ Identity, one of the key concepts, is used by the diffing algorithm to perform c
 
 ```swift
 public protocol Renderable: class {
-    associatedtype View: UIView
+associatedtype View: UIView
 
-    func render(in view: View)
+func render(in view: View)
 }
 
 class IconTextComponent: Renderable {
-    private let title: String
-    private let image: UIImage
+private let title: String
+private let image: UIImage
 
-    init(image: UIImage,
-         title: String) {
-        self.image = image
-        self.title = title
-    }
+init(image: UIImage,
+title: String) {
+self.image = image
+self.title = title
+}
 
-    func render(in view: IconTextCell) {
-        view.titleLabel.text = title
-        view.iconView.image = image
-    }
+func render(in view: IconTextCell) {
+view.titleLabel.text = title
+view.iconView.image = image
+}
 }
 ```
 
@@ -108,18 +108,18 @@ There are several custom operators that provide syntax sugar to make it easier t
 
 ```swift
 precedencegroup ComposingPrecedence {
-    associativity: left
-    higherThan: NodeConcatenationPrecedence
+associativity: left
+higherThan: NodeConcatenationPrecedence
 }
 
 precedencegroup NodeConcatenationPrecedence {
-    associativity: left
-    higherThan: SectionConcatenationPrecedence
+associativity: left
+higherThan: SectionConcatenationPrecedence
 }
 
 precedencegroup SectionConcatenationPrecedence {
-    associativity: left
-    higherThan: AdditionPrecedence
+associativity: left
+higherThan: AdditionPrecedence
 }
 
 infix operator <>: ComposingPrecedence
@@ -127,11 +127,15 @@ infix operator |-+: SectionConcatenationPrecedence
 infix operator |--+: NodeConcatenationPrecedence
 
 let bento = Box.empty // 3
-	|-+ Section() // 2
-	|---+ RowId.id <> Component() // 1
+|-+ Section() // 2
+|---+ RowId.id <> Component() // 1
 ```
+As you might have noticed:
 
-As you can see, `<>` has a `ComposingPrecedence`, `|---+` has a `NodeConcatenationPrecedence `, which is higher then `|-+`, `SectionConcatenationPrecedence`, which means that Nodes will be computed first. The order of the expression above is:
+* `<>` has `ComposingPrecedence`;
+* `|---+` has `NodeConcatenationPrecedence `
+
+`<>` / `NodeConcatenationPrecedence` is higher than `|-+` / `SectionConcatenationPrecedence`, meaning Nodes will be computed first. The order of the expression above is:
 
 1. `RowId.id <> Component()` => `Node`
 2. `Section() |---+ Node()` => `Section`
@@ -149,7 +153,7 @@ Sections | Appointment | Movies
 
 ```ruby
 target 'MyApp' do
-    pod 'Bento'
+pod 'Bento'
 end
 ```
 * Carthage
