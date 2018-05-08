@@ -131,7 +131,13 @@ let bento = Box.empty // 3
 	|---+ RowId.id <> Component() // 1
 ```
 
-As you can see, `<>` has a `ComposingPrecedence`, `|---+` has a `NodeConcatenationPrecedence `, which is higher then `|-+`, `SectionConcatenationPrecedence`, which means that Nodes will be computed first. The order of the expression above is:
+As you might have noticed:
+* `<>` has `ComposingPrecedence`;
+* `|---+` has `NodeConcatenationPrecedence`
+
+`<> / NodeConcatenationPrecedence` is higher than `|-+ / SectionConcatenationPrecedence`, meaning Nodes will be computed first. 
+
+The order of the expression above is:
 
 1. `RowId.id <> Component()` => `Node`
 2. `Section() |---+ Node()` => `Section`
