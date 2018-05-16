@@ -52,7 +52,7 @@ struct TableViewSectionDiff<SectionId: Hashable, RowId: Hashable> {
             tableView.insertRows(at: sectionMutation.insertedIndexPaths, with: animation.rowInsertion)
             tableView.perform(moves: sectionMutation.movedIndexPaths)
             [sectionMutation.changeset.moves.lazy
-                .flatMap { $0.isMutated ? ($0.source, $0.destination) : nil },
+                .compactMap { $0.isMutated ? ($0.source, $0.destination) : nil },
              sectionMutation.changeset.mutations.lazy.map { ($0, $0) }]
                 .joined()
                 .forEach { source, destination in

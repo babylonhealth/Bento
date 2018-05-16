@@ -16,6 +16,7 @@ precedencegroup SectionConcatenationPrecedence {
 }
 
 infix operator |-+: SectionConcatenationPrecedence
+infix operator |-?: SectionConcatenationPrecedence
 infix operator |---+: NodeConcatenationPrecedence
 infix operator |---*: NodeConcatenationPrecedence
 infix operator |---?: NodeConcatenationPrecedence
@@ -35,6 +36,10 @@ public struct Box<SectionId: Hashable, RowId: Hashable> {
 
 public func |-+<SectionId, RowId>(lhs: Box<SectionId, RowId>, rhs: Section<SectionId, RowId>) -> Box<SectionId, RowId> {
     return Box(sections: lhs.sections + [rhs])
+}
+
+public func |-+<SectionId, RowId>(lhs: Box<SectionId, RowId>, rhs: Section<SectionId, RowId>?) -> Box<SectionId, RowId> {
+    return Box(sections: lhs.sections + [rhs].compactMap { $0 })
 }
 
 extension UITableView {
