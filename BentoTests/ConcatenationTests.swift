@@ -57,8 +57,8 @@ class ConcatenationTests: XCTestCase {
 
         let result: Section<TestSectionId, TestRowId> = section
             |---? .some(optional) { _ in
-            node
-        }
+                node
+            }
 
         expect(result.rows.count) == 0
     }
@@ -72,7 +72,7 @@ class ConcatenationTests: XCTestCase {
         let result: Section<TestSectionId, TestRowId> = section
             |---? .some(optional) { _ in
                 node
-        }
+            }
 
         expect(result.rows.count) == 1
     }
