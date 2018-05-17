@@ -47,6 +47,8 @@
 		58FC444A207CFBD700DA3614 /* MovieComponentView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 58FC4440207CFBD700DA3614 /* MovieComponentView.xib */; };
 		58FC444D207CFBE200DA3614 /* BookAppointmentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58FC444B207CFBE100DA3614 /* BookAppointmentViewController.swift */; };
 		58FC444E207CFBE200DA3614 /* MoviesListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58FC444C207CFBE200DA3614 /* MoviesListViewController.swift */; };
+		740921B620ACDDDA00B59F5C /* IfTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 740921B520ACDDDA00B59F5C /* IfTests.swift */; };
+		740921B820ACE5EC00B59F5C /* ConcatenationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 740921B720ACE5EC00B59F5C /* ConcatenationTests.swift */; };
 		74208FA12083B1F00062CC8D /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 74208FA22083B1F00062CC8D /* Nimble.framework */; };
 		747523C72083A6660030CCAA /* FlexibleDiff.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 747523C82083A6660030CCAA /* FlexibleDiff.framework */; };
 		74C7FE982083A990005C8B53 /* Result.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 74C7FE972083A990005C8B53 /* Result.framework */; };
@@ -143,6 +145,8 @@
 		58FC4440207CFBD700DA3614 /* MovieComponentView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MovieComponentView.xib; sourceTree = "<group>"; };
 		58FC444B207CFBE100DA3614 /* BookAppointmentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookAppointmentViewController.swift; sourceTree = "<group>"; };
 		58FC444C207CFBE200DA3614 /* MoviesListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MoviesListViewController.swift; sourceTree = "<group>"; };
+		740921B520ACDDDA00B59F5C /* IfTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IfTests.swift; sourceTree = "<group>"; };
+		740921B720ACE5EC00B59F5C /* ConcatenationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConcatenationTests.swift; sourceTree = "<group>"; };
 		74208FA22083B1F00062CC8D /* Nimble.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Nimble.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		747523C82083A6660030CCAA /* FlexibleDiff.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = FlexibleDiff.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		74C7FE972083A990005C8B53 /* Result.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Result.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -310,6 +314,8 @@
 				9A3EF77F205D866F00D043AC /* AnyRenderableTests.swift */,
 				9A7846FC205EAF7C00FA597E /* NodeTests.swift */,
 				9A7846FE205EAF8400FA597E /* SectionTests.swift */,
+				740921B520ACDDDA00B59F5C /* IfTests.swift */,
+				740921B720ACE5EC00B59F5C /* ConcatenationTests.swift */,
 				9A784700205EB5E000FA597E /* TestRenderable.swift */,
 				9A784702205EB61D00FA597E /* TestId.swift */,
 				58FC4421207CF29F00DA3614 /* Info.plist */,
@@ -544,7 +550,9 @@
 				58FC442A207CF2BB00DA3614 /* NodeTests.swift in Sources */,
 				58FC4428207CF2BB00DA3614 /* TestId.swift in Sources */,
 				58FC4429207CF2BB00DA3614 /* TestRenderable.swift in Sources */,
+				740921B620ACDDDA00B59F5C /* IfTests.swift in Sources */,
 				58FC442B207CF2BB00DA3614 /* SectionTests.swift in Sources */,
+				740921B820ACE5EC00B59F5C /* ConcatenationTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
