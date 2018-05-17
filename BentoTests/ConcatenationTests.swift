@@ -14,11 +14,28 @@ class ConcatenationTests: XCTestCase {
         expect(box.sections.count) == 1
     }
 
-    func testSectionOptionalConcatentation() {
+    func testSectionOptionalNilConcatentation() {
+        let section = Section<TestSectionId, TestRowId>(id: .first)
+        let optional: String? = nil
+
         let box = Box<TestSectionId, TestRowId>.empty
-            |-+ nil
+            |-? .some(optional) { _ in
+                section
+            }
 
         expect(box.sections.count) == 0
+    }
+
+    func testSectionOptionalSomeConcatentation() {
+        let section = Section<TestSectionId, TestRowId>(id: .first)
+        let optional: String? = "something"
+
+        let box = Box<TestSectionId, TestRowId>.empty
+            |-? .some(optional) { _ in
+                section
+            }
+
+        expect(box.sections.count) == 1
     }
 
     func testNodeConcatenation() {
@@ -32,12 +49,31 @@ class ConcatenationTests: XCTestCase {
         expect(result.rows.count) == 1
     }
 
-    func testNodeOptionalConcatenation() {
+    func testNodeOptionalNilConcatenation() {
         let section = Section<TestSectionId, TestRowId>(id: .first)
+        let node = Node(id: TestRowId.first,
+                        component: TestCustomEqualityRenderable(value: 0))
+        let optional: String? = nil
 
         let result: Section<TestSectionId, TestRowId> = section
-            |---+ nil
+            |---? .some(optional) { _ in
+            node
+        }
 
         expect(result.rows.count) == 0
+    }
+
+    func testNodeOptionalSomeConcatenation() {
+        let section = Section<TestSectionId, TestRowId>(id: .first)
+        let node = Node(id: TestRowId.first,
+                        component: TestCustomEqualityRenderable(value: 0))
+        let optional: String? = "something"
+
+        let result: Section<TestSectionId, TestRowId> = section
+            |---? .some(optional) { _ in
+                node
+        }
+
+        expect(result.rows.count) == 1
     }
 }

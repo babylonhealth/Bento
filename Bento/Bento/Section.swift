@@ -68,10 +68,6 @@ public func |---+<SectionId, RowId>(lhs: Section<SectionId, RowId>, rhs: Node<Ro
     return Section(id: lhs.id, header: lhs.header, footer: lhs.footer, rows: lhs.rows + [rhs])
 }
 
-public func |---+<SectionId, RowId>(lhs: Section<SectionId, RowId>, rhs: Node<RowId>?) -> Section<SectionId, RowId> {
-    return Section(id: lhs.id, header: lhs.header, footer: lhs.footer, rows: lhs.rows + [rhs].compactMap { $0 })
-}
-
 public func |---*<SectionId, RowId>(lhs: Section<SectionId, RowId>, rhs: [Node<RowId>]) -> Section<SectionId, RowId> {
     return Section(id: lhs.id, header: lhs.header, footer: lhs.footer, rows: lhs.rows + rhs)
 }

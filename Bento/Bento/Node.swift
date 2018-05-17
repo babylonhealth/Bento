@@ -26,14 +26,6 @@ public func |---+<Identifier>(lhs: Node<Identifier>, rhs: Node<Identifier>) -> [
     return [lhs, rhs]
 }
 
-public func |---+<Identifier>(lhs: Node<Identifier>, rhs: Node<Identifier>?) -> [Node<Identifier>] {
-    return [lhs, rhs].compactMap { $0 }
-}
-
 public func |---+<Identifier>(lhs: [Node<Identifier>], rhs: Node<Identifier>) -> [Node<Identifier>] {
     return lhs + [rhs]
-}
-
-public func |---+<Identifier>(lhs: [Node<Identifier>], rhs: Node<Identifier>?) -> [Node<Identifier>] {
-    return lhs + [rhs].compactMap { $0 }
 }

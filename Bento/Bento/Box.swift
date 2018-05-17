@@ -38,10 +38,6 @@ public func |-+<SectionId, RowId>(lhs: Box<SectionId, RowId>, rhs: Section<Secti
     return Box(sections: lhs.sections + [rhs])
 }
 
-public func |-+<SectionId, RowId>(lhs: Box<SectionId, RowId>, rhs: Section<SectionId, RowId>?) -> Box<SectionId, RowId> {
-    return Box(sections: lhs.sections + [rhs].compactMap { $0 })
-}
-
 extension UITableView {
     public func render<SectionId, RowId>(_ box: Box<SectionId, RowId>) {
         let adapter: SectionedFormAdapter<SectionId, RowId> = getAdapter()

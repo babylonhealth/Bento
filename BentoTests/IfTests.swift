@@ -9,7 +9,7 @@ class IfTests: XCTestCase {
         let section = Section<TestSectionId, TestRowId>(id: .first)
 
         let box = Box<TestSectionId, TestRowId>.empty
-            |-? If.iff(true, section)
+            |-? .iff(true, section)
 
         expect(box.sections.count) == 1
     }
@@ -18,7 +18,7 @@ class IfTests: XCTestCase {
         let section = Section<TestSectionId, TestRowId>(id: .first)
 
         let box = Box<TestSectionId, TestRowId>.empty
-            |-? If.iff(true) {
+            |-? .iff(true) {
                 section
             }
 
@@ -29,7 +29,7 @@ class IfTests: XCTestCase {
         let section = Section<TestSectionId, TestRowId>(id: .first)
 
         let box = Box<TestSectionId, TestRowId>.empty
-            |-? If.iff(false, section)
+            |-? .iff(false, section)
 
         expect(box.sections.count) == 0
     }
@@ -38,7 +38,7 @@ class IfTests: XCTestCase {
         let section = Section<TestSectionId, TestRowId>(id: .first)
 
         let box = Box<TestSectionId, TestRowId>.empty
-            |-? If.iff(false) {
+            |-? .iff(false) {
                 section
             }
 
@@ -51,7 +51,7 @@ class IfTests: XCTestCase {
                         component: TestCustomEqualityRenderable(value: 0))
 
         let result = section
-            |---? If.iff(true, node)
+            |---? .iff(true, node)
 
         expect(result.rows.count) == 1
     }
@@ -62,7 +62,7 @@ class IfTests: XCTestCase {
                         component: TestCustomEqualityRenderable(value: 0))
 
         let result = section
-            |---? If.iff(true) {
+            |---? .iff(true) {
                 node
             }
 
@@ -75,7 +75,7 @@ class IfTests: XCTestCase {
                         component: TestCustomEqualityRenderable(value: 0))
 
         let result = section
-            |---? If.iff(false, node)
+            |---? .iff(false, node)
 
         expect(result.rows.count) == 0
     }
@@ -86,7 +86,7 @@ class IfTests: XCTestCase {
                         component: TestCustomEqualityRenderable(value: 0))
 
         let result = section
-            |---? If.iff(false) {
+            |---? .iff(false) {
                 node
             }
 
