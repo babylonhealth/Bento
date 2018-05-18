@@ -4,6 +4,17 @@ import ReactiveSwift
 import ReactiveFeedback
 import enum Result.NoError
 
+final class CustomTableViewAdapter<SectionId: Hashable, RowId: Hashable>: TableViewAdapterBase<SectionId, RowId>, UITableViewDataSource, UITableViewDelegate {
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        print("Custom Table View Adapter: Will Display Cell at \(indexPath)")
+    }
+
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        print("Custom Table View Adapter: Cell For Row at \(indexPath)")
+        return super.tableView(tableView, cellForRowAt: indexPath)
+    }
+}
+
 final class BookAppointmentViewController: UIViewController {
     enum SectionId {
         case user
@@ -45,6 +56,7 @@ final class BookAppointmentViewController: UIViewController {
         tableView.estimatedSectionHeaderHeight = 18
         tableView.sectionHeaderHeight = UITableViewAutomaticDimension
         tableView.sectionFooterHeight = UITableViewAutomaticDimension
+        tableView.prepareForBoxRendering(CustomTableViewAdapter<BookAppointmentViewModel.Renderer.SectionId, BookAppointmentViewModel.Renderer.RowId>.self)
     }
 }
 
