@@ -147,13 +147,11 @@ The order of the expression above is:
 
 #### Conditional operators ❓
 
-In addition to the normal `|-+` and `|---+` concatenation operators, Bento has conditional concatenation operators:
+In addition to the `|-+` and `|---+` concatenation operators, Bento has conditional concatenation operators:
 * `|-?` for `Section`
 * `|---?` for `Node`
 
-They are used with the static function `.iff` for 
-
-They work with `Optional` and `Bool` and are used with the functions `.iff` for `Bool` and `.some` for `Optional`: 
+They are used to provide a `Section` or `Node` in a closure for the `Bool` and `Optional` happy path, via the `.iff` and `.some` functions.
 
 Here are some examples:
 ```swift
