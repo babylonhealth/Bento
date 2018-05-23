@@ -17,7 +17,8 @@ public extension Renderable where Self: AnyObject {
 
 public extension Renderable {
     var reuseIdentifier: String {
-        return String(describing: View.self)
+        /// Returns the demangled qualified name of View
+        return _typeName(View.self, qualified: true)
     }
 }
 
