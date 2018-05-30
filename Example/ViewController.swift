@@ -1,5 +1,5 @@
-import UIKit
 import Bento
+import UIKit
 
 class ViewController: UIViewController {
     enum State {
@@ -16,6 +16,7 @@ class ViewController: UIViewController {
         case space
         case note
         case toggle
+        case statefulToggle
     }
 
     @IBOutlet weak var tableView: UITableView!
@@ -41,7 +42,7 @@ class ViewController: UIViewController {
                 |---+ renderIconText()
                 |-+ renderSecondSection()
                 |---+ renderIconText()
-                |---+ renderToggle()
+                |---+ renderStatefullToggle()
 
             tableView.render(box)
         case .wifi:
@@ -108,6 +109,14 @@ class ViewController: UIViewController {
                                             }
                                         })
         return RowId.toggle <> component
+    }
+    
+    func renderStatefullToggle() -> Node<RowId> {
+        let component = StatefulToggle(isOn: self.state == .airplaneMode,
+                                       title: "Stateful Toggle",
+                                       icon: #imageLiteral(resourceName:"plane"))
+
+        return .statefulToggle <> component
     }
 
     private func renderIconText() -> Node<RowId> {

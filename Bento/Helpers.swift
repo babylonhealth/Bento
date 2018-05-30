@@ -48,3 +48,11 @@ extension Optional {
         return selector(unwrapped, other)
     }
 }
+
+final class Value<T>: NSObject {
+    let value: T
+    
+    init(_ value: T) {
+        self.value = value
+    }
+}

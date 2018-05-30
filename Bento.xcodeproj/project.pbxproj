@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		258A9B7A20BC76A500DF4E6F /* StatefulToggle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 258A9B7920BC76A500DF4E6F /* StatefulToggle.swift */; };
+		258A9B7C20BC76F900DF4E6F /* StatefulToggleView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 258A9B7B20BC76F900DF4E6F /* StatefulToggleView.xib */; };
 		515F94097C1F82B7E5C2DE0C /* Section.swift in Sources */ = {isa = PBXBuildFile; fileRef = 515F9EAF847DD1D68DE3A48C /* Section.swift */; };
 		5829D269200FB092001E020D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5829D268200FB092001E020D /* AppDelegate.swift */; };
 		5829D26B200FB092001E020D /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5829D26A200FB092001E020D /* ViewController.swift */; };
@@ -105,6 +107,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		258A9B7920BC76A500DF4E6F /* StatefulToggle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatefulToggle.swift; sourceTree = "<group>"; };
+		258A9B7B20BC76F900DF4E6F /* StatefulToggleView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = StatefulToggleView.xib; sourceTree = "<group>"; };
 		515F9EAF847DD1D68DE3A48C /* Section.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Section.swift; sourceTree = "<group>"; };
 		5829D265200FB092001E020D /* Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5829D268200FB092001E020D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -297,6 +301,8 @@
 				58E98E552016571F00F78BAE /* IconTextCell.xib */,
 				58E98E572016571F00F78BAE /* ToggleCell.swift */,
 				58E98E562016571F00F78BAE /* ToggleCell.xib */,
+				258A9B7920BC76A500DF4E6F /* StatefulToggle.swift */,
+				258A9B7B20BC76F900DF4E6F /* StatefulToggleView.xib */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -479,6 +485,7 @@
 				58FC444A207CFBD700DA3614 /* MovieComponentView.xib in Resources */,
 				58FC442F207CF37700DA3614 /* script in Resources */,
 				5829D273200FB092001E020D /* LaunchScreen.storyboard in Resources */,
+				258A9B7C20BC76F900DF4E6F /* StatefulToggleView.xib in Resources */,
 				58FC4443207CFBD700DA3614 /* SegmetControlView.xib in Resources */,
 				5829D270200FB092001E020D /* Assets.xcassets in Resources */,
 				58E98E5E2016571F00F78BAE /* EmptySpaceCell.xib in Resources */,
@@ -514,6 +521,7 @@
 				5829D26B200FB092001E020D /* ViewController.swift in Sources */,
 				58FC4447207CFBD700DA3614 /* ButtonComponentView.swift in Sources */,
 				58FC4441207CFBD700DA3614 /* MovieComponentView.swift in Sources */,
+				258A9B7A20BC76A500DF4E6F /* StatefulToggle.swift in Sources */,
 				58FC444D207CFBE200DA3614 /* BookAppointmentViewController.swift in Sources */,
 				58E98E5D2016571F00F78BAE /* ToggleCell.swift in Sources */,
 				58FC4445207CFBD700DA3614 /* LoadingIndicatorView.swift in Sources */,
