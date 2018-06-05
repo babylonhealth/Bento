@@ -1,9 +1,0 @@
-machine:
-  xcode:
-    version: "9.2"
-test:
-  override:
-    - git submodule sync --recursive
-    - git submodule update --init --recursive
-    - script/test iphonesimulator "platform=iOS Simulator,name=iPhone 6,OS=11.2" Bento
-    - script/test iphonesimulator "platform=iOS Simulator,name=iPhone 6,OS=11.2" Example build

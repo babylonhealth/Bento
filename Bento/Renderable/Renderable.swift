@@ -17,7 +17,7 @@ public extension Renderable where Self: AnyObject {
 
 public extension Renderable {
     var reuseIdentifier: String {
-        return String(describing: View.self)
+        return String(reflecting: View.self)
     }
 }
 

@@ -57,6 +57,8 @@
 		61B64BB420873DA10092082C /* CollectionViewSectionDiff.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61B64BB320873DA10092082C /* CollectionViewSectionDiff.swift */; };
 		61B64BB6208745730092082C /* CollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61B64BB5208745730092082C /* CollectionViewCell.swift */; };
 		61B64BB8208748A80092082C /* SectionedCollectionViewFormAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61B64BB7208748A80092082C /* SectionedCollectionViewFormAdapter.swift */; };
+		740921B620ACDDDA00B59F5C /* IfTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 740921B520ACDDDA00B59F5C /* IfTests.swift */; };
+		740921B820ACE5EC00B59F5C /* ConcatenationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 740921B720ACE5EC00B59F5C /* ConcatenationTests.swift */; };
 		74208FA12083B1F00062CC8D /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 74208FA22083B1F00062CC8D /* Nimble.framework */; };
 		747523C72083A6660030CCAA /* FlexibleDiff.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 747523C82083A6660030CCAA /* FlexibleDiff.framework */; };
 		74C7FE982083A990005C8B53 /* Result.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 74C7FE972083A990005C8B53 /* Result.framework */; };
@@ -69,6 +71,7 @@
 		74C7FEA22083A9B4005C8B53 /* Kingfisher.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 74C7FEA02083A9B4005C8B53 /* Kingfisher.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		74C7FEA42083AC0E005C8B53 /* ReactiveFeedback.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 74C7FEA32083AC0E005C8B53 /* ReactiveFeedback.framework */; };
 		74C7FEA52083AC0E005C8B53 /* ReactiveFeedback.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 74C7FEA32083AC0E005C8B53 /* ReactiveFeedback.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		A67A873520B5D2D100BC2BAC /* RenderableTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A67A873420B5D2D100BC2BAC /* RenderableTests.swift */; };
 		A95093B3B7AD6DC69644BCA6 /* SectionedFormAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9509BC2762C8B4277B973D8 /* SectionedFormAdapter.swift */; };
 		A9509880661501C40B50E453 /* TableViewHeaderFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A950970749997A21E1BF7777 /* TableViewHeaderFooterView.swift */; };
 		A9509C4FC3664040FF3649CD /* Node.swift in Sources */ = {isa = PBXBuildFile; fileRef = A95093DB10046D731018127D /* Node.swift */; };
@@ -163,6 +166,8 @@
 		61B64BB320873DA10092082C /* CollectionViewSectionDiff.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewSectionDiff.swift; sourceTree = "<group>"; };
 		61B64BB5208745730092082C /* CollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewCell.swift; sourceTree = "<group>"; };
 		61B64BB7208748A80092082C /* SectionedCollectionViewFormAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionedCollectionViewFormAdapter.swift; sourceTree = "<group>"; };
+		740921B520ACDDDA00B59F5C /* IfTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IfTests.swift; sourceTree = "<group>"; };
+		740921B720ACE5EC00B59F5C /* ConcatenationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConcatenationTests.swift; sourceTree = "<group>"; };
 		74208FA22083B1F00062CC8D /* Nimble.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Nimble.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		747523C82083A6660030CCAA /* FlexibleDiff.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = FlexibleDiff.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		74C7FE972083A990005C8B53 /* Result.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Result.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -176,6 +181,7 @@
 		9A7846FE205EAF8400FA597E /* SectionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionTests.swift; sourceTree = "<group>"; };
 		9A784700205EB5E000FA597E /* TestRenderable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestRenderable.swift; sourceTree = "<group>"; };
 		9A784702205EB61D00FA597E /* TestId.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestId.swift; sourceTree = "<group>"; };
+		A67A873420B5D2D100BC2BAC /* RenderableTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RenderableTests.swift; sourceTree = "<group>"; };
 		A95093DB10046D731018127D /* Node.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Node.swift; sourceTree = "<group>"; };
 		A950967CC717BBF3B02B766D /* Box.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Box.swift; sourceTree = "<group>"; };
 		A950970749997A21E1BF7777 /* TableViewHeaderFooterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewHeaderFooterView.swift; sourceTree = "<group>"; };
@@ -330,9 +336,12 @@
 		58FC441E207CF29F00DA3614 /* BentoTests */ = {
 			isa = PBXGroup;
 			children = (
+				A67A873420B5D2D100BC2BAC /* RenderableTests.swift */,
 				9A3EF77F205D866F00D043AC /* AnyRenderableTests.swift */,
 				9A7846FC205EAF7C00FA597E /* NodeTests.swift */,
 				9A7846FE205EAF8400FA597E /* SectionTests.swift */,
+				740921B520ACDDDA00B59F5C /* IfTests.swift */,
+				740921B720ACE5EC00B59F5C /* ConcatenationTests.swift */,
 				9A784700205EB5E000FA597E /* TestRenderable.swift */,
 				9A784702205EB61D00FA597E /* TestId.swift */,
 				58FC4421207CF29F00DA3614 /* Info.plist */,
@@ -592,7 +601,10 @@
 				58FC442A207CF2BB00DA3614 /* NodeTests.swift in Sources */,
 				58FC4428207CF2BB00DA3614 /* TestId.swift in Sources */,
 				58FC4429207CF2BB00DA3614 /* TestRenderable.swift in Sources */,
+				740921B620ACDDDA00B59F5C /* IfTests.swift in Sources */,
 				58FC442B207CF2BB00DA3614 /* SectionTests.swift in Sources */,
+				740921B820ACE5EC00B59F5C /* ConcatenationTests.swift in Sources */,
+				A67A873520B5D2D100BC2BAC /* RenderableTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -781,6 +793,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = "$(SRCROOT)/Bento/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.babylonhealth.FormsKit;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
@@ -806,6 +819,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = "$(SRCROOT)/Bento/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.babylonhealth.FormsKit;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
@@ -822,6 +836,7 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = BentoTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.babylonhealth.BentoTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -835,6 +850,7 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = BentoTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.babylonhealth.BentoTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";

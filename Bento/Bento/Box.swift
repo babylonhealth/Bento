@@ -16,6 +16,7 @@ precedencegroup SectionConcatenationPrecedence {
 }
 
 infix operator |-+: SectionConcatenationPrecedence
+infix operator |-?: SectionConcatenationPrecedence
 infix operator |---+: NodeConcatenationPrecedence
 infix operator |---*: NodeConcatenationPrecedence
 infix operator |---?: NodeConcatenationPrecedence

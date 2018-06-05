@@ -13,13 +13,13 @@ In our experience it makes UI-related code easier to build and maintain. Our aim
 
 ## Content 📋
 
-- [What's it like?](#whats-it-like)
-- [How does it work?](#how-does-it-work)
-- [How do components look?](#how-do-components-look)
-- [Samples](#samples)
-- [Installation](#installation)
-- [State of the project](#state-of-the-project)
-- [Contribute](#contribute)
+- [What's it like?](#whats-it-like-)
+- [How does it work?](#how-does-it-work-)
+- [Examples](#examples-)
+- [Installation](#installation-)
+- [Development installation](#development-installation-)
+- [State of the project](#state-of-the-project-%EF%B8%8F)
+- [Contributing](#contributing-%EF%B8%8F)
 
 ### What's it like? 🧐
 
@@ -124,18 +124,50 @@ precedencegroup SectionConcatenationPrecedence {
 
 infix operator <>: ComposingPrecedence
 infix operator |-+: SectionConcatenationPrecedence
-infix operator |--+: NodeConcatenationPrecedence
+infix operator |-?: SectionConcatenationPrecedence
+infix operator |---+: NodeConcatenationPrecedence
+infix operator |---?: NodeConcatenationPrecedence
 
 let bento = Box.empty // 3
 	|-+ Section() // 2
 	|---+ RowId.id <> Component() // 1
 ```
 
-As you can see, `<>` has a `ComposingPrecedence`, `|---+` has a `NodeConcatenationPrecedence `, which is higher then `|-+`, `SectionConcatenationPrecedence`, which means that Nodes will be computed first. The order of the expression above is:
+As you might have noticed:
+* `<>` has `ComposingPrecedence`;
+* `|---+` has `NodeConcatenationPrecedence`
+
+`<> / NodeConcatenationPrecedence` is higher than `|-+ / SectionConcatenationPrecedence`, meaning Nodes will be computed first. 
+
+The order of the expression above is:
 
 1. `RowId.id <> Component()` => `Node`
 2. `Section() |---+ Node()` => `Section`
 3. `Box() |-+ Section()` => `Box`
+
+#### Conditional operators ❓
+
+In addition to the `|-+` and `|---+` concatenation operators, Bento has conditional concatenation operators:
+* `|-?` for `Section`
+* `|---?` for `Node`
+
+They are used to provide a `Section` or `Node` in a closure for the `Bool` and `Optional` happy path, via the `.iff` and `.some` functions.
+
+Here are some examples:
+```swift
+let box = Box.empty
+    |-? .iff(aBoolCondition) {
+        Section()  // <-- Section only added if `boolCondition` is `true`
+    }
+```
+```swift
+let box = Box.empty
+    |-? .some(anOptional) { theOptional in  // <-- the value of anOptional unwrapped
+        Section()  // <-- Section only added if `anOptional` is not `nil`
+    }
+```
+
+`|---?` works in exactly the same way for `Node`s
 
 ### Examples 😎
 
