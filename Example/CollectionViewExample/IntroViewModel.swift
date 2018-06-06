@@ -3,25 +3,45 @@ import ReactiveSwift
 import Result
 import Bento
 
-public struct IntroContent {
+public struct IntroContent: Hashable {
     let image: UIImage
     let title: String
     let body: String
 }
 
 struct IntroViewModel {
-
-    private let state: Property<State>
-    //private let reloadObserver: Signal<Void, NoError>.Observer
-    let box: Property<Box<IntroRenderer.SectionId, IntroRenderer.RowId>>
+    let state: SignalProducer<State, NoError>
 
     enum State {
         case loading
-        case loaded(IntroContent)
+        case loaded([IntroContent])
     }
 
-    init(_ renderer: IntroRenderer) {
-        state = Property(value: State.loading)
-        box = state.map { renderer.render(state: $0) }
+    init(content: [IntroContent]) {
+        state = SignalProducer.timer(interval: DispatchTimeInterval.seconds(1), on: QueueScheduler.main)
+            .map { tick -> [IntroContent] in
+                return content.shuffled()
+            }
+            .map(State.loaded)
+            .prefix(value: .loading)
+    }
+}
+
+extension Array {
+    mutating func shuffle() {
+        let c = count
+        guard c > 1 else { return }
+
+        for (firstUnshuffled, unshuffledCount) in zip(indices, stride(from: c, to: 1, by: -1)) {
+            let d: Int = numericCast(arc4random_uniform(numericCast(unshuffledCount)))
+            let i = index(firstUnshuffled, offsetBy: d)
+            swapAt(firstUnshuffled, i)
+        }
+    }
+
+    func shuffled() -> [Element] {
+        var result = Array(self)
+        result.shuffle()
+        return result
     }
 }

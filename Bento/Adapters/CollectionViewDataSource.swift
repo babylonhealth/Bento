@@ -1,17 +1,21 @@
-import UIKit
 import FlexibleDiff
+import UIKit
 
-final class SectionedCollectionViewFormAdapter<SectionId: Hashable, ItemId: Hashable>
-: NSObject, UICollectionViewDataSource, UICollectionViewDelegate {
+final class CollectionViewDataSource<SectionId: Hashable, ItemId: Hashable>
+    : NSObject, UICollectionViewDataSource {
     private var sections: [Section<SectionId, ItemId>] = []
     private weak var collectionView: UICollectionView?
 
     init(with collectionView: UICollectionView) {
-        self.sections = []
+        sections = []
         self.collectionView = collectionView
         super.init()
         collectionView.dataSource = self
-        collectionView.delegate = self
+        /*
+         Force reset of the collection view state to prevent inconsistency on first reload
+         */
+        collectionView.reloadData()
+        collectionView.layoutIfNeeded()
     }
 
     func update(sections: [Section<SectionId, ItemId>], animated: Bool = true) {
@@ -28,6 +32,15 @@ final class SectionedCollectionViewFormAdapter<SectionId: Hashable, ItemId: Hash
         }
     }
 
+    func update(sections: [Section<SectionId, ItemId>], completion: (() -> Void)?) {
+        guard let collectionView = collectionView else { return }
+
+        let diff = CollectionViewSectionDiff(oldSections: self.sections,
+                                             newSections: sections)
+        self.sections = sections
+        diff.apply(to: collectionView, completion: completion)
+    }
+
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return sections.count
     }
@@ -37,13 +50,9 @@ final class SectionedCollectionViewFormAdapter<SectionId: Hashable, ItemId: Hash
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-
         let component = node(at: indexPath).component
-        let reuseIdentifier = component.reuseIdentifier
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as? CollectionViewCell else {
-            collectionView.register(CollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
-            return self.collectionView(collectionView, cellForItemAt: indexPath)
-        }
+        collectionView.register(CollectionViewCell.self, forCellWithReuseIdentifier: component.reuseIdentifier)
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: component.reuseIdentifier, for: indexPath) as! CollectionViewCell
 
         let componentView: UIView
         if let containedView = cell.containedView {

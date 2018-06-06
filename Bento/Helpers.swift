@@ -45,9 +45,9 @@ extension UICollectionView {
         static let key = UnsafeMutablePointer<CChar>.allocate(capacity: 1)
     }
 
-    func getAdapter<SectionId, ItemId>() -> SectionedCollectionViewFormAdapter<SectionId, ItemId> {
-        guard let adapter = objc_getAssociatedObject(self, AssociatedKey.key) as? SectionedCollectionViewFormAdapter<SectionId, ItemId> else {
-            let adapter = SectionedCollectionViewFormAdapter<SectionId, ItemId>(with: self)
+    func getAdapter<SectionId, ItemId>() -> CollectionViewDataSource<SectionId, ItemId> {
+        guard let adapter = objc_getAssociatedObject(self, AssociatedKey.key) as? CollectionViewDataSource<SectionId, ItemId> else {
+            let adapter = CollectionViewDataSource<SectionId, ItemId>(with: self)
             objc_setAssociatedObject(self, AssociatedKey.key, adapter, .OBJC_ASSOCIATION_RETAIN)
             return getAdapter()
         }

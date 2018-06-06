@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iN0-l3-epB" customClass="IntroComponentView" customModule="Example" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <subviews>
+                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bentobox-hero" translatesAutoresizingMaskIntoConstraints="NO" id="Ipk-9L-8OD">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                </imageView>
+                <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VYG-YO-uUg">
+                    <rect key="frame" x="20" y="605" width="335" height="52"/>
+                    <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="Di4-Na-Rcb">
+                        <rect key="frame" x="0.0" y="0.0" width="335" height="52"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AdZ-Td-fIM">
+                                <rect key="frame" x="0.0" y="0.0" width="335" height="52"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="1kd-XI-5kc">
+                                    <rect key="frame" x="0.0" y="0.0" width="335" height="52"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <subviews>
+                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="ERV-N0-oMz">
+                                            <rect key="frame" x="0.0" y="0.0" width="335" height="52"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tCc-M0-vVd">
+                                                    <rect key="frame" x="0.0" y="0.0" width="335" height="31.5"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cm2-Jh-KeC">
+                                                    <rect key="frame" x="0.0" y="31.5" width="335" height="20.5"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </stackView>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="ERV-N0-oMz" firstAttribute="top" secondItem="1kd-XI-5kc" secondAttribute="top" id="FyJ-0L-zAs"/>
+                                        <constraint firstItem="ERV-N0-oMz" firstAttribute="leading" secondItem="1kd-XI-5kc" secondAttribute="leading" id="JAF-3y-h3M"/>
+                                        <constraint firstAttribute="trailing" secondItem="ERV-N0-oMz" secondAttribute="trailing" id="XkC-2d-aBZ"/>
+                                        <constraint firstAttribute="bottom" secondItem="ERV-N0-oMz" secondAttribute="bottom" id="mO7-lE-HRM"/>
+                                    </constraints>
+                                </view>
+                                <vibrancyEffect>
+                                    <blurEffect style="light"/>
+                                </vibrancyEffect>
+                            </visualEffectView>
+                        </subviews>
+                        <constraints>
+                            <constraint firstAttribute="bottom" secondItem="AdZ-Td-fIM" secondAttribute="bottom" id="2Ov-6b-sKT"/>
+                            <constraint firstItem="AdZ-Td-fIM" firstAttribute="top" secondItem="Di4-Na-Rcb" secondAttribute="top" id="SfJ-s5-xqN"/>
+                            <constraint firstAttribute="trailing" secondItem="AdZ-Td-fIM" secondAttribute="trailing" id="n7v-dY-3ET"/>
+                            <constraint firstItem="AdZ-Td-fIM" firstAttribute="leading" secondItem="Di4-Na-Rcb" secondAttribute="leading" id="s1J-Wq-X1A"/>
+                        </constraints>
+                    </view>
+                    <blurEffect style="light"/>
+                </visualEffectView>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="VYG-YO-uUg" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="20" id="5GU-RX-Dqe"/>
+                <constraint firstItem="Ipk-9L-8OD" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="IAb-tl-gpn"/>
+                <constraint firstItem="Ipk-9L-8OD" firstAttribute="trailing" secondItem="iN0-l3-epB" secondAttribute="trailing" id="Sif-Tk-2DR"/>
+                <constraint firstAttribute="bottom" secondItem="VYG-YO-uUg" secondAttribute="bottom" constant="10" id="gog-ei-1Sr"/>
+                <constraint firstItem="Ipk-9L-8OD" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="hFG-Aq-ae3"/>
+                <constraint firstItem="Ipk-9L-8OD" firstAttribute="bottom" secondItem="iN0-l3-epB" secondAttribute="bottom" id="sSJ-tF-Xdx"/>
+                <constraint firstAttribute="trailing" secondItem="VYG-YO-uUg" secondAttribute="trailing" constant="20" id="sf7-tK-uqH"/>
+            </constraints>
+            <viewLayoutGuide key="safeArea" id="jTU-RL-0gN"/>
+            <connections>
+                <outlet property="imageView" destination="Ipk-9L-8OD" id="Vs0-n7-NtB"/>
+                <outlet property="subtitleLabel" destination="cm2-Jh-KeC" id="LOz-OV-gre"/>
+                <outlet property="titleLabel" destination="tCc-M0-vVd" id="za0-OE-DqE"/>
+            </connections>
+            <point key="canvasLocation" x="34.5" y="53.5"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="bentobox-hero" width="2800" height="1400"/>
+    </resources>
+</document>

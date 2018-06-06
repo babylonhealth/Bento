@@ -61,13 +61,13 @@ extension UITableView {
 }
 
 extension UICollectionView {
-    public func render<SectionId, ItemId>(_ box: Box<SectionId, ItemId>) {
-        let adapter: SectionedCollectionViewFormAdapter<SectionId, ItemId> = getAdapter()
-        adapter.update(sections: box.sections, animated: true)
+    public func render<SectionId, ItemId>(_ box: Box<SectionId, ItemId>, completion: (() -> Void)? = nil) {
+        let adapter: CollectionViewDataSource<SectionId, ItemId> = getAdapter()
+        adapter.update(sections: box.sections, completion: completion)
     }
 
     public func render<SectionId, ItemId>(_ box: Box<SectionId, ItemId>, animated: Bool) {
-        let adapter: SectionedCollectionViewFormAdapter<SectionId, ItemId> = getAdapter()
+        let adapter: CollectionViewDataSource<SectionId, ItemId> = getAdapter()
         adapter.update(sections: box.sections, animated: animated)
     }
 }

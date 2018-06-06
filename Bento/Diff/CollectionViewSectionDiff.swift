@@ -11,7 +11,7 @@ struct CollectionViewSectionDiff<SectionId: Hashable, RowId: Hashable> {
         self.newSections = newSections
     }
 
-    func apply(to collectionView: UICollectionView) {
+    func apply(to collectionView: UICollectionView, completion: (() -> Void)? = nil) {
         let diff = SectionedChangeset(previous: oldSections,
                                       current: newSections,
                                       sectionIdentifier: { $0.id },
@@ -19,11 +19,10 @@ struct CollectionViewSectionDiff<SectionId: Hashable, RowId: Hashable> {
                                       items: { $0.rows },
                                       itemIdentifier: { $0.id },
                                       areItemsEqual: ==)
-        apply(diff: diff, to: collectionView)
+        apply(diff: diff, to: collectionView, completion: completion)
     }
 
-    private func apply(diff: SectionedChangeset, to collectionView: UICollectionView) {
-
+    private func apply(diff: SectionedChangeset, to collectionView: UICollectionView, completion: (() -> Void)?) {
         collectionView.performBatchUpdates({
             for (item, section) in diff.sections.mutations.enumerated() {
                 if let headerView = collectionView.supplementaryView(forElementKind: UICollectionElementKindSectionHeader.description,
@@ -43,7 +42,7 @@ struct CollectionViewSectionDiff<SectionId: Hashable, RowId: Hashable> {
             apply(sectionMutations: diff.mutatedSections, to: collectionView)
             collectionView.moveSections(diff.sections.moves)
 
-        }, completion: nil)
+        }, completion: { _ in completion?() })
     }
 
     private func apply(sectionMutations: [SectionedChangeset.MutatedSection],
@@ -107,4 +106,3 @@ extension UICollectionView {
         }
     }
 }
-
