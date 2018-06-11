@@ -209,7 +209,7 @@ carthage checkout
 Feature | Status
 --- | ---
 `UITableView` | ✅
-`UICollectionView` | ❌
+`UICollectionView` | ✅
 Carthage Support | ✅
 Free functions as alternative to the operators | ❌
 
