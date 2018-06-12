@@ -1,6 +1,6 @@
 import UIKit
 
-final class TableViewCell: UITableViewCell {
+final class TableViewContainerCell: UITableViewCell {
 
     var containedView: UIView? = nil
 

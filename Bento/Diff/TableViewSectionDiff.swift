@@ -69,7 +69,7 @@ struct TableViewSectionDiff<SectionId: Hashable, RowId: Hashable> {
     }
 
     private func update(cell: UITableViewCell, with node: Node<RowId>) {
-        guard let cell = cell as? TableViewCell,
+        guard let cell = cell as? TableViewContainerCell,
             let contentView = cell.containedView else { return }
         node.component.render(in: contentView)
     }

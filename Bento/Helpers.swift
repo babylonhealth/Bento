@@ -40,6 +40,21 @@ extension UITableView {
     }
 }
 
+extension UICollectionView {
+    private struct AssociatedKey {
+        static let key = UnsafeMutablePointer<CChar>.allocate(capacity: 1)
+    }
+
+    func getAdapter<SectionId, ItemId>() -> CollectionViewDataSource<SectionId, ItemId> {
+        guard let adapter = objc_getAssociatedObject(self, AssociatedKey.key) as? CollectionViewDataSource<SectionId, ItemId> else {
+            let adapter = CollectionViewDataSource<SectionId, ItemId>(with: self)
+            objc_setAssociatedObject(self, AssociatedKey.key, adapter, .OBJC_ASSOCIATION_RETAIN)
+            return getAdapter()
+        }
+        return adapter
+    }
+}
+
 extension Optional {
     func zip<T, R>(with other: T?, _ selector: (Wrapped, T) -> R) -> Optional<R> {
         guard let unwrapped = self, let other = other else {
