@@ -1,6 +1,6 @@
 import UIKit
 
-final class CollectionViewCell: UICollectionViewCell {
+final class CollectionViewContainerCell: UICollectionViewCell {
     var containedView: UIView? = nil
 
     func install(view: UIView) {

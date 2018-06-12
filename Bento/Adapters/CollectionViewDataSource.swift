@@ -11,24 +11,21 @@ final class CollectionViewDataSource<SectionId: Hashable, ItemId: Hashable>
         self.collectionView = collectionView
         super.init()
         collectionView.dataSource = self
-        /*
-         Force reset of the collection view state to prevent inconsistency on first reload
-         */
+         //Force reset of the collection view state to prevent inconsistency on first reload
         collectionView.reloadData()
         collectionView.layoutIfNeeded()
     }
 
     func update(sections: [Section<SectionId, ItemId>], animated: Bool = true) {
+        guard let collectionView = collectionView else { return }
         if animated {
-            guard let collectionView = collectionView else { return }
-
             let diff = CollectionViewSectionDiff(oldSections: self.sections,
                                                  newSections: sections)
             self.sections = sections
             diff.apply(to: collectionView)
         } else {
             self.sections = sections
-            collectionView?.reloadData()
+            collectionView.reloadData()
         }
     }
 
@@ -51,8 +48,8 @@ final class CollectionViewDataSource<SectionId: Hashable, ItemId: Hashable>
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let component = node(at: indexPath).component
-        collectionView.register(CollectionViewCell.self, forCellWithReuseIdentifier: component.reuseIdentifier)
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: component.reuseIdentifier, for: indexPath) as! CollectionViewCell
+        collectionView.register(CollectionViewContainerCell.self, forCellWithReuseIdentifier: component.reuseIdentifier)
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: component.reuseIdentifier, for: indexPath) as! CollectionViewContainerCell
 
         let componentView: UIView
         if let containedView = cell.containedView {
