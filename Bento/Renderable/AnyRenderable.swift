@@ -1,7 +1,7 @@
 import UIKit
 
 struct AnyRenderable: Renderable {
-    var reuseIdentifier: String {
+    public var reuseIdentifier: String {
         return base.reuseIdentifier
     }
 
@@ -17,6 +17,32 @@ struct AnyRenderable: Renderable {
 
     func render(in view: UIView) {
         base.render(in: view)
+    }
+
+    func sizeBoundTo(width: CGFloat) -> CGSize {
+        return rendered()
+            .systemLayoutSizeFitting(CGSize(width: width, height: UILayoutFittingCompressedSize.height),
+                                                      withHorizontalFittingPriority: .required,
+                                                      verticalFittingPriority: .defaultLow)
+    }
+
+    func sizeBoundTo(height: CGFloat) -> CGSize {
+        return rendered()
+            .systemLayoutSizeFitting(CGSize(width: UILayoutFittingCompressedSize.width, height: height),
+                                     withHorizontalFittingPriority: .defaultLow,
+                                     verticalFittingPriority: .required)
+    }
+
+    func sizeBoundTo(size: CGSize) -> CGSize {
+        return rendered()
+            .systemLayoutSizeFitting(size)
+    }
+
+    private func rendered() -> UIView {
+        let view = generate()
+        render(in: view)
+
+        return view
     }
 
     static func ==(lhs: AnyRenderable, rhs: AnyRenderable) -> Bool {

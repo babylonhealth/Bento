@@ -1,7 +1,7 @@
 import UIKit
 
 public struct Node<Identifier: Hashable>: Equatable {
-    let id: Identifier
+    public let id: Identifier
     let component: AnyRenderable
 
     init(id: Identifier, component: AnyRenderable) {
@@ -15,6 +15,18 @@ public struct Node<Identifier: Hashable>: Equatable {
 
     public static func == (lhs: Node, rhs: Node) -> Bool {
         return lhs.id == rhs.id && lhs.component == rhs.component
+    }
+
+    public func sizeBoundTo(width: CGFloat) -> CGSize {
+        return component.sizeBoundTo(width: width)
+    }
+
+    public func sizeBoundTo(height: CGFloat) -> CGSize {
+        return component.sizeBoundTo(height: height)
+    }
+
+    public func sizeBoundTo(size: CGSize) -> CGSize {
+        return component.sizeBoundTo(size: size)
     }
 }
 
