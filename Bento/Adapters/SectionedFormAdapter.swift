@@ -81,6 +81,41 @@ final class SectionedFormAdapter<SectionId: Hashable, RowId: Hashable>
         return sections[section].footer == nil ? CGFloat.leastNonzeroMagnitude : UITableViewAutomaticDimension
     }
 
+    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+        let row = sections[indexPath.section].rows[indexPath.row]
+        guard row.component.canBeDeleted else {
+            return nil
+        }
+
+        return [
+            UITableViewRowAction(style: .destructive, title: row.component.deleteActionText) { (_, indexPath) in
+                self.deleteRow(at: indexPath, actionPerformed: nil)
+            }
+        ]
+    }
+
+    @available(iOS 11.0, *)
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let row = sections[indexPath.section].rows[indexPath.row]
+        guard row.component.canBeDeleted else {
+            return UISwipeActionsConfiguration(actions: [])
+        }
+
+        let action = UIContextualAction(style: .destructive, title: row.component.deleteActionText) { (_, _, actionPerformed) in
+            self.deleteRow(at: indexPath, actionPerformed: actionPerformed)
+        }
+
+        return UISwipeActionsConfiguration(actions: [action])
+    }
+
+    private func deleteRow(at indexPath: IndexPath, actionPerformed: ((Bool) -> Void)?) {
+        let row = sections[indexPath.section].rows[indexPath.row]
+        row.component.delete()
+        sections[indexPath.section].rows.remove(at: indexPath.row)
+        tableView?.deleteRows(at: [indexPath], with: .left)
+        actionPerformed?(true)
+    }
+
     private func node(at indexPath: IndexPath) -> Node<RowId> {
         return sections[indexPath.section].rows[indexPath.row]
     }
