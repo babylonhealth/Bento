@@ -2,7 +2,7 @@ import UIKit
 
 public struct Section<SectionId: Hashable, RowId: Hashable>: Equatable {
     public let id: SectionId
-    public let rows: [Node<RowId>]
+    public var rows: [Node<RowId>]
     let header: AnyRenderable?
     let footer: AnyRenderable?
 
