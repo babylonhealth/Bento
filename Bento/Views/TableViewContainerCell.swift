@@ -7,6 +7,7 @@ final class TableViewContainerCell: UITableViewCell {
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         selectionStyle = .none
+        backgroundColor = .clear
     }
 
     required init?(coder aDecoder: NSCoder) {
