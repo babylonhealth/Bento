@@ -20,8 +20,7 @@ extension UITableView {
     }
 
     public func render<SectionId, RowId>(_ box: Box<SectionId, RowId>) {
-        let adapter: TableViewAdapterBase<SectionId, RowId> = getAdapter()
-        adapter.update(sections: box.sections, with: TableViewAnimation())
+        render(box, animated: true)
     }
 
     public func render<SectionId, RowId>(_ box: Box<SectionId, RowId>, animated: Bool) {
@@ -31,12 +30,14 @@ extension UITableView {
         } else {
             adapter.update(sections: box.sections)
         }
+        didRenderBox()
     }
 
     public func render<SectionId, RowId>(_ box: Box<SectionId, RowId>, with animation: TableViewAnimation) {
         let adapter: TableViewAdapterBase<SectionId, RowId> = getAdapter()
 
         adapter.update(sections: box.sections, with: animation)
+        didRenderBox()
     }
 
     private struct AssociatedKey {
