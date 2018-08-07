@@ -31,30 +31,12 @@ struct AnyRenderable: Renderable, Deletable {
         base.render(in: view)
     }
 
-    func sizeBoundTo(width: CGFloat) -> CGSize {
-        return rendered()
-            .systemLayoutSizeFitting(CGSize(width: width, height: UILayoutFittingCompressedSize.height),
-                                                      withHorizontalFittingPriority: .required,
-                                                      verticalFittingPriority: .defaultLow)
+    func height(forWidth width: CGFloat, inheritedMargins: HorizontalEdgeInsets) -> CGFloat? {
+        return base.height(forWidth: width, inheritedMargins: inheritedMargins)
     }
 
-    func sizeBoundTo(height: CGFloat) -> CGSize {
-        return rendered()
-            .systemLayoutSizeFitting(CGSize(width: UILayoutFittingCompressedSize.width, height: height),
-                                     withHorizontalFittingPriority: .defaultLow,
-                                     verticalFittingPriority: .required)
-    }
-
-    func sizeBoundTo(size: CGSize) -> CGSize {
-        return rendered()
-            .systemLayoutSizeFitting(size)
-    }
-
-    private func rendered() -> UIView {
-        let view = generate()
-        render(in: view)
-
-        return view
+    func estimatedHeight(forWidth width: CGFloat, inheritedMargins: HorizontalEdgeInsets) -> CGFloat? {
+        return base.estimatedHeight(forWidth: width, inheritedMargins: inheritedMargins)
     }
 
     func delete() {
@@ -104,6 +86,14 @@ private class AnyRenderableBox<Base: Renderable>: AnyRenderableBoxBase where Bas
         return base.generate()
     }
 
+    override func height(forWidth width: CGFloat, inheritedMargins: HorizontalEdgeInsets) -> CGFloat? {
+        return base.height(forWidth: width, inheritedMargins: inheritedMargins)
+    }
+
+    override func estimatedHeight(forWidth width: CGFloat, inheritedMargins: HorizontalEdgeInsets) -> CGFloat? {
+        return base.estimatedHeight(forWidth: width, inheritedMargins: inheritedMargins)
+    }
+
     override func equals(to other: AnyRenderableBoxBase) -> Bool {
         guard let other = other as? AnyRenderableBox<Base>
             else { return false }
@@ -126,6 +116,8 @@ private class AnyRenderableBoxBase {
 
     func render(in view: UIView) { fatalError() }
     func generate() -> UIView { fatalError() }
+    func height(forWidth width: CGFloat, inheritedMargins: HorizontalEdgeInsets) -> CGFloat? { fatalError() }
+    func estimatedHeight(forWidth width: CGFloat, inheritedMargins: HorizontalEdgeInsets) -> CGFloat? { fatalError() }
     func equals(to other: AnyRenderableBoxBase) -> Bool { fatalError() }
     func delete() {}
 }

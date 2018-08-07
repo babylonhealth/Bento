@@ -5,7 +5,9 @@ final class TableViewHeaderFooterView: UITableViewHeaderFooterView {
 
     override init(reuseIdentifier: String?) {
         super.init(reuseIdentifier: reuseIdentifier)
-        backgroundColor = .clear
+        contentView.backgroundColor = .clear
+        preservesSuperviewLayoutMargins = false
+        contentView.preservesSuperviewLayoutMargins = false
     }
 
     required init?(coder aDecoder: NSCoder) {
