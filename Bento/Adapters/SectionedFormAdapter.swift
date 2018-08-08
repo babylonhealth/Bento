@@ -54,6 +54,8 @@ final class SectionedFormAdapter<SectionId: Hashable, RowId: Hashable>
             componentView = component.generate()
             cell.install(view: componentView)
         }
+
+        copyLayoutMargins(from: tableView, to: cell.contentView)
         component.render(in: componentView)
         return cell
 
@@ -74,11 +76,55 @@ final class SectionedFormAdapter<SectionId: Hashable, RowId: Hashable>
     }
 
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return sections[section].header == nil ? CGFloat.leastNonzeroMagnitude : UITableViewAutomaticDimension
+        if let component = sections[section].header {
+            return component.height(forWidth: tableView.bounds.width,
+                                    inheritedMargins: HorizontalEdgeInsets(tableView.layoutMargins))
+                ?? tableView.sectionHeaderHeight
+        }
+        return CGFloat.leastNonzeroMagnitude
     }
 
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        return sections[section].footer == nil ? CGFloat.leastNonzeroMagnitude : UITableViewAutomaticDimension
+        if let component = sections[section].footer {
+            return component.height(forWidth: tableView.bounds.width,
+                                    inheritedMargins: HorizontalEdgeInsets(tableView.layoutMargins))
+                ?? tableView.sectionFooterHeight
+        }
+        return CGFloat.leastNonzeroMagnitude
+    }
+
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        let component = sections[indexPath.section].rows[indexPath.row].component
+        return component.height(forWidth: tableView.bounds.width,
+                                inheritedMargins: HorizontalEdgeInsets(tableView.layoutMargins))
+            .map { $0 + tableView.separatorHeightOffset }
+            ?? tableView.rowHeight
+    }
+
+    func tableView(_ tableView: UITableView, estimatedHeightForHeaderInSection section: Int) -> CGFloat {
+        if let component = sections[section].header {
+            return component.estimatedHeight(forWidth: tableView.bounds.width,
+                                             inheritedMargins: HorizontalEdgeInsets(tableView.layoutMargins))
+                ?? tableView.estimatedSectionHeaderHeight
+        }
+        return CGFloat.leastNonzeroMagnitude
+    }
+
+    func tableView(_ tableView: UITableView, estimatedHeightForFooterInSection section: Int) -> CGFloat {
+        if let component = sections[section].footer {
+            return component.estimatedHeight(forWidth: tableView.bounds.width,
+                                             inheritedMargins: HorizontalEdgeInsets(tableView.layoutMargins))
+                ?? tableView.estimatedSectionFooterHeight
+        }
+        return CGFloat.leastNonzeroMagnitude
+    }
+
+    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+        let component = sections[indexPath.section].rows[indexPath.row].component
+        return component.estimatedHeight(forWidth: tableView.bounds.width,
+                                         inheritedMargins: HorizontalEdgeInsets(tableView.layoutMargins))
+            .map { $0 + tableView.separatorHeightOffset }
+            ?? tableView.estimatedRowHeight
     }
 
     func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
@@ -108,6 +154,13 @@ final class SectionedFormAdapter<SectionId: Hashable, RowId: Hashable>
         return UISwipeActionsConfiguration(actions: [action])
     }
 
+    private func copyLayoutMargins(from tableView: UITableView, to view: UIView) {
+        view.layoutMargins = UIEdgeInsets(top: 0,
+                                          left: tableView.layoutMargins.left,
+                                          bottom: 0,
+                                          right: tableView.layoutMargins.right)
+    }
+
     private func deleteRow(at indexPath: IndexPath, actionPerformed: ((Bool) -> Void)?) {
         let row = sections[indexPath.section].rows[indexPath.row]
         row.component.delete()
@@ -132,7 +185,18 @@ final class SectionedFormAdapter<SectionId: Hashable, RowId: Hashable>
             componentView = node.generate()
             header.install(view: componentView)
         }
+
+        copyLayoutMargins(from: tableView, to: header.contentView)
         node.render(in: componentView)
         return header
+    }
+}
+
+extension UITableView {
+    fileprivate var separatorHeightOffset: CGFloat {
+        // The UITableView separator is one pixel high.
+        return separatorStyle == .none
+            ? 0.0
+            : (1.0 / contentScaleFactor)
     }
 }

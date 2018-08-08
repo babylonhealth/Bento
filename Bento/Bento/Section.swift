@@ -53,28 +53,28 @@ public struct Section<SectionId: Hashable, RowId: Hashable>: Equatable {
         self.rows = rows
     }
 
-    public func headerSizeBoundTo(width: CGFloat) -> CGSize {
-        return header?.sizeBoundTo(width: width) ?? .zero
+    public func headerSizeBoundTo(width: CGFloat, inheritedMargins: HorizontalEdgeInsets = .zero) -> CGSize {
+        return header?.sizeBoundTo(width: width, inheritedMargins: inheritedMargins) ?? .zero
     }
 
-    public func headerSizeBoundTo(height: CGFloat) -> CGSize {
-        return header?.sizeBoundTo(height: height) ?? .zero
+    public func headerSizeBoundTo(height: CGFloat, inheritedMargins: HorizontalEdgeInsets = .zero) -> CGSize {
+        return header?.sizeBoundTo(height: height, inheritedMargins: inheritedMargins) ?? .zero
     }
 
-    public func headerSizeBoundTo(size: CGSize) -> CGSize {
-        return header?.sizeBoundTo(size: size) ?? .zero
+    public func headerSizeBoundTo(size: CGSize, inheritedMargins: HorizontalEdgeInsets = .zero) -> CGSize {
+        return header?.sizeBoundTo(size: size, inheritedMargins: inheritedMargins) ?? .zero
     }
 
-    public func footerSizeBoundTo(width: CGFloat) -> CGSize {
-        return footer?.sizeBoundTo(width: width) ?? .zero
+    public func footerSizeBoundTo(width: CGFloat, inheritedMargins: HorizontalEdgeInsets = .zero) -> CGSize {
+        return footer?.sizeBoundTo(width: width, inheritedMargins: inheritedMargins) ?? .zero
     }
 
-    public func footerSizeBoundTo(height: CGFloat) -> CGSize {
-        return footer?.sizeBoundTo(height: height) ?? .zero
+    public func footerSizeBoundTo(height: CGFloat, inheritedMargins: HorizontalEdgeInsets = .zero) -> CGSize {
+        return footer?.sizeBoundTo(height: height, inheritedMargins: inheritedMargins) ?? .zero
     }
 
-    public func footerSizeBoundTo(size: CGSize) -> CGSize {
-        return footer?.sizeBoundTo(size: size) ?? .zero
+    public func footerSizeBoundTo(size: CGSize, inheritedMargins: HorizontalEdgeInsets = .zero) -> CGSize {
+        return footer?.sizeBoundTo(size: size, inheritedMargins: inheritedMargins) ?? .zero
     }
 
     public static func hasEqualMetadata(_ lhs: Section, _ rhs: Section) -> Bool {

@@ -7,12 +7,14 @@ final class TableViewContainerCell: UITableViewCell {
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         selectionStyle = .none
-        backgroundColor = .clear
+        contentView.backgroundColor = .clear
+        preservesSuperviewLayoutMargins = false
+        contentView.preservesSuperviewLayoutMargins = false
     }
 
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        selectionStyle = .none
+        fatalError()
     }
 
     func install(view: UIView) {
