@@ -97,6 +97,7 @@ final class SectionedFormAdapter<SectionId: Hashable, RowId: Hashable>
         let component = sections[indexPath.section].rows[indexPath.row].component
         return component.height(forWidth: tableView.bounds.width,
                                 inheritedMargins: HorizontalEdgeInsets(tableView.layoutMargins))
+            .map { $0 + tableView.separatorHeightOffset }
             ?? tableView.rowHeight
     }
 
@@ -122,6 +123,7 @@ final class SectionedFormAdapter<SectionId: Hashable, RowId: Hashable>
         let component = sections[indexPath.section].rows[indexPath.row].component
         return component.estimatedHeight(forWidth: tableView.bounds.width,
                                          inheritedMargins: HorizontalEdgeInsets(tableView.layoutMargins))
+            .map { $0 + tableView.separatorHeightOffset }
             ?? tableView.estimatedRowHeight
     }
 
@@ -187,5 +189,14 @@ final class SectionedFormAdapter<SectionId: Hashable, RowId: Hashable>
         copyLayoutMargins(from: tableView, to: header.contentView)
         node.render(in: componentView)
         return header
+    }
+}
+
+extension UITableView {
+    fileprivate var separatorHeightOffset: CGFloat {
+        // The UITableView separator is one pixel high.
+        return separatorStyle == .none
+            ? 0.0
+            : (1.0 / contentScaleFactor)
     }
 }
