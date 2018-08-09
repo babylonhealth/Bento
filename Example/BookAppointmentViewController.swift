@@ -56,7 +56,9 @@ final class BookAppointmentViewController: UIViewController {
         tableView.estimatedSectionHeaderHeight = 18
         tableView.sectionHeaderHeight = UITableViewAutomaticDimension
         tableView.sectionFooterHeight = UITableViewAutomaticDimension
-        tableView.prepareForBoxRendering(CustomTableViewAdapter<BookAppointmentViewModel.Renderer.SectionId, BookAppointmentViewModel.Renderer.RowId>.self)
+
+        let adapter = CustomTableViewAdapter<BookAppointmentViewModel.Renderer.SectionId, BookAppointmentViewModel.Renderer.RowId>(with: tableView)
+        tableView.prepareForBoxRendering(with: adapter)
     }
 }
 

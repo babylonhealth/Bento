@@ -3,15 +3,15 @@ extension UITableView {
         sectionIdType: SectionId.Type,
         rowIdType: RowId.Type
     ) {
-        prepareForBoxRendering(BentoTableViewAdapter<SectionId, RowId>.self)
+        prepareForBoxRendering(with: BentoTableViewAdapter<SectionId, RowId>(with: self))
     }
 
     public func prepareForBoxRendering<SectionId, RowId>(
-        _ type: TableViewAdapter<SectionId, RowId>.Type
+        with adapter: TableViewAdapter<SectionId, RowId>
     ) {
         precondition(typeErasedAdapter == nil, "Preparation must happen before any Bento `Box` rendering occurrence.")
+        precondition(adapter.tableView == self, "The custom adapter is not created for the table view it is deployed to.")
 
-        let adapter = type.init(with: self)
         self.delegate = adapter
         self.dataSource = adapter
         reloadData()

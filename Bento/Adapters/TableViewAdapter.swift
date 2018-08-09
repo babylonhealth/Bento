@@ -6,9 +6,9 @@ public typealias TableViewAdapter<SectionId: Hashable, RowId: Hashable> = TableV
 open class TableViewAdapterBase<SectionId: Hashable, RowId: Hashable>
     : NSObject {
     public final var sections: [Section<SectionId, RowId>] = []
-    private weak var tableView: UITableView?
+    internal weak var tableView: UITableView?
 
-    public required init(with tableView: UITableView) {
+    public init(with tableView: UITableView) {
         self.sections = []
         self.tableView = tableView
         super.init()
