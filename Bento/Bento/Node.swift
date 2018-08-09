@@ -21,6 +21,10 @@ public struct Node<Identifier: Hashable>: Equatable {
         return lhs.id == rhs.id && lhs.component == rhs.component
     }
 
+    public func component<T>(as type: T.Type) -> T? {
+        return component.cast(to: type)
+    }
+
     public func sizeBoundTo(width: CGFloat) -> CGSize {
         return component.sizeBoundTo(width: width)
     }
