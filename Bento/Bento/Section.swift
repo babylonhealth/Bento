@@ -53,6 +53,14 @@ public struct Section<SectionId: Hashable, RowId: Hashable>: Equatable {
         self.rows = rows
     }
 
+    public func headerComponent<T>(as type: T.Type) -> T? {
+        return header?.cast(to: type)
+    }
+
+    public func footerComponent<T>(as type: T.Type) -> T? {
+        return footer?.cast(to: type)
+    }
+
     public func headerSizeBoundTo(width: CGFloat) -> CGSize {
         return header?.sizeBoundTo(width: width) ?? .zero
     }

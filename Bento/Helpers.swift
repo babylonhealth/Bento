@@ -26,20 +26,6 @@ extension UIView {
     }
 }
 
-extension UITableView {
-    private struct AssociatedKey {
-        static let key = UnsafeMutablePointer<CChar>.allocate(capacity: 1)
-    }
-    func getAdapter<SectionId, RowId>() -> SectionedFormAdapter<SectionId, RowId> {
-        guard let adapter = objc_getAssociatedObject(self, AssociatedKey.key) as? SectionedFormAdapter<SectionId, RowId> else {
-            let adapter = SectionedFormAdapter<SectionId, RowId>(with: self)
-            objc_setAssociatedObject(self, AssociatedKey.key, adapter, .OBJC_ASSOCIATION_RETAIN)
-            return getAdapter()
-        }
-        return adapter
-    }
-}
-
 extension UICollectionView {
     private struct AssociatedKey {
         static let key = UnsafeMutablePointer<CChar>.allocate(capacity: 1)
