@@ -209,7 +209,7 @@ carthage checkout
 Feature | Status
 --- | ---
 `UITableView` | ✅
-`UICollectionView` | ❌
+`UICollectionView` | ✅
 Carthage Support | ✅
 Free functions as alternative to the operators | ❌
 
@@ -220,3 +220,10 @@ Contributions are very welcome and highly appreciated! ❤️ Here's how to do i
 - If you have any questions feel free to create an issue with a `question` label;
 - If you have a feature request you can create an issue with a `Feature request` label;
 - If you found a bug feel free to create an issue with a `bug` label or open a PR with a fix.
+
+#### Image attributions
+
+[Coffee](https://pixabay.com/en/coffee-beans-coffee-beans-caffeine-3457587/)
+[Pomegranate fruit](https://pixabay.com/en/pomegranate-fruit-exotic-fruit-3383814/)
+[Cherries](https://pixabay.com/en/cherries-sweet-cherries-fruit-red-3433775/)
+[Strawberries](https://pixabay.com/en/strawberries-season-spring-fruit-3359755/) 

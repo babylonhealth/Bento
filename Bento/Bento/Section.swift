@@ -1,10 +1,10 @@
 import UIKit
 
 public struct Section<SectionId: Hashable, RowId: Hashable>: Equatable {
-    let id: SectionId
+    public let id: SectionId
+    public var rows: [Node<RowId>]
     let header: AnyRenderable?
     let footer: AnyRenderable?
-    let rows: [Node<RowId>]
 
     public init<Header: Renderable, Footer: Renderable>(id: SectionId,
                                                         header: Header,
@@ -51,6 +51,30 @@ public struct Section<SectionId: Hashable, RowId: Hashable>: Equatable {
         self.header = header
         self.footer = footer
         self.rows = rows
+    }
+
+    public func headerSizeBoundTo(width: CGFloat) -> CGSize {
+        return header?.sizeBoundTo(width: width) ?? .zero
+    }
+
+    public func headerSizeBoundTo(height: CGFloat) -> CGSize {
+        return header?.sizeBoundTo(height: height) ?? .zero
+    }
+
+    public func headerSizeBoundTo(size: CGSize) -> CGSize {
+        return header?.sizeBoundTo(size: size) ?? .zero
+    }
+
+    public func footerSizeBoundTo(width: CGFloat) -> CGSize {
+        return footer?.sizeBoundTo(width: width) ?? .zero
+    }
+
+    public func footerSizeBoundTo(height: CGFloat) -> CGSize {
+        return footer?.sizeBoundTo(height: height) ?? .zero
+    }
+
+    public func footerSizeBoundTo(size: CGSize) -> CGSize {
+        return footer?.sizeBoundTo(size: size) ?? .zero
     }
 
     public static func hasEqualMetadata(_ lhs: Section, _ rhs: Section) -> Bool {

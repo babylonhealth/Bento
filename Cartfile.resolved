@@ -1,5 +1,5 @@
 github "Babylonpartners/ReactiveFeedback" "0.2.0"
-github "Quick/Nimble" "v7.1.1"
+github "Quick/Nimble" "v7.1.2"
 github "RACCommunity/FlexibleDiff" "0.0.5"
 github "ReactiveCocoa/ReactiveCocoa" "7.2.0"
 github "ReactiveCocoa/ReactiveSwift" "3.1.0"

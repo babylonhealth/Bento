@@ -1,19 +1,19 @@
 import UIKit
 
-final class TableViewHeaderFooterView: UITableViewHeaderFooterView {
+final class CollectionViewContainerCell: UICollectionViewCell {
     var containedView: UIView? = nil
 
-    override init(reuseIdentifier: String?) {
-        super.init(reuseIdentifier: reuseIdentifier)
+    override init(frame: CGRect) {
+        super.init(frame: frame)
         backgroundColor = .clear
     }
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     func install(view: UIView) {
-        self.containedView = view
+        containedView = view
         contentView.addSubview(view)
         view.pinToEdges(of: contentView)
     }

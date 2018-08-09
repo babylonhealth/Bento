@@ -2,11 +2,13 @@ import UIKit
 import Bento
 import Kingfisher
 
-final class MovieComponent: Renderable {
+final class MovieComponent: Deletable {
     private let movie: Movie
+    private let didDelete: (() -> Void)?
 
-    init(movie: Movie) {
+    init(movie: Movie, didDelete: (() -> Void)? = nil) {
         self.movie = movie
+        self.didDelete = didDelete
     }
 
     func render(in view: MovieComponentView) {
@@ -14,6 +16,18 @@ final class MovieComponent: Renderable {
         view.imageView.kf
             .setImage(with: movie.posterURL,
                       options: [KingfisherOptionsInfoItem.transition(ImageTransition.fade(0.2))])
+    }
+
+    var canBeDeleted: Bool {
+        return didDelete != nil
+    }
+
+    var deleteActionText: String {
+        return "Remove"
+    }
+
+    func delete() {
+        didDelete?()
     }
 }
 

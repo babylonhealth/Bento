@@ -1,12 +1,13 @@
 import UIKit
 
-final class TableViewCell: UITableViewCell {
+final class TableViewContainerCell: UITableViewCell {
 
     var containedView: UIView? = nil
 
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         selectionStyle = .none
+        backgroundColor = .clear
     }
 
     required init?(coder aDecoder: NSCoder) {

@@ -51,12 +51,14 @@ final class PaginationViewModel {
     init() {
         let (nearBottomSignal, nearBottomObserver) = Signal<Void, NoError>.pipe()
         let (retrySignal, retryObserver) = Signal<Void, NoError>.pipe()
+        let actionsPipe = Signal<Action, NoError>.pipe()
 
         let feedbacks = [
             PaginationViewModel.whenPaging(nearBottomSignal: nearBottomSignal),
             PaginationViewModel.pagingFeedback(),
             PaginationViewModel.whenError(retrySignal: retrySignal),
-            PaginationViewModel.whenRetry()
+            PaginationViewModel.whenRetry(),
+            PaginationViewModel.delete(trigger: actionsPipe.output)
         ]
         self.lifetime = Lifetime(token)
         self.nearBottomBinding = BindingTarget(lifetime: lifetime, action: nearBottomObserver.send)
@@ -64,7 +66,9 @@ final class PaginationViewModel {
         self.state = Property(initial: State.initial,
                               reduce: State.reduce,
                               feedbacks: feedbacks)
-        self.box = Property(initial: Box.empty, then: state.producer.filterMap(renderer.render))
+        self.box = Property(initial: Box.empty, then: state.producer.filterMap { [renderer] state in
+            return renderer.render(state: state, observer: actionsPipe.input.send)
+        })
     }
 
     private static func whenPaging(nearBottomSignal: Signal<Void, NoError>) -> Feedback<State, Event> {
@@ -102,6 +106,12 @@ final class PaginationViewModel {
                 .flatMapError { error in
                     return SignalProducer(value: Event.failed(error))
                 }
+        }
+    }
+
+    private static func delete(trigger: Signal<Action, NoError>) -> Feedback<State, Event> {
+        return Feedback { _ -> Signal<Event, NoError> in
+            return trigger.map(Event.ui)
         }
     }
 
@@ -171,8 +181,16 @@ final class PaginationViewModel {
                 return .error(error: error, context: state.context)
             case .retry:
                 return .retry(context: state.context)
+            case let .ui(.deleteMovieAtIndex(index)):
+                var context = state.context
+                context.movies.remove(at: index)
+                return .loadedPage(context: context)
             }
         }
+    }
+
+    enum Action {
+        case deleteMovieAtIndex(Int)
     }
 
     enum Event {
@@ -181,23 +199,26 @@ final class PaginationViewModel {
         case response(Results)
         case failed(NSError)
         case retry
+        case ui(Action)
     }
 
     final class Renderer {
-        func render(state: State) -> Box<SectionId, RowId>? {
+        func render(state: State, observer: @escaping (Action) -> Void) -> Box<SectionId, RowId>? {
             switch state {
             case .initial:
                 return renderLoading()
             case .loadedPage(let context):
-                return render(movies: context.movies)
+                return render(movies: context.movies, observer: observer)
             default:
                 return nil
             }
         }
 
-        private func render(movies: [Movie]) -> Box<SectionId, RowId> {
-            let rows = movies.map { movie in
-                return RowId.movie(movie) <> MovieComponent(movie: movie)
+        private func render(movies: [Movie], observer: @escaping (Action) -> Void) -> Box<SectionId, RowId> {
+            let rows = movies.enumerated().map { (index, movie) in
+                return RowId.movie(movie) <> MovieComponent(movie: movie, didDelete: {
+                    observer(.deleteMovieAtIndex(index))
+                })
             }
             return Box.empty
                 |-+ Section(id: SectionId.noId)
