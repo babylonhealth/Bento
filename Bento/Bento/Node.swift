@@ -21,6 +21,10 @@ public struct Node<Identifier: Hashable>: Equatable {
         return lhs.id == rhs.id && lhs.component == rhs.component
     }
 
+    public func component<T>(as type: T.Type) -> T? {
+        return component.cast(to: type)
+    }
+
     public func sizeBoundTo(width: CGFloat, inheritedMargins: UIEdgeInsets = .zero) -> CGSize {
         return component.sizeBoundTo(width: width, inheritedMargins: inheritedMargins)
     }
@@ -41,7 +45,6 @@ public func <> <RowId, R: Renderable>(id: RowId, component: R) -> Node<RowId> wh
 public func <> <RowId, R: Deletable>(id: RowId, component: R) -> Node<RowId> where R.View: UIView {
     return Node(id: id, component: component)
 }
-
 
 public func |---+<Identifier>(lhs: Node<Identifier>, rhs: Node<Identifier>) -> [Node<Identifier>] {
     return [lhs, rhs]

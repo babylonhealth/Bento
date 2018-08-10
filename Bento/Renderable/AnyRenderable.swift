@@ -31,11 +31,15 @@ struct AnyRenderable: Renderable, Deletable {
         base.render(in: view)
     }
 
+    func cast<T>(to type: T.Type) -> T? {
+        return base.cast(to: type)
+    }
+
     func sizeBoundTo(width: CGFloat, inheritedMargins: UIEdgeInsets) -> CGSize {
         return rendered(inheritedMargins: inheritedMargins)
             .systemLayoutSizeFitting(CGSize(width: width, height: UILayoutFittingCompressedSize.height),
-                                                      withHorizontalFittingPriority: .required,
-                                                      verticalFittingPriority: .defaultLow)
+                                     withHorizontalFittingPriority: .required,
+                                     verticalFittingPriority: .defaultLow)
     }
 
     func sizeBoundTo(height: CGFloat, inheritedMargins: UIEdgeInsets) -> CGSize {
@@ -110,6 +114,10 @@ private class AnyRenderableBox<Base: Renderable>: AnyRenderableBoxBase where Bas
         return base.generate()
     }
 
+    override func cast<T>(to type: T.Type) -> T? {
+        return base as? T
+    }
+
     override func equals(to other: AnyRenderableBoxBase) -> Bool {
         guard let other = other as? AnyRenderableBox<Base>
             else { return false }
@@ -133,5 +141,6 @@ private class AnyRenderableBoxBase {
     func render(in view: UIView) { fatalError() }
     func generate() -> UIView { fatalError() }
     func equals(to other: AnyRenderableBoxBase) -> Bool { fatalError() }
+    func cast<T>(to type: T.Type) -> T? { fatalError() }
     func delete() {}
 }
