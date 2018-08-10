@@ -35,28 +35,34 @@ struct AnyRenderable: Renderable, Deletable {
         return base.cast(to: type)
     }
 
-    func sizeBoundTo(width: CGFloat) -> CGSize {
-        return rendered()
+    func sizeBoundTo(width: CGFloat, inheritedMargins: UIEdgeInsets) -> CGSize {
+        return rendered(inheritedMargins: inheritedMargins)
             .systemLayoutSizeFitting(CGSize(width: width, height: UILayoutFittingCompressedSize.height),
-                                                      withHorizontalFittingPriority: .required,
-                                                      verticalFittingPriority: .defaultLow)
+                                     withHorizontalFittingPriority: .required,
+                                     verticalFittingPriority: .defaultLow)
     }
 
-    func sizeBoundTo(height: CGFloat) -> CGSize {
-        return rendered()
+    func sizeBoundTo(height: CGFloat, inheritedMargins: UIEdgeInsets) -> CGSize {
+        return rendered(inheritedMargins: inheritedMargins)
             .systemLayoutSizeFitting(CGSize(width: UILayoutFittingCompressedSize.width, height: height),
                                      withHorizontalFittingPriority: .defaultLow,
                                      verticalFittingPriority: .required)
     }
 
-    func sizeBoundTo(size: CGSize) -> CGSize {
-        return rendered()
+    func sizeBoundTo(size: CGSize, inheritedMargins: UIEdgeInsets) -> CGSize {
+        return rendered(inheritedMargins: inheritedMargins)
             .systemLayoutSizeFitting(size)
     }
 
-    private func rendered() -> UIView {
+    private func rendered(inheritedMargins: UIEdgeInsets) -> UIView {
         let view = generate()
         render(in: view)
+
+        let margins = view.layoutMargins
+        view.layoutMargins = UIEdgeInsets(top: max(margins.top, inheritedMargins.top),
+                                          left: max(margins.left, inheritedMargins.left),
+                                          bottom: max(margins.bottom, inheritedMargins.bottom),
+                                          right: max(margins.right, inheritedMargins.right))
 
         return view
     }
