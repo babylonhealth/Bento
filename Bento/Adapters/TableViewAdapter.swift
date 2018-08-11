@@ -81,7 +81,8 @@ open class TableViewAdapterBase<SectionId: Hashable, RowId: Hashable>
         return sections[section].footer == nil ? CGFloat.leastNonzeroMagnitude : UITableViewAutomaticDimension
     }
 
-    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+    @objc(tableView:editActionsForRowAtIndexPath:)
+    open func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
         let row = sections[indexPath.section].rows[indexPath.row]
         guard row.component.canBeDeleted else {
             return nil
@@ -95,7 +96,8 @@ open class TableViewAdapterBase<SectionId: Hashable, RowId: Hashable>
     }
 
     @available(iOS 11.0, *)
-    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+    @objc(tableView:trailingSwipeActionsConfigurationForRowAtIndexPath:)
+    open func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let row = sections[indexPath.section].rows[indexPath.row]
         guard row.component.canBeDeleted else {
             return UISwipeActionsConfiguration(actions: [])
