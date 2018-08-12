@@ -1,11 +1,11 @@
 import UIKit
 import FlexibleDiff
 
-public typealias TableViewAdapter<SectionId: Hashable, RowId: Hashable> = TableViewAdapterBase<SectionId, RowId> & UITableViewDataSource & UITableViewDelegate
+public typealias TableViewAdapter<SectionID: Hashable, ItemID: Hashable> = TableViewAdapterBase<SectionID, ItemID> & UITableViewDataSource & UITableViewDelegate
 
-open class TableViewAdapterBase<SectionId: Hashable, RowId: Hashable>
+open class TableViewAdapterBase<SectionID: Hashable, ItemID: Hashable>
     : NSObject {
-    public final var sections: [Section<SectionId, RowId>] = []
+    public final var sections: [Section<SectionID, ItemID>] = []
     internal weak var tableView: UITableView?
 
     public init(with tableView: UITableView) {
@@ -14,7 +14,7 @@ open class TableViewAdapterBase<SectionId: Hashable, RowId: Hashable>
         super.init()
     }
 
-    func update(sections: [Section<SectionId, RowId>], with animation: TableViewAnimation) {
+    func update(sections: [Section<SectionID, ItemID>], with animation: TableViewAnimation) {
         guard let tableView = tableView else {
             return
         }
@@ -25,7 +25,7 @@ open class TableViewAdapterBase<SectionId: Hashable, RowId: Hashable>
         diff.apply(to: tableView)
     }
 
-    func update(sections: [Section<SectionId, RowId>]) {
+    func update(sections: [Section<SectionID, ItemID>]) {
         self.sections = sections
         tableView?.reloadData()
     }
@@ -36,54 +36,45 @@ open class TableViewAdapterBase<SectionId: Hashable, RowId: Hashable>
     }
 
     @objc open func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return sections[section].rows.count
+        return sections[section].items.count
     }
 
     @objc(tableView:cellForRowAtIndexPath:)
     open func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let component = node(at: indexPath).component
         let reuseIdentifier = component.reuseIdentifier
+
         guard let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier) as? TableViewContainerCell else {
             tableView.register(TableViewContainerCell.self, forCellReuseIdentifier: reuseIdentifier)
             return self.tableView(tableView, cellForRowAt: indexPath)
         }
-        let componentView: UIView
-        if let containedView = cell.containedView {
-            componentView = containedView
-        } else {
-            componentView = component.generate()
-            cell.install(view: componentView)
-        }
-        component.render(in: componentView)
+
+        cell.bind(component)
         return cell
 
     }
 
     @objc open func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        return sections[section].header
-            .map {
-                return self.render(node: $0, in: tableView)
-            }
+        return sections[section].supplements[.header]
+            .map { self.render($0, in: tableView) }
     }
 
     @objc open func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        return sections[section].footer
-            .map {
-                return self.render(node: $0, in: tableView)
-            }
+        return sections[section].supplements[.footer]
+            .map { self.render($0, in: tableView) }
     }
 
     @objc open func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return sections[section].header == nil ? CGFloat.leastNonzeroMagnitude : UITableViewAutomaticDimension
+        return sections[section].supplements.keys.contains(.header) ? UITableViewAutomaticDimension : .leastNonzeroMagnitude
     }
 
     @objc open func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        return sections[section].footer == nil ? CGFloat.leastNonzeroMagnitude : UITableViewAutomaticDimension
+        return sections[section].supplements.keys.contains(.footer) ? UITableViewAutomaticDimension : .leastNonzeroMagnitude
     }
 
     @objc(tableView:editActionsForRowAtIndexPath:)
     open func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
-        let row = sections[indexPath.section].rows[indexPath.row]
+        let row = sections[indexPath.section].items[indexPath.row]
         guard row.component.canBeDeleted else {
             return nil
         }
@@ -98,7 +89,7 @@ open class TableViewAdapterBase<SectionId: Hashable, RowId: Hashable>
     @available(iOS 11.0, *)
     @objc(tableView:trailingSwipeActionsConfigurationForRowAtIndexPath:)
     open func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        let row = sections[indexPath.section].rows[indexPath.row]
+        let row = sections[indexPath.section].items[indexPath.row]
         guard row.component.canBeDeleted else {
             return UISwipeActionsConfiguration(actions: [])
         }
@@ -111,36 +102,30 @@ open class TableViewAdapterBase<SectionId: Hashable, RowId: Hashable>
     }
 
     private func deleteRow(at indexPath: IndexPath, actionPerformed: ((Bool) -> Void)?) {
-        let row = sections[indexPath.section].rows[indexPath.row]
+        let row = sections[indexPath.section].items[indexPath.row]
         row.component.delete()
-        sections[indexPath.section].rows.remove(at: indexPath.row)
+        sections[indexPath.section].items.remove(at: indexPath.row)
         tableView?.deleteRows(at: [indexPath], with: .left)
         actionPerformed?(true)
     }
 
-    private func node(at indexPath: IndexPath) -> Node<RowId> {
-        return sections[indexPath.section].rows[indexPath.row]
+    private func node(at indexPath: IndexPath) -> Node<ItemID> {
+        return sections[indexPath.section].items[indexPath.row]
     }
     
-    private func render(node: AnyRenderable, in tableView: UITableView) -> UIView {
-        guard let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: node.reuseIdentifier) as? TableViewHeaderFooterView else {
-            tableView.register(TableViewHeaderFooterView.self, forHeaderFooterViewReuseIdentifier: node.reuseIdentifier)
-            return render(node: node, in: tableView)
+    private func render(_ component: AnyRenderable, in tableView: UITableView) -> UIView {
+        guard let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: component.reuseIdentifier) as? TableViewHeaderFooterView else {
+            tableView.register(TableViewHeaderFooterView.self,
+                               forHeaderFooterViewReuseIdentifier: component.reuseIdentifier)
+            return render(component, in: tableView)
         }
-        let componentView: UIView
-        if let containedView = header.containedView {
-            componentView = containedView
-        } else {
-            componentView = node.generate()
-            header.install(view: componentView)
-        }
-        node.render(in: componentView)
+        header.bind(component)
         return header
     }
 }
 
-internal final class BentoTableViewAdapter<SectionId: Hashable, RowId: Hashable>
-    : TableViewAdapterBase<SectionId, RowId>,
+internal final class BentoTableViewAdapter<SectionID: Hashable, ItemID: Hashable>
+    : TableViewAdapterBase<SectionID, ItemID>,
       UITableViewDataSource,
       UITableViewDelegate
 {}

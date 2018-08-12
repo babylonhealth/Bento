@@ -46,7 +46,7 @@ class ConcatenationTests: XCTestCase {
         let result = section
             |---+ node
 
-        expect(result.rows.count) == 1
+        expect(result.items.count) == 1
     }
 
     func testNodeOptionalNilConcatenation() {
@@ -60,7 +60,7 @@ class ConcatenationTests: XCTestCase {
                 node
             }
 
-        expect(result.rows.count) == 0
+        expect(result.items.count) == 0
     }
 
     func testNodeOptionalSomeConcatenation() {
@@ -74,6 +74,6 @@ class ConcatenationTests: XCTestCase {
                 node
             }
 
-        expect(result.rows.count) == 1
+        expect(result.items.count) == 1
     }
 }

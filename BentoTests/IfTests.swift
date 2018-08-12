@@ -53,7 +53,7 @@ class IfTests: XCTestCase {
         let result = section
             |---? .iff(true, node)
 
-        expect(result.rows.count) == 1
+        expect(result.items.count) == 1
     }
 
     func testNodeConditionalTrueClosureConcatenation() {
@@ -66,7 +66,7 @@ class IfTests: XCTestCase {
                 node
             }
 
-        expect(result.rows.count) == 1
+        expect(result.items.count) == 1
     }
 
     func testNodeConditionalFalseConcatenation() {
@@ -77,7 +77,7 @@ class IfTests: XCTestCase {
         let result = section
             |---? .iff(false, node)
 
-        expect(result.rows.count) == 0
+        expect(result.items.count) == 0
     }
 
     func testNodeConditionalFalseClosureConcatenation() {
@@ -90,6 +90,6 @@ class IfTests: XCTestCase {
                 node
             }
 
-        expect(result.rows.count) == 0
+        expect(result.items.count) == 0
     }
 }

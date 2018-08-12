@@ -1,14 +1,17 @@
 import FlexibleDiff
 import UIKit
 
-struct CollectionViewSectionDiff<SectionId: Hashable, RowId: Hashable> {
-    private let oldSections: [Section<SectionId, RowId>]
-    private let newSections: [Section<SectionId, RowId>]
+struct CollectionViewSectionDiff<SectionID: Hashable, ItemID: Hashable> {
+    private let oldSections: [Section<SectionID, ItemID>]
+    private let newSections: [Section<SectionID, ItemID>]
+    private let supplements: Set<Supplement>
 
-    init(oldSections: [Section<SectionId, RowId>],
-         newSections: [Section<SectionId, RowId>]) {
+    init(oldSections: [Section<SectionID, ItemID>],
+         newSections: [Section<SectionID, ItemID>],
+         knownSupplements: Set<Supplement>) {
         self.oldSections = oldSections
         self.newSections = newSections
+        self.supplements = knownSupplements
     }
 
     func apply(to collectionView: UICollectionView, completion: (() -> Void)? = nil) {
@@ -16,7 +19,7 @@ struct CollectionViewSectionDiff<SectionId: Hashable, RowId: Hashable> {
                                       current: newSections,
                                       sectionIdentifier: { $0.id },
                                       areMetadataEqual: Section.hasEqualMetadata,
-                                      items: { $0.rows },
+                                      items: { $0.items },
                                       itemIdentifier: { $0.id },
                                       areItemsEqual: ==)
         apply(diff: diff, to: collectionView, completion: completion)
@@ -29,20 +32,15 @@ struct CollectionViewSectionDiff<SectionId: Hashable, RowId: Hashable> {
     }
 
     private func performBatchUpdates(with diff: SectionedChangeset, for collectionView: UICollectionView) {
-        for (item, section) in diff.sections.mutations.enumerated() {
-            if let headerView = collectionView.supplementaryView(
-                forElementKind: UICollectionElementKindSectionHeader.description,
-                at: IndexPath(row: item, section: section)
-                ),
-                let node = newSections[section].header {
-                update(view: headerView, with: node)
-            }
-            if let footerView = collectionView.supplementaryView(
-                forElementKind: UICollectionElementKindSectionFooter.description,
-                at: IndexPath(row: item, section: section)
-                ),
-                let node = newSections[section].footer {
-                update(view: footerView, with: node)
+        for section in diff.sections.mutations {
+            for supplement in supplements {
+                let view = collectionView.supplementaryView(
+                    forElementKind: supplement.elementKind,
+                    at: IndexPath(index: section)
+                )
+
+                let component = newSections[section].supplements[supplement]
+                (view as? BentoReusableView)?.bind(component)
             }
         }
 
@@ -50,18 +48,6 @@ struct CollectionViewSectionDiff<SectionId: Hashable, RowId: Hashable> {
         collectionView.deleteSections(diff.sections.removals)
         collectionView.apply(sectionMutations: diff.mutatedSections, newSections: newSections)
         collectionView.moveSections(diff.sections.moves)
-    }
-
-    private func update(view: UIView, with node: AnyRenderable) {
-        guard let headerFooterView = view as? CollectionViewSupplementaryView,
-            let containedView = headerFooterView.containedView else { return }
-        node.render(in: containedView)
-    }
-
-    private func update(cell: UICollectionViewCell, with node: Node<RowId>) {
-        guard let cell = cell as? CollectionViewContainerCell,
-            let contentView = cell.containedView else { return }
-        node.component.render(in: contentView)
     }
 }
 
@@ -94,11 +80,13 @@ extension UICollectionView {
         }
     }
 
-    func apply<SectionId, RowId>(sectionMutations: [SectionedChangeset.MutatedSection],
-                                 newSections: [Section<SectionId, RowId>]) {
+    func apply<SectionID, ItemID>(
+        sectionMutations: [SectionedChangeset.MutatedSection],
+        newSections: [Section<SectionID, ItemID>]
+    ) {
         for sectionMutation in sectionMutations {
             let sectionChanges = [
-                sectionMutation.changeset.moves.flatMap { $0.isMutated ? ($0.source, $0.destination) : nil },
+                sectionMutation.changeset.moves.compactMap { $0.isMutated ? ($0.source, $0.destination) : nil },
                 sectionMutation.changeset.mutations.lazy.map { ($0, $0) }
             ].joined()
 
@@ -107,12 +95,12 @@ extension UICollectionView {
             perform(moves: sectionMutation.movedCollectionIndexPaths)
             sectionChanges
                 .forEach { source, destination in
-                    guard let cell = cellForItem(at: [sectionMutation.source, source]) as? CollectionViewContainerCell,
-                        let contentView = cell.containedView else { return }
-                    newSections[sectionMutation.destination]
-                        .rows[destination]
+                    guard let cell = cellForItem(at: [sectionMutation.source, source]) as? CollectionViewContainerCell
+                        else { return }
+                    let component = newSections[sectionMutation.destination]
+                        .items[destination]
                         .component
-                        .render(in: contentView)
+                    cell.bind(component)
                 }
         }
     }

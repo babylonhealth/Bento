@@ -19,7 +19,7 @@ struct TableViewSectionDiff<SectionId: Hashable, RowId: Hashable> {
                                       current: newSections,
                                       sectionIdentifier: { $0.id },
                                       areMetadataEqual: Section.hasEqualMetadata,
-                                      items: { $0.rows },
+                                      items: { $0.items },
                                       itemIdentifier: { $0.id },
                                       areItemsEqual: ==)
         apply(diff: diff, to: tableView)
@@ -28,13 +28,14 @@ struct TableViewSectionDiff<SectionId: Hashable, RowId: Hashable> {
     private func apply(diff: SectionedChangeset, to tableView: UITableView) {
         tableView.beginUpdates()
         for section in diff.sections.mutations {
-            if let headerView = tableView.headerView(forSection: section),
-                let node = newSections[section].header {
-                update(view: headerView, with: node)
+            if let headerView = tableView.headerView(forSection: section) {
+                let component = newSections[section].supplements[.header]
+                (headerView as? BentoReusableView)?.bind(component)
             }
-            if let footerView = tableView.footerView(forSection: section),
-                let node = newSections[section].footer {
-                update(view: footerView, with: node)
+
+            if let footerView = tableView.footerView(forSection: section) {
+                let component = newSections[section].supplements[.footer]
+                (footerView as? BentoReusableView)?.bind(component)
             }
         }
         tableView.insertSections(diff.sections.inserts, with: animation.sectionInsertion)
@@ -56,22 +57,12 @@ struct TableViewSectionDiff<SectionId: Hashable, RowId: Hashable> {
              sectionMutation.changeset.mutations.lazy.map { ($0, $0) }]
                 .joined()
                 .forEach { source, destination in
-                    guard let cell = tableView.cellForRow(at: [sectionMutation.source, source]) else { return }
-                    update(cell: cell, with: newSections[sectionMutation.destination].rows[destination])
+                    guard let cell = tableView.cellForRow(at: [sectionMutation.source, source]) as? BentoReusableView
+                        else { return }
+                    let node = newSections[sectionMutation.source].items[source]
+                    cell.bind(node.component)
             }
         }
-    }
-
-    private func update(view: UIView, with node: AnyRenderable) {
-        guard let headerFooterView = view as? TableViewHeaderFooterView,
-            let containedView = headerFooterView.containedView else { return }
-        node.render(in: containedView)
-    }
-
-    private func update(cell: UITableViewCell, with node: Node<RowId>) {
-        guard let cell = cell as? TableViewContainerCell,
-            let contentView = cell.containedView else { return }
-        node.component.render(in: contentView)
     }
 }
 

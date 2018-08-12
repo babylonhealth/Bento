@@ -1,10 +1,11 @@
 import FlexibleDiff
 import UIKit
 
-final class CollectionViewDataSource<SectionId: Hashable, ItemId: Hashable>
+final class CollectionViewDataSource<SectionID: Hashable, ItemID: Hashable>
     : NSObject, UICollectionViewDataSource {
-    private var sections: [Section<SectionId, ItemId>] = []
+    private var sections: [Section<SectionID, ItemID>] = []
     private weak var collectionView: UICollectionView?
+    private var knownSupplements: Set<Supplement> = []
 
     init(with collectionView: UICollectionView) {
         sections = []
@@ -16,11 +17,12 @@ final class CollectionViewDataSource<SectionId: Hashable, ItemId: Hashable>
         collectionView.layoutIfNeeded()
     }
 
-    func update(sections: [Section<SectionId, ItemId>], animated: Bool = true) {
+    func update(sections: [Section<SectionID, ItemID>], animated: Bool = true) {
         guard let collectionView = collectionView else { return }
         if animated {
             let diff = CollectionViewSectionDiff(oldSections: self.sections,
-                                                 newSections: sections)
+                                                 newSections: sections,
+                                                 knownSupplements: knownSupplements)
             self.sections = sections
             diff.apply(to: collectionView)
         } else {
@@ -29,11 +31,12 @@ final class CollectionViewDataSource<SectionId: Hashable, ItemId: Hashable>
         }
     }
 
-    func update(sections: [Section<SectionId, ItemId>], completion: (() -> Void)?) {
+    func update(sections: [Section<SectionID, ItemID>], completion: (() -> Void)?) {
         guard let collectionView = collectionView else { return }
 
         let diff = CollectionViewSectionDiff(oldSections: self.sections,
-                                             newSections: sections)
+                                             newSections: sections,
+                                             knownSupplements: knownSupplements)
         self.sections = sections
         diff.apply(to: collectionView, completion: completion)
     }
@@ -43,26 +46,43 @@ final class CollectionViewDataSource<SectionId: Hashable, ItemId: Hashable>
     }
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return sections[section].rows.count
+        return sections[section].items.count
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let component = node(at: indexPath).component
-        collectionView.register(CollectionViewContainerCell.self, forCellWithReuseIdentifier: component.reuseIdentifier)
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: component.reuseIdentifier, for: indexPath) as! CollectionViewContainerCell
+        let reuseIdentifier = component.reuseIdentifier
+        collectionView.register(CollectionViewContainerCell.self, forCellWithReuseIdentifier: reuseIdentifier)
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! CollectionViewContainerCell
 
-        let componentView: UIView
-        if let containedView = cell.containedView {
-            componentView = containedView
-        } else {
-            componentView = component.generate()
-            cell.install(view: componentView)
-        }
-        component.render(in: componentView)
+        cell.bind(component)
         return cell
     }
 
-    private func node(at indexPath: IndexPath) -> Node<ItemId> {
-        return sections[indexPath.section].rows[indexPath.row]
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        let supplement = Supplement(collectionViewSupplementaryKind: kind)
+
+        if let component = sections[indexPath.section].supplements[supplement] {
+            knownSupplements.insert(supplement)
+
+            let reuseIdentifier = component.reuseIdentifier
+            collectionView.register(CollectionViewContainerReusableView.self,
+                                    forSupplementaryViewOfKind: kind,
+                                    withReuseIdentifier: reuseIdentifier)
+            let view = collectionView.dequeueReusableSupplementaryView(
+                ofKind: kind,
+                withReuseIdentifier: reuseIdentifier,
+                for: indexPath
+            ) as! CollectionViewContainerReusableView
+
+            view.bind(component)
+            return view
+        } else {
+            return UICollectionReusableView()
+        }
+    }
+
+    private func node(at indexPath: IndexPath) -> Node<ItemID> {
+        return sections[indexPath.section].items[indexPath.row]
     }
 }

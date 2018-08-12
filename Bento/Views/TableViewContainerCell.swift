@@ -1,8 +1,11 @@
 import UIKit
 
 final class TableViewContainerCell: UITableViewCell {
-
-    var containedView: UIView? = nil
+    var containedView: UIView? {
+        didSet {
+            containerViewDidChange(from: oldValue, to: containedView)
+        }
+    }
 
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -14,10 +17,6 @@ final class TableViewContainerCell: UITableViewCell {
         super.init(coder: aDecoder)
         selectionStyle = .none
     }
-
-    func install(view: UIView) {
-        self.containedView = view
-        contentView.addSubview(view)
-        view.pinToEdges(of: contentView)
-    }
 }
+
+extension TableViewContainerCell: BentoReusableView {}
