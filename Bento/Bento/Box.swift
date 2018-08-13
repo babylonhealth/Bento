@@ -42,10 +42,12 @@ extension UICollectionView {
     public func render<SectionId, ItemId>(_ box: Box<SectionId, ItemId>, completion: (() -> Void)? = nil) {
         let adapter: CollectionViewDataSource<SectionId, ItemId> = getAdapter()
         adapter.update(sections: box.sections, completion: completion)
+        didRenderBox()
     }
 
     public func render<SectionId, ItemId>(_ box: Box<SectionId, ItemId>, animated: Bool) {
         let adapter: CollectionViewDataSource<SectionId, ItemId> = getAdapter()
         adapter.update(sections: box.sections, animated: animated)
+        didRenderBox()
     }
 }

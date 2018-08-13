@@ -4,7 +4,8 @@ import FlexibleDiff
 public typealias TableViewAdapter<SectionId: Hashable, RowId: Hashable> = TableViewAdapterBase<SectionId, RowId> & UITableViewDataSource & UITableViewDelegate
 
 open class TableViewAdapterBase<SectionId: Hashable, RowId: Hashable>
-    : NSObject {
+    : NSObject,
+      FocusEligibilitySourceImplementing {
     public final var sections: [Section<SectionId, RowId>] = []
     internal weak var tableView: UITableView?
 
@@ -84,12 +85,13 @@ open class TableViewAdapterBase<SectionId: Hashable, RowId: Hashable>
     @objc(tableView:editActionsForRowAtIndexPath:)
     open func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
         let row = sections[indexPath.section].rows[indexPath.row]
-        guard row.component.canBeDeleted else {
+        guard let component = row.component(as: Deletable.self),
+              component.canBeDeleted else {
             return nil
         }
 
         return [
-            UITableViewRowAction(style: .destructive, title: row.component.deleteActionText) { (_, indexPath) in
+            UITableViewRowAction(style: .destructive, title: component.deleteActionText) { (_, indexPath) in
                 self.deleteRow(at: indexPath, actionPerformed: nil)
             }
         ]
@@ -99,11 +101,12 @@ open class TableViewAdapterBase<SectionId: Hashable, RowId: Hashable>
     @objc(tableView:trailingSwipeActionsConfigurationForRowAtIndexPath:)
     open func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let row = sections[indexPath.section].rows[indexPath.row]
-        guard row.component.canBeDeleted else {
+        guard let component = row.component(as: Deletable.self),
+              component.canBeDeleted else {
             return UISwipeActionsConfiguration(actions: [])
         }
 
-        let action = UIContextualAction(style: .destructive, title: row.component.deleteActionText) { (_, _, actionPerformed) in
+        let action = UIContextualAction(style: .destructive, title: component.deleteActionText) { (_, _, actionPerformed) in
             self.deleteRow(at: indexPath, actionPerformed: actionPerformed)
         }
 
@@ -112,7 +115,12 @@ open class TableViewAdapterBase<SectionId: Hashable, RowId: Hashable>
 
     private func deleteRow(at indexPath: IndexPath, actionPerformed: ((Bool) -> Void)?) {
         let row = sections[indexPath.section].rows[indexPath.row]
-        row.component.delete()
+        guard let component = row.component(as: Deletable.self) else {
+            actionPerformed?(false)
+            return
+        }
+
+        component.delete()
         sections[indexPath.section].rows.remove(at: indexPath.row)
         tableView?.deleteRows(at: [indexPath], with: .left)
         actionPerformed?(true)

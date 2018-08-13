@@ -59,6 +59,15 @@
 		65496FB8211C323F00511D8A /* TableViewContainerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 587F0717201B355800ACD219 /* TableViewContainerCell.swift */; };
 		65496FB9211C323F00511D8A /* TableViewAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9509BC2762C8B4277B973D8 /* TableViewAdapter.swift */; };
 		65BA922E20AF388F004AEF18 /* UITableViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65BA922D20AF388F004AEF18 /* UITableViewExtensions.swift */; };
+		65E3ECA02113114100869DF3 /* Focusable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65E3EC9F2113114100869DF3 /* Focusable.swift */; };
+		65E3ECA2211317EA00869DF3 /* FocusCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65E3ECA1211317EA00869DF3 /* FocusCoordinator.swift */; };
+		65E3ECA421133BF700869DF3 /* FocusEligibilitySource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65E3ECA321133BF700869DF3 /* FocusEligibilitySource.swift */; };
+		65E3ECA621133C9400869DF3 /* UIKit+CollectionViewFocus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65E3ECA521133C9400869DF3 /* UIKit+CollectionViewFocus.swift */; };
+		65E3ECA8211340CE00869DF3 /* PersonalDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65E3ECA7211340CE00869DF3 /* PersonalDetailsViewController.swift */; };
+		65E3ECAA2113448200869DF3 /* TextFieldComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65E3ECA92113448200869DF3 /* TextFieldComponent.swift */; };
+		65E3ECAC2113591500869DF3 /* FocusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65E3ECAB2113591500869DF3 /* FocusableView.swift */; };
+		65E3ECAE2113594600869DF3 /* BentoCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65E3ECAD2113594600869DF3 /* BentoCollectionView.swift */; };
+		65E3ECB02113598700869DF3 /* UIKit+BentoCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65E3ECAF2113598700869DF3 /* UIKit+BentoCollectionView.swift */; };
 		740921B620ACDDDA00B59F5C /* IfTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 740921B520ACDDDA00B59F5C /* IfTests.swift */; };
 		740921B820ACE5EC00B59F5C /* ConcatenationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 740921B720ACE5EC00B59F5C /* ConcatenationTests.swift */; };
 		74208FA12083B1F00062CC8D /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 74208FA22083B1F00062CC8D /* Nimble.framework */; };
@@ -168,6 +177,15 @@
 		61B64BB320873DA10092082C /* CollectionViewSectionDiff.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewSectionDiff.swift; sourceTree = "<group>"; };
 		61B64BB5208745730092082C /* CollectionViewContainerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewContainerCell.swift; sourceTree = "<group>"; };
 		65BA922D20AF388F004AEF18 /* UITableViewExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITableViewExtensions.swift; sourceTree = "<group>"; };
+		65E3EC9F2113114100869DF3 /* Focusable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Focusable.swift; sourceTree = "<group>"; };
+		65E3ECA1211317EA00869DF3 /* FocusCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FocusCoordinator.swift; sourceTree = "<group>"; };
+		65E3ECA321133BF700869DF3 /* FocusEligibilitySource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FocusEligibilitySource.swift; sourceTree = "<group>"; };
+		65E3ECA521133C9400869DF3 /* UIKit+CollectionViewFocus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIKit+CollectionViewFocus.swift"; sourceTree = "<group>"; };
+		65E3ECA7211340CE00869DF3 /* PersonalDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersonalDetailsViewController.swift; sourceTree = "<group>"; };
+		65E3ECA92113448200869DF3 /* TextFieldComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldComponent.swift; sourceTree = "<group>"; };
+		65E3ECAB2113591500869DF3 /* FocusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FocusableView.swift; sourceTree = "<group>"; };
+		65E3ECAD2113594600869DF3 /* BentoCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BentoCollectionView.swift; sourceTree = "<group>"; };
+		65E3ECAF2113598700869DF3 /* UIKit+BentoCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIKit+BentoCollectionView.swift"; sourceTree = "<group>"; };
 		740921B520ACDDDA00B59F5C /* IfTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IfTests.swift; sourceTree = "<group>"; };
 		740921B720ACE5EC00B59F5C /* ConcatenationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConcatenationTests.swift; sourceTree = "<group>"; };
 		74208FA22083B1F00062CC8D /* Nimble.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Nimble.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -266,6 +284,7 @@
 			children = (
 				61B40915208523CE0063DE25 /* CollectionViewExample */,
 				58E98E542016570800F78BAE /* Cells */,
+				65E3ECA7211340CE00869DF3 /* PersonalDetailsViewController.swift */,
 				58FC444B207CFBE100DA3614 /* BookAppointmentViewController.swift */,
 				58FC444C207CFBE200DA3614 /* MoviesListViewController.swift */,
 				5829D268200FB092001E020D /* AppDelegate.swift */,
@@ -323,6 +342,7 @@
 				58E98E552016571F00F78BAE /* IconTextCell.xib */,
 				58E98E572016571F00F78BAE /* ToggleCell.swift */,
 				58E98E562016571F00F78BAE /* ToggleCell.xib */,
+				65E3ECA92113448200869DF3 /* TextFieldComponent.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -333,6 +353,10 @@
 				58BA7583201633CC0050D5F1 /* Renderable.swift */,
 				58E98E62201889B900F78BAE /* AnyRenderable.swift */,
 				587A341E2100A09B00B25CCA /* Deletable.swift */,
+				65E3EC9F2113114100869DF3 /* Focusable.swift */,
+				65E3ECAB2113591500869DF3 /* FocusableView.swift */,
+				65E3ECA1211317EA00869DF3 /* FocusCoordinator.swift */,
+				65E3ECA521133C9400869DF3 /* UIKit+CollectionViewFocus.swift */,
 			);
 			path = Renderable;
 			sourceTree = "<group>";
@@ -381,6 +405,9 @@
 				A9509BC2762C8B4277B973D8 /* TableViewAdapter.swift */,
 				5874C80420C9342B004EB5EA /* CollectionViewDataSource.swift */,
 				58D0F12C207F573B00A24E96 /* TableViewAnimation.swift */,
+				65E3ECA321133BF700869DF3 /* FocusEligibilitySource.swift */,
+				65E3ECAD2113594600869DF3 /* BentoCollectionView.swift */,
+				65E3ECAF2113598700869DF3 /* UIKit+BentoCollectionView.swift */,
 			);
 			path = Adapters;
 			sourceTree = "<group>";
@@ -557,8 +584,10 @@
 				5829D26B200FB092001E020D /* ViewController.swift in Sources */,
 				58FC4447207CFBD700DA3614 /* ButtonComponentView.swift in Sources */,
 				58FC4441207CFBD700DA3614 /* MovieComponentView.swift in Sources */,
+				65E3ECA8211340CE00869DF3 /* PersonalDetailsViewController.swift in Sources */,
 				61B40919208523F60063DE25 /* IntroViewModel.swift in Sources */,
 				58FC444D207CFBE200DA3614 /* BookAppointmentViewController.swift in Sources */,
+				65E3ECAA2113448200869DF3 /* TextFieldComponent.swift in Sources */,
 				61B64BB12086561B0092082C /* IntroRenderer.swift in Sources */,
 				58E98E5D2016571F00F78BAE /* ToggleCell.swift in Sources */,
 				58FC4445207CFBD700DA3614 /* LoadingIndicatorView.swift in Sources */,
@@ -578,6 +607,8 @@
 			files = (
 				65496FB8211C323F00511D8A /* TableViewContainerCell.swift in Sources */,
 				65496FB9211C323F00511D8A /* TableViewAdapter.swift in Sources */,
+				65E3ECB02113598700869DF3 /* UIKit+BentoCollectionView.swift in Sources */,
+				65E3ECA02113114100869DF3 /* Focusable.swift in Sources */,
 				58E98E63201889B900F78BAE /* AnyRenderable.swift in Sources */,
 				58BA7586201634120050D5F1 /* Helpers.swift in Sources */,
 				61B64BB420873DA10092082C /* CollectionViewSectionDiff.swift in Sources */,
@@ -586,14 +617,19 @@
 				58BA7584201633CC0050D5F1 /* Renderable.swift in Sources */,
 				5857BECA2056F02C0085EB9C /* If.swift in Sources */,
 				A9509FB12CAD89179FAA03B0 /* Box.swift in Sources */,
+				65E3ECA621133C9400869DF3 /* UIKit+CollectionViewFocus.swift in Sources */,
 				58467B03202B33F200577C77 /* TableViewSectionDiff.swift in Sources */,
 				A9509C4FC3664040FF3649CD /* Node.swift in Sources */,
 				587A341F2100A09B00B25CCA /* Deletable.swift in Sources */,
 				5874C80520C9342B004EB5EA /* CollectionViewDataSource.swift in Sources */,
 				5874C80720C93445004EB5EA /* CollectionViewSupplementaryView.swift in Sources */,
 				61B64BB6208745730092082C /* CollectionViewContainerCell.swift in Sources */,
+				65E3ECA2211317EA00869DF3 /* FocusCoordinator.swift in Sources */,
+				65E3ECAE2113594600869DF3 /* BentoCollectionView.swift in Sources */,
+				65E3ECAC2113591500869DF3 /* FocusableView.swift in Sources */,
 				A9509880661501C40B50E453 /* TableViewHeaderFooterView.swift in Sources */,
 				515F94097C1F82B7E5C2DE0C /* Section.swift in Sources */,
+				65E3ECA421133BF700869DF3 /* FocusEligibilitySource.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
