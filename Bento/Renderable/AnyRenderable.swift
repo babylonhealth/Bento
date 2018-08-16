@@ -1,14 +1,6 @@
 import UIKit
 
-struct AnyRenderable: Renderable, Deletable {
-    var canBeDeleted: Bool {
-        return base.canBeDeleted
-    }
-
-    var deleteActionText: String {
-        return base.deleteActionText
-    }
-
+struct AnyRenderable: Renderable {
     var reuseIdentifier: String {
         return base.reuseIdentifier
     }
@@ -21,10 +13,6 @@ struct AnyRenderable: Renderable, Deletable {
 
     init<Base: Renderable>(_ base: Base) where Base.View: UIView {
         self.base = AnyRenderableBox(base)
-    }
-
-    init<Base: Deletable>(_ base: Base) where Base.View: UIView {
-        self.base = AnyDeletableBox(base)
     }
 
     func generate() -> UIView {
@@ -71,30 +59,8 @@ struct AnyRenderable: Renderable, Deletable {
         return view
     }
 
-    func delete() {
-        base.delete()
-    }
-
     static func ==(lhs: AnyRenderable, rhs: AnyRenderable) -> Bool {
         return lhs.base.equals(to: rhs.base)
-    }
-}
-
-private class AnyDeletableBox<Base: Deletable>: AnyRenderableBox<Base> where Base.View: UIView {
-    override var canBeDeleted: Bool {
-        return base.canBeDeleted
-    }
-
-    override var deleteActionText: String {
-        return base.deleteActionText
-    }
-
-    override init(_ base: Base) {
-        super.init(base)
-    }
-
-    override func delete() {
-        base.delete()
     }
 }
 
@@ -134,14 +100,6 @@ private class AnyRenderableBox<Base: Renderable>: AnyRenderableBoxBase where Bas
 }
 
 private class AnyRenderableBoxBase {
-    var canBeDeleted: Bool {
-        return false
-    }
-
-    var deleteActionText: String {
-        return ""
-    }
-
     var reuseIdentifier: String { fatalError() }
 
     var viewType: Any.Type { fatalError() }
@@ -152,5 +110,4 @@ private class AnyRenderableBoxBase {
     func generate() -> UIView { fatalError() }
     func equals(to other: AnyRenderableBoxBase) -> Bool { fatalError() }
     func cast<T>(to type: T.Type) -> T? { fatalError() }
-    func delete() {}
 }

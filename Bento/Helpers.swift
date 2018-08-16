@@ -49,3 +49,11 @@ extension Optional {
         return selector(unwrapped, other)
     }
 }
+
+internal func search<T>(from leaf: UIView, type: T.Type) -> T? {
+    var cell = leaf.superview
+    while let view = cell, !(view is T) {
+        cell = view.superview
+    }
+    return cell as! T?
+}

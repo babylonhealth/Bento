@@ -1,10 +1,8 @@
 import UIKit
 
-public protocol Deletable: Renderable {
+public protocol Deletable {
     var canBeDeleted: Bool { get }
-
     var deleteActionText: String { get }
-
     var backgroundColor: UIColor? { get }
 
     func delete()

@@ -2,8 +2,8 @@ import FlexibleDiff
 import UIKit
 
 final class CollectionViewDataSource<SectionID: Hashable, ItemID: Hashable>
-    : NSObject, UICollectionViewDataSource {
-    private var sections: [Section<SectionID, ItemID>] = []
+    : NSObject, UICollectionViewDataSource, FocusEligibilitySourceImplementing {
+    var sections: [Section<SectionID, ItemID>] = []
     private weak var collectionView: UICollectionView?
     private var knownSupplements: Set<Supplement> = []
 

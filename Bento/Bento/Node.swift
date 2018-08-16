@@ -13,10 +13,6 @@ public struct Node<Identifier: Hashable>: Equatable {
         self.init(id: id, component: AnyRenderable(component))
     }
 
-    public init<R: Deletable>(id: Identifier, component: R) where R.View: UIView {
-        self.init(id: id, component: AnyRenderable(component))
-    }
-
     public static func == (lhs: Node, rhs: Node) -> Bool {
         return lhs.id == rhs.id && lhs.component == rhs.component
     }
@@ -39,10 +35,6 @@ public struct Node<Identifier: Hashable>: Equatable {
 }
 
 public func <> <RowId, R: Renderable>(id: RowId, component: R) -> Node<RowId> where R.View: UIView {
-    return Node(id: id, component: component)
-}
-
-public func <> <RowId, R: Deletable>(id: RowId, component: R) -> Node<RowId> where R.View: UIView {
     return Node(id: id, component: component)
 }
 
