@@ -13,7 +13,7 @@ class SectionTests: XCTestCase {
             id: TestSectionId.first,
             header: TestCustomEqualityRenderable(value: 0),
             footer: TestCustomEqualityRenderable(value: 2),
-            rows: []
+            items: []
         )
 
         expect(Section.hasEqualMetadata(section, section)) == true
@@ -25,7 +25,7 @@ class SectionTests: XCTestCase {
             id: TestSectionId.first,
             header: TestCustomEqualityRenderable(value: -1),
             footer: TestCustomEqualityRenderable(value: 1),
-            rows: []
+            items: []
         )
 
         expect(Section.hasEqualMetadata(section, section)) == true
@@ -37,7 +37,7 @@ class SectionTests: XCTestCase {
             id: TestSectionId.first,
             header: TestDefaultEqualityRenderable(),
             footer: TestCustomEqualityRenderable(value: 1),
-            rows: []
+            items: []
         )
 
         expect(Section.hasEqualMetadata(section, section)) == true
@@ -49,7 +49,7 @@ class SectionTests: XCTestCase {
             id: TestSectionId.first,
             header: TestCustomEqualityRenderable(value: 0),
             footer: TestDefaultEqualityRenderable(),
-            rows: []
+            items: []
         )
 
         expect(Section.hasEqualMetadata(section, section)) == true
@@ -60,7 +60,7 @@ class SectionTests: XCTestCase {
         let section = Section<TestSectionId, TestRowId>(
             id: TestSectionId.first,
             header: TestCustomEqualityRenderable(value: 0),
-            rows: []
+            items: []
         )
 
         expect(Section.hasEqualMetadata(section, section)) == true
@@ -71,7 +71,7 @@ class SectionTests: XCTestCase {
         let section = Section<TestSectionId, TestRowId>(
             id: TestSectionId.first,
             footer: TestCustomEqualityRenderable(value: 1),
-            rows: []
+            items: []
         )
 
         expect(Section.hasEqualMetadata(section, section)) == true
@@ -87,7 +87,7 @@ class SectionTests: XCTestCase {
             id: TestSectionId.first,
             header: TestCustomEqualityRenderable(value: 0),
             footer: TestCustomEqualityRenderable(value: .max),
-            rows: [Node(id: .first, component: TestCustomEqualityRenderable(value: 3))]
+            items: [Node(id: .first, component: TestCustomEqualityRenderable(value: 3))]
         )
 
         expect(section) == section
@@ -99,7 +99,7 @@ class SectionTests: XCTestCase {
             id: TestSectionId.first,
             header: TestCustomEqualityRenderable(value: .max),
             footer: TestCustomEqualityRenderable(value: 1),
-            rows: [Node(id: .first, component: TestCustomEqualityRenderable(value: 3))]
+            items: [Node(id: .first, component: TestCustomEqualityRenderable(value: 3))]
         )
 
         expect(section) == section
@@ -111,7 +111,7 @@ class SectionTests: XCTestCase {
             id: TestSectionId.first,
             header: TestCustomEqualityRenderable(value: .max),
             footer: TestCustomEqualityRenderable(value: 1),
-            rows: [Node(id: .first, component: TestCustomEqualityRenderable(value: 3)),
+            items: [Node(id: .first, component: TestCustomEqualityRenderable(value: 3)),
                    Node(id: .second, component: TestCustomEqualityRenderable(value: 3))]
         )
 
@@ -125,7 +125,7 @@ class SectionTests: XCTestCase {
             id: TestSectionId.first,
             header: TestCustomEqualityRenderable(value: 0),
             footer: TestDefaultEqualityRenderable(),
-            rows: [Node(id: .first, component: TestCustomEqualityRenderable(value: 3))]
+            items: [Node(id: .first, component: TestCustomEqualityRenderable(value: 3))]
         )
 
         expect(section) == section
@@ -137,7 +137,7 @@ class SectionTests: XCTestCase {
             id: TestSectionId.first,
             header: TestDefaultEqualityRenderable(),
             footer: TestCustomEqualityRenderable(value: 1),
-            rows: [Node(id: .first, component: TestCustomEqualityRenderable(value: 3))]
+            items: [Node(id: .first, component: TestCustomEqualityRenderable(value: 3))]
         )
 
         expect(section) == section
@@ -149,7 +149,7 @@ class SectionTests: XCTestCase {
             id: TestSectionId.first,
             header: TestCustomEqualityRenderable(value: .max),
             footer: TestCustomEqualityRenderable(value: 1),
-            rows: [Node(id: .first, component: TestDefaultEqualityRenderable())]
+            items: [Node(id: .first, component: TestDefaultEqualityRenderable())]
         )
 
         expect(section) == section
@@ -160,7 +160,7 @@ class SectionTests: XCTestCase {
         let section = Section<TestSectionId, TestRowId>(
             id: TestSectionId.first,
             header: TestCustomEqualityRenderable(value: 0),
-            rows: [Node(id: .first, component: TestCustomEqualityRenderable(value: 3))]
+            items: [Node(id: .first, component: TestCustomEqualityRenderable(value: 3))]
         )
 
         expect(section) == section
@@ -171,7 +171,7 @@ class SectionTests: XCTestCase {
         let section = Section<TestSectionId, TestRowId>(
             id: TestSectionId.first,
             footer: TestCustomEqualityRenderable(value: 1),
-            rows: [Node(id: .first, component: TestCustomEqualityRenderable(value: 3))]
+            items: [Node(id: .first, component: TestCustomEqualityRenderable(value: 3))]
         )
 
         expect(section) == section
@@ -181,7 +181,7 @@ class SectionTests: XCTestCase {
     func testEqualityOmittedHeaderFooter() {
         let section = Section<TestSectionId, TestRowId>(
             id: TestSectionId.first,
-            rows: [Node(id: .first, component: TestCustomEqualityRenderable(value: 3))]
+            items: [Node(id: .first, component: TestCustomEqualityRenderable(value: 3))]
         )
 
         expect(section) == section
@@ -193,7 +193,7 @@ class SectionTests: XCTestCase {
             id: TestSectionId.second,
             header: TestCustomEqualityRenderable(value: 0),
             footer: TestCustomEqualityRenderable(value: 1),
-            rows: []
+            items: []
         )
 
         expect(section) == section
@@ -206,7 +206,7 @@ private var template: Section<TestSectionId, TestRowId> {
         id: TestSectionId.first,
         header: TestCustomEqualityRenderable(value: 0),
         footer: TestCustomEqualityRenderable(value: 1),
-        rows: []
+        items: []
     )
 }
 
@@ -215,6 +215,6 @@ private var templateWithNodes: Section<TestSectionId, TestRowId> {
         id: TestSectionId.first,
         header: TestCustomEqualityRenderable(value: 0),
         footer: TestCustomEqualityRenderable(value: 1),
-        rows: [Node(id: .first, component: TestCustomEqualityRenderable(value: 3))]
+        items: [Node(id: .first, component: TestCustomEqualityRenderable(value: 3))]
     )
 }

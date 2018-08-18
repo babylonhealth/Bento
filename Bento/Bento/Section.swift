@@ -1,105 +1,90 @@
 import UIKit
 
-public struct Section<SectionId: Hashable, RowId: Hashable>: Equatable {
-    public let id: SectionId
-    public var rows: [Node<RowId>]
-    let header: AnyRenderable?
-    let footer: AnyRenderable?
+public struct Section<SectionID: Hashable, ItemID: Hashable>: Equatable {
+    public typealias Item = Node<ItemID>
 
-    public init<Header: Renderable, Footer: Renderable>(id: SectionId,
-                                                        header: Header,
-                                                        footer: Footer,
-                                                        rows: [Node<RowId>] = [])
-        where Header.View: UIView, Footer.View: UIView {
+    public let id: SectionID
+    public var items: [Item]
+    internal var supplements: [Supplement: AnyRenderable]
+
+    public init(id: SectionID, items: [Item] = []) {
         self.id = id
-        self.header = AnyRenderable(header)
-        self.footer = AnyRenderable(footer)
-        self.rows = rows
+        self.items = items
+        self.supplements = [:]
     }
 
-    public init<Header: Renderable>(id: SectionId,
-                                    header: Header,
-                                    rows: [Node<RowId>] = []) where Header.View: UIView {
+    public init<Header: Renderable>(id: SectionID, header: Header, items: [Item] = []) where Header.View: UIView {
         self.id = id
-        self.header = AnyRenderable(header)
-        self.footer = nil
-        self.rows = rows
+        self.items = items
+        self.supplements = [.header: AnyRenderable(header)]
     }
 
-    public init<Footer: Renderable>(id: SectionId,
-                                    footer: Footer,
-                                    rows: [Node<RowId>] = []) where Footer.View: UIView {
+    public init<Footer: Renderable>(id: SectionID, footer: Footer, items: [Item] = []) where Footer.View: UIView {
         self.id = id
-        self.header = nil
-        self.footer = AnyRenderable(footer)
-        self.rows = rows
+        self.items = items
+        self.supplements = [.footer: AnyRenderable(footer)]
     }
 
-    public init(id: SectionId,
-                rows: [Node<RowId>] = []) {
+    public init<Header: Renderable, Footer: Renderable>(id: SectionID, header: Header, footer: Footer, items: [Item] = []) where Header.View: UIView, Footer.View: UIView {
         self.id = id
-        self.header = nil
-        self.footer = nil
-        self.rows = rows
+        self.items = items
+        self.supplements = [.header: AnyRenderable(header),
+                            .footer: AnyRenderable(footer)]
     }
 
-    init(id: SectionId,
-         header: AnyRenderable?,
-         footer: AnyRenderable?,
-         rows: [Node<RowId>]) {
+    internal init(id: SectionID, items: [Item], supplements: [Supplement: AnyRenderable]) {
         self.id = id
-        self.header = header
-        self.footer = footer
-        self.rows = rows
+        self.items = items
+        self.supplements = supplements
     }
 
-    public func headerComponent<T>(as type: T.Type) -> T? {
-        return header?.cast(to: type)
+    public func adding<R: Renderable>(_ supplement: Supplement, _ component: R) -> Section where R.View: UIView {
+        var section = self
+        section.supplements[supplement] = AnyRenderable(component)
+        return section
     }
 
-    public func footerComponent<T>(as type: T.Type) -> T? {
-        return footer?.cast(to: type)
+    public func removing<R: Renderable>(_ supplement: Supplement, _ component: R) -> Section where R.View: UIView {
+        var section = self
+        section.supplements[supplement] = AnyRenderable(component)
+        return section
     }
 
-    public func headerSizeBoundTo(width: CGFloat, inheritedMargins: UIEdgeInsets = .zero) -> CGSize {
-        return header?.sizeBoundTo(width: width, inheritedMargins: inheritedMargins) ?? .zero
+    public func has(_ supplement: Supplement) -> Bool {
+        return supplements.keys.contains(supplement)
     }
 
-    public func headerSizeBoundTo(height: CGFloat, inheritedMargins: UIEdgeInsets = .zero) -> CGSize {
-        return header?.sizeBoundTo(height: height, inheritedMargins: inheritedMargins) ?? .zero
+    public func component<T>(of supplement: Supplement, as type: T.Type) -> T? {
+        return supplements[supplement]?.cast(to: type)
     }
 
-    public func headerSizeBoundTo(size: CGSize, inheritedMargins: UIEdgeInsets = .zero) -> CGSize {
-        return header?.sizeBoundTo(size: size, inheritedMargins: inheritedMargins) ?? .zero
+    public func componentSize(of supplement: Supplement, fittingWidth width: CGFloat, inheritedMargins: UIEdgeInsets = .zero) -> CGSize? {
+        return supplements[supplement]?.sizeBoundTo(width: width, inheritedMargins: inheritedMargins)
     }
 
-    public func footerSizeBoundTo(width: CGFloat, inheritedMargins: UIEdgeInsets = .zero) -> CGSize {
-        return footer?.sizeBoundTo(width: width, inheritedMargins: inheritedMargins) ?? .zero
+    public func componentSize(of supplement: Supplement, fittingHeight height: CGFloat, inheritedMargins: UIEdgeInsets = .zero) -> CGSize? {
+        return supplements[supplement]?.sizeBoundTo(height: height, inheritedMargins: inheritedMargins)
     }
 
-    public func footerSizeBoundTo(height: CGFloat, inheritedMargins: UIEdgeInsets = .zero) -> CGSize {
-        return footer?.sizeBoundTo(height: height, inheritedMargins: inheritedMargins) ?? .zero
-    }
-
-    public func footerSizeBoundTo(size: CGSize, inheritedMargins: UIEdgeInsets = .zero) -> CGSize {
-        return footer?.sizeBoundTo(size: size, inheritedMargins: inheritedMargins) ?? .zero
+    public func componentSize(of supplement: Supplement, fittingSize size: CGSize, inheritedMargins: UIEdgeInsets = .zero) -> CGSize? {
+        return supplements[supplement]?.sizeBoundTo(size: size, inheritedMargins: inheritedMargins)
     }
 
     public static func hasEqualMetadata(_ lhs: Section, _ rhs: Section) -> Bool {
-        return lhs.header == rhs.header && lhs.footer == rhs.footer
+        return lhs.supplements == rhs.supplements
     }
 
     public static func == (lhs: Section, rhs: Section) -> Bool {
         return lhs.id == rhs.id
             && hasEqualMetadata(lhs, rhs)
-            && lhs.rows == rhs.rows
+            && lhs.items == rhs.items
     }
-}
 
-public func |---+<SectionId, RowId>(lhs: Section<SectionId, RowId>, rhs: Node<RowId>) -> Section<SectionId, RowId> {
-    return Section(id: lhs.id, header: lhs.header, footer: lhs.footer, rows: lhs.rows + [rhs])
-}
+    public static func |---+ (lhs: Section, rhs: Item) -> Section {
+        return Section(id: lhs.id, items: lhs.items + [rhs], supplements: lhs.supplements)
+    }
 
-public func |---*<SectionId, RowId>(lhs: Section<SectionId, RowId>, rhs: [Node<RowId>]) -> Section<SectionId, RowId> {
-    return Section(id: lhs.id, header: lhs.header, footer: lhs.footer, rows: lhs.rows + rhs)
+    public static func |---* (lhs: Section, rhs: [Item]) -> Section {
+        return Section(id: lhs.id, items: lhs.items + rhs, supplements: lhs.supplements)
+    }
 }

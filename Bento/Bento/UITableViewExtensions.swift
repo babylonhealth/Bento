@@ -1,13 +1,13 @@
 extension UITableView {
-    public func prepareForBoxRendering<SectionId: Hashable, RowId: Hashable>(
-        sectionIdType: SectionId.Type,
-        rowIdType: RowId.Type
+    public func prepareForBoxRendering<SectionID: Hashable, ItemID: Hashable>(
+        sectionIdType: SectionID.Type,
+        rowIdType: ItemID.Type
     ) {
-        prepareForBoxRendering(with: BentoTableViewAdapter<SectionId, RowId>(with: self))
+        prepareForBoxRendering(with: BentoTableViewAdapter<SectionID, ItemID>(with: self))
     }
 
-    public func prepareForBoxRendering<SectionId, RowId>(
-        with adapter: TableViewAdapter<SectionId, RowId>
+    public func prepareForBoxRendering<SectionID, ItemID>(
+        with adapter: TableViewAdapter<SectionID, ItemID>
     ) {
         precondition(typeErasedAdapter == nil, "Preparation must happen before any Bento `Box` rendering occurrence.")
         precondition(adapter.tableView == self, "The custom adapter is not created for the table view it is deployed to.")
@@ -19,12 +19,12 @@ extension UITableView {
         objc_setAssociatedObject(self, AssociatedKey.adapter, adapter, .OBJC_ASSOCIATION_RETAIN)
     }
 
-    public func render<SectionId, RowId>(_ box: Box<SectionId, RowId>) {
+    public func render<SectionID, ItemID>(_ box: Box<SectionID, ItemID>) {
         render(box, animated: true)
     }
 
-    public func render<SectionId, RowId>(_ box: Box<SectionId, RowId>, animated: Bool) {
-        let adapter: TableViewAdapterBase<SectionId, RowId> = getAdapter()
+    public func render<SectionID, ItemID>(_ box: Box<SectionID, ItemID>, animated: Bool) {
+        let adapter: TableViewAdapterBase<SectionID, ItemID> = getAdapter()
         if animated {
             adapter.update(sections: box.sections, with: TableViewAnimation())
         } else {
@@ -33,8 +33,8 @@ extension UITableView {
         didRenderBox()
     }
 
-    public func render<SectionId, RowId>(_ box: Box<SectionId, RowId>, with animation: TableViewAnimation) {
-        let adapter: TableViewAdapterBase<SectionId, RowId> = getAdapter()
+    public func render<SectionID, ItemID>(_ box: Box<SectionID, ItemID>, with animation: TableViewAnimation) {
+        let adapter: TableViewAdapterBase<SectionID, ItemID> = getAdapter()
 
         adapter.update(sections: box.sections, with: animation)
         didRenderBox()
@@ -44,14 +44,14 @@ extension UITableView {
         static let adapter = UnsafeMutablePointer<CChar>.allocate(capacity: 1)
     }
 
-    func getAdapter<SectionId, RowId>() -> TableViewAdapterBase<SectionId, RowId> {
+    func getAdapter<SectionID, ItemID>() -> TableViewAdapterBase<SectionID, ItemID> {
         if let adapter = typeErasedAdapter {
-            precondition(adapter is TableViewAdapterBase<SectionId, RowId>,
-                         "Adapter type `\(type(of: adapter))` does not match the expected section and/or row ID type: \(SectionId.self) and \(RowId.self).")
-            return unsafeDowncast(adapter, to: TableViewAdapterBase<SectionId, RowId>.self)
+            precondition(adapter is TableViewAdapterBase<SectionID, ItemID>,
+                         "Adapter type `\(type(of: adapter))` does not match the expected section and/or row ID type: \(SectionID.self) and \(ItemID.self).")
+            return unsafeDowncast(adapter, to: TableViewAdapterBase<SectionID, ItemID>.self)
         }
 
-        prepareForBoxRendering(sectionIdType: SectionId.self, rowIdType: RowId.self)
+        prepareForBoxRendering(sectionIdType: SectionID.self, rowIdType: ItemID.self)
         return getAdapter()
     }
 

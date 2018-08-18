@@ -22,31 +22,33 @@ infix operator |---*: NodeConcatenationPrecedence
 infix operator |---?: NodeConcatenationPrecedence
 infix operator <>: ComposingPrecedence
 
-public struct Box<SectionId: Hashable, RowId: Hashable> {
-    public let sections: [Section<SectionId, RowId>]
+public struct Box<SectionID: Hashable, ItemID: Hashable> {
+    public typealias Section = Bento.Section<SectionID, ItemID>
 
-    public init(sections: [Section<SectionId, RowId>]) {
+    public var sections: [Section]
+
+    public init(sections: [Section]) {
         self.sections = sections
     }
 
     public static var empty: Box {
         return Box(sections: [])
     }
-}
 
-public func |-+<SectionId, RowId>(lhs: Box<SectionId, RowId>, rhs: Section<SectionId, RowId>) -> Box<SectionId, RowId> {
-    return Box(sections: lhs.sections + [rhs])
+    public static func |-+ (lhs: Box, rhs: Section) -> Box {
+        return Box(sections: lhs.sections + [rhs])
+    }
 }
 
 extension UICollectionView {
-    public func render<SectionId, ItemId>(_ box: Box<SectionId, ItemId>, completion: (() -> Void)? = nil) {
-        let adapter: CollectionViewDataSource<SectionId, ItemId> = getAdapter()
+    public func render<SectionID, ItemID>(_ box: Box<SectionID, ItemID>, completion: (() -> Void)? = nil) {
+        let adapter: CollectionViewDataSource<SectionID, ItemID> = getAdapter()
         adapter.update(sections: box.sections, completion: completion)
         didRenderBox()
     }
 
-    public func render<SectionId, ItemId>(_ box: Box<SectionId, ItemId>, animated: Bool) {
-        let adapter: CollectionViewDataSource<SectionId, ItemId> = getAdapter()
+    public func render<SectionID, ItemID>(_ box: Box<SectionID, ItemID>, animated: Bool) {
+        let adapter: CollectionViewDataSource<SectionID, ItemID> = getAdapter()
         adapter.update(sections: box.sections, animated: animated)
         didRenderBox()
     }

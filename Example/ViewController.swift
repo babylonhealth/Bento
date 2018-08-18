@@ -10,6 +10,7 @@ class ViewController: UIViewController {
     enum SectionId: Hashable {
         case first
         case second
+        case third
     }
 
     enum RowId: Hashable {
@@ -42,6 +43,7 @@ class ViewController: UIViewController {
                 |-+ renderSecondSection()
                 |---+ renderIconText()
                 |---+ renderToggle()
+                |-+ renderThirdSection()
 
             tableView.render(box)
         case .wifi:
@@ -52,6 +54,7 @@ class ViewController: UIViewController {
                 |-+ renderSecondSection()
                 |---+ renderToggle()
                 |---+ renderIconText()
+                |-+ renderThirdSection()
 
             tableView.render(box)
         }
@@ -93,6 +96,18 @@ class ViewController: UIViewController {
             let headerSpec = EmptySpaceComponent.Spec(height: 30, color: .purple)
             let headerComponent = EmptySpaceComponent(spec: headerSpec)
             return Section(id: SectionId.first, header: headerComponent)
+        }
+    }
+
+    private func renderThirdSection() -> Section<SectionId, RowId> {
+        switch state {
+        case .airplaneMode:
+            return Section(id: .third,
+                           footer: IconTextComponent(image: nil, title: "Airplane"))
+        case .wifi:
+            return Section(id: .third,
+                           header: IconTextComponent(image: nil, title: "WiFi"),
+                           footer: EmptySpaceComponent(spec: EmptySpaceComponent.Spec(height: 20, color: .black)))
         }
     }
 

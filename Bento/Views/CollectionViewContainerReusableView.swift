@@ -1,6 +1,6 @@
 import UIKit
 
-final class CollectionViewContainerCell: UICollectionViewCell {
+final class CollectionViewContainerReusableView: UICollectionReusableView {
     var containedView: UIView? {
         didSet {
             containerViewDidChange(from: oldValue, to: containedView)
@@ -17,4 +17,4 @@ final class CollectionViewContainerCell: UICollectionViewCell {
     }
 }
 
-extension CollectionViewContainerCell: BentoReusableView {}
+extension CollectionViewContainerReusableView: BentoReusableView {}

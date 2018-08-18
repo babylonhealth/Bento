@@ -24,46 +24,50 @@ public struct Some<T, U> {
     }
 }
 
-public func |---?<SectionId, RowId>(lhs: Section<SectionId, RowId>, rhs: If<Node<RowId>>) -> Section<SectionId, RowId> {
-    if rhs.condition() {
+extension Section {
+    public static func |---? (lhs: Section, rhs: If<Item>) -> Section {
+        if rhs.condition() {
+            return lhs
+                |---+ rhs.generator()
+        }
         return lhs
-            |---+ rhs.generator()
     }
-    return lhs
-}
 
-public func |---?<SectionId, RowId>(lhs: Section<SectionId, RowId>, rhs: If<[Node<RowId>]>) -> Section<SectionId, RowId> {
-    if rhs.condition() {
+    public static func |---? (lhs: Section, rhs: If<[Item]>) -> Section {
+        if rhs.condition() {
+            return lhs
+                |---* rhs.generator()
+        }
         return lhs
-            |---* rhs.generator()
     }
-    return lhs
+
+    public static func |---? <T>(lhs: Section, rhs: Some<T, Item>) -> Section {
+        return rhs.optional.map { value in
+            lhs |---+ rhs.generator(value)
+        } ?? lhs
+    }
+
+    public static func |---? <T>(lhs: Section, rhs: Some<T, [Item]>) -> Section {
+        return rhs.optional.map { value in
+            lhs |---* rhs.generator(value)
+        } ?? lhs
+    }
 }
 
-public func |---?<T, SectionId, RowId>(lhs: Section<SectionId, RowId>, rhs: Some<T, Node<RowId>>) -> Section<SectionId, RowId> {
-    return rhs.optional.map { value in
-        lhs |---+ rhs.generator(value)
-    } ?? lhs
-}
-
-public func |---?<T, SectionId, RowId>(lhs: Section<SectionId, RowId>, rhs: Some<T, [Node<RowId>]>) -> Section<SectionId, RowId> {
-    return rhs.optional.map { value in
-        lhs |---* rhs.generator(value)
-    } ?? lhs
-}
-
-public func |-?<SectionId, RowId>(lhs: Box<SectionId, RowId>, rhs: If<Section<SectionId, RowId>>) -> Box<SectionId, RowId> {
-    if rhs.condition() {
+extension Box {
+    public static func |-? (lhs: Box, rhs: If<Section>) -> Box {
+        if rhs.condition() {
+            return lhs
+                |-+ rhs.generator()
+        }
         return lhs
-            |-+ rhs.generator()
     }
-    return lhs
-}
 
-public func |-?<T, SectionId, RowId>(lhs: Box<SectionId, RowId>, rhs: Some<T, Section<SectionId, RowId>>) -> Box<SectionId, RowId> {
-    return rhs.optional.map { value in
-        lhs |-+ rhs.generator(value)
-    } ?? lhs
+    public static func |-? <T>(lhs: Box, rhs: Some<T, Section>) -> Box {
+        return rhs.optional.map { value in
+            lhs |-+ rhs.generator(value)
+        } ?? lhs
+    }
 }
 
 public func |---?<Identifier>(lhs: Node<Identifier>, rhs: If<Node<Identifier>>) -> [Node<Identifier>] {

@@ -16,41 +16,41 @@ extension FocusEligibilitySourceImplementing {
         switch direction {
         case .backward:
             let indexPath = indexPath ?? IndexPath(item: -1, section: 0)
-            var startNodeIndex = indexPath.item + 1
+            var startItemIndex = indexPath.item + 1
 
             for sectionIndex in indexPath.section ..< sections.endIndex {
-                let nodes = sections[sectionIndex].rows
+                let items = sections[sectionIndex].items
 
-                for nodeIndex in startNodeIndex ..< nodes.endIndex {
-                    if let component = nodes[nodeIndex].component(as: Focusable.self),
+                for itemIndex in startItemIndex ..< items.endIndex {
+                    if let component = items[itemIndex].component(as: Focusable.self),
                        component.focusEligibility.isEligible(skipsPopulatedComponents: skipsPopulatedComponents) {
-                        return IndexPath(item: nodeIndex, section: sectionIndex)
+                        return IndexPath(item: itemIndex, section: sectionIndex)
                     }
                 }
 
-                startNodeIndex = 0
+                startItemIndex = 0
             }
 
             return nil
 
         case .forward:
-            let indexPath = indexPath ?? IndexPath(item: sections.last?.rows.endIndex ?? 0,
+            let indexPath = indexPath ?? IndexPath(item: sections.last?.items.endIndex ?? 0,
                                                    section: max(sections.endIndex - 1, 0))
             var exclusiveNodeUpperBound = indexPath.item
 
             for sectionIndex in (sections.startIndex ... indexPath.section).reversed() {
-                let nodes = sections[sectionIndex].rows
+                let items = sections[sectionIndex].items
 
-                for nodeIndex in (nodes.startIndex ..< exclusiveNodeUpperBound).reversed() {
-                    if let component = nodes[nodeIndex].component(as: Focusable.self),
+                for itemIndex in (items.startIndex ..< exclusiveNodeUpperBound).reversed() {
+                    if let component = items[itemIndex].component(as: Focusable.self),
                        component.focusEligibility.isEligible(skipsPopulatedComponents: skipsPopulatedComponents) {
-                        return IndexPath(item: nodeIndex, section: sectionIndex)
+                        return IndexPath(item: itemIndex, section: sectionIndex)
                     }
                 }
 
                 exclusiveNodeUpperBound = sectionIndex == sections.startIndex
                     ? 0
-                    : sections[sectionIndex - 1].rows.endIndex
+                    : sections[sectionIndex - 1].items.endIndex
             }
 
             return nil

@@ -5,6 +5,10 @@ struct AnyRenderable: Renderable {
         return base.reuseIdentifier
     }
 
+    var viewType: Any.Type {
+        return base.viewType
+    }
+
     private let base: AnyRenderableBoxBase
 
     init<Base: Renderable>(_ base: Base) where Base.View: UIView {
@@ -65,6 +69,10 @@ private class AnyRenderableBox<Base: Renderable>: AnyRenderableBoxBase where Bas
         return base.reuseIdentifier
     }
 
+    override var viewType: Any.Type {
+        return Base.View.self
+    }
+
     fileprivate let base: Base
 
     init(_ base: Base) {
@@ -93,6 +101,8 @@ private class AnyRenderableBox<Base: Renderable>: AnyRenderableBoxBase where Bas
 
 private class AnyRenderableBoxBase {
     var reuseIdentifier: String { fatalError() }
+
+    var viewType: Any.Type { fatalError() }
 
     init() {}
 
