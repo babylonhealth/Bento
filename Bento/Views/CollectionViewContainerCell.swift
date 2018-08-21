@@ -10,6 +10,7 @@ final class CollectionViewContainerCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         backgroundColor = .clear
+        contentView.backgroundColor = .clear
     }
 
     required init?(coder aDecoder: NSCoder) {

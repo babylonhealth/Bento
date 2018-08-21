@@ -9,7 +9,7 @@ final class TableViewHeaderFooterView: UITableViewHeaderFooterView {
 
     override init(reuseIdentifier: String?) {
         super.init(reuseIdentifier: reuseIdentifier)
-        backgroundColor = .clear
+        contentView.backgroundColor = .clear
     }
 
     required init?(coder aDecoder: NSCoder) {
