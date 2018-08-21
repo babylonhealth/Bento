@@ -9,6 +9,9 @@ final class TableViewHeaderFooterView: UITableViewHeaderFooterView {
 
     override init(reuseIdentifier: String?) {
         super.init(reuseIdentifier: reuseIdentifier)
+        let view = UIView()
+        view.backgroundColor = .clear
+        backgroundView = view
         contentView.backgroundColor = .clear
     }
 
