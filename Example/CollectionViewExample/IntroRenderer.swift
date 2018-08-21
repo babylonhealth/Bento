@@ -21,17 +21,26 @@ final class IntroRenderer {
 
     private func renderLoading() -> Box<SectionId, RowId> {
         return Box<SectionId, RowId>.empty
-            |-+ Section(id: SectionId.intro)
+            |-+ Section(id: SectionId.intro,
+                        header: IconTextComponent(image: nil, title: "Loading"))
             |---+ RowId.loading <> LoadingIndicatorComponent(isLoading: true)
     }
 
     private func render(pages: [IntroContent]) -> Box<SectionId, RowId> {
-        return Box<SectionId, RowId>.empty
-            |-+ Section(id: SectionId.intro)
-            |---* pages.map { page in
-                RowId.introPage(page) <> IntroComponent(title: page.title,
-                                                        body: page.body,
-                                                        image: page.image)
-            }
+        return Box<SectionId, RowId>(
+            sections: [Section(
+                id: SectionId.intro,
+                header: IconTextComponent(image: nil, title: "Header"),
+                footer: IconTextComponent(image: nil, title: "Footer"),
+                items: pages.map { page in
+                    return Node(id: RowId.introPage(page), component:
+                        IntroComponent(title: page.title,
+                                       body: page.body,
+                                       image: page.image
+                        )
+                    )
+                }
+            )]
+        )
     }
 }

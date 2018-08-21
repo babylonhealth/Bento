@@ -32,15 +32,22 @@ struct CollectionViewSectionDiff<SectionID: Hashable, ItemID: Hashable> {
     }
 
     private func performBatchUpdates(with diff: SectionedChangeset, for collectionView: UICollectionView) {
-        for section in diff.sections.mutations {
-            for supplement in supplements {
-                let view = collectionView.supplementaryView(
-                    forElementKind: supplement.elementKind,
-                    at: IndexPath(index: section)
-                )
+        for supplement in supplements {
+            let elementKind = supplement.elementKind
 
-                let component = newSections[section].supplements[supplement]
-                (view as? BentoReusableView)?.bind(component)
+            let groups = Dictionary(
+                grouping: collectionView.indexPathsForVisibleSupplementaryElements(ofKind: elementKind),
+                by: { $0.section }
+            )
+
+            for (source, destination) in diff.sections.mutationIndexPairs {
+                if let indexPaths = groups[source] {
+                    for indexPath in indexPaths {
+                        let view = collectionView.supplementaryView(forElementKind: elementKind, at: indexPath)
+                        let component = newSections[destination].supplements[supplement]
+                        (view as? BentoReusableView)?.bind(component)
+                    }
+                }
             }
         }
 
@@ -85,23 +92,18 @@ extension UICollectionView {
         newSections: [Section<SectionID, ItemID>]
     ) {
         for sectionMutation in sectionMutations {
-            let sectionChanges = [
-                sectionMutation.changeset.moves.compactMap { $0.isMutated ? ($0.source, $0.destination) : nil },
-                sectionMutation.changeset.mutations.lazy.map { ($0, $0) }
-            ].joined()
-
             deleteItems(at: sectionMutation.deletedIndexPaths)
             insertItems(at: sectionMutation.insertedIndexPaths)
             perform(moves: sectionMutation.movedCollectionIndexPaths)
-            sectionChanges
-                .forEach { source, destination in
-                    guard let cell = cellForItem(at: [sectionMutation.source, source]) as? CollectionViewContainerCell
-                        else { return }
-                    let component = newSections[sectionMutation.destination]
-                        .items[destination]
-                        .component
-                    cell.bind(component)
-                }
+
+            for (source, destination) in sectionMutation.changeset.mutationIndexPairs {
+                guard let cell = cellForItem(at: [sectionMutation.source, source]) as? CollectionViewContainerCell
+                    else { return }
+                let component = newSections[sectionMutation.destination]
+                    .items[destination]
+                    .component
+                cell.bind(component)
+            }
         }
     }
 }

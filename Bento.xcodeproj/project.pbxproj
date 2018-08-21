@@ -82,6 +82,7 @@
 		74C7FEA22083A9B4005C8B53 /* Kingfisher.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 74C7FEA02083A9B4005C8B53 /* Kingfisher.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		74C7FEA42083AC0E005C8B53 /* ReactiveFeedback.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 74C7FEA32083AC0E005C8B53 /* ReactiveFeedback.framework */; };
 		74C7FEA52083AC0E005C8B53 /* ReactiveFeedback.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 74C7FEA32083AC0E005C8B53 /* ReactiveFeedback.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		9A4DB3E1212CB3710079D5AE /* Changeset+MutationIndexPairs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A4DB3E0212CB3710079D5AE /* Changeset+MutationIndexPairs.swift */; };
 		9AF4786A21205E3100F87E21 /* Supplement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AF4786921205E3100F87E21 /* Supplement.swift */; };
 		9AF4786C2120CA7500F87E21 /* BentoReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AF4786B2120CA7500F87E21 /* BentoReusableView.swift */; };
 		A67A873520B5D2D100BC2BAC /* RenderableTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A67A873420B5D2D100BC2BAC /* RenderableTests.swift */; };
@@ -198,6 +199,7 @@
 		74C7FEA02083A9B4005C8B53 /* Kingfisher.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Kingfisher.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		74C7FEA32083AC0E005C8B53 /* ReactiveFeedback.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ReactiveFeedback.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9A3EF77F205D866F00D043AC /* AnyRenderableTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnyRenderableTests.swift; sourceTree = "<group>"; };
+		9A4DB3E0212CB3710079D5AE /* Changeset+MutationIndexPairs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Changeset+MutationIndexPairs.swift"; sourceTree = "<group>"; };
 		9A7846FA205D89C000FA597E /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Platforms/iPhoneOS.platform/Developer/Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		9A7846FC205EAF7C00FA597E /* NodeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeTests.swift; sourceTree = "<group>"; };
 		9A7846FE205EAF8400FA597E /* SectionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionTests.swift; sourceTree = "<group>"; };
@@ -250,6 +252,7 @@
 			children = (
 				58467B02202B33F200577C77 /* TableViewSectionDiff.swift */,
 				61B64BB320873DA10092082C /* CollectionViewSectionDiff.swift */,
+				9A4DB3E0212CB3710079D5AE /* Changeset+MutationIndexPairs.swift */,
 			);
 			path = Diff;
 			sourceTree = "<group>";
@@ -309,6 +312,7 @@
 				A950970749997A21E1BF7777 /* TableViewHeaderFooterView.swift */,
 				61B64BB5208745730092082C /* CollectionViewContainerCell.swift */,
 				9AF4786B2120CA7500F87E21 /* BentoReusableView.swift */,
+				A950967CC717BBF3B02B766D /* Box.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -420,7 +424,6 @@
 		A95095B51B6349DC59C77D6D /* Bento */ = {
 			isa = PBXGroup;
 			children = (
-				A950967CC717BBF3B02B766D /* Box.swift */,
 				A95093DB10046D731018127D /* Node.swift */,
 				515F9EAF847DD1D68DE3A48C /* Section.swift */,
 				5857BEC92056F02C0085EB9C /* If.swift */,
@@ -637,6 +640,7 @@
 				65E3ECAC2113591500869DF3 /* FocusableView.swift in Sources */,
 				A9509880661501C40B50E453 /* TableViewHeaderFooterView.swift in Sources */,
 				515F94097C1F82B7E5C2DE0C /* Section.swift in Sources */,
+				9A4DB3E1212CB3710079D5AE /* Changeset+MutationIndexPairs.swift in Sources */,
 				65E3ECA421133BF700869DF3 /* FocusEligibilitySource.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

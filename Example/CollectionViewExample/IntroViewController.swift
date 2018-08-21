@@ -70,6 +70,8 @@ final class IntroCollectionViewLayout: UICollectionViewFlowLayout {
                           height: UIScreen.main.bounds.size.height / 4)
         minimumInteritemSpacing = 4
         minimumLineSpacing = 4
+        headerReferenceSize = CGSize(width: 1, height: 100)
+        footerReferenceSize = CGSize(width: 1, height: 1)
     }
 
     required init?(coder aDecoder: NSCoder) {

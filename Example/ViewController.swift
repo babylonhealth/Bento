@@ -11,6 +11,7 @@ class ViewController: UIViewController {
         case first
         case second
         case third
+        case forth
     }
 
     enum RowId: Hashable {
@@ -55,6 +56,7 @@ class ViewController: UIViewController {
                 |---+ renderToggle()
                 |---+ renderIconText()
                 |-+ renderThirdSection()
+                |-+ renderForthSection()
 
             tableView.render(box)
         }
@@ -109,6 +111,11 @@ class ViewController: UIViewController {
                            header: IconTextComponent(image: nil, title: "WiFi"),
                            footer: EmptySpaceComponent(spec: EmptySpaceComponent.Spec(height: 20, color: .black)))
         }
+    }
+
+    private func renderForthSection() -> Section<SectionId, RowId> {
+        return Section(id: .forth,
+                           footer: LoadingIndicatorComponent(isLoading: true))
     }
 
     private func renderToggle() -> Node<RowId> {

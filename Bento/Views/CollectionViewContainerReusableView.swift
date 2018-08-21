@@ -7,6 +7,10 @@ final class CollectionViewContainerReusableView: UICollectionReusableView {
         }
     }
 
+    var contentView: UIView {
+        return self
+    }
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         backgroundColor = .clear
