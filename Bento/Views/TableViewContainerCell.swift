@@ -11,6 +11,7 @@ final class TableViewContainerCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         selectionStyle = .none
         backgroundColor = .clear
+        contentView.backgroundColor = .clear
     }
 
     required init?(coder aDecoder: NSCoder) {
