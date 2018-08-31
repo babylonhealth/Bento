@@ -1,6 +1,8 @@
 import FlexibleDiff
 import UIKit
 
+private let emptyReuseIdentifier = "_bento_empty"
+
 final class CollectionViewDataSource<SectionID: Hashable, ItemID: Hashable>
     : NSObject, UICollectionViewDataSource, FocusEligibilitySourceImplementing {
     var sections: [Section<SectionID, ItemID>] = []
@@ -61,25 +63,23 @@ final class CollectionViewDataSource<SectionID: Hashable, ItemID: Hashable>
 
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         let supplement = Supplement(collectionViewSupplementaryKind: kind)
+        knownSupplements.insert(supplement)
 
-        if let component = sections[indexPath.section].supplements[supplement] {
-            knownSupplements.insert(supplement)
+        let component = sections[indexPath.section].supplements[supplement]
+        let reuseIdentifier = component?.reuseIdentifier ?? emptyReuseIdentifier
 
-            let reuseIdentifier = component.reuseIdentifier
-            collectionView.register(CollectionViewContainerReusableView.self,
-                                    forSupplementaryViewOfKind: kind,
-                                    withReuseIdentifier: reuseIdentifier)
-            let view = collectionView.dequeueReusableSupplementaryView(
-                ofKind: kind,
-                withReuseIdentifier: reuseIdentifier,
-                for: indexPath
-            ) as! CollectionViewContainerReusableView
+        collectionView.register(CollectionViewContainerReusableView.self,
+                                forSupplementaryViewOfKind: kind,
+                                withReuseIdentifier: reuseIdentifier)
 
-            view.bind(component)
-            return view
-        } else {
-            return UICollectionReusableView()
-        }
+        let view = collectionView.dequeueReusableSupplementaryView(
+            ofKind: kind,
+            withReuseIdentifier: reuseIdentifier,
+            for: indexPath
+        ) as! CollectionViewContainerReusableView
+
+        view.bind(component)
+        return view
     }
 
     private func node(at indexPath: IndexPath) -> Node<ItemID> {

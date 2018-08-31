@@ -27,14 +27,14 @@ struct TableViewSectionDiff<SectionId: Hashable, RowId: Hashable> {
 
     private func apply(diff: SectionedChangeset, to tableView: UITableView) {
         tableView.beginUpdates()
-        for section in diff.sections.mutations {
-            if let headerView = tableView.headerView(forSection: section) {
-                let component = newSections[section].supplements[.header]
+        for (source, destination) in diff.sections.mutationIndexPairs {
+            if let headerView = tableView.headerView(forSection: source) {
+               let component = newSections[destination].supplements[.header]
                 (headerView as? BentoReusableView)?.bind(component)
             }
 
-            if let footerView = tableView.footerView(forSection: section) {
-                let component = newSections[section].supplements[.footer]
+            if let footerView = tableView.footerView(forSection: source) {
+               let component = newSections[destination].supplements[.footer]
                 (footerView as? BentoReusableView)?.bind(component)
             }
         }
@@ -52,15 +52,12 @@ struct TableViewSectionDiff<SectionId: Hashable, RowId: Hashable> {
             tableView.deleteRows(at: sectionMutation.deletedIndexPaths, with: animation.rowDeletion)
             tableView.insertRows(at: sectionMutation.insertedIndexPaths, with: animation.rowInsertion)
             tableView.perform(moves: sectionMutation.movedIndexPaths)
-            [sectionMutation.changeset.moves.lazy
-                .compactMap { $0.isMutated ? ($0.source, $0.destination) : nil },
-             sectionMutation.changeset.mutations.lazy.map { ($0, $0) }]
-                .joined()
-                .forEach { source, destination in
-                    guard let cell = tableView.cellForRow(at: [sectionMutation.source, source]) as? BentoReusableView
-                        else { return }
-                    let node = newSections[sectionMutation.source].items[source]
-                    cell.bind(node.component)
+
+            for (source, destination) in sectionMutation.changeset.mutationIndexPairs {
+                guard let cell = tableView.cellForRow(at: [sectionMutation.source, source]) as? BentoReusableView
+                    else { return }
+                let node = newSections[sectionMutation.source].items[source]
+                cell.bind(node.component)
             }
         }
     }

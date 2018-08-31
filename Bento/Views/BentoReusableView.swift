@@ -1,5 +1,6 @@
 protocol BentoReusableView: AnyObject {
     var containedView: UIView? { get set }
+    var contentView: UIView { get }
 }
 
 extension BentoReusableView {
@@ -24,8 +25,8 @@ extension BentoReusableView {
 extension BentoReusableView where Self: UIView {
     func containerViewDidChange(from old: UIView?, to new: UIView?) {
         func add(_ view: UIView) {
-            addSubview(view)
-            view.pinToEdges(of: self)
+            contentView.addSubview(view)
+            view.pinToEdges(of: contentView)
         }
 
         switch (old, new) {

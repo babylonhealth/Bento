@@ -14,7 +14,7 @@ extension UITableView: BentoCollectionView {
 
 extension UICollectionView: BentoCollectionView {
     func indexPath(for cell: CollectionViewContainerCell) -> IndexPath? {
-        return indexPath(for: cell)
+        return indexPath(for: cell as UICollectionViewCell)
     }
 
     func visibleCell(at indexPath: IndexPath) -> CollectionViewContainerCell? {
