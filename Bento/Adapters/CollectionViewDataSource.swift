@@ -21,12 +21,8 @@ final class CollectionViewDataSource<SectionID: Hashable, ItemID: Hashable>
 
     func update(sections: [Section<SectionID, ItemID>], animated: Bool = true) {
         guard let collectionView = collectionView else { return }
-        if animated {
-            let diff = CollectionViewSectionDiff(oldSections: self.sections,
-                                                 newSections: sections,
-                                                 knownSupplements: knownSupplements)
-            self.sections = sections
-            diff.apply(to: collectionView)
+        if animated && collectionView.window != nil {
+            update(sections: sections, completion: nil)
         } else {
             self.sections = sections
             collectionView.reloadData()
@@ -35,6 +31,13 @@ final class CollectionViewDataSource<SectionID: Hashable, ItemID: Hashable>
 
     func update(sections: [Section<SectionID, ItemID>], completion: (() -> Void)?) {
         guard let collectionView = collectionView else { return }
+        if collectionView.window == nil {
+            // Just reload collection view if it's not in the window hierarchy
+            self.sections = sections
+            collectionView.reloadData()
+            completion?()
+            return
+        }
 
         let diff = CollectionViewSectionDiff(oldSections: self.sections,
                                              newSections: sections,
