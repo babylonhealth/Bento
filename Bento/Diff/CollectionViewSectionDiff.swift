@@ -97,12 +97,12 @@ extension UICollectionView {
             perform(moves: sectionMutation.movedCollectionIndexPaths)
 
             for (source, destination) in sectionMutation.changeset.mutationIndexPairs {
-                guard let cell = cellForItem(at: [sectionMutation.source, source]) as? CollectionViewContainerCell
-                    else { return }
-                let component = newSections[sectionMutation.destination]
-                    .items[destination]
-                    .component
-                cell.bind(component)
+                if let cell = cellForItem(at: [sectionMutation.source, source]) as? CollectionViewContainerCell {
+                    let component = newSections[sectionMutation.destination]
+                        .items[destination]
+                        .component
+                    cell.bind(component)
+                }
             }
         }
     }
