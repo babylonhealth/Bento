@@ -54,10 +54,10 @@ struct TableViewSectionDiff<SectionId: Hashable, RowId: Hashable> {
             tableView.perform(moves: sectionMutation.movedIndexPaths)
 
             for (source, destination) in sectionMutation.changeset.mutationIndexPairs {
-                guard let cell = tableView.cellForRow(at: [sectionMutation.source, source]) as? BentoReusableView
-                    else { return }
-                let node = newSections[sectionMutation.source].items[source]
-                cell.bind(node.component)
+                if let cell = tableView.cellForRow(at: [sectionMutation.source, source]) as? BentoReusableView {
+                    let node = newSections[sectionMutation.source].items[source]
+                    cell.bind(node.component)
+                }
             }
         }
     }
