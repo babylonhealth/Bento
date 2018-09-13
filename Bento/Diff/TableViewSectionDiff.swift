@@ -55,7 +55,7 @@ struct TableViewSectionDiff<SectionId: Hashable, RowId: Hashable> {
 
             for (source, destination) in sectionMutation.changeset.mutationIndexPairs {
                 if let cell = tableView.cellForRow(at: [sectionMutation.source, source]) as? BentoReusableView {
-                    let node = newSections[sectionMutation.source].items[source]
+                    let node = newSections[sectionMutation.destination].items[destination]
                     cell.bind(node.component)
                 }
             }
