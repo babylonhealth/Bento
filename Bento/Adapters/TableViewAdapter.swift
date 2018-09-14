@@ -110,10 +110,15 @@ open class TableViewAdapterBase<SectionID: Hashable, ItemID: Hashable>
             return
         }
 
-        component.delete()
         sections[indexPath.section].items.remove(at: indexPath.row)
+
+        CATransaction.begin()
+        CATransaction.setCompletionBlock {
+            component.delete()
+        }
         tableView?.deleteRows(at: [indexPath], with: .left)
         actionPerformed?(true)
+        CATransaction.commit()
     }
 
     private func node(at indexPath: IndexPath) -> Node<ItemID> {
