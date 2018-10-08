@@ -40,8 +40,8 @@ struct TableViewSectionDiff<SectionId: Hashable, RowId: Hashable> {
         }
         tableView.insertSections(diff.sections.inserts, with: animation.sectionInsertion)
         tableView.deleteSections(diff.sections.removals, with: animation.sectionDeletion)
+        tableView.moveSections(diff.sections.moves, animation: animation)
         apply(sectionMutations: diff.mutatedSections, to: tableView, with: animation)
-        tableView.moveSections(diff.sections.moves)
         tableView.endUpdates()
     }
 
@@ -94,10 +94,9 @@ extension UITableView {
         let destination: IndexPath
     }
 
-    func moveSections(_ moves: [Changeset.Move]) {
-        for move in moves {
-            moveSection(move.source, toSection: move.destination)
-        }
+    func moveSections(_ moves: [Changeset.Move], animation: TableViewAnimation) {
+        deleteSections(IndexSet(moves.map { $0.source }), with: animation.sectionDeletion)
+        insertSections(IndexSet(moves.map { $0.destination }), with: animation.sectionInsertion)
     }
 
     func perform(moves: [Move]) {
