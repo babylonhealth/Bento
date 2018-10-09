@@ -75,7 +75,7 @@ extension SectionedChangeset.MutatedSection {
     var movedIndexPaths: [UITableView.Move] {
         return changeset.moves.map {
             let source = IndexPath(row: $0.source, section: self.source)
-            let destination = IndexPath(row: $0.destination, section: self.source)
+            let destination = IndexPath(row: $0.destination, section: self.destination)
 
             return UITableView.Move(source: source, destination: destination)
         }
