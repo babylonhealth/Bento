@@ -161,7 +161,7 @@
 		58FC4421207CF29F00DA3614 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		58FC442C207CF2F500DA3614 /* Bento.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Bento.podspec; sourceTree = "<group>"; };
 		58FC442E207CF37700DA3614 /* script */ = {isa = PBXFileReference; lastKnownFileType = folder; path = script; sourceTree = "<group>"; };
-		58FC4435207CF7F100DA3614 /* circle.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = circle.yml; sourceTree = "<group>"; };
+		58FC4435207CF7F100DA3614 /* config.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = config.yml; path = .circleci/config.yml; sourceTree = "<group>"; };
 		58FC4437207CFBD600DA3614 /* MovieComponentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MovieComponentView.swift; sourceTree = "<group>"; };
 		58FC4438207CFBD600DA3614 /* LoadingIndicatorView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoadingIndicatorView.xib; sourceTree = "<group>"; };
 		58FC4439207CFBD700DA3614 /* SegmetControlView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SegmetControlView.xib; sourceTree = "<group>"; };
@@ -265,7 +265,7 @@
 				74C7FE9D2083A9AA005C8B53 /* ReactiveCocoa.framework */,
 				74C7FE9A2083A99F005C8B53 /* ReactiveSwift.framework */,
 				74C7FE972083A990005C8B53 /* Result.framework */,
-				58FC4435207CF7F100DA3614 /* circle.yml */,
+				58FC4435207CF7F100DA3614 /* config.yml */,
 				58FC442C207CF2F500DA3614 /* Bento.podspec */,
 				58FC442E207CF37700DA3614 /* script */,
 				5829D267200FB092001E020D /* Example */,
