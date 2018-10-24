@@ -1,0 +1,7 @@
+#include "Framework.Base.xcconfig"
+
+VALIDATE_PRODUCT = YES
+SWIFT_COMPILATION_MODE = wholemodule
+SWIFT_OPTIMIZATION_LEVEL = -O
+ENABLE_NS_ASSERTIONS = NO
+DEBUG_INFORMATION_FORMAT = dwarf-with-dsym

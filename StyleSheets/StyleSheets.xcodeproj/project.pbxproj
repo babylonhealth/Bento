@@ -51,6 +51,9 @@
 		6554A9F22136A1FB00D84BD4 /* StyleSheetsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = StyleSheetsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		6554A9F62136A1FB00D84BD4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6554A9FD2136A20A00D84BD4 /* StyleSheetTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StyleSheetTests.swift; sourceTree = "<group>"; };
+		A6C9C8DB21807A1D00261906 /* Framework.Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Framework.Debug.xcconfig; sourceTree = "<group>"; };
+		A6C9C8DC21807A1D00261906 /* Framework.Base.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Framework.Base.xcconfig; sourceTree = "<group>"; };
+		A6C9C8DD21807A1D00261906 /* Framework.Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Framework.Release.xcconfig; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -78,6 +81,7 @@
 				25EFC8C3217BAB260056D4B9 /* StyleSheets.podspec */,
 				6554A9D2213699B600D84BD4 /* StyleSheets */,
 				6554A9F32136A1FB00D84BD4 /* StyleSheetsTests */,
+				A6C9C8DA21807A1D00261906 /* BuildConfigs */,
 				6554A9D1213699B600D84BD4 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -117,6 +121,17 @@
 				6554A9F62136A1FB00D84BD4 /* Info.plist */,
 			);
 			path = StyleSheetsTests;
+			sourceTree = "<group>";
+		};
+		A6C9C8DA21807A1D00261906 /* BuildConfigs */ = {
+			isa = PBXGroup;
+			children = (
+				A6C9C8DB21807A1D00261906 /* Framework.Debug.xcconfig */,
+				A6C9C8DC21807A1D00261906 /* Framework.Base.xcconfig */,
+				A6C9C8DD21807A1D00261906 /* Framework.Release.xcconfig */,
+			);
+			name = BuildConfigs;
+			path = ../BuildConfigs;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -326,6 +341,7 @@
 		};
 		6554A9D9213699B600D84BD4 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = A6C9C8DB21807A1D00261906 /* Framework.Debug.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
@@ -351,6 +367,7 @@
 		};
 		6554A9FB2136A1FB00D84BD4 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = A6C9C8DB21807A1D00261906 /* Framework.Debug.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				DEBUG_INFORMATION_FORMAT = dwarf;
@@ -426,6 +443,7 @@
 		};
 		BA21245021413188004AE9B7 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = A6C9C8DD21807A1D00261906 /* Framework.Release.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
@@ -451,6 +469,7 @@
 		};
 		BA21245121413188004AE9B7 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = A6C9C8DD21807A1D00261906 /* Framework.Release.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				DEBUG_INFORMATION_FORMAT = dwarf;
