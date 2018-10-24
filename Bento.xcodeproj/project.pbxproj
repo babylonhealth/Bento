@@ -72,20 +72,15 @@
 		740921B820ACE5EC00B59F5C /* ConcatenationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 740921B720ACE5EC00B59F5C /* ConcatenationTests.swift */; };
 		74208FA12083B1F00062CC8D /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 74208FA22083B1F00062CC8D /* Nimble.framework */; };
 		747523C72083A6660030CCAA /* FlexibleDiff.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 747523C82083A6660030CCAA /* FlexibleDiff.framework */; };
-		74C7FE982083A990005C8B53 /* Result.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 74C7FE972083A990005C8B53 /* Result.framework */; };
-		74C7FE992083A990005C8B53 /* Result.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 74C7FE972083A990005C8B53 /* Result.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		74C7FE9B2083A99F005C8B53 /* ReactiveSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 74C7FE9A2083A99F005C8B53 /* ReactiveSwift.framework */; };
-		74C7FE9C2083A99F005C8B53 /* ReactiveSwift.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 74C7FE9A2083A99F005C8B53 /* ReactiveSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		74C7FE9E2083A9AA005C8B53 /* ReactiveCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 74C7FE9D2083A9AA005C8B53 /* ReactiveCocoa.framework */; };
-		74C7FE9F2083A9AA005C8B53 /* ReactiveCocoa.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 74C7FE9D2083A9AA005C8B53 /* ReactiveCocoa.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		74C7FEA12083A9B4005C8B53 /* Kingfisher.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 74C7FEA02083A9B4005C8B53 /* Kingfisher.framework */; };
-		74C7FEA22083A9B4005C8B53 /* Kingfisher.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 74C7FEA02083A9B4005C8B53 /* Kingfisher.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		74C7FEA42083AC0E005C8B53 /* ReactiveFeedback.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 74C7FEA32083AC0E005C8B53 /* ReactiveFeedback.framework */; };
-		74C7FEA52083AC0E005C8B53 /* ReactiveFeedback.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 74C7FEA32083AC0E005C8B53 /* ReactiveFeedback.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		9A4DB3E1212CB3710079D5AE /* Changeset+MutationIndexPairs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A4DB3E0212CB3710079D5AE /* Changeset+MutationIndexPairs.swift */; };
 		9AF4786A21205E3100F87E21 /* Supplement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AF4786921205E3100F87E21 /* Supplement.swift */; };
 		9AF4786C2120CA7500F87E21 /* BentoReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AF4786B2120CA7500F87E21 /* BentoReusableView.swift */; };
 		A67A873520B5D2D100BC2BAC /* RenderableTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A67A873420B5D2D100BC2BAC /* RenderableTests.swift */; };
+		A6C9C8B92180781A00261906 /* ReactiveFeedback.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A6C9C8B62180780E00261906 /* ReactiveFeedback.framework */; };
+		A6C9C8BA2180782500261906 /* Kingfisher.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A6C9C8B82180780E00261906 /* Kingfisher.framework */; };
+		A6C9C8BB2180782500261906 /* ReactiveCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A6C9C8B42180780E00261906 /* ReactiveCocoa.framework */; };
+		A6C9C8BC2180782500261906 /* ReactiveSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A6C9C8B52180780E00261906 /* ReactiveSwift.framework */; };
+		A6C9C8BD2180782500261906 /* Result.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A6C9C8B72180780E00261906 /* Result.framework */; };
 		A9509880661501C40B50E453 /* TableViewHeaderFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A950970749997A21E1BF7777 /* TableViewHeaderFooterView.swift */; };
 		A9509C4FC3664040FF3649CD /* Node.swift in Sources */ = {isa = PBXBuildFile; fileRef = A95093DB10046D731018127D /* Node.swift */; };
 		A9509FB12CAD89179FAA03B0 /* Box.swift in Sources */ = {isa = PBXBuildFile; fileRef = A950967CC717BBF3B02B766D /* Box.swift */; };
@@ -115,12 +110,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				74C7FEA52083AC0E005C8B53 /* ReactiveFeedback.framework in Embed Frameworks */,
-				74C7FEA22083A9B4005C8B53 /* Kingfisher.framework in Embed Frameworks */,
 				58FC4431207CF3CD00DA3614 /* Bento.framework in Embed Frameworks */,
-				74C7FE992083A990005C8B53 /* Result.framework in Embed Frameworks */,
-				74C7FE9C2083A99F005C8B53 /* ReactiveSwift.framework in Embed Frameworks */,
-				74C7FE9F2083A9AA005C8B53 /* ReactiveCocoa.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -193,11 +183,6 @@
 		740921B720ACE5EC00B59F5C /* ConcatenationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConcatenationTests.swift; sourceTree = "<group>"; };
 		74208FA22083B1F00062CC8D /* Nimble.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Nimble.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		747523C82083A6660030CCAA /* FlexibleDiff.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = FlexibleDiff.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		74C7FE972083A990005C8B53 /* Result.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Result.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		74C7FE9A2083A99F005C8B53 /* ReactiveSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ReactiveSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		74C7FE9D2083A9AA005C8B53 /* ReactiveCocoa.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ReactiveCocoa.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		74C7FEA02083A9B4005C8B53 /* Kingfisher.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Kingfisher.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		74C7FEA32083AC0E005C8B53 /* ReactiveFeedback.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ReactiveFeedback.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9A3EF77F205D866F00D043AC /* AnyRenderableTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnyRenderableTests.swift; sourceTree = "<group>"; };
 		9A4DB3E0212CB3710079D5AE /* Changeset+MutationIndexPairs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Changeset+MutationIndexPairs.swift"; sourceTree = "<group>"; };
 		9A7846FA205D89C000FA597E /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Platforms/iPhoneOS.platform/Developer/Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
@@ -208,6 +193,14 @@
 		9AF4786921205E3100F87E21 /* Supplement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Supplement.swift; sourceTree = "<group>"; };
 		9AF4786B2120CA7500F87E21 /* BentoReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BentoReusableView.swift; sourceTree = "<group>"; };
 		A67A873420B5D2D100BC2BAC /* RenderableTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RenderableTests.swift; sourceTree = "<group>"; };
+		A6C9C8AE218072CD00261906 /* Framework.Debug.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Framework.Debug.xcconfig; sourceTree = "<group>"; };
+		A6C9C8AF218072CD00261906 /* Framework.Base.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Framework.Base.xcconfig; sourceTree = "<group>"; };
+		A6C9C8B0218072CD00261906 /* Framework.Release.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Framework.Release.xcconfig; sourceTree = "<group>"; };
+		A6C9C8B42180780E00261906 /* ReactiveCocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ReactiveCocoa.framework; path = "../../../Library/Developer/Xcode/DerivedData/Bento-eondxvvtkrzdzbecwbypokilnrrj/Build/Products/Debug-iphoneos/ReactiveCocoa.framework"; sourceTree = "<group>"; };
+		A6C9C8B52180780E00261906 /* ReactiveSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ReactiveSwift.framework; path = "../../../Library/Developer/Xcode/DerivedData/Bento-eondxvvtkrzdzbecwbypokilnrrj/Build/Products/Debug-iphoneos/ReactiveSwift.framework"; sourceTree = "<group>"; };
+		A6C9C8B62180780E00261906 /* ReactiveFeedback.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ReactiveFeedback.framework; path = "../../../Library/Developer/Xcode/DerivedData/Bento-eondxvvtkrzdzbecwbypokilnrrj/Build/Products/Debug-iphoneos/ReactiveFeedback.framework"; sourceTree = "<group>"; };
+		A6C9C8B72180780E00261906 /* Result.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Result.framework; path = "../../../Library/Developer/Xcode/DerivedData/Bento-eondxvvtkrzdzbecwbypokilnrrj/Build/Products/Debug-iphoneos/Result.framework"; sourceTree = "<group>"; };
+		A6C9C8B82180780E00261906 /* Kingfisher.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Kingfisher.framework; path = "../../../Library/Developer/Xcode/DerivedData/Bento-eondxvvtkrzdzbecwbypokilnrrj/Build/Products/Debug-iphoneos/Kingfisher.framework"; sourceTree = "<group>"; };
 		A95093DB10046D731018127D /* Node.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Node.swift; sourceTree = "<group>"; };
 		A950967CC717BBF3B02B766D /* Box.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Box.swift; sourceTree = "<group>"; };
 		A950970749997A21E1BF7777 /* TableViewHeaderFooterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewHeaderFooterView.swift; sourceTree = "<group>"; };
@@ -219,12 +212,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				74C7FEA42083AC0E005C8B53 /* ReactiveFeedback.framework in Frameworks */,
-				74C7FEA12083A9B4005C8B53 /* Kingfisher.framework in Frameworks */,
+				A6C9C8BD2180782500261906 /* Result.framework in Frameworks */,
+				A6C9C8BA2180782500261906 /* Kingfisher.framework in Frameworks */,
 				58FC4430207CF3CD00DA3614 /* Bento.framework in Frameworks */,
-				74C7FE982083A990005C8B53 /* Result.framework in Frameworks */,
-				74C7FE9B2083A99F005C8B53 /* ReactiveSwift.framework in Frameworks */,
-				74C7FE9E2083A9AA005C8B53 /* ReactiveCocoa.framework in Frameworks */,
+				A6C9C8B92180781A00261906 /* ReactiveFeedback.framework in Frameworks */,
+				A6C9C8BC2180782500261906 /* ReactiveSwift.framework in Frameworks */,
+				A6C9C8BB2180782500261906 /* ReactiveCocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -260,17 +253,13 @@
 		5829D25C200FB092001E020D = {
 			isa = PBXGroup;
 			children = (
-				74C7FEA32083AC0E005C8B53 /* ReactiveFeedback.framework */,
-				74C7FEA02083A9B4005C8B53 /* Kingfisher.framework */,
-				74C7FE9D2083A9AA005C8B53 /* ReactiveCocoa.framework */,
-				74C7FE9A2083A99F005C8B53 /* ReactiveSwift.framework */,
-				74C7FE972083A990005C8B53 /* Result.framework */,
 				58FC4435207CF7F100DA3614 /* config.yml */,
 				58FC442C207CF2F500DA3614 /* Bento.podspec */,
 				58FC442E207CF37700DA3614 /* script */,
 				5829D267200FB092001E020D /* Example */,
 				58BA755D2016303B0050D5F1 /* Bento */,
 				58FC441E207CF29F00DA3614 /* BentoTests */,
+				A6C9C8AD218072CD00261906 /* BuildConfigs */,
 				5829D266200FB092001E020D /* Products */,
 				7D7D5AFB203495BA731D7A3E /* Frameworks */,
 			);
@@ -401,11 +390,26 @@
 		7D7D5AFB203495BA731D7A3E /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				A6C9C8B62180780E00261906 /* ReactiveFeedback.framework */,
+				A6C9C8B82180780E00261906 /* Kingfisher.framework */,
+				A6C9C8B42180780E00261906 /* ReactiveCocoa.framework */,
+				A6C9C8B52180780E00261906 /* ReactiveSwift.framework */,
+				A6C9C8B72180780E00261906 /* Result.framework */,
 				74208FA22083B1F00062CC8D /* Nimble.framework */,
 				747523C82083A6660030CCAA /* FlexibleDiff.framework */,
 				9A7846FA205D89C000FA597E /* XCTest.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		A6C9C8AD218072CD00261906 /* BuildConfigs */ = {
+			isa = PBXGroup;
+			children = (
+				A6C9C8AE218072CD00261906 /* Framework.Debug.xcconfig */,
+				A6C9C8AF218072CD00261906 /* Framework.Base.xcconfig */,
+				A6C9C8B0218072CD00261906 /* Framework.Release.xcconfig */,
+			);
+			path = BuildConfigs;
 			sourceTree = "<group>";
 		};
 		A950945F6360B851C3E87B61 /* Adapters */ = {
@@ -834,6 +838,7 @@
 		};
 		58BA75662016303B0050D5F1 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = A6C9C8AE218072CD00261906 /* Framework.Debug.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
@@ -845,7 +850,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = "$(SRCROOT)/Bento/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.babylonhealth.FormsKit;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
@@ -860,6 +865,7 @@
 		};
 		58BA75672016303B0050D5F1 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = A6C9C8B0218072CD00261906 /* Framework.Release.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
@@ -871,7 +877,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = "$(SRCROOT)/Bento/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.babylonhealth.FormsKit;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
@@ -885,10 +891,11 @@
 		};
 		58FC4425207CF29F00DA3614 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = A6C9C8AE218072CD00261906 /* Framework.Debug.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = BentoTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.babylonhealth.BentoTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -899,10 +906,11 @@
 		};
 		58FC4426207CF29F00DA3614 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = A6C9C8B0218072CD00261906 /* Framework.Release.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = BentoTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.babylonhealth.BentoTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
