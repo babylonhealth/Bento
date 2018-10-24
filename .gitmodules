@@ -22,3 +22,6 @@
 [submodule "Carthage/Checkouts/Result"]
 	path = Carthage/Checkouts/Result
 	url = https://github.com/antitypical/Result.git
+[submodule "Carthage/Checkouts/ios-snapshot-test-case"]
+	path = Carthage/Checkouts/ios-snapshot-test-case
+	url = https://github.com/uber/ios-snapshot-test-case.git
