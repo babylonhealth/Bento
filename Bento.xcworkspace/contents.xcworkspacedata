@@ -5,27 +5,6 @@
       location = "group:StyleSheets/StyleSheets.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:Carthage/Checkouts/Nimble/Nimble.xcodeproj">
-   </FileRef>
-   <FileRef
-      location = "group:Carthage/Checkouts/ReactiveFeedback/ReactiveFeedback.xcodeproj">
-   </FileRef>
-   <FileRef
-      location = "group:Carthage/Checkouts/Kingfisher/Kingfisher.xcodeproj">
-   </FileRef>
-   <FileRef
-      location = "group:Carthage/Checkouts/ReactiveCocoa/ReactiveCocoa.xcodeproj">
-   </FileRef>
-   <FileRef
-      location = "group:Carthage/Checkouts/ReactiveSwift/ReactiveSwift.xcodeproj">
-   </FileRef>
-   <FileRef
-      location = "group:Carthage/Checkouts/Result/Result.xcodeproj">
-   </FileRef>
-   <FileRef
-      location = "group:Carthage/Checkouts/FlexibleDiff/FlexibleDiff.xcodeproj">
-   </FileRef>
-   <FileRef
       location = "group:Bento.xcodeproj">
    </FileRef>
 </Workspace>
