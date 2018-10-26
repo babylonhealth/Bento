@@ -104,6 +104,20 @@
                ReferencedContainer = "container:BentoKit.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "NO"
+            buildForProfiling = "NO"
+            buildForArchiving = "NO"
+            buildForAnalyzing = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "B31987EF1AB782D000B0A900"
+               BuildableName = "FBSnapshotTestCase.framework"
+               BlueprintName = "FBSnapshotTestCase iOS"
+               ReferencedContainer = "container:../Carthage/Checkouts/ios-snapshot-test-case/FBSnapshotTestCase.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
       </BuildActionEntries>
    </BuildAction>
    <TestAction
