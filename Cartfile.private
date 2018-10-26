@@ -1,7 +1,7 @@
 # Example app
-github "ReactiveCocoa/ReactiveCocoa" ~> 7.2
 github "Babylonpartners/ReactiveFeedback" ~> 0.2
 github "onevcat/Kingfisher" ~> 4.7
 
 # Tests
+github "uber/ios-snapshot-test-case" ~> 4.0
 github "Quick/Nimble" ~> 7.1

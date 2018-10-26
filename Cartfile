@@ -1,1 +1,2 @@
+github "ReactiveCocoa/ReactiveCocoa" ~> 8.0
 github "RACCommunity/FlexibleDiff" ~> 0.0.5
