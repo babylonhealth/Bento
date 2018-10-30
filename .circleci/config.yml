@@ -14,7 +14,7 @@ jobs:
       - run: script/test iphonesimulator "platform=iOS Simulator,name=iPhone 6,OS=12.0" Bento
       - run: script/test iphonesimulator "platform=iOS Simulator,name=iPhone 6,OS=12.0" BentoKit
       - run: script/test iphonesimulator "platform=iOS Simulator,name=iPhone 6,OS=12.0" StyleSheets
-      - run: script/test iphonesimulator "platform=iOS Simulator,name=iPhone 6,OS=12.0" Example build
+      - run: script/test iphonesimulator "platform=iOS Simulator,name=iPhone 6,OS=12.0" BentoExample build
 
 workflows:
   version: 2
