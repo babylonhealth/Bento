@@ -16,7 +16,6 @@ set -o pipefail
 xcodebuild $XCODE_ACTION \
     -workspace Bento.xcworkspace \
     -scheme "$3" \
-    -sdk "$1" \
     -destination "$2" \
     -configuration Release \
     ENABLE_TESTABILITY=YES \
