@@ -79,6 +79,13 @@
 			remoteGlobalIDString = 580B60A4215D2C3400A69E87;
 			remoteInfo = BentoKit;
 		};
+		9AE9565E2189105A005A8C69 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 580B609C215D2C3300A69E87 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 580B616A215E3F7400A69E87;
+			remoteInfo = BentoKitPlaygroundSupport;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
@@ -458,6 +465,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				9AE9565F2189105A005A8C69 /* PBXTargetDependency */,
 				5880117E21626DCE0084EE07 /* PBXTargetDependency */,
 			);
 			name = BentoKitTests;
@@ -615,6 +623,11 @@
 			isa = PBXTargetDependency;
 			target = 580B60A4215D2C3400A69E87 /* BentoKit */;
 			targetProxy = 5880117D21626DCE0084EE07 /* PBXContainerItemProxy */;
+		};
+		9AE9565F2189105A005A8C69 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 580B616A215E3F7400A69E87 /* BentoKitPlaygroundSupport */;
+			targetProxy = 9AE9565E2189105A005A8C69 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 

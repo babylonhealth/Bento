@@ -16,7 +16,7 @@
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "9A4CCB171F95DEF000ACF758"
                BuildableName = "FlexibleDiff.framework"
-               BlueprintName = "FlexibleDiff"
+               BlueprintName = "FlexibleDiff-iOS"
                ReferencedContainer = "container:../Carthage/Checkouts/FlexibleDiff/FlexibleDiff.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
