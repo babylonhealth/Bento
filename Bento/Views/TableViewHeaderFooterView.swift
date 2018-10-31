@@ -7,6 +7,8 @@ final class TableViewHeaderFooterView: UITableViewHeaderFooterView {
         }
     }
 
+    var component: AnyRenderable?
+
     override init(reuseIdentifier: String?) {
         super.init(reuseIdentifier: reuseIdentifier)
         let view = UIView()
@@ -20,4 +22,4 @@ final class TableViewHeaderFooterView: UITableViewHeaderFooterView {
     }
 }
 
-extension TableViewHeaderFooterView: BentoReusableView {}
+extension TableViewHeaderFooterView: BentoView {}

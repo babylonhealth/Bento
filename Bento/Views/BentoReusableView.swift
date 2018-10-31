@@ -1,10 +1,17 @@
-protocol BentoReusableView: AnyObject {
+typealias BentoView = BentoReusableView & ComponentAwareView
+
+public protocol BentoReusableView: AnyObject, ViewLifecycleAware {
     var containedView: UIView? { get set }
     var contentView: UIView { get }
 }
 
-extension BentoReusableView {
+protocol ComponentAwareView: AnyObject {
+    var component: AnyRenderable? { get set }
+}
+
+extension BentoReusableView where Self: ComponentAwareView {
     func bind(_ component: AnyRenderable?) {
+        self.component = component
         if let component = component {
             let renderingView: UIView
 
@@ -19,6 +26,20 @@ extension BentoReusableView {
         } else {
             containedView = nil
         }
+    }
+
+    func willDisplayView() {
+        component?
+            .cast(to: ComponentLifecycleAware.self)?
+            .willDisplayItem()
+        (containedView as? ViewLifecycleAware)?.willDisplayView()
+    }
+
+    func didEndDisplayingView() {
+        component?
+            .cast(to: ComponentLifecycleAware.self)?
+            .didEndDisplayingItem()
+        (containedView as? ViewLifecycleAware)?.didEndDisplayingView()
     }
 }
 

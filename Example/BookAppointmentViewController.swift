@@ -5,7 +5,8 @@ import ReactiveFeedback
 import enum Result.NoError
 
 final class CustomTableViewAdapter<SectionId: Hashable, RowId: Hashable>: TableViewAdapterBase<SectionId, RowId>, UITableViewDataSource, UITableViewDelegate {
-    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        super.tableView(tableView, willDisplay: cell, forRowAt: indexPath)
         print("Custom Table View Adapter: Will Display Cell at \(indexPath)")
     }
 

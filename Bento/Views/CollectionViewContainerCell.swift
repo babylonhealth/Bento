@@ -7,6 +7,8 @@ final class CollectionViewContainerCell: UICollectionViewCell {
         }
     }
 
+    var component: AnyRenderable?
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         backgroundColor = .clear
@@ -18,4 +20,4 @@ final class CollectionViewContainerCell: UICollectionViewCell {
     }
 }
 
-extension CollectionViewContainerCell: BentoReusableView {}
+extension CollectionViewContainerCell: BentoView {}
