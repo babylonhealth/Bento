@@ -189,3 +189,7 @@ backboneLocalizationBuilder
 fastlane/README.md
 fastlane/report.xml
 vendor/
+
+# Snapshots
+
+Snapshots/FailureDiffs/

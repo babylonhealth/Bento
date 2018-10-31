@@ -87,14 +87,14 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		58FC4422207CF29F00DA3614 /* PBXContainerItemProxy */ = {
+		58FC4432207CF3CD00DA3614 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 5829D25D200FB092001E020D /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 5829D264200FB092001E020D;
-			remoteInfo = Example;
+			remoteGlobalIDString = 58BA755B2016303B0050D5F1;
+			remoteInfo = Bento;
 		};
-		58FC4432207CF3CD00DA3614 /* PBXContainerItemProxy */ = {
+		9AE9565C21890FB1005A8C69 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 5829D25D200FB092001E020D /* Project object */;
 			proxyType = 1;
@@ -499,7 +499,7 @@
 			buildRules = (
 			);
 			dependencies = (
-				58FC4423207CF29F00DA3614 /* PBXTargetDependency */,
+				9AE9565D21890FB1005A8C69 /* PBXTargetDependency */,
 			);
 			name = BentoTests;
 			productName = BentoTests;
@@ -667,15 +667,15 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		58FC4423207CF29F00DA3614 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 5829D264200FB092001E020D /* Example */;
-			targetProxy = 58FC4422207CF29F00DA3614 /* PBXContainerItemProxy */;
-		};
 		58FC4433207CF3CD00DA3614 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 58BA755B2016303B0050D5F1 /* Bento */;
 			targetProxy = 58FC4432207CF3CD00DA3614 /* PBXContainerItemProxy */;
+		};
+		9AE9565D21890FB1005A8C69 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 58BA755B2016303B0050D5F1 /* Bento */;
+			targetProxy = 9AE9565C21890FB1005A8C69 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 

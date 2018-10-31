@@ -82,7 +82,7 @@ final class PaginationViewModel {
     }
 
     private static func pagingFeedback() -> Feedback<State, Event> {
-        return Feedback<State, Event>(query: { $0.nextPage }) { (nextPage) -> SignalProducer<Event, NoError> in
+        return Feedback<State, Event>(skippingRepeated: { $0.nextPage }) { (nextPage) -> SignalProducer<Event, NoError> in
             URLSession.shared.fetchMovies(page: nextPage)
                 .map(Event.response)
                 .flatMapError { error in
