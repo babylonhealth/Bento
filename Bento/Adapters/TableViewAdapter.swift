@@ -103,6 +103,41 @@ open class TableViewAdapterBase<SectionID: Hashable, ItemID: Hashable>
         return UISwipeActionsConfiguration(actions: [action])
     }
 
+    @objc(tableView:willDisplayCell:forRowAtIndexPath:)
+    open func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        guard let cell = cell as? BentoReusableView else { return }
+        cell.willDisplayView()
+    }
+
+    @objc open  func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+        guard let view = view as? BentoReusableView else { return }
+        view.willDisplayView()
+    }
+
+    @objc
+    open func tableView(_ tableView: UITableView, willDisplayFooterView view: UIView, forSection section: Int) {
+        guard let view = view as? BentoReusableView else { return }
+        view.willDisplayView()
+    }
+
+    @objc(tableView:didEndDisplayingCell:forRowAtIndexPath:)
+    open func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        guard let cell = cell as? BentoReusableView else { return }
+        cell.didEndDisplayingView()
+    }
+
+    @objc
+    open func tableView(_ tableView: UITableView, didEndDisplayingHeaderView view: UIView, forSection section: Int) {
+        guard let view = view as? BentoReusableView else { return }
+        view.didEndDisplayingView()
+    }
+
+    @objc
+    open func tableView(_ tableView: UITableView, didEndDisplayingFooterView view: UIView, forSection section: Int) {
+        guard let view = view as? BentoReusableView else { return }
+        view.didEndDisplayingView()
+    }
+
     private func deleteRow(at indexPath: IndexPath, actionPerformed: ((Bool) -> Void)?) {
         let item = sections[indexPath.section].items[indexPath.row]
         guard let component = item.component(as: Deletable.self) else {
@@ -124,7 +159,7 @@ open class TableViewAdapterBase<SectionID: Hashable, ItemID: Hashable>
     private func node(at indexPath: IndexPath) -> Node<ItemID> {
         return sections[indexPath.section].items[indexPath.row]
     }
-    
+
     private func render(_ component: AnyRenderable, in tableView: UITableView) -> UIView {
         guard let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: component.reuseIdentifier) as? TableViewHeaderFooterView else {
             tableView.register(TableViewHeaderFooterView.self,

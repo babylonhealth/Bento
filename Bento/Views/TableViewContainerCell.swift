@@ -7,6 +7,8 @@ final class TableViewContainerCell: UITableViewCell {
         }
     }
 
+    var component: AnyRenderable?
+
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         selectionStyle = .none
@@ -20,4 +22,4 @@ final class TableViewContainerCell: UITableViewCell {
     }
 }
 
-extension TableViewContainerCell: BentoReusableView {}
+extension TableViewContainerCell: BentoView {}

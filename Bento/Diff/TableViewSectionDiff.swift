@@ -30,12 +30,12 @@ struct TableViewSectionDiff<SectionId: Hashable, RowId: Hashable> {
         for (source, destination) in diff.sections.mutationIndexPairs {
             if let headerView = tableView.headerView(forSection: source) {
                let component = newSections[destination].supplements[.header]
-                (headerView as? BentoReusableView)?.bind(component)
+                (headerView as? BentoView)?.bind(component)
             }
 
             if let footerView = tableView.footerView(forSection: source) {
                let component = newSections[destination].supplements[.footer]
-                (footerView as? BentoReusableView)?.bind(component)
+                (footerView as? BentoView)?.bind(component)
             }
         }
         tableView.insertSections(diff.sections.inserts, with: animation.sectionInsertion)
@@ -54,7 +54,7 @@ struct TableViewSectionDiff<SectionId: Hashable, RowId: Hashable> {
             tableView.perform(moves: sectionMutation.movedIndexPaths)
 
             for (source, destination) in sectionMutation.changeset.mutationIndexPairs {
-                if let cell = tableView.cellForRow(at: [sectionMutation.source, source]) as? BentoReusableView {
+                if let cell = tableView.cellForRow(at: [sectionMutation.source, source]) as? BentoView {
                     let node = newSections[sectionMutation.destination].items[destination]
                     cell.bind(node.component)
                 }

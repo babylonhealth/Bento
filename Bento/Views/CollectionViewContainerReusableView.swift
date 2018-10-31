@@ -11,6 +11,8 @@ final class CollectionViewContainerReusableView: UICollectionReusableView {
         return self
     }
 
+    var component: AnyRenderable?
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         backgroundColor = .clear
@@ -21,4 +23,4 @@ final class CollectionViewContainerReusableView: UICollectionReusableView {
     }
 }
 
-extension CollectionViewContainerReusableView: BentoReusableView {}
+extension CollectionViewContainerReusableView: BentoView {}
