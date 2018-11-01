@@ -18,7 +18,7 @@
 		584A6F9E20C7E36D006395E8 /* IntroComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 584A6F9D20C7E36D006395E8 /* IntroComponent.swift */; };
 		584A6FA020C7E470006395E8 /* IntroComponentView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 584A6F9F20C7E470006395E8 /* IntroComponentView.xib */; };
 		5857BECA2056F02C0085EB9C /* If.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5857BEC92056F02C0085EB9C /* If.swift */; };
-		5874C80520C9342B004EB5EA /* CollectionViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5874C80420C9342B004EB5EA /* CollectionViewDataSource.swift */; };
+		5874C80520C9342B004EB5EA /* CollectionViewAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5874C80420C9342B004EB5EA /* CollectionViewAdapter.swift */; };
 		5874C80720C93445004EB5EA /* CollectionViewContainerReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5874C80620C93445004EB5EA /* CollectionViewContainerReusableView.swift */; };
 		587A341F2100A09B00B25CCA /* Deletable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 587A341E2100A09B00B25CCA /* Deletable.swift */; };
 		58BA75602016303B0050D5F1 /* Bento.h in Headers */ = {isa = PBXBuildFile; fileRef = 58BA755E2016303B0050D5F1 /* Bento.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -59,6 +59,8 @@
 		61B64BB6208745730092082C /* CollectionViewContainerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61B64BB5208745730092082C /* CollectionViewContainerCell.swift */; };
 		65496FB8211C323F00511D8A /* TableViewContainerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 587F0717201B355800ACD219 /* TableViewContainerCell.swift */; };
 		65496FB9211C323F00511D8A /* TableViewAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9509BC2762C8B4277B973D8 /* TableViewAdapter.swift */; };
+		65A69EDF218B8892005D90AC /* UICollectionViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65A69EDE218B8891005D90AC /* UICollectionViewExtensions.swift */; };
+		65A69EE1218B8AB6005D90AC /* CustomCollectionViewAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65A69EE0218B8AB6005D90AC /* CustomCollectionViewAdapter.swift */; };
 		65BA922E20AF388F004AEF18 /* UITableViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65BA922D20AF388F004AEF18 /* UITableViewExtensions.swift */; };
 		65E3ECA02113114100869DF3 /* Focusable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65E3EC9F2113114100869DF3 /* Focusable.swift */; };
 		65E3ECA2211317EA00869DF3 /* FocusCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65E3ECA1211317EA00869DF3 /* FocusCoordinator.swift */; };
@@ -132,7 +134,7 @@
 		584A6F9D20C7E36D006395E8 /* IntroComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroComponent.swift; sourceTree = "<group>"; };
 		584A6F9F20C7E470006395E8 /* IntroComponentView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = IntroComponentView.xib; sourceTree = "<group>"; };
 		5857BEC92056F02C0085EB9C /* If.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = If.swift; sourceTree = "<group>"; };
-		5874C80420C9342B004EB5EA /* CollectionViewDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionViewDataSource.swift; sourceTree = "<group>"; };
+		5874C80420C9342B004EB5EA /* CollectionViewAdapter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionViewAdapter.swift; sourceTree = "<group>"; };
 		5874C80620C93445004EB5EA /* CollectionViewContainerReusableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionViewContainerReusableView.swift; sourceTree = "<group>"; };
 		587A341E2100A09B00B25CCA /* Deletable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Deletable.swift; sourceTree = "<group>"; };
 		587F0717201B355800ACD219 /* TableViewContainerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewContainerCell.swift; sourceTree = "<group>"; };
@@ -171,6 +173,8 @@
 		61B64BB02086561B0092082C /* IntroRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroRenderer.swift; sourceTree = "<group>"; };
 		61B64BB320873DA10092082C /* CollectionViewSectionDiff.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewSectionDiff.swift; sourceTree = "<group>"; };
 		61B64BB5208745730092082C /* CollectionViewContainerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewContainerCell.swift; sourceTree = "<group>"; };
+		65A69EDE218B8891005D90AC /* UICollectionViewExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UICollectionViewExtensions.swift; sourceTree = "<group>"; };
+		65A69EE0218B8AB6005D90AC /* CustomCollectionViewAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCollectionViewAdapter.swift; sourceTree = "<group>"; };
 		65BA922D20AF388F004AEF18 /* UITableViewExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITableViewExtensions.swift; sourceTree = "<group>"; };
 		65E3EC9F2113114100869DF3 /* Focusable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Focusable.swift; sourceTree = "<group>"; };
 		65E3ECA1211317EA00869DF3 /* FocusCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FocusCoordinator.swift; sourceTree = "<group>"; };
@@ -386,6 +390,7 @@
 				61B64BB02086561B0092082C /* IntroRenderer.swift */,
 				584A6F9D20C7E36D006395E8 /* IntroComponent.swift */,
 				584A6F9F20C7E470006395E8 /* IntroComponentView.xib */,
+				65A69EE0218B8AB6005D90AC /* CustomCollectionViewAdapter.swift */,
 			);
 			path = CollectionViewExample;
 			sourceTree = "<group>";
@@ -419,7 +424,7 @@
 			isa = PBXGroup;
 			children = (
 				A9509BC2762C8B4277B973D8 /* TableViewAdapter.swift */,
-				5874C80420C9342B004EB5EA /* CollectionViewDataSource.swift */,
+				5874C80420C9342B004EB5EA /* CollectionViewAdapter.swift */,
 				58D0F12C207F573B00A24E96 /* TableViewAnimation.swift */,
 				65E3ECA321133BF700869DF3 /* FocusEligibilitySource.swift */,
 				65E3ECAD2113594600869DF3 /* BentoCollectionView.swift */,
@@ -435,6 +440,7 @@
 				515F9EAF847DD1D68DE3A48C /* Section.swift */,
 				5857BEC92056F02C0085EB9C /* If.swift */,
 				65BA922D20AF388F004AEF18 /* UITableViewExtensions.swift */,
+				65A69EDE218B8891005D90AC /* UICollectionViewExtensions.swift */,
 				9AF4786921205E3100F87E21 /* Supplement.swift */,
 			);
 			path = Bento;
@@ -602,6 +608,7 @@
 				58FC4441207CFBD700DA3614 /* MovieComponentView.swift in Sources */,
 				65E3ECA8211340CE00869DF3 /* PersonalDetailsViewController.swift in Sources */,
 				61B40919208523F60063DE25 /* IntroViewModel.swift in Sources */,
+				65A69EE1218B8AB6005D90AC /* CustomCollectionViewAdapter.swift in Sources */,
 				58FC444D207CFBE200DA3614 /* BookAppointmentViewController.swift in Sources */,
 				65E3ECAA2113448200869DF3 /* TextFieldComponent.swift in Sources */,
 				61B64BB12086561B0092082C /* IntroRenderer.swift in Sources */,
@@ -631,6 +638,7 @@
 				61B64BB420873DA10092082C /* CollectionViewSectionDiff.swift in Sources */,
 				58D0F12D207F573B00A24E96 /* TableViewAnimation.swift in Sources */,
 				65BA922E20AF388F004AEF18 /* UITableViewExtensions.swift in Sources */,
+				65A69EDF218B8892005D90AC /* UICollectionViewExtensions.swift in Sources */,
 				58BA7584201633CC0050D5F1 /* Renderable.swift in Sources */,
 				5857BECA2056F02C0085EB9C /* If.swift in Sources */,
 				A9509FB12CAD89179FAA03B0 /* Box.swift in Sources */,
@@ -639,7 +647,7 @@
 				58467B03202B33F200577C77 /* TableViewSectionDiff.swift in Sources */,
 				A9509C4FC3664040FF3649CD /* Node.swift in Sources */,
 				587A341F2100A09B00B25CCA /* Deletable.swift in Sources */,
-				5874C80520C9342B004EB5EA /* CollectionViewDataSource.swift in Sources */,
+				5874C80520C9342B004EB5EA /* CollectionViewAdapter.swift in Sources */,
 				5874C80720C93445004EB5EA /* CollectionViewContainerReusableView.swift in Sources */,
 				9AF4786C2120CA7500F87E21 /* BentoReusableView.swift in Sources */,
 				61B64BB6208745730092082C /* CollectionViewContainerCell.swift in Sources */,

@@ -22,4 +22,4 @@ final class TableViewContainerCell: UITableViewCell {
     }
 }
 
-extension TableViewContainerCell: BentoView {}
+extension TableViewContainerCell: BentoReusableView {}

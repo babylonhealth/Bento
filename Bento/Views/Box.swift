@@ -39,17 +39,3 @@ public struct Box<SectionID: Hashable, ItemID: Hashable> {
         return Box(sections: lhs.sections + [rhs])
     }
 }
-
-extension UICollectionView {
-    public func render<SectionID, ItemID>(_ box: Box<SectionID, ItemID>, completion: (() -> Void)? = nil) {
-        let adapter: CollectionViewDataSource<SectionID, ItemID> = getAdapter()
-        adapter.update(sections: box.sections, completion: completion)
-        didRenderBox()
-    }
-
-    public func render<SectionID, ItemID>(_ box: Box<SectionID, ItemID>, animated: Bool) {
-        let adapter: CollectionViewDataSource<SectionID, ItemID> = getAdapter()
-        adapter.update(sections: box.sections, animated: animated)
-        didRenderBox()
-    }
-}

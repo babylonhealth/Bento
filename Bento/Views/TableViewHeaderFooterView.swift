@@ -22,4 +22,4 @@ final class TableViewHeaderFooterView: UITableViewHeaderFooterView {
     }
 }
 
-extension TableViewHeaderFooterView: BentoView {}
+extension TableViewHeaderFooterView: BentoReusableView {}
