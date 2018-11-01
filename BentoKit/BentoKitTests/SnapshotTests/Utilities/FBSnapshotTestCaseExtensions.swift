@@ -6,8 +6,33 @@ import UIKit
 extension FBSnapshotTestCase {
     static let tolerance: CGFloat = 0.01
 
-    public func verifyComponentForAllSizes<R: Renderable>(component: R) where R.View: UIView {
-        self.testViewForAllSizes(view: self.render(component: component, in: UITableView(frame: .zero, style: .plain)))
+    public func verify(
+        viewController: UIViewController,
+        for device: Device,
+        customSize: CGSize? = nil,
+        file: StaticString = #file,
+        line: UInt = #line
+    ) {
+        UIView.performWithoutAnimation {
+            let window = HostWindow(screen: device)
+            window.frame.size = customSize ?? device.size
+            UIView.setAnimationsEnabled(false)
+            window.rootViewController = viewController
+            window.isHidden = false
+            FBSnapshotVerifyView(window, identifier: device.indentifier, tolerance: FBSnapshotTestCase.tolerance, file: file, line: line)
+        }
+    }
+
+    public func verifyComponentForAllSizes<R: Renderable>(
+        component: R,
+        file: StaticString = #file,
+        line: UInt = #line
+    ) where R.View: UIView {
+        testViewForAllSizes(
+            view: self.render(component: component, in: UITableView(frame: .zero, style: .plain)),
+            file: file,
+            line: line
+        )
     }
 
     public func verifyBoxForAllSizes<SectionId, RowId>(

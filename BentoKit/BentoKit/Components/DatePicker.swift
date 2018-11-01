@@ -10,6 +10,7 @@ extension Component {
             date: Date? = nil,
             minDate: Date? = nil,
             maxDate: Date? = nil,
+            calendar: Calendar? = nil,
             datePickerMode: UIDatePicker.Mode = .date,
             styleSheet: StyleSheet = StyleSheet(),
             didPickDate: ((Date) -> Void)? = nil
@@ -18,6 +19,7 @@ extension Component {
                 view.datePicker.date = date ?? Date()
                 view.datePicker.minimumDate = minDate
                 view.datePicker.maximumDate = maxDate
+                view.datePicker.calendar = calendar
                 view.datePicker.datePickerMode = datePickerMode
                 view.didPickDate = didPickDate
             }

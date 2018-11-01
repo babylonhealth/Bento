@@ -68,6 +68,16 @@
 		588011A02162740C0084EE07 /* FBSnapshotTestCaseExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5880119F2162740C0084EE07 /* FBSnapshotTestCaseExtensions.swift */; };
 		58ADAF72215E602E00B143F5 /* UIImageExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58ADAF71215E602E00B143F5 /* UIImageExtensions.swift */; };
 		A6113A7E2180CD0100C6DB5A /* FBSnapshotTestCase.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A6113A7D2180CD0100C6DB5A /* FBSnapshotTestCase.framework */; };
+		A6EC2DAE218B28AA002B128F /* BoxAppearance.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6EC2DA9218B28AA002B128F /* BoxAppearance.swift */; };
+		A6EC2DAF218B28AA002B128F /* Screen.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6EC2DAA218B28AA002B128F /* Screen.swift */; };
+		A6EC2DB0218B28AA002B128F /* BoxViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6EC2DAB218B28AA002B128F /* BoxViewModel.swift */; };
+		A6EC2DB1218B28AA002B128F /* BoxViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6EC2DAC218B28AA002B128F /* BoxViewController.swift */; };
+		A6EC2DB2218B28AA002B128F /* BoxRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6EC2DAD218B28AA002B128F /* BoxRenderer.swift */; };
+		A6EC2DB5218B28BF002B128F /* BoxViewControllerSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6EC2DB4218B28BF002B128F /* BoxViewControllerSnapshotTests.swift */; };
+		A6EC2DB9218B2912002B128F /* UIViewAnimationOptions+Curve.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6EC2DB6218B2912002B128F /* UIViewAnimationOptions+Curve.swift */; };
+		A6EC2DBA218B2912002B128F /* UIButton+Closure.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6EC2DB7218B2912002B128F /* UIButton+Closure.swift */; };
+		A6EC2DBB218B2912002B128F /* Bool+Assertions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6EC2DB8218B2912002B128F /* Bool+Assertions.swift */; };
+		A6EC2DBD218B298B002B128F /* HostWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6EC2DBC218B298A002B128F /* HostWindow.swift */; };
 		B5234D63216EB0060061AD8B /* ImageOrLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5234D62216EB0060061AD8B /* ImageOrLabel.swift */; };
 /* End PBXBuildFile section */
 
@@ -161,6 +171,16 @@
 		A6113A7B2180C87400C6DB5A /* Framework.Base.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Framework.Base.xcconfig; sourceTree = "<group>"; };
 		A6113A7C2180C87400C6DB5A /* Framework.Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Framework.Release.xcconfig; sourceTree = "<group>"; };
 		A6113A7D2180CD0100C6DB5A /* FBSnapshotTestCase.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = FBSnapshotTestCase.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		A6EC2DA9218B28AA002B128F /* BoxAppearance.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BoxAppearance.swift; sourceTree = "<group>"; };
+		A6EC2DAA218B28AA002B128F /* Screen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Screen.swift; sourceTree = "<group>"; };
+		A6EC2DAB218B28AA002B128F /* BoxViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BoxViewModel.swift; sourceTree = "<group>"; };
+		A6EC2DAC218B28AA002B128F /* BoxViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BoxViewController.swift; sourceTree = "<group>"; };
+		A6EC2DAD218B28AA002B128F /* BoxRenderer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BoxRenderer.swift; sourceTree = "<group>"; };
+		A6EC2DB4218B28BF002B128F /* BoxViewControllerSnapshotTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BoxViewControllerSnapshotTests.swift; sourceTree = "<group>"; };
+		A6EC2DB6218B2912002B128F /* UIViewAnimationOptions+Curve.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewAnimationOptions+Curve.swift"; sourceTree = "<group>"; };
+		A6EC2DB7218B2912002B128F /* UIButton+Closure.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIButton+Closure.swift"; sourceTree = "<group>"; };
+		A6EC2DB8218B2912002B128F /* Bool+Assertions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Bool+Assertions.swift"; sourceTree = "<group>"; };
+		A6EC2DBC218B298A002B128F /* HostWindow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HostWindow.swift; sourceTree = "<group>"; };
 		B5234D62216EB0060061AD8B /* ImageOrLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageOrLabel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -226,6 +246,7 @@
 				580B6175215E400300A69E87 /* Components.playground */,
 				580B611C215D2F2100A69E87 /* Protocols */,
 				580B60B0215D2C9C00A69E87 /* Components */,
+				A6EC2DA8218B28AA002B128F /* Screen */,
 				580B613E215D339600A69E87 /* Views */,
 				580B613B215D2F7000A69E87 /* Helpers */,
 				580B6187215E584100A69E87 /* Resources */,
@@ -314,6 +335,9 @@
 		580B6143215D34B400A69E87 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				A6EC2DB8218B2912002B128F /* Bool+Assertions.swift */,
+				A6EC2DB7218B2912002B128F /* UIButton+Closure.swift */,
+				A6EC2DB6218B2912002B128F /* UIViewAnimationOptions+Curve.swift */,
 				580B6144215D34C200A69E87 /* NSLayoutConstraintExtensions.swift */,
 				580B614C215D355200A69E87 /* UIViewExtensions.swift */,
 				580B6150215D37E700A69E87 /* BoxExtensions.swift */,
@@ -356,6 +380,7 @@
 				587208D3216280A700C8E6DF /* Media.xcassets */,
 				5880119C216272B80084EE07 /* Utilities */,
 				588011832162711F0084EE07 /* Components */,
+				A6EC2DB3218B28BF002B128F /* Screen */,
 			);
 			path = SnapshotTests;
 			sourceTree = "<group>";
@@ -381,6 +406,7 @@
 		5880119C216272B80084EE07 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				A6EC2DBC218B298A002B128F /* HostWindow.swift */,
 				5880119D216272C30084EE07 /* Device.swift */,
 				5880119F2162740C0084EE07 /* FBSnapshotTestCaseExtensions.swift */,
 			);
@@ -396,6 +422,26 @@
 			);
 			name = BuildConfigs;
 			path = ../BuildConfigs;
+			sourceTree = "<group>";
+		};
+		A6EC2DA8218B28AA002B128F /* Screen */ = {
+			isa = PBXGroup;
+			children = (
+				A6EC2DA9218B28AA002B128F /* BoxAppearance.swift */,
+				A6EC2DAA218B28AA002B128F /* Screen.swift */,
+				A6EC2DAB218B28AA002B128F /* BoxViewModel.swift */,
+				A6EC2DAC218B28AA002B128F /* BoxViewController.swift */,
+				A6EC2DAD218B28AA002B128F /* BoxRenderer.swift */,
+			);
+			path = Screen;
+			sourceTree = "<group>";
+		};
+		A6EC2DB3218B28BF002B128F /* Screen */ = {
+			isa = PBXGroup;
+			children = (
+				A6EC2DB4218B28BF002B128F /* BoxViewControllerSnapshotTests.swift */,
+			);
+			path = Screen;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -548,13 +594,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A6EC2DAF218B28AA002B128F /* Screen.swift in Sources */,
 				B5234D63216EB0060061AD8B /* ImageOrLabel.swift in Sources */,
+				A6EC2DBB218B2912002B128F /* Bool+Assertions.swift in Sources */,
 				580B614F215D37A200A69E87 /* ImageOrLabelView.swift in Sources */,
 				580B6137215D2F6800A69E87 /* OptionPicker.swift in Sources */,
 				580B6145215D34C200A69E87 /* NSLayoutConstraintExtensions.swift in Sources */,
 				580B6120215D2F6100A69E87 /* AutoRenderable.swift in Sources */,
 				580B6138215D2F6800A69E87 /* TitledDescription.swift in Sources */,
 				580B6155215D3AEE00A69E87 /* With.swift in Sources */,
+				A6EC2DAE218B28AA002B128F /* BoxAppearance.swift in Sources */,
+				A6EC2DB9218B2912002B128F /* UIViewAnimationOptions+Curve.swift in Sources */,
+				A6EC2DB1218B28AA002B128F /* BoxViewController.swift in Sources */,
+				A6EC2DBA218B2912002B128F /* UIButton+Closure.swift in Sources */,
 				585B4B1F215E721600C8304A /* BentoTableView.swift in Sources */,
 				580B614D215D355200A69E87 /* UIViewExtensions.swift in Sources */,
 				580B614B215D353B00A69E87 /* AnyBox.swift in Sources */,
@@ -570,8 +622,10 @@
 				580B612E215D2F6800A69E87 /* Component.swift in Sources */,
 				580B614A215D353B00A69E87 /* InputNodes.swift in Sources */,
 				580B6134215D2F6800A69E87 /* TextInput.swift in Sources */,
+				A6EC2DB0218B28AA002B128F /* BoxViewModel.swift in Sources */,
 				580B611F215D2F6100A69E87 /* HeightCustomizing.swift in Sources */,
 				580B6135215D2F6800A69E87 /* MultilineTextInput.swift in Sources */,
+				A6EC2DB2218B28AA002B128F /* BoxRenderer.swift in Sources */,
 				580B6139215D2F6800A69E87 /* Description.swift in Sources */,
 				580B6132215D2F6800A69E87 /* EmptySpace.swift in Sources */,
 				580B6157215D3BD700A69E87 /* UIEdgeInsetsTests.swift in Sources */,
@@ -608,10 +662,12 @@
 				58801196216271DB0084EE07 /* DescriptionComponentSnapshotTests.swift in Sources */,
 				58801195216271DB0084EE07 /* TitledDescriptionLegacySnapshotTests.swift in Sources */,
 				588011A02162740C0084EE07 /* FBSnapshotTestCaseExtensions.swift in Sources */,
+				A6EC2DBD218B298B002B128F /* HostWindow.swift in Sources */,
 				58801198216271DB0084EE07 /* TextInputSnapshotTests.swift in Sources */,
 				58801197216271DB0084EE07 /* ActivityComponentSnapshotTests.swift in Sources */,
 				58801191216271DB0084EE07 /* TitledDescriptionSnapshotTests.swift in Sources */,
 				58801192216271DB0084EE07 /* ToggleSnapshotTests.swift in Sources */,
+				A6EC2DB5218B28BF002B128F /* BoxViewControllerSnapshotTests.swift in Sources */,
 				58801193216271DB0084EE07 /* ButtonComponentSnapshotTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

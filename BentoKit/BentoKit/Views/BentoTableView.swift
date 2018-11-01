@@ -285,7 +285,8 @@ extension BentoTableView {
                  (.topYAlignedAlwaysFading, _),
                  (_, .topYAlignedAlwaysFading),
                  (.centerYAlignedMinimumFading, .topYAligned),
-                 (.topYAligned, .centerYAlignedMinimumFading):
+                 (.topYAligned, .centerYAlignedMinimumFading),
+                 (.centerYAligned, .centerYAlignedMinimumFading):
                 return true
             case (_, .topYAligned), (_, .centerYAlignedMinimumFading):
                 return false

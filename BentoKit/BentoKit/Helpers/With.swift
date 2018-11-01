@@ -1,4 +1,5 @@
 import Foundation
+import UIKit
 
 /// Inspired (pretty much copied 😛) by https://github.com/devxoul/Then
 protocol With {}
@@ -25,3 +26,4 @@ extension With where Self: Any {
 }
 
 extension NSObject: With {}
+extension UIEdgeInsets: With {}
