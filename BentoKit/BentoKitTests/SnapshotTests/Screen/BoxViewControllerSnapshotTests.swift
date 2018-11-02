@@ -11,9 +11,26 @@ final class BoxViewControllerSnapshotTests: SnapshotTestCase {
         self.recordMode = false
     }
 
-    func testWithYCenterAligned() {
+    func testWithYCenterAligned_StringTitle() {
         Device.all.forEach {
-            let vm = ViewModel()
+            let vm = ViewModel(state: .text("String Title"))
+            let vc = BoxViewController(viewModel: vm,
+                                       renderer: Renderer.self,
+                                       rendererConfig: (),
+                                       appearance: Property(value: TestAppearance()))
+            let nc = UINavigationController(rootViewController: vc)
+            verify(viewController: nc, for: $0)
+        }
+    }
+
+    func testWithYCenterAligned_ViewTitle() {
+        let view = UILabel()
+        view.text = "View Title"
+        view.layer.borderColor = UIColor.red.cgColor
+        view.layer.borderWidth = 1
+
+        Device.all.forEach {
+            let vm = ViewModel(state: .view(view))
             let vc = BoxViewController(viewModel: vm,
                                        renderer: Renderer.self,
                                        rendererConfig: (),
@@ -24,10 +41,14 @@ final class BoxViewControllerSnapshotTests: SnapshotTestCase {
     }
 
     class ViewModel: BoxViewModel {
-        typealias State = String
+        typealias State = NavigationTitleItem
         typealias Action = Never
 
-        let state = Property(value: "Unable to connect")
+        let state: Property<State>
+
+        init(state: State) {
+            self.state = Property(value: state)
+        }
 
         func send(action: Never) {}
     }
@@ -37,7 +58,7 @@ final class BoxViewControllerSnapshotTests: SnapshotTestCase {
     }
 
     struct Renderer: BoxRenderer {
-        typealias State = String
+        typealias State = NavigationTitleItem
         typealias Action = Never
         typealias SectionId = Int
         typealias RowId = Int
@@ -56,7 +77,7 @@ final class BoxViewControllerSnapshotTests: SnapshotTestCase {
             self.observer = observer
         }
 
-        func render(state: String) -> Screen<SectionId, RowId> {
+        func render(state: NavigationTitleItem) -> Screen<SectionId, RowId> {
             let rightButtons = [
                 BarButtonItem(appearance: .text("R"))
             ]
@@ -65,7 +86,7 @@ final class BoxViewControllerSnapshotTests: SnapshotTestCase {
                 BarButtonItem(appearance: .text("L"))
             ]
             return Screen(
-                title: "Title",
+                titleItem: state,
                 leftBarItems: leftButtons,
                 rightBarItems: rightButtons,
                 formStyle: .centerYAligned,

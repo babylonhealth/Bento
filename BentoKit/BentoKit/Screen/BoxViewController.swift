@@ -295,7 +295,13 @@ open class BoxViewController<ViewModel: BoxViewModel, Renderer: BoxRenderer, App
         screen: Screen<Renderer.SectionID, Renderer.ItemID>,
         usesSystemSeparator: Bool
     ) {
-        navigationItem.title = screen.title
+        switch screen.titleItem {
+        case let .text(text):
+            navigationItem.title = text
+        case let .view(view):
+            navigationItem.titleView = view
+        }
+
         renderBarItems(reference: \.previousLeftBarItems,
                        new: screen.leftBarItems,
                        setItems: navigationItem.setLeftBarButtonItems(_:animated:),

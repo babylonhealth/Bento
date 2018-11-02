@@ -3,7 +3,7 @@ import Bento
 public struct Screen<SectionId: Hashable, RowId: Hashable> {
     public let leftBarItems: [BarButtonItem]
     public let rightBarItems: [BarButtonItem]
-    public let title: String
+    public let titleItem: NavigationTitleItem
     public let formStyle: BentoTableView.Layout
     public let focusMode: FocusMode
     /// If not nil will override renderer configuration property
@@ -13,7 +13,31 @@ public struct Screen<SectionId: Hashable, RowId: Hashable> {
     public let pinnedToBottomBox: Box<SectionId, RowId>
 
     public init(
-        title: String = "",
+        title: String,
+        leftBarItems: [BarButtonItem] = [],
+        rightBarItems: [BarButtonItem] = [],
+        formStyle: BentoTableView.Layout = .topYAligned,
+        focusMode: FocusMode = .never,
+        shouldUseSystemSeparators: Bool? = nil,
+        box: Box<SectionId, RowId>,
+        pinnedToTopBox: Box<SectionId, RowId> = .empty,
+        pinnedToBottomBox: Box<SectionId, RowId> = .empty
+    ) {
+        self.init(
+            titleItem: .text(title),
+            leftBarItems: leftBarItems,
+            rightBarItems: rightBarItems,
+            formStyle: formStyle,
+            focusMode: focusMode,
+            shouldUseSystemSeparators: shouldUseSystemSeparators,
+            box: box,
+            pinnedToTopBox: pinnedToTopBox,
+            pinnedToBottomBox: pinnedToBottomBox
+        )
+    }
+
+    public init(
+        titleItem: NavigationTitleItem,
         leftBarItems: [BarButtonItem] = [],
         rightBarItems: [BarButtonItem] = [],
         formStyle: BentoTableView.Layout = .topYAligned,
@@ -25,7 +49,7 @@ public struct Screen<SectionId: Hashable, RowId: Hashable> {
     ) {
         self.leftBarItems = leftBarItems
         self.rightBarItems = rightBarItems
-        self.title = title
+        self.titleItem = titleItem
         self.formStyle = formStyle
         self.focusMode = focusMode
         self.shouldUseSystemSeparators = shouldUseSystemSeparators
