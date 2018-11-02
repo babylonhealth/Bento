@@ -37,7 +37,7 @@ public struct Screen<SectionId: Hashable, RowId: Hashable> {
     }
 
     public init(
-        titleItem: NavigationTitleItem = .text(""),
+        titleItem: NavigationTitleItem,
         leftBarItems: [BarButtonItem] = [],
         rightBarItems: [BarButtonItem] = [],
         formStyle: BentoTableView.Layout = .topYAligned,
