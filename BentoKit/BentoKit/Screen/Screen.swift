@@ -13,7 +13,7 @@ public struct Screen<SectionId: Hashable, RowId: Hashable> {
     public let pinnedToBottomBox: Box<SectionId, RowId>
 
     public init(
-        title: String = "",
+        title: String,
         leftBarItems: [BarButtonItem] = [],
         rightBarItems: [BarButtonItem] = [],
         formStyle: BentoTableView.Layout = .topYAligned,
