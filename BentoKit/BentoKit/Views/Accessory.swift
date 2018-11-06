@@ -48,9 +48,7 @@ public final class AccessoryView: InteractiveView {
     private func accessoryTypeDidChange(old: Accessory, new: Accessory) {
         guard old != new else { return }
 
-        let localBundle = Bundle(for: AccessoryView.self)
-        let url = localBundle.url(forResource: "BentoKit", withExtension: "bundle")
-        let bundle = url.map(Bundle.init) ?? localBundle
+        let bundle = Bundle(for: AccessoryView.self)
 
         switch new {
         case .chevron:

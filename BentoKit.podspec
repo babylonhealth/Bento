@@ -14,9 +14,9 @@ Pod::Spec.new do |s|
   s.ios.deployment_target = '10.0'
 
 # Switch back to use the version tag when we release 0.4.
-  s.source           = { :git => "https://github.com/Babylonpartners/Bento.git", :branch => "develop" } #, :tag => "#{s.version}" }
+  s.source           = { :git => "https://github.com/Babylonpartners/Bento.git", :branch => "master" } #, :tag => "#{s.version}" }
   s.source_files     = 'BentoKit/BentoKit/**/*.swift'
-  s.resource_bundles =  { 'BentoKit' => 'BentoKit/BentoKit/Resources/Media.xcassets' }
+  s.resources        = ['BentoKit/BentoKit/Resources/Media.xcassets']
   s.exclude_files    = 'BentoKit/BentoKit/Components.playground/**/*'
 
   s.swift_version = "4.2"
