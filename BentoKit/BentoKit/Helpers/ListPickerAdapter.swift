@@ -31,7 +31,7 @@ public final class ListPickerAdapter<Option: BentoKit.Option>: NSObject, UIPicke
         if let view = view as? UILabel {
             label = view
         } else {
-            label = UILabel(frame: CGRect(x: 0, y: 0, width: pickerView.frame.width, height: 0))
+            label = UILabel()
         }
 
         label.frame = CGRect(x: 0, y: 0, width: pickerView.frame.width, height: 0)
