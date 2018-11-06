@@ -48,19 +48,18 @@ public final class AccessoryView: InteractiveView {
     private func accessoryTypeDidChange(old: Accessory, new: Accessory) {
         guard old != new else { return }
 
+        let url = Bundle(for: AccessoryView.self).url(forResource: "BentoKit", withExtension: "bundle")
+        let bundle = url.map(Bundle.init) ?? nil
+
         switch new {
         case .chevron:
-            view = UIImage(named: "chevronNext",
-                           in: Bundle(for: AccessoryView.self),
-                           compatibleWith: nil)
+            view = UIImage(named: "chevronNext", in: bundle, compatibleWith: nil)
                 .map(UIImageView.init)
         case .activityIndicator:
             view = UIActivityIndicatorView(style: .gray)
                 .with { $0.startAnimating() }
         case .checkmark:
-            view = UIImage(named: "tickIcon",
-                           in: Bundle(for: AccessoryView.self),
-                           compatibleWith: nil)
+            view = UIImage(named: "tickIcon", in: bundle, compatibleWith: nil)
                 .map(UIImageView.init)
         case let .icon(image):
             view = UIImageView(image: image)
