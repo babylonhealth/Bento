@@ -5,8 +5,8 @@ public typealias TableViewAdapter<SectionID: Hashable, ItemID: Hashable> = Table
 
 open class TableViewAdapterBase<SectionID: Hashable, ItemID: Hashable>
     : NSObject, FocusEligibilitySourceImplementing {
-    public final var sections: [Section<SectionID, ItemID>] = []
-    internal weak var tableView: UITableView?
+    public private(set) var sections: [Section<SectionID, ItemID>] = []
+    internal private(set) weak var tableView: UITableView?
 
     public init(with tableView: UITableView) {
         self.sections = []

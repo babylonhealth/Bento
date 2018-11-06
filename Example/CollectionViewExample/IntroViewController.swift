@@ -59,6 +59,8 @@ public final class IntroViewController: UIViewController {
     }
 
     private func setupCollectionView() {
+        let adapter = CustomCollectionViewAdapter<IntroRenderer.SectionId, IntroRenderer.RowId>(with: collectionView)
+        collectionView.prepareForBoxRendering(with: adapter)
         collectionView.collectionViewLayout = IntroCollectionViewLayout()
     }
 }

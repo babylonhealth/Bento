@@ -1,15 +1,10 @@
-typealias BentoView = BentoReusableView & ComponentAwareView
-
-public protocol BentoReusableView: AnyObject, ViewLifecycleAware {
+protocol BentoReusableView: AnyObject {
     var containedView: UIView? { get set }
     var contentView: UIView { get }
-}
-
-protocol ComponentAwareView: AnyObject {
     var component: AnyRenderable? { get set }
 }
 
-extension BentoReusableView where Self: ComponentAwareView {
+extension BentoReusableView {
     func bind(_ component: AnyRenderable?) {
         self.component = component
         if let component = component {

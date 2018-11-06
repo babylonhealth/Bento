@@ -1,7 +1,7 @@
 import Bento
 import UIKit
 
-final class IntroComponent: Renderable {
+final class IntroComponent: Renderable, ComponentLifecycleAware {
     private let title: String
     private let body: String
     private let image: UIImage
@@ -18,6 +18,14 @@ final class IntroComponent: Renderable {
         view.imageView.image = image
         view.titleLabel.text = title
         view.subtitleLabel.text = body
+    }
+
+    func willDisplayItem() {
+        print("IntroComponent: Will Display `\(title)`")
+    }
+
+    func didEndDisplayingItem() {
+        print("IntroComponent: Did End Displaying `\(title)`")
     }
 }
 

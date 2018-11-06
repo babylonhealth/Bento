@@ -23,4 +23,4 @@ final class CollectionViewContainerReusableView: UICollectionReusableView {
     }
 }
 
-extension CollectionViewContainerReusableView: BentoView {}
+extension CollectionViewContainerReusableView: BentoReusableView {}

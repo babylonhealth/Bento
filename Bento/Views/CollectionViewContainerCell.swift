@@ -20,4 +20,4 @@ final class CollectionViewContainerCell: UICollectionViewCell {
     }
 }
 
-extension CollectionViewContainerCell: BentoView {}
+extension CollectionViewContainerCell: BentoReusableView {}
