@@ -31,13 +31,13 @@ public final class ListPickerAdapter<Option: BentoKit.Option>: NSObject, UIPicke
         if let view = view as? UILabel {
             label = view
         } else {
-            label = UILabel()
+            label = UILabel(frame: CGRect(x: 0, y: 0, width: pickerView.frame.width, height: 0)).with {
+                $0.textAlignment = .center
+                $0.numberOfLines = 0
+            }
         }
 
-        label.frame = CGRect(x: 0, y: 0, width: pickerView.frame.width, height: 0)
         label.text = items[row].displayName
-        label.textAlignment = .center
-        label.numberOfLines = 0
         label.sizeToFit()
 
         return label
