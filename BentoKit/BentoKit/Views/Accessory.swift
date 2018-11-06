@@ -49,7 +49,7 @@ public final class AccessoryView: InteractiveView {
         guard old != new else { return }
 
         let url = Bundle(for: AccessoryView.self).url(forResource: "BentoKit", withExtension: "bundle")
-        let bundle = url.map(Bundle.init) ?? nil
+        let bundle = url.map(Bundle.init) ?? Bundle(for: AccessoryView.self)
 
         switch new {
         case .chevron:
