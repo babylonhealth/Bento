@@ -8,8 +8,9 @@ public final class FocusToolbar: UIToolbar {
     private var view: (UIView & FocusableView)?
 
     public init(view: UIView & FocusableView) {
-        let url = Bundle(for: FocusToolbar.self).url(forResource: "BentoKit", withExtension: "bundle")
-        let bundle = url.map(Bundle.init) ?? Bundle(for: FocusToolbar.self)
+        let localBundle = Bundle(for: FocusToolbar.self)
+        let url = localBundle.url(forResource: "BentoKit", withExtension: "bundle")
+        let bundle = url.map(Bundle.init) ?? localBundle
 
         backwardButton = UIBarButtonItem(
             image: UIImage(named: "arrow_down", in: bundle, compatibleWith: nil)!,
