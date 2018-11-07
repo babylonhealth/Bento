@@ -67,6 +67,7 @@
 		5880119E216272C30084EE07 /* Device.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5880119D216272C30084EE07 /* Device.swift */; };
 		588011A02162740C0084EE07 /* FBSnapshotTestCaseExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5880119F2162740C0084EE07 /* FBSnapshotTestCaseExtensions.swift */; };
 		58ADAF72215E602E00B143F5 /* UIImageExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58ADAF71215E602E00B143F5 /* UIImageExtensions.swift */; };
+		7421E0282192D9B70014F631 /* Resources.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7421E0272192D9B70014F631 /* Resources.swift */; };
 		A6113A7E2180CD0100C6DB5A /* FBSnapshotTestCase.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A6113A7D2180CD0100C6DB5A /* FBSnapshotTestCase.framework */; };
 		A6EC2DAE218B28AA002B128F /* BoxAppearance.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6EC2DA9218B28AA002B128F /* BoxAppearance.swift */; };
 		A6EC2DAF218B28AA002B128F /* Screen.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6EC2DAA218B28AA002B128F /* Screen.swift */; };
@@ -167,6 +168,7 @@
 		588011A321627D570084EE07 /* ReactiveSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ReactiveSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		58ADAF71215E602E00B143F5 /* UIImageExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImageExtensions.swift; sourceTree = "<group>"; };
 		639430F94D2A3AB0B5FBBFF0 /* Pods_BentoKitTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BentoKitTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		7421E0272192D9B70014F631 /* Resources.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Resources.swift; sourceTree = "<group>"; };
 		A6113A7A2180C87400C6DB5A /* Framework.Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Framework.Debug.xcconfig; sourceTree = "<group>"; };
 		A6113A7B2180C87400C6DB5A /* Framework.Base.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Framework.Base.xcconfig; sourceTree = "<group>"; };
 		A6113A7C2180C87400C6DB5A /* Framework.Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Framework.Release.xcconfig; sourceTree = "<group>"; };
@@ -328,6 +330,7 @@
 				580B613F215D343E00A69E87 /* BaseView.swift */,
 				580B6140215D343E00A69E87 /* InteractiveView.swift */,
 				585B4B1E215E721600C8304A /* BentoTableView.swift */,
+				7421E0272192D9B70014F631 /* Resources.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -635,6 +638,7 @@
 				580B6142215D343E00A69E87 /* InteractiveView.swift in Sources */,
 				580B6136215D2F6800A69E87 /* Activity.swift in Sources */,
 				580B6151215D37E700A69E87 /* BoxExtensions.swift in Sources */,
+				7421E0282192D9B70014F631 /* Resources.swift in Sources */,
 				580B615D215D40E000A69E87 /* InputView.swift in Sources */,
 				580B6133215D2F6800A69E87 /* DatePicker.swift in Sources */,
 			);
