@@ -388,7 +388,7 @@ open class BoxViewController<ViewModel: BoxViewModel, Renderer: BoxRenderer, App
         } else {
             let items = navigationItem[keyPath: itemsKeyPath] ?? []
             for (lhs, rhs) in zip(new, items) {
-                lhs.applyNonAppearanceChanges(to: rhs)
+                lhs.applyNonAppearanceChanges(to: rhs, willTriggerAction: resignFirstResponder)
             }
         }
 
