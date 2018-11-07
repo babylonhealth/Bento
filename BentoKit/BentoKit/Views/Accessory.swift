@@ -50,17 +50,13 @@ public final class AccessoryView: InteractiveView {
 
         switch new {
         case .chevron:
-            view = UIImage(named: "chevronNext",
-                           in: Bundle(for: AccessoryView.self),
-                           compatibleWith: nil)
+            view = UIImage(named: "chevronNext", in: Resources.bundle, compatibleWith: nil)
                 .map(UIImageView.init)
         case .activityIndicator:
             view = UIActivityIndicatorView(style: .gray)
                 .with { $0.startAnimating() }
         case .checkmark:
-            view = UIImage(named: "tickIcon",
-                           in: Bundle(for: AccessoryView.self),
-                           compatibleWith: nil)
+            view = UIImage(named: "tickIcon", in: Resources.bundle, compatibleWith: nil)
                 .map(UIImageView.init)
         case let .icon(image):
             view = UIImageView(image: image)
