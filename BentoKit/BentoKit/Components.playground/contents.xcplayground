@@ -9,5 +9,6 @@
         <page name='MultilineTextInput'/>
         <page name='TextInput'/>
         <page name='TitledDescription'/>
+        <page name='Search'/>
     </pages>
 </playground>
