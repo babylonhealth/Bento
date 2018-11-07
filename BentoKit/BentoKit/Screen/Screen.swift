@@ -137,6 +137,7 @@ public struct BarButtonItem {
             willTriggerAction?()
             self.callback?()
         }
+        item.isEnabled = isEnabled
         item.accessibilityIdentifier = accessibilityIdentifier
     }
 
