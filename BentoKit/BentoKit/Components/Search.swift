@@ -29,7 +29,7 @@ extension Component {
 extension Component.Search {
     public final class View: BaseView, UISearchBarDelegate {
 
-        fileprivate let searchBar = UISearchBar()
+        let searchBar = UISearchBar()
 
         var textDidChange: Optional<(UISearchBar, String) -> Void> = nil
         var cancelButtonClicked: Optional<(UISearchBar) -> Void> = nil
@@ -39,8 +39,8 @@ extension Component.Search {
             super.init(frame: frame)
 
             searchBar.add(to: self)
-                .height(36)
                 .pinEdges(to: layoutMarginsGuide)
+
             searchBar.backgroundColor = .white
             searchBar.barTintColor = .white
             searchBar.backgroundImage = UIImage()
@@ -83,6 +83,7 @@ extension Component.Search {
             public var enablesReturnKeyAutomatically: Bool = true
 
             public func apply(to element: UISearchBar) {
+                element.height(height)
                 element.setTextInputBackgroundColor(color: backgroundColor,
                                                     height: height,
                                                     cornerRadius: cornerRadius)
