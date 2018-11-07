@@ -81,6 +81,7 @@
 		A6EC2DBD218B298B002B128F /* HostWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6EC2DBC218B298A002B128F /* HostWindow.swift */; };
 		B5234D63216EB0060061AD8B /* ImageOrLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5234D62216EB0060061AD8B /* ImageOrLabel.swift */; };
 		B5BD11C6219301D500DC6A51 /* Search.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5BD11C5219301D500DC6A51 /* Search.swift */; };
+		B5BD11C821930A2400DC6A51 /* SearchSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5BD11C721930A2400DC6A51 /* SearchSnapshotTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -186,6 +187,7 @@
 		A6EC2DBC218B298A002B128F /* HostWindow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HostWindow.swift; sourceTree = "<group>"; };
 		B5234D62216EB0060061AD8B /* ImageOrLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageOrLabel.swift; sourceTree = "<group>"; };
 		B5BD11C5219301D500DC6A51 /* Search.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Search.swift; sourceTree = "<group>"; };
+		B5BD11C721930A2400DC6A51 /* SearchSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchSnapshotTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -405,6 +407,7 @@
 				58801186216271DA0084EE07 /* TitledDescriptionSnapshotTests.swift */,
 				5880118A216271DA0084EE07 /* TitledDescriptionLegacySnapshotTests.swift */,
 				58801187216271DA0084EE07 /* ToggleSnapshotTests.swift */,
+				B5BD11C721930A2400DC6A51 /* SearchSnapshotTests.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -675,6 +678,7 @@
 				58801197216271DB0084EE07 /* ActivityComponentSnapshotTests.swift in Sources */,
 				58801191216271DB0084EE07 /* TitledDescriptionSnapshotTests.swift in Sources */,
 				58801192216271DB0084EE07 /* ToggleSnapshotTests.swift in Sources */,
+				B5BD11C821930A2400DC6A51 /* SearchSnapshotTests.swift in Sources */,
 				A6EC2DB5218B28BF002B128F /* BoxViewControllerSnapshotTests.swift in Sources */,
 				58801193216271DB0084EE07 /* ButtonComponentSnapshotTests.swift in Sources */,
 			);

@@ -12,7 +12,7 @@ extension Component {
             didBeginEditing: Optional<(UISearchBar) -> Void> = nil,
             textDidChange: Optional<(UISearchBar, String) -> Void> = nil,
             cancelButtonClicked: Optional<(UISearchBar) -> Void> = nil,
-            styleSheet: StyleSheet
+            styleSheet: StyleSheet = StyleSheet()
             ) {
             self.configurator = { view in
                 view.searchBar.placeholder = placeholder
