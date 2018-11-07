@@ -103,6 +103,27 @@ open class CollectionViewAdapterBase<SectionID: Hashable, ItemID: Hashable>
         view.didEndDisplayingView()
     }
 
+    @objc(collectionView:shouldShowMenuForItemAtIndexPath:)
+    open func collectionView(_ collectionView: UICollectionView, shouldShowMenuForItemAt indexPath: IndexPath) -> Bool {
+        guard let component = sections[indexPath.section].items[indexPath.row].component(as: MenuItemsResponding.self) else {
+            return false
+        }
+        UIMenuController.shared.menuItems = component.menuItems
+        return true
+    }
+
+    @objc(collectionView:canPerformAction:forItemAtIndexPath:withSender:)
+    open func collectionView(_ collectionView: UICollectionView, canPerformAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?) -> Bool {
+        guard let component = sections[indexPath.section].items[indexPath.row].component(as: MenuItemsResponding.self) else {
+            return false
+        }
+
+        return component.responds(to: action)
+    }
+
+    @objc(collectionView:performAction:forItemAtIndexPath:withSender:)
+    open func collectionView(_ collectionView: UICollectionView, performAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?) {}
+
     private func node(at indexPath: IndexPath) -> Node<ItemID> {
         return sections[indexPath.section].items[indexPath.row]
     }

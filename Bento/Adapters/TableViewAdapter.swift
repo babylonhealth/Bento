@@ -138,6 +138,27 @@ open class TableViewAdapterBase<SectionID: Hashable, ItemID: Hashable>
         view.didEndDisplayingView()
     }
 
+    @objc(tableView:shouldShowMenuForRowAtIndexPath:)
+    open func tableView(_ tableView: UITableView, shouldShowMenuForRowAt indexPath: IndexPath) -> Bool {
+        guard let component = sections[indexPath.section].items[indexPath.row].component(as: MenuItemsResponding.self) else {
+            return false
+        }
+        UIMenuController.shared.menuItems = component.menuItems
+        return true
+    }
+
+    @objc(tableView:canPerformAction:forRowAtIndexPath:withSender:)
+    open func tableView(_ tableView: UITableView, canPerformAction action: Selector, forRowAt indexPath: IndexPath, withSender sender: Any?) -> Bool {
+        guard let component = sections[indexPath.section].items[indexPath.row].component(as: MenuItemsResponding.self) else {
+            return false
+        }
+
+        return component.responds(to: action)
+    }
+
+    @objc(tableView:performAction:forRowAtIndexPath:withSender:)
+    open func tableView(_ tableView: UITableView, performAction action: Selector, forRowAt indexPath: IndexPath, withSender sender: Any?) {}
+
     private func deleteRow(at indexPath: IndexPath, actionPerformed: ((Bool) -> Void)?) {
         let item = sections[indexPath.section].items[indexPath.row]
         guard let component = item.component(as: Deletable.self) else {
