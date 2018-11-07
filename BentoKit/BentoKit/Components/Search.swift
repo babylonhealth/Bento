@@ -9,13 +9,15 @@ extension Component {
         public init(
             placeholder: String? = nil,
             keyboardType: UIKeyboardType = .default,
-            textDidChange: Optional<(String) -> Void> = nil,
-            cancelButtonClicked: Optional<() -> Void> = nil,
+            didBeginEditing: Optional<(UISearchBar) -> Void> = nil,
+            textDidChange: Optional<(UISearchBar, String) -> Void> = nil,
+            cancelButtonClicked: Optional<(UISearchBar) -> Void> = nil,
             styleSheet: StyleSheet
             ) {
             self.configurator = { view in
                 view.searchBar.placeholder = placeholder
                 view.searchBar.keyboardType = keyboardType
+                view.didBeginEditing = didBeginEditing
                 view.textDidChange = textDidChange
                 view.cancelButtonClicked = cancelButtonClicked
             }
@@ -29,9 +31,9 @@ extension Component.Search {
 
         fileprivate let searchBar = UISearchBar()
 
-        var textDidChange: Optional<(String) -> Void> = nil
-        var cancelButtonClicked: Optional<() -> Void> = nil
-        var didBeginEditing: Optional<() -> Void> = nil
+        var textDidChange: Optional<(UISearchBar, String) -> Void> = nil
+        var cancelButtonClicked: Optional<(UISearchBar) -> Void> = nil
+        var didBeginEditing: Optional<(UISearchBar) -> Void> = nil
 
         public override init(frame: CGRect) {
             super.init(frame: frame)
@@ -51,7 +53,7 @@ extension Component.Search {
         }
 
         public func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
-            self.didBeginEditing?()
+            self.didBeginEditing?(searchBar)
         }
 
         public func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
@@ -59,11 +61,11 @@ extension Component.Search {
         }
 
         public func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-            self.textDidChange?(searchText)
+            self.textDidChange?(searchBar, searchText)
         }
 
         public func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-            self.cancelButtonClicked?()
+            self.cancelButtonClicked?(searchBar)
         }
     }
 }

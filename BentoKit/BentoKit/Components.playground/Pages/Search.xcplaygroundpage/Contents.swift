@@ -12,11 +12,15 @@ let styleSheet = Component.Search.StyleSheet()
 let component = Component.Search(
     placeholder: "Placeholder",
     keyboardType: .default,
-    textDidChange: {
-        print("textDidChange", $0)
+    didBeginEditing: { _ in
+        print("didBeginEditing")
+},
+    textDidChange: { _, text in
+        print("textDidChange", text)
 },
     cancelButtonClicked: {
         print("cancelButtonClicked")
+        $0.endEditing(true)
 },
     styleSheet: styleSheet
 )
