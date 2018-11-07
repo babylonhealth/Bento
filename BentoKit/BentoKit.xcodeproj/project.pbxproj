@@ -80,6 +80,7 @@
 		A6EC2DBB218B2912002B128F /* Bool+Assertions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6EC2DB8218B2912002B128F /* Bool+Assertions.swift */; };
 		A6EC2DBD218B298B002B128F /* HostWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6EC2DBC218B298A002B128F /* HostWindow.swift */; };
 		B5234D63216EB0060061AD8B /* ImageOrLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5234D62216EB0060061AD8B /* ImageOrLabel.swift */; };
+		B5BD11C6219301D500DC6A51 /* Search.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5BD11C5219301D500DC6A51 /* Search.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -184,6 +185,7 @@
 		A6EC2DB8218B2912002B128F /* Bool+Assertions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Bool+Assertions.swift"; sourceTree = "<group>"; };
 		A6EC2DBC218B298A002B128F /* HostWindow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HostWindow.swift; sourceTree = "<group>"; };
 		B5234D62216EB0060061AD8B /* ImageOrLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageOrLabel.swift; sourceTree = "<group>"; };
+		B5BD11C5219301D500DC6A51 /* Search.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Search.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -273,6 +275,7 @@
 				580B6127215D2F6800A69E87 /* TextInput.swift */,
 				580B612B215D2F6800A69E87 /* TitledDescription.swift */,
 				580B6122215D2F6700A69E87 /* Toggle.swift */,
+				B5BD11C5219301D500DC6A51 /* Search.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -624,6 +627,7 @@
 				580B612F215D2F6800A69E87 /* Toggle.swift in Sources */,
 				580B612E215D2F6800A69E87 /* Component.swift in Sources */,
 				580B614A215D353B00A69E87 /* InputNodes.swift in Sources */,
+				B5BD11C6219301D500DC6A51 /* Search.swift in Sources */,
 				580B6134215D2F6800A69E87 /* TextInput.swift in Sources */,
 				A6EC2DB0218B28AA002B128F /* BoxViewModel.swift in Sources */,
 				580B611F215D2F6100A69E87 /* HeightCustomizing.swift in Sources */,
