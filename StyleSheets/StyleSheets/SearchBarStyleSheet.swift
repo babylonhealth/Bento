@@ -1,37 +1,20 @@
 import UIKit
 
 open class SearchBarStyleSheet: ViewStyleSheet<UISearchBar> {
-    public var height: CGFloat
-    public var showsCancelButton: Bool
-    public var searchTextPositionAdjustment: UIOffset
-    public var keyboardType: UIKeyboardType
-    public var returnKeyType: UIReturnKeyType
-    public var enablesReturnKeyAutomatically: Bool
-
-    public init(
-        backgroundColor: UIColor = .white,
-        cornerRadius: CGFloat = 10,
-        height: CGFloat = 36,
-        showsCancelButton: Bool = false,
-        searchTextPositionAdjustment: UIOffset = UIOffset(horizontal: 8, vertical: 0),
-        keyboardType: UIKeyboardType = .default,
-        returnKeyType: UIReturnKeyType = .search,
-        enablesReturnKeyAutomatically: Bool = true
-        ) {
-        self.height = height
-        self.showsCancelButton = showsCancelButton
-        self.searchTextPositionAdjustment = searchTextPositionAdjustment
-        self.keyboardType = keyboardType
-        self.returnKeyType = returnKeyType
-        self.enablesReturnKeyAutomatically = enablesReturnKeyAutomatically
-        super.init(backgroundColor: backgroundColor, cornerRadius: cornerRadius)
-    }
+    public var textInputBackgroundColor: UIColor = .white
+    public var textInputCornerRaidus: CGFloat = 10
+    public var height: CGFloat = 36
+    public var showsCancelButton: Bool = false
+    public var searchTextPositionAdjustment: UIOffset = UIOffset(horizontal: 8, vertical: 0)
+    public var keyboardType: UIKeyboardType = .default
+    public var returnKeyType: UIReturnKeyType = .search
+    public var enablesReturnKeyAutomatically: Bool = true
 
     open override func apply(to element: UISearchBar) {
         super.apply(to: element)
-        element.setTextInputBackgroundColor(color: backgroundColor ?? .clear,
+        element.setTextInputBackgroundColor(color: textInputBackgroundColor,
                                             height: height,
-                                            cornerRadius: cornerRadius)
+                                            cornerRadius: textInputCornerRaidus)
         element.showsCancelButton = showsCancelButton
         element.searchTextPositionAdjustment = searchTextPositionAdjustment
         element.keyboardType = keyboardType
@@ -39,7 +22,6 @@ open class SearchBarStyleSheet: ViewStyleSheet<UISearchBar> {
         element.enablesReturnKeyAutomatically = enablesReturnKeyAutomatically
         element.barTintColor = tintColor
         // remove system background
-        element.backgroundColor = .white
         element.backgroundImage = UIImage()
     }
 

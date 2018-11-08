@@ -70,7 +70,7 @@ extension Component.Search {
 
 extension Component.Search {
     public final class StyleSheet: BaseViewStyleSheet<View> {
-        public var searchBar = SearchBarStyleSheet()
+        public let searchBar = SearchBarStyleSheet()
 
         public init() {}
 
