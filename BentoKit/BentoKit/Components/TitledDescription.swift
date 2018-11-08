@@ -43,7 +43,6 @@ public extension Component {
             image: Property<BentoKit.ImageOrLabel>? = nil,
             accessory: Accessory = .chevron,
             badgeIcon: UIImage? = nil,
-            isEnabled: Bool = true,
             inputNodes: CustomInput? = nil,
             didTap: Optional<() -> Void> = nil,
             didTapAccessory: Optional<() -> Void> = nil,
@@ -76,7 +75,6 @@ public extension Component {
                 image: image,
                 accessory: accessory,
                 badgeIcon: badgeIcon,
-                isEnabled: isEnabled,
                 inputNodes: inputNodes,
                 didTap: didTap,
                 didTapAccessory: didTapAccessory,
@@ -90,10 +88,10 @@ public extension Component {
             image: Property<BentoKit.ImageOrLabel>? = nil,
             accessory: Accessory = .chevron,
             badgeIcon: UIImage? = nil,
-            isEnabled: Bool = true,
             inputNodes: CustomInput? = nil,
             didTap: (() -> Void)? = nil,
             didTapAccessory: (() -> Void)? = nil,
+            interactionBehavior: InteractionBehavior = .becomeFirstResponder,
             styleSheet: StyleSheet = .init()
         ) {
             self.configurator = { view in
@@ -111,11 +109,13 @@ public extension Component {
 
                 view.accessoryView.accessory = accessory
                 view.accessoryView.didTap = didTapAccessory
+                view.accessoryView.interactionBehavior = interactionBehavior
 
                 view.badgeView.imageView.image = badgeIcon
                 view.badgeView.isHidden = badgeIcon == nil
 
                 view.inputNodes = inputNodes
+                view.highlightingGesture.interactionBehavior = interactionBehavior
                 view.highlightingGesture.didTap = inputNodes != nil
                     ? .manual
                     : didTap.map(HighlightingGesture.TapAction.resign)
