@@ -21,6 +21,7 @@
 		6554A9ED21369CA900D84BD4 /* TextAlignment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6554A9EC21369CA900D84BD4 /* TextAlignment.swift */; };
 		6554A9F72136A1FB00D84BD4 /* StyleSheets.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6554A9D0213699B600D84BD4 /* StyleSheets.framework */; };
 		6554A9FE2136A20B00D84BD4 /* StyleSheetTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6554A9FD2136A20A00D84BD4 /* StyleSheetTests.swift */; };
+		B5BD13022194405400DC6A51 /* SearchBarStyleSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5BD13012194405400DC6A51 /* SearchBarStyleSheet.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -54,6 +55,7 @@
 		A6C9C8DB21807A1D00261906 /* Framework.Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Framework.Debug.xcconfig; sourceTree = "<group>"; };
 		A6C9C8DC21807A1D00261906 /* Framework.Base.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Framework.Base.xcconfig; sourceTree = "<group>"; };
 		A6C9C8DD21807A1D00261906 /* Framework.Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Framework.Release.xcconfig; sourceTree = "<group>"; };
+		B5BD13012194405400DC6A51 /* SearchBarStyleSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBarStyleSheet.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -110,6 +112,7 @@
 				25EFC89D217BA8390056D4B9 /* TextBoundComputing.swift */,
 				25EFC89F217BA85B0056D4B9 /* TextViewStyleSheet.swift */,
 				25EFC891217BA6450056D4B9 /* ViewStyleSheet.swift */,
+				B5BD13012194405400DC6A51 /* SearchBarStyleSheet.swift */,
 			);
 			path = StyleSheets;
 			sourceTree = "<group>";
@@ -248,6 +251,7 @@
 				25EFC8A2217BA8750056D4B9 /* TableViewStyleSheet.swift in Sources */,
 				25EFC892217BA6450056D4B9 /* ViewStyleSheet.swift in Sources */,
 				25EFC896217BA6830056D4B9 /* LabelStyleSheet.swift in Sources */,
+				B5BD13022194405400DC6A51 /* SearchBarStyleSheet.swift in Sources */,
 				25EFC89E217BA8390056D4B9 /* TextBoundComputing.swift in Sources */,
 				25EFC898217BA6D10056D4B9 /* ButtonStyleSheet.swift in Sources */,
 				25EFC89C217BA8050056D4B9 /* ImageViewStyleSheet.swift in Sources */,

@@ -20,6 +20,7 @@ extension Component {
                 view.didBeginEditing = didBeginEditing
                 view.textDidChange = textDidChange
                 view.cancelButtonClicked = cancelButtonClicked
+                view.searchBar.height(styleSheet.searchBar.height)
             }
             self.styleSheet = styleSheet
         }
@@ -41,9 +42,6 @@ extension Component.Search {
             searchBar.add(to: self)
                 .pinEdges(to: layoutMarginsGuide)
 
-            searchBar.backgroundColor = .white
-            searchBar.barTintColor = .white
-            searchBar.backgroundImage = UIImage()
             searchBar.delegate = self
         }
 
@@ -72,29 +70,7 @@ extension Component.Search {
 
 extension Component.Search {
     public final class StyleSheet: BaseViewStyleSheet<View> {
-        public struct SearchBar: StyleSheetProtocol {
-            public var backgroundColor: UIColor = .white
-            public var cornerRadius: CGFloat = 10
-            public var height: CGFloat = 36
-            public var showsCancelButton: Bool = false
-            public var searchTextPositionAdjustment: UIOffset = UIOffset.init(horizontal: 8, vertical: 0)
-            public var keyboardType: UIKeyboardType = .default
-            public var returnKeyType: UIReturnKeyType = .search
-            public var enablesReturnKeyAutomatically: Bool = true
-
-            public func apply(to element: UISearchBar) {
-                element.height(height)
-                element.setTextInputBackgroundColor(color: backgroundColor,
-                                                    height: height,
-                                                    cornerRadius: cornerRadius)
-                element.showsCancelButton = showsCancelButton
-                element.searchTextPositionAdjustment = searchTextPositionAdjustment
-                element.keyboardType = keyboardType
-                element.returnKeyType = returnKeyType
-                element.enablesReturnKeyAutomatically = enablesReturnKeyAutomatically
-            }
-        }
-        public var searchBar: SearchBar = SearchBar()
+        public var searchBar = SearchBarStyleSheet()
 
         public init() {}
 
@@ -102,25 +78,5 @@ extension Component.Search {
             super.apply(to: element)
             searchBar.apply(to: element.searchBar)
         }
-    }
-}
-
-extension UISearchBar {
-    func setTextInputBackgroundColor(color: UIColor, height: CGFloat, cornerRadius: CGFloat) {
-        // creates an image with rounded corners from background color
-        let size = CGSize(width: cornerRadius * 2, height: height)
-        let backgroundImage = UIGraphicsImageRenderer(size: size)
-            .image { imageContext in
-                let path = UIBezierPath(roundedRect: CGRect(origin: .zero, size: size), cornerRadius: cornerRadius)
-
-                imageContext.cgContext.beginPath()
-                imageContext.cgContext.addPath(path.cgPath)
-                imageContext.cgContext.closePath()
-                imageContext.cgContext.clip()
-
-                imageContext.cgContext.setFillColor(color.cgColor)
-                imageContext.cgContext.fill(CGRect(origin: .zero, size: size))
-            }
-        setSearchFieldBackgroundImage(backgroundImage, for: .normal)
     }
 }
