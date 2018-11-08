@@ -13,7 +13,7 @@ final class SearchSnapshotTests: SnapshotTestCase {
 
     func testSearch() {
         let styleSheet = Component.Search.StyleSheet()
-            .compose(\.searchBar.backgroundColor, UIColor.gray.withAlphaComponent(0.25))
+            .compose(\.searchBar.textInputBackgroundColor, UIColor.gray.withAlphaComponent(0.25))
             .compose(\.searchBar.showsCancelButton, true)
 
         let component = Component.Search(placeholder: placeholder, styleSheet: styleSheet)
