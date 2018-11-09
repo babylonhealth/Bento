@@ -15,13 +15,17 @@ struct CollectionViewSectionDiff<SectionID: Hashable, ItemID: Hashable> {
     }
 
     func apply(to collectionView: UICollectionView, completion: (() -> Void)? = nil) {
+        // NOTE: Item equivalence is not considered during the diff to speed up
+        //       the process, since the only place needing this piece of
+        //       knowledge is updating visible items at pre-insertion indices,
+        //       and we can defer the comparison till that point.
         let diff = SectionedChangeset(previous: oldSections,
                                       current: newSections,
                                       sectionIdentifier: { $0.id },
                                       areMetadataEqual: Section.hasEqualMetadata,
                                       items: { $0.items },
                                       itemIdentifier: { $0.id },
-                                      areItemsEqual: ==)
+                                      areItemsEqual: { _, _ in true })
         apply(diff: diff, to: collectionView, completion: completion)
     }
 
@@ -53,7 +57,7 @@ struct CollectionViewSectionDiff<SectionID: Hashable, ItemID: Hashable> {
 
         collectionView.insertSections(diff.sections.inserts)
         collectionView.deleteSections(diff.sections.removals)
-        collectionView.apply(sectionMutations: diff.mutatedSections, newSections: newSections)
+        collectionView.apply(sectionMutations: diff.mutatedSections, newSections: newSections, visibleIndexPaths: collectionView.indexPathsForVisibleItems)
         collectionView.moveSections(diff.sections.moves)
     }
 }
@@ -89,20 +93,25 @@ extension UICollectionView {
 
     func apply<SectionID, ItemID>(
         sectionMutations: [SectionedChangeset.MutatedSection],
-        newSections: [Section<SectionID, ItemID>]
+        newSections: [Section<SectionID, ItemID>],
+        visibleIndexPaths: [IndexPath]
     ) {
         for sectionMutation in sectionMutations {
             deleteItems(at: sectionMutation.deletedIndexPaths)
             insertItems(at: sectionMutation.insertedIndexPaths)
             perform(moves: sectionMutation.movedCollectionIndexPaths)
 
-            for (source, destination) in sectionMutation.changeset.mutationIndexPairs {
-                if let cell = cellForItem(at: [sectionMutation.source, source]) as? CollectionViewContainerCell {
-                    let component = newSections[sectionMutation.destination]
-                        .items[destination]
-                        .component
-                    cell.bind(component)
+            for indexPath in visibleIndexPaths where indexPath.section == sectionMutation.source && !sectionMutation.changeset.removals.contains(indexPath.row) {
+                let component: AnyRenderable
+
+                if let destination = sectionMutation.changeset.moves.first(where: { $0.source == indexPath.row })?.destination {
+                    component = newSections[indexPath.section].items[destination].component
+                } else {
+                    component = newSections[indexPath.section].items[indexPath.row].component
                 }
+
+                let cell = visibleCell(at: indexPath)
+                cell?.bind(component)
             }
         }
     }

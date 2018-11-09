@@ -15,13 +15,17 @@ struct TableViewSectionDiff<SectionId: Hashable, RowId: Hashable> {
     }
 
     func apply(to tableView: UITableView) {
+        // NOTE: Item equivalence is not considered during the diff to speed up
+        //       the process, since the only place needing this piece of
+        //       knowledge is updating visible items at pre-insertion indices,
+        //       and we can defer the comparison till that point.
         let diff = SectionedChangeset(previous: oldSections,
                                       current: newSections,
                                       sectionIdentifier: { $0.id },
                                       areMetadataEqual: Section.hasEqualMetadata,
                                       items: { $0.items },
                                       itemIdentifier: { $0.id },
-                                      areItemsEqual: ==)
+                                      areItemsEqual: { _, _ in true })
         apply(diff: diff, to: tableView)
     }
 
@@ -41,23 +45,30 @@ struct TableViewSectionDiff<SectionId: Hashable, RowId: Hashable> {
         tableView.insertSections(diff.sections.inserts, with: animation.sectionInsertion)
         tableView.deleteSections(diff.sections.removals, with: animation.sectionDeletion)
         tableView.moveSections(diff.sections.moves, animation: animation)
-        apply(sectionMutations: diff.mutatedSections, to: tableView, with: animation)
+        apply(sectionMutations: diff.mutatedSections, to: tableView, visibleIndexPaths: tableView.indexPathsForVisibleRows ?? [], with: animation)
         tableView.endUpdates()
     }
 
     private func apply(sectionMutations: [SectionedChangeset.MutatedSection],
                        to tableView: UITableView,
+                       visibleIndexPaths: [IndexPath],
                        with animation: TableViewAnimation) {
         for sectionMutation in sectionMutations {
             tableView.deleteRows(at: sectionMutation.deletedIndexPaths, with: animation.rowDeletion)
             tableView.insertRows(at: sectionMutation.insertedIndexPaths, with: animation.rowInsertion)
             tableView.perform(moves: sectionMutation.movedIndexPaths)
 
-            for (source, destination) in sectionMutation.changeset.mutationIndexPairs {
-                if let cell = tableView.cellForRow(at: [sectionMutation.source, source]) as? BentoReusableView {
-                    let node = newSections[sectionMutation.destination].items[destination]
-                    cell.bind(node.component)
+            for indexPath in visibleIndexPaths where indexPath.section == sectionMutation.source && !sectionMutation.changeset.removals.contains(indexPath.row) {
+                let component: AnyRenderable
+
+                if let destination = sectionMutation.changeset.moves.first(where: { $0.source == indexPath.row })?.destination {
+                    component = newSections[indexPath.section].items[destination].component
+                } else {
+                    component = newSections[indexPath.section].items[indexPath.row].component
                 }
+
+                let cell = tableView.visibleCell(at: indexPath)
+                cell?.bind(component)
             }
         }
     }
