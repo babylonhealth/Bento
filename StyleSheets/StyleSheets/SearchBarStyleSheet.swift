@@ -15,7 +15,7 @@ open class SearchBarStyleSheet: ViewStyleSheet<UISearchBar> {
         element.setTextInputBackgroundColor(color: textInputBackgroundColor,
                                             height: height,
                                             cornerRadius: textInputCornerRaidus)
-        element.showsCancelButton = showsCancelButton
+        element.setShowsCancelButton(showsCancelButton, animated: true)
         element.searchTextPositionAdjustment = searchTextPositionAdjustment
         element.keyboardType = keyboardType
         element.returnKeyType = returnKeyType
