@@ -113,8 +113,9 @@ open class CollectionViewAdapterBase<SectionID: Hashable, ItemID: Hashable>
     }
 
     @objc(collectionView:canPerformAction:forItemAtIndexPath:withSender:)
-    open func collectionView(_ collectionView: UICollectionView, canPerformAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?) -> Bool {
-        guard let component = sections[indexPath.section].items[indexPath.row].component(as: MenuItemsResponding.self) else {
+    open func collectionView(_ collectionView: UICollectionView, canPerformAction action: Selector, forItemAt indexPath: IndexPath?, withSender sender: Any?) -> Bool {
+        guard let indexPath = indexPath,
+            let component = sections[indexPath.section].items[indexPath.row].component(as: MenuItemsResponding.self) else {
             return false
         }
 
