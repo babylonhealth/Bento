@@ -295,7 +295,7 @@ extension Component.TitledDescription {
         }
 
         override init(frame: CGRect) {
-            self.labels = (0 ..< numberOfLabels).map { _ in UILabel() }
+            self.labels = []// (0 ..< numberOfLabels).map { _ in UILabel() }
             self.labelsContainer = stack(.vertical,
                                          spacing: 8.0,
                                          distribution: .fill,
@@ -478,24 +478,24 @@ private extension Component.TitledDescription.View {
     }
 
     func processChangeInLabelCount() {
-        let currentLabelCount = labels.count
-        let newLabelCount = numberOfLabels
-        let labelCountDifference = abs(newLabelCount - currentLabelCount)
-
-        guard newLabelCount != currentLabelCount else { return }
-
-        if newLabelCount > currentLabelCount {
-            let labelsToAdd = (1 ... labelCountDifference).map { _ in UILabel() }
-            labelsToAdd.forEach { label in
-                setupAutoLayoutPriorities(for: label)
-                labelsContainer.addArrangedSubview(label)
-            }
-            labels += labelsToAdd
-        } else {
-            let labelsToRemove = labels.suffix(labelCountDifference)
-            labelsToRemove.forEach { $0.removeFromSuperview() }
-            labels = [UILabel](labels.prefix(newLabelCount))
-        }
+//        let currentLabelCount = labels.count
+//        let newLabelCount = numberOfLabels
+//        let labelCountDifference = abs(newLabelCount - currentLabelCount)
+//
+//        guard newLabelCount != currentLabelCount else { return }
+//
+//        if newLabelCount > currentLabelCount {
+//            let labelsToAdd = (1 ... labelCountDifference).map { _ in UILabel() }
+//            labelsToAdd.forEach { label in
+//                setupAutoLayoutPriorities(for: label)
+//                labelsContainer.addArrangedSubview(label)
+//            }
+//            labels += labelsToAdd
+//        } else {
+//            let labelsToRemove = labels.suffix(labelCountDifference)
+//            labelsToRemove.forEach { $0.removeFromSuperview() }
+//            labels = [UILabel](labels.prefix(newLabelCount))
+//        }
     }
 
     func setupAutoLayoutPriorities(for label: UILabel) {
