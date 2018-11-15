@@ -46,6 +46,22 @@ final class CollectionViewDataSource<SectionID: Hashable, ItemID: Hashable>
         diff.apply(to: collectionView, completion: completion)
     }
 
+    func update(sections: [Section<SectionID, ItemID>], layout: UICollectionViewLayout) {
+        guard let collectionView = collectionView else { return }
+        if collectionView.window == nil {
+            // Just reload collection view if it's not in the window hierarchy
+            self.sections = sections
+            collectionView.reloadData()
+            return
+        }
+
+        let diff = CollectionViewSectionDiff(oldSections: self.sections,
+                                             newSections: sections,
+                                             knownSupplements: knownSupplements)
+        self.sections = sections
+        diff.apply(to: collectionView, with: layout)
+    }
+
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return sections.count
     }

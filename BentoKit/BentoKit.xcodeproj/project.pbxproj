@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		258FECF62190E50A008BE6D2 /* CollectionViewLayoutAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 258FECEC2190E2BF008BE6D2 /* CollectionViewLayoutAdapter.swift */; };
+		258FECF72190E50A008BE6D2 /* CenterYLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 258FECED2190E2BF008BE6D2 /* CenterYLayout.swift */; };
+		258FECF82190E50A008BE6D2 /* StickyFooterCollectionViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 258FECEE2190E2BF008BE6D2 /* StickyFooterCollectionViewLayout.swift */; };
+		258FECF92190E50A008BE6D2 /* ListCollectionViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 258FECEF2190E2BF008BE6D2 /* ListCollectionViewLayout.swift */; };
+		258FECFC2190EA4C008BE6D2 /* BoxLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 258FECFB2190EA4C008BE6D2 /* BoxLayout.swift */; };
 		580B60B3215D2CC100A69E87 /* StyleSheets.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 580B60B2215D2CC100A69E87 /* StyleSheets.framework */; };
 		580B60B5215D2CCB00A69E87 /* Bento.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 580B60B4215D2CCB00A69E87 /* Bento.framework */; };
 		580B611F215D2F6100A69E87 /* HeightCustomizing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580B611D215D2F6100A69E87 /* HeightCustomizing.swift */; };
@@ -99,6 +104,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		258FECEC2190E2BF008BE6D2 /* CollectionViewLayoutAdapter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionViewLayoutAdapter.swift; sourceTree = "<group>"; };
+		258FECED2190E2BF008BE6D2 /* CenterYLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CenterYLayout.swift; sourceTree = "<group>"; };
+		258FECEE2190E2BF008BE6D2 /* StickyFooterCollectionViewLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StickyFooterCollectionViewLayout.swift; sourceTree = "<group>"; };
+		258FECEF2190E2BF008BE6D2 /* ListCollectionViewLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListCollectionViewLayout.swift; sourceTree = "<group>"; };
+		258FECFB2190EA4C008BE6D2 /* BoxLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoxLayout.swift; sourceTree = "<group>"; };
 		580B60A5215D2C3400A69E87 /* BentoKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = BentoKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		580B60A9215D2C3400A69E87 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		580B60B2215D2CC100A69E87 /* StyleSheets.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = StyleSheets.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -218,6 +228,18 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		258FECEB2190E2BF008BE6D2 /* Layouts */ = {
+			isa = PBXGroup;
+			children = (
+				258FECFB2190EA4C008BE6D2 /* BoxLayout.swift */,
+				258FECEC2190E2BF008BE6D2 /* CollectionViewLayoutAdapter.swift */,
+				258FECED2190E2BF008BE6D2 /* CenterYLayout.swift */,
+				258FECEE2190E2BF008BE6D2 /* StickyFooterCollectionViewLayout.swift */,
+				258FECEF2190E2BF008BE6D2 /* ListCollectionViewLayout.swift */,
+			);
+			path = Layouts;
+			sourceTree = "<group>";
+		};
 		580B609B215D2C3300A69E87 = {
 			isa = PBXGroup;
 			children = (
@@ -247,6 +269,7 @@
 				580B611C215D2F2100A69E87 /* Protocols */,
 				580B60B0215D2C9C00A69E87 /* Components */,
 				A6EC2DA8218B28AA002B128F /* Screen */,
+				258FECEB2190E2BF008BE6D2 /* Layouts */,
 				580B613E215D339600A69E87 /* Views */,
 				580B613B215D2F7000A69E87 /* Helpers */,
 				580B6187215E584100A69E87 /* Resources */,
@@ -606,18 +629,23 @@
 				A6EC2DAE218B28AA002B128F /* BoxAppearance.swift in Sources */,
 				A6EC2DB9218B2912002B128F /* UIViewAnimationOptions+Curve.swift in Sources */,
 				A6EC2DB1218B28AA002B128F /* BoxViewController.swift in Sources */,
+				258FECF82190E50A008BE6D2 /* StickyFooterCollectionViewLayout.swift in Sources */,
 				A6EC2DBA218B2912002B128F /* UIButton+Closure.swift in Sources */,
 				585B4B1F215E721600C8304A /* BentoTableView.swift in Sources */,
+				258FECF62190E50A008BE6D2 /* CollectionViewLayoutAdapter.swift in Sources */,
 				580B614D215D355200A69E87 /* UIViewExtensions.swift in Sources */,
 				580B614B215D353B00A69E87 /* AnyBox.swift in Sources */,
 				580B6164215E3C1D00A69E87 /* TextValue.swift in Sources */,
 				580B6141215D343E00A69E87 /* BaseView.swift in Sources */,
+				258FECF92190E50A008BE6D2 /* ListCollectionViewLayout.swift in Sources */,
+				258FECFC2190EA4C008BE6D2 /* BoxLayout.swift in Sources */,
 				580B6186215E435700A69E87 /* BoxTableViewAdapter.swift in Sources */,
 				580B6149215D353B00A69E87 /* HighlightingGesture.swift in Sources */,
 				580B6165215E3C1D00A69E87 /* NodeConstruction.swift in Sources */,
 				587208EE2164DA4400C8E6DF /* DeleteAction.swift in Sources */,
 				580B6131215D2F6800A69E87 /* Button.swift in Sources */,
 				580B613A215D2F6800A69E87 /* Image.swift in Sources */,
+				258FECF72190E50A008BE6D2 /* CenterYLayout.swift in Sources */,
 				580B612F215D2F6800A69E87 /* Toggle.swift in Sources */,
 				580B612E215D2F6800A69E87 /* Component.swift in Sources */,
 				580B614A215D353B00A69E87 /* InputNodes.swift in Sources */,

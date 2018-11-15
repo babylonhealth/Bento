@@ -11,7 +11,7 @@ struct CollectionViewSectionDiff<SectionID: Hashable, ItemID: Hashable> {
          knownSupplements: Set<Supplement>) {
         self.oldSections = oldSections
         self.newSections = newSections
-        self.supplements = knownSupplements
+        supplements = knownSupplements
     }
 
     func apply(to collectionView: UICollectionView, completion: (() -> Void)? = nil) {
@@ -25,6 +25,21 @@ struct CollectionViewSectionDiff<SectionID: Hashable, ItemID: Hashable> {
         apply(diff: diff, to: collectionView, completion: completion)
     }
 
+    func apply(to collectionView: UICollectionView, with layout: UICollectionViewLayout) {
+        let diff = SectionedChangeset(previous: oldSections,
+                                      current: newSections,
+                                      sectionIdentifier: { $0.id },
+                                      areMetadataEqual: Section.hasEqualMetadata,
+                                      items: { $0.items },
+                                      itemIdentifier: { $0.id },
+                                      areItemsEqual: ==)
+
+        collectionView.performBatchUpdates({
+            collectionView.setCollectionViewLayout(layout, animated: true)
+            self.performBatchUpdates(with: diff, for: collectionView)
+        }, completion: nil)
+    }
+
     private func apply(diff: SectionedChangeset, to collectionView: UICollectionView, completion: (() -> Void)?) {
         collectionView.performBatchUpdates({
             self.performBatchUpdates(with: diff, for: collectionView)
@@ -35,10 +50,7 @@ struct CollectionViewSectionDiff<SectionID: Hashable, ItemID: Hashable> {
         for supplement in supplements {
             let elementKind = supplement.elementKind
 
-            let groups = Dictionary(
-                grouping: collectionView.indexPathsForVisibleSupplementaryElements(ofKind: elementKind),
-                by: { $0.section }
-            )
+            let groups = Dictionary(grouping: collectionView.indexPathsForVisibleSupplementaryElements(ofKind: elementKind)) { $0.section }
 
             for (source, destination) in diff.sections.mutationIndexPairs {
                 if let indexPaths = groups[source] {
@@ -87,10 +99,8 @@ extension UICollectionView {
         }
     }
 
-    func apply<SectionID, ItemID>(
-        sectionMutations: [SectionedChangeset.MutatedSection],
-        newSections: [Section<SectionID, ItemID>]
-    ) {
+    func apply<SectionID, ItemID>(sectionMutations: [SectionedChangeset.MutatedSection],
+                                  newSections: [Section<SectionID, ItemID>]) {
         for sectionMutation in sectionMutations {
             deleteItems(at: sectionMutation.deletedIndexPaths)
             insertItems(at: sectionMutation.insertedIndexPaths)

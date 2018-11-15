@@ -40,16 +40,22 @@ public struct Box<SectionID: Hashable, ItemID: Hashable> {
     }
 }
 
-extension UICollectionView {
-    public func render<SectionID, ItemID>(_ box: Box<SectionID, ItemID>, completion: (() -> Void)? = nil) {
+public extension UICollectionView {
+    func render<SectionID, ItemID>(_ box: Box<SectionID, ItemID>, completion: (() -> Void)? = nil) {
         let adapter: CollectionViewDataSource<SectionID, ItemID> = getAdapter()
         adapter.update(sections: box.sections, completion: completion)
         didRenderBox()
     }
 
-    public func render<SectionID, ItemID>(_ box: Box<SectionID, ItemID>, animated: Bool) {
+    func render<SectionID, ItemID>(_ box: Box<SectionID, ItemID>, animated: Bool) {
         let adapter: CollectionViewDataSource<SectionID, ItemID> = getAdapter()
         adapter.update(sections: box.sections, animated: animated)
+        didRenderBox()
+    }
+
+    func render<SectionID, ItemID>(_ box: Box<SectionID, ItemID>, with layout: UICollectionViewLayout) {
+        let adapter: CollectionViewDataSource<SectionID, ItemID> = getAdapter()
+        adapter.update(sections: box.sections, layout: layout)
         didRenderBox()
     }
 }

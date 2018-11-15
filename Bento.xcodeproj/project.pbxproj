@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		25FAC55B219E1C0500740807 /* BentoKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25FAC55A219E1C0500740807 /* BentoKit.framework */; };
 		515F94097C1F82B7E5C2DE0C /* Section.swift in Sources */ = {isa = PBXBuildFile; fileRef = 515F9EAF847DD1D68DE3A48C /* Section.swift */; };
 		5829D269200FB092001E020D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5829D268200FB092001E020D /* AppDelegate.swift */; };
 		5829D26B200FB092001E020D /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5829D26A200FB092001E020D /* ViewController.swift */; };
@@ -119,6 +120,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		25FAC55A219E1C0500740807 /* BentoKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = BentoKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		515F9EAF847DD1D68DE3A48C /* Section.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Section.swift; sourceTree = "<group>"; };
 		5829D265200FB092001E020D /* Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5829D268200FB092001E020D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -214,6 +216,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				25FAC55B219E1C0500740807 /* BentoKit.framework in Frameworks */,
 				A6C9C8BD2180782500261906 /* Result.framework in Frameworks */,
 				A6C9C8BA2180782500261906 /* Kingfisher.framework in Frameworks */,
 				58FC4430207CF3CD00DA3614 /* Bento.framework in Frameworks */,
@@ -393,6 +396,7 @@
 		7D7D5AFB203495BA731D7A3E /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				25FAC55A219E1C0500740807 /* BentoKit.framework */,
 				A6C9C8B62180780E00261906 /* ReactiveFeedback.framework */,
 				A6C9C8B82180780E00261906 /* Kingfisher.framework */,
 				A6C9C8B42180780E00261906 /* ReactiveCocoa.framework */,
