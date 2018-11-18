@@ -59,8 +59,8 @@ struct AnyRenderable: Renderable {
         return view
     }
 
-    static func ==(lhs: AnyRenderable, rhs: AnyRenderable) -> Bool {
-        return lhs.base.equals(to: rhs.base)
+    static func isLayoutEquivalent(lhs: AnyRenderable, rhs: AnyRenderable) -> Bool {
+        return lhs.base.isLayoutEquivalent(to: rhs.base)
     }
 }
 
@@ -92,10 +92,10 @@ private class AnyRenderableBox<Base: Renderable>: AnyRenderableBoxBase where Bas
         return base as? T
     }
 
-    override func equals(to other: AnyRenderableBoxBase) -> Bool {
+    override func isLayoutEquivalent(to other: AnyRenderableBoxBase) -> Bool {
         guard let other = other as? AnyRenderableBox<Base>
             else { return false }
-        return self.base == other.base
+        return Base.isLayoutEquivalent(base, other.base)
     }
 }
 
@@ -108,6 +108,6 @@ private class AnyRenderableBoxBase {
 
     func render(in view: UIView) { fatalError() }
     func generate() -> UIView { fatalError() }
-    func equals(to other: AnyRenderableBoxBase) -> Bool { fatalError() }
+    func isLayoutEquivalent(to other: AnyRenderableBoxBase) -> Bool { fatalError() }
     func cast<T>(to type: T.Type) -> T? { fatalError() }
 }

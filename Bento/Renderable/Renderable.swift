@@ -1,21 +1,31 @@
 import UIKit
 
-public protocol Renderable: Equatable {
+/// Represent a component that can be rendered on screen as part of a composite
+/// layout tree.
+public protocol Renderable {
     associatedtype View
 
     var reuseIdentifier: String { get }
 
     func generate() -> View
     func render(in view: View)
-}
-
-public extension Renderable where Self: AnyObject {
-    static func == (lhs: Self, rhs: Self) -> Bool {
-        return lhs === rhs
-    }
+    
+    /// Whether `lhs` and `rhs` produces an equivalent layout.
+    ///
+    /// Components may implement this method if they are able to determine whether
+    /// two instances should produce equivalent layout result solely based on the
+    /// component properties.
+    ///
+    /// The default implementation returns `false`, leading Bento to be conservative
+    /// about re-rendering elision and other optimizations.
+    static func isLayoutEquivalent(_ lhs: Self, _ rhs: Self) -> Bool
 }
 
 public extension Renderable {
+    static func isLayoutEquivalent(_ lhs: Self, _ rhs: Self) -> Bool {
+        return false
+    }
+    
     var reuseIdentifier: String {
         return String(reflecting: View.self)
     }

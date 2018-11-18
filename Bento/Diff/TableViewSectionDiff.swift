@@ -18,10 +18,10 @@ struct TableViewSectionDiff<SectionId: Hashable, RowId: Hashable> {
         let diff = SectionedChangeset(previous: oldSections,
                                       current: newSections,
                                       sectionIdentifier: { $0.id },
-                                      areMetadataEqual: Section.hasEqualMetadata,
+                                      areMetadataEqual: Section.supplementHasEquivalentLayout,
                                       items: { $0.items },
                                       itemIdentifier: { $0.id },
-                                      areItemsEqual: ==)
+                                      areItemsEqual: Node.isLayoutEquivalent)
         apply(diff: diff, to: tableView)
     }
 
