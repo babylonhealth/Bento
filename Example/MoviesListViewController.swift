@@ -16,10 +16,14 @@ final class MoviesListViewController: UIViewController {
 
         tableView.sectionHeaderHeight = 0
         tableView.sectionFooterHeight = 0
-        viewModel.box.producer.take(first: 1).startWithValues(tableView.render)
-        viewModel.box.producer.skip(first: 1).startWithValues { [tableView] in
-            tableView?.render($0, animated: false)
-        }
+        
+        var isInitial = true
+
+        viewModel.box.producer
+            .startWithValues { [weak tableView] in
+                tableView?.render($0, animated: isInitial)
+                isInitial = false
+            }
 
         viewModel.nearBottomBinding <~ tableView!.rac_nearBottomSignal
         viewModel.retryBinding <~ retrySignal

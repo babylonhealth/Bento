@@ -1,6 +1,6 @@
 import UIKit
 
-public struct TableViewAnimation {
+public struct TableViewAnimationOptions {
     let sectionInsertion: UITableViewRowAnimation
     let sectionDeletion: UITableViewRowAnimation
     let rowDeletion: UITableViewRowAnimation

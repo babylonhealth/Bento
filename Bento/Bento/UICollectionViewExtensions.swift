@@ -25,10 +25,9 @@ extension UICollectionView {
         render(box, animated: true)
     }
 
-    public func render<SectionID, ItemID>(_ box: Box<SectionID, ItemID>, animated: Bool = true, completion: (() -> Void)? = nil) {
+    public func render<SectionID, ItemID>(_ box: Box<SectionID, ItemID>, animated: Bool = true, completion: ((Bool) -> Void)? = nil) {
         let adapter: CollectionViewAdapterBase<SectionID, ItemID> = getAdapter()
         adapter.update(sections: box.sections, animated: animated, completion: completion)
-        didRenderBox()
     }
 
     private struct AssociatedKey {

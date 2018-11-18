@@ -18,22 +18,26 @@ open class CollectionViewAdapterBase<SectionID: Hashable, ItemID: Hashable>
         super.init()
     }
 
-    internal func update(sections: [Section<SectionID, ItemID>], animated: Bool, completion: (() -> Void)?) {
+    internal func update(sections: [Section<SectionID, ItemID>], animated: Bool, completion: ((Bool) -> Void)?) {
         guard let collectionView = collectionView else { return }
 
         if !animated || collectionView.window == nil {
             // Just reload collection view if it's not in the window hierarchy
             self.sections = sections
             collectionView.reloadData()
-            completion?()
+            completion?(true)
             return
         }
 
-        let diff = CollectionViewSectionDiff(oldSections: self.sections,
-                                             newSections: sections,
-                                             knownSupplements: knownSupplements)
+        let diff = SectionDiff<UICollectionView, SectionID, ItemID>(
+            oldSections: self.sections,
+            newSections: sections,
+            knownSupplements: knownSupplements
+        )
+
         self.sections = sections
         diff.apply(to: collectionView, completion: completion)
+        collectionView.didRenderBox()
     }
 
     @objc(numberOfSectionsInCollectionView:)

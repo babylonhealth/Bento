@@ -15,7 +15,6 @@
 		5829D273200FB092001E020D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5829D271200FB092001E020D /* LaunchScreen.storyboard */; };
 		582D9951217E196E00C67B0D /* MenuItemsResponding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 582D9950217E196E00C67B0D /* MenuItemsResponding.swift */; };
 		582D9987217F87B100C67B0D /* ComponentLifecycleAware.swift in Sources */ = {isa = PBXBuildFile; fileRef = 582D9986217F87B100C67B0D /* ComponentLifecycleAware.swift */; };
-		58467B03202B33F200577C77 /* TableViewSectionDiff.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58467B02202B33F200577C77 /* TableViewSectionDiff.swift */; };
 		584A6F9E20C7E36D006395E8 /* IntroComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 584A6F9D20C7E36D006395E8 /* IntroComponent.swift */; };
 		584A6FA020C7E470006395E8 /* IntroComponentView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 584A6F9F20C7E470006395E8 /* IntroComponentView.xib */; };
 		5857BECA2056F02C0085EB9C /* If.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5857BEC92056F02C0085EB9C /* If.swift */; };
@@ -56,7 +55,7 @@
 		61B40919208523F60063DE25 /* IntroViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61B40916208523F50063DE25 /* IntroViewModel.swift */; };
 		61B4091A208523F60063DE25 /* IntroViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61B40917208523F50063DE25 /* IntroViewController.swift */; };
 		61B64BB12086561B0092082C /* IntroRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61B64BB02086561B0092082C /* IntroRenderer.swift */; };
-		61B64BB420873DA10092082C /* CollectionViewSectionDiff.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61B64BB320873DA10092082C /* CollectionViewSectionDiff.swift */; };
+		61B64BB420873DA10092082C /* SectionDiff.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61B64BB320873DA10092082C /* SectionDiff.swift */; };
 		61B64BB6208745730092082C /* CollectionViewContainerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61B64BB5208745730092082C /* CollectionViewContainerCell.swift */; };
 		65496FB8211C323F00511D8A /* TableViewContainerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 587F0717201B355800ACD219 /* TableViewContainerCell.swift */; };
 		65496FB9211C323F00511D8A /* TableViewAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9509BC2762C8B4277B973D8 /* TableViewAdapter.swift */; };
@@ -132,7 +131,6 @@
 		5829D274200FB092001E020D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		582D9950217E196E00C67B0D /* MenuItemsResponding.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuItemsResponding.swift; sourceTree = "<group>"; };
 		582D9986217F87B100C67B0D /* ComponentLifecycleAware.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComponentLifecycleAware.swift; sourceTree = "<group>"; };
-		58467B02202B33F200577C77 /* TableViewSectionDiff.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewSectionDiff.swift; sourceTree = "<group>"; };
 		584A6F9D20C7E36D006395E8 /* IntroComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroComponent.swift; sourceTree = "<group>"; };
 		584A6F9F20C7E470006395E8 /* IntroComponentView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = IntroComponentView.xib; sourceTree = "<group>"; };
 		5857BEC92056F02C0085EB9C /* If.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = If.swift; sourceTree = "<group>"; };
@@ -173,7 +171,7 @@
 		61B40916208523F50063DE25 /* IntroViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IntroViewModel.swift; sourceTree = "<group>"; };
 		61B40917208523F50063DE25 /* IntroViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IntroViewController.swift; sourceTree = "<group>"; };
 		61B64BB02086561B0092082C /* IntroRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroRenderer.swift; sourceTree = "<group>"; };
-		61B64BB320873DA10092082C /* CollectionViewSectionDiff.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewSectionDiff.swift; sourceTree = "<group>"; };
+		61B64BB320873DA10092082C /* SectionDiff.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionDiff.swift; sourceTree = "<group>"; };
 		61B64BB5208745730092082C /* CollectionViewContainerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewContainerCell.swift; sourceTree = "<group>"; };
 		65A69EDE218B8891005D90AC /* UICollectionViewExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UICollectionViewExtensions.swift; sourceTree = "<group>"; };
 		65A69EE0218B8AB6005D90AC /* CustomCollectionViewAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCollectionViewAdapter.swift; sourceTree = "<group>"; };
@@ -251,8 +249,7 @@
 		581ED77E2022041C00EC9584 /* Diff */ = {
 			isa = PBXGroup;
 			children = (
-				58467B02202B33F200577C77 /* TableViewSectionDiff.swift */,
-				61B64BB320873DA10092082C /* CollectionViewSectionDiff.swift */,
+				61B64BB320873DA10092082C /* SectionDiff.swift */,
 				9A4DB3E0212CB3710079D5AE /* Changeset+MutationIndexPairs.swift */,
 			);
 			path = Diff;
@@ -639,7 +636,7 @@
 				65E3ECA02113114100869DF3 /* Focusable.swift in Sources */,
 				58E98E63201889B900F78BAE /* AnyRenderable.swift in Sources */,
 				58BA7586201634120050D5F1 /* Helpers.swift in Sources */,
-				61B64BB420873DA10092082C /* CollectionViewSectionDiff.swift in Sources */,
+				61B64BB420873DA10092082C /* SectionDiff.swift in Sources */,
 				58D0F12D207F573B00A24E96 /* TableViewAnimation.swift in Sources */,
 				65BA922E20AF388F004AEF18 /* UITableViewExtensions.swift in Sources */,
 				65A69EDF218B8892005D90AC /* UICollectionViewExtensions.swift in Sources */,
@@ -648,7 +645,6 @@
 				A9509FB12CAD89179FAA03B0 /* Box.swift in Sources */,
 				582D9987217F87B100C67B0D /* ComponentLifecycleAware.swift in Sources */,
 				65E3ECA621133C9400869DF3 /* UIKit+CollectionViewFocus.swift in Sources */,
-				58467B03202B33F200577C77 /* TableViewSectionDiff.swift in Sources */,
 				A9509C4FC3664040FF3649CD /* Node.swift in Sources */,
 				587A341F2100A09B00B25CCA /* Deletable.swift in Sources */,
 				5874C80520C9342B004EB5EA /* CollectionViewAdapter.swift in Sources */,

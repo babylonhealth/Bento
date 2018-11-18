@@ -1,4 +1,14 @@
 extension UITableView {
+    public var animationOptions: TableViewAnimationOptions {
+        get {
+            let options = objc_getAssociatedObject(self, AssociatedKey.animationOptions) as? TableViewAnimationOptions
+            return options ?? TableViewAnimationOptions()
+        }
+        set {
+            objc_setAssociatedObject(self, AssociatedKey.animationOptions, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+        }
+    }
+    
     public func prepareForBoxRendering<SectionID: Hashable, ItemID: Hashable>(
         sectionIdType: SectionID.Type,
         rowIdType: ItemID.Type
@@ -18,30 +28,21 @@ extension UITableView {
         layoutIfNeeded()
         objc_setAssociatedObject(self, AssociatedKey.adapter, adapter, .OBJC_ASSOCIATION_RETAIN)
     }
-
-    public func render<SectionID, ItemID>(_ box: Box<SectionID, ItemID>) {
-        render(box, animated: true)
+    
+    public func render<SectionID, ItemID>(_ box: Box<SectionID, ItemID>, animated: Bool = true) {
+        let adapter: TableViewAdapterBase<SectionID, ItemID> = getAdapter()
+        adapter.update(sections: box.sections, animated: animated, completion: nil)
     }
 
-    public func render<SectionID, ItemID>(_ box: Box<SectionID, ItemID>, animated: Bool) {
+    @available(iOS 11.0, *)
+    public func render<SectionID, ItemID>(_ box: Box<SectionID, ItemID>, animated: Bool = true, completion: ((Bool) -> Void)?) {
         let adapter: TableViewAdapterBase<SectionID, ItemID> = getAdapter()
-        if animated {
-            adapter.update(sections: box.sections, with: TableViewAnimation())
-        } else {
-            adapter.update(sections: box.sections)
-        }
-        didRenderBox()
-    }
-
-    public func render<SectionID, ItemID>(_ box: Box<SectionID, ItemID>, with animation: TableViewAnimation) {
-        let adapter: TableViewAdapterBase<SectionID, ItemID> = getAdapter()
-
-        adapter.update(sections: box.sections, with: animation)
-        didRenderBox()
+        adapter.update(sections: box.sections, animated: animated, completion: completion)
     }
 
     private struct AssociatedKey {
         static let adapter = UnsafeMutablePointer<CChar>.allocate(capacity: 1)
+        static let animationOptions = UnsafeMutablePointer<CChar>.allocate(capacity: 1)
     }
 
     func getAdapter<SectionID, ItemID>() -> TableViewAdapterBase<SectionID, ItemID> {

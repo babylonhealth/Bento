@@ -20,7 +20,9 @@ final class PersonalDetailsViewController: UIViewController {
             .map { [weak viewModel] state in
                 return renderer.render(state, action: { viewModel?.send($0) })
             }
-            .startWithValues(tableView.render)
+            .startWithValues { [weak tableView] in
+                tableView?.render($0)
+            }
     }
 
     override func viewDidAppear(_ animated: Bool) {

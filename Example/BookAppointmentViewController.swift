@@ -42,9 +42,10 @@ final class BookAppointmentViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupTableView()
-        viewModel.box
-            .producer
-            .startWithValues(tableView.render)
+        viewModel.box.producer
+            .startWithValues { [weak tableView] in
+                tableView?.render($0)
+            }
     }
 
     override func viewWillAppear(_ animated: Bool) {

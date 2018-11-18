@@ -14,20 +14,26 @@ open class TableViewAdapterBase<SectionID: Hashable, ItemID: Hashable>
         super.init()
     }
 
-    func update(sections: [Section<SectionID, ItemID>], with animation: TableViewAnimation) {
+    func update(sections: [Section<SectionID, ItemID>], animated: Bool, completion: ((Bool) -> Void)?) {
         guard let tableView = tableView else {
             return
         }
-        let diff = TableViewSectionDiff(oldSections: self.sections,
-                                        newSections: sections,
-                                        animation: animation)
-        self.sections = sections
-        diff.apply(to: tableView)
-    }
+        
+        guard animated else {
+            self.sections = sections
+            tableView.reloadData()
+            return
+        }
 
-    func update(sections: [Section<SectionID, ItemID>]) {
+        let diff = SectionDiff<UITableView, SectionID, ItemID>(
+            oldSections: self.sections,
+            newSections: sections,
+            knownSupplements: [.header, .footer]
+        )
+
         self.sections = sections
-        tableView?.reloadData()
+        diff.apply(to: tableView, completion: completion)
+        tableView.didRenderBox()
     }
 
     @objc(numberOfSectionsInTableView:)
