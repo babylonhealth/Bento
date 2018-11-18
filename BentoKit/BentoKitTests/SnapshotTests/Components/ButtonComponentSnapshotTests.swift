@@ -1,6 +1,6 @@
 import BentoKit
 import StyleSheets
-@testable import BentoKitPlaygroundSupport
+import BentoKitPlaygroundSupport
 import UIKit
 
 final class ButtonComponentSnapshotTests: SnapshotTestCase {

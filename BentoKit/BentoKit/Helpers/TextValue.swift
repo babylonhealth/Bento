@@ -1,7 +1,7 @@
 import UIKit
 import StyleSheets
 
-public enum TextValue: ExpressibleByStringLiteral {
+public enum TextValue: Equatable, ExpressibleByStringLiteral {
     public init(stringLiteral value: String) {
         self = .plain(value)
     }

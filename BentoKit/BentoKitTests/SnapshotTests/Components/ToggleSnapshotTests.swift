@@ -1,7 +1,7 @@
 import BentoKit
 import StyleSheets
 import UIKit
-@testable import BentoKitPlaygroundSupport
+import BentoKitPlaygroundSupport
 
 final class ToggleSnapshotTests: SnapshotTestCase {
     private let title = "I agree to the Terms & Conditions I agree to the Terms & Conditions I agree to the Terms & Conditions I agree to the Terms & Conditions I agree to the Terms & Conditions I agree to the Terms & Conditions I agree to the Terms & Conditions I agree to the Terms & Conditions I agree to the Terms & Conditions I agree to the Terms & Conditions "

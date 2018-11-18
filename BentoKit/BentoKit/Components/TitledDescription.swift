@@ -26,6 +26,17 @@ public extension Component {
         public let configurator: (View) -> Void
         public let deleteActionText: String
         public let styleSheet: StyleSheet
+        public let props: Props
+        
+        public struct Props: Equatable {
+            let texts: [TextValue]
+            let detail: TextValue?
+            let image: ObjectIdentifier?
+            let accessory: Accessory
+            let badgeIcon: UIImage?
+            let isEnabled: Bool
+            let styleSheet: ObjectIdentifier
+        }
 
         public var canBeDeleted: Bool {
             return didDelete != nil
@@ -162,6 +173,7 @@ public extension Component {
             self.didDelete = deleteAction.callback
             self._willDisplayItem = willDisplayItem
             self._didEndDisplayingItem = didEndDisplayingItem
+            self.props = Props(texts: texts, detail: detail, image: image.map(ObjectIdentifier.init), accessory: accessory, badgeIcon: badgeIcon, isEnabled: isEnabled, styleSheet: ObjectIdentifier(styleSheet))
         }
 
         private let heightComputer: (CGFloat, UIEdgeInsets) -> CGFloat

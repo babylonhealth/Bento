@@ -2,6 +2,7 @@ import XCTest
 import BentoKit
 import StyleSheets
 import ReactiveSwift
+import Bento
 
 final class TitledDescriptionSnapshotTests: SnapshotTestCase {
 
@@ -19,6 +20,69 @@ final class TitledDescriptionSnapshotTests: SnapshotTestCase {
         super.setUp()
         self.recordMode = false
     }
+    
+    func test_performance_customizedHeight() {
+        let c = Component.TitledDescription(
+            texts: [.plain("Label 1"),
+                    .plain("Label 2"),
+                    .plain("Label 3")],
+            detail: .plain("Detail"),
+            accessory: .none,
+            styleSheet: styleSheet(3))
+        let n = Node<CChar>(id: 0, component: c)
+        
+        measure {
+            for _ in 0 ..< 100_0 {
+                withExtendedLifetime(n.component(as: HeightCustomizing.self)!.height(forWidth: 320, inheritedMargins: .zero)) {}
+            }
+        }
+    }
+
+    func test_performance_autoLayoutHeight() {
+        let c = Component.TitledDescription(
+            texts: [.plain("Label 1"),
+                    .plain("Label 2"),
+                    .plain("Label 3")],
+            detail: .plain("Detail"),
+            accessory: .none,
+            styleSheet: styleSheet(3))
+        
+        measure {
+            let v = c.generate()
+            for _ in 0 ..< 100_0 {
+                c.render(in: v)
+                withExtendedLifetime(
+                    v.systemLayoutSizeFitting(CGSize(width: 320, height: UIView.layoutFittingCompressedSize.height),
+                                              withHorizontalFittingPriority: .required, verticalFittingPriority: .defaultLow)
+                ) {}
+            }
+        }
+    }
+
+    func test_performance_equatable() {
+        let c1 = Component.TitledDescription(
+            texts: [.plain("Label 1"),
+                    .plain("Label 2"),
+                    .plain("Label 3")],
+            detail: .plain("Detail"),
+            accessory: .none,
+            styleSheet: styleSheet(3))
+
+        let c2 = Component.TitledDescription(
+            texts: [.plain("Label 1"),
+                    .plain("Label 2"),
+                    .plain("Label 3")],
+            detail: .plain("Detail"),
+            accessory: .none,
+            styleSheet: styleSheet(3))
+
+        measure {
+            for _ in 0 ..< 100_0 {
+                withExtendedLifetime(c1.props == c2.props) {}
+            }
+        }
+    }
+
 
     func test_no_labels_no_image() {
         let component = Component.TitledDescription(

@@ -1,7 +1,7 @@
 import BentoKit
 import StyleSheets
 import UIKit
-@testable import BentoKitPlaygroundSupport
+import BentoKitPlaygroundSupport
 
 final class SearchSnapshotTests: SnapshotTestCase {
     let placeholder = "Search for address or a postcode"
