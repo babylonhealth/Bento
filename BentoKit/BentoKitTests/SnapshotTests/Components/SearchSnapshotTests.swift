@@ -14,9 +14,12 @@ final class SearchSnapshotTests: SnapshotTestCase {
     func testSearch() {
         let styleSheet = Component.Search.StyleSheet()
             .compose(\.searchBar.textInputBackgroundColor, UIColor.gray.withAlphaComponent(0.25))
-            .compose(\.searchBar.showsCancelButton, true)
 
-        let component = Component.Search(placeholder: placeholder, styleSheet: styleSheet)
+        let component = Component.Search(
+            placeholder: placeholder,
+            showsCancelButton: true,
+            styleSheet: styleSheet
+        )
 
         verifyComponentForAllSizes(component: component)
     }

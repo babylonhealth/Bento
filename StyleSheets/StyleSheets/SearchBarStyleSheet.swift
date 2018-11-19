@@ -4,7 +4,6 @@ open class SearchBarStyleSheet: ViewStyleSheet<UISearchBar> {
     public var textInputBackgroundColor: UIColor = .white
     public var textInputCornerRaidus: CGFloat = 10
     public var height: CGFloat = 36
-    public var showsCancelButton: Bool = false
     public var searchTextPositionAdjustment: UIOffset = UIOffset(horizontal: 8, vertical: 0)
     public var keyboardType: UIKeyboardType = .default
     public var returnKeyType: UIReturnKeyType = .search
@@ -15,7 +14,6 @@ open class SearchBarStyleSheet: ViewStyleSheet<UISearchBar> {
         element.setTextInputBackgroundColor(color: textInputBackgroundColor,
                                             height: height,
                                             cornerRadius: textInputCornerRaidus)
-        element.showsCancelButton = showsCancelButton
         element.searchTextPositionAdjustment = searchTextPositionAdjustment
         element.keyboardType = keyboardType
         element.returnKeyType = returnKeyType
