@@ -42,6 +42,10 @@ public final class AccessoryView: InteractiveView {
     }
 
     public override var intrinsicContentSize: CGSize {
+        if case let .custom(view) = accessory {
+            view.layoutIfNeeded()
+            return view.frame.size
+        }
         return CGSize(width: 24, height: 24)
     }
 
@@ -63,6 +67,8 @@ public final class AccessoryView: InteractiveView {
         case let .tintedIcon(image, tintColor):
             view = UIImageView(image: image)
                 .with { $0.tintColor = tintColor }
+        case let .custom(customView):
+            view = customView
         case .none:
             view = nil
         }
@@ -77,6 +83,7 @@ extension AccessoryView {
         case checkmark
         case icon(UIImage)
         case tintedIcon(UIImage, UIColor)
+        case custom(UIView)
         case none
     }
 }

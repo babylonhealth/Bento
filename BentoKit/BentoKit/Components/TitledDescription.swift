@@ -206,6 +206,13 @@ private extension Component.TitledDescription {
                 detailWidthPlusSpacing = 0
             }
 
+            let accessorySize: CGSize
+            if case let .custom(view) = accessory {
+                view.layoutIfNeeded()
+                accessorySize = view.frame.size
+            } else {
+                accessorySize = CGSize(width: 24, height: 24)
+            }
             let availableWidthForLabelBlock = width
                 - max(styleSheet.layoutMargins.left, inheritedMargins.left)
                 - max(styleSheet.layoutMargins.right, inheritedMargins.right)
@@ -214,7 +221,7 @@ private extension Component.TitledDescription {
                     : 0)
                 - imageWidthPlusSpacing(measuring: image, styleSheet: styleSheet)
                 - detailWidthPlusSpacing
-                - (accessory != .none ? 24 + xSpacing : 0)
+                - (accessory != .none ? accessorySize.width + xSpacing : 0)
 
             assert(availableWidthForLabelBlock > 0,
                    "availableWidthForLabelBlock (\(availableWidthForLabelBlock)) ≤ 0")
@@ -235,7 +242,8 @@ private extension Component.TitledDescription {
                 verticalMargins + max(
                     textHeightsPlusSpacing,
                     styleSheet.imageOrLabel.fixedSize?.height ?? 0,
-                    detailHeight
+                    detailHeight,
+                    accessorySize.height
                 ),
                 styleSheet.enforcesMinimumHeight ? 44 : 0
             )

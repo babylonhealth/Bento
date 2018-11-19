@@ -115,6 +115,36 @@ final class TitledDescriptionSnapshotTests: SnapshotTestCase {
         verifyComponentForAllSizes(component: component)
     }
 
+    func test_with_custom_accessory_view() {
+        let image = UIImageView(image: self.image(named: "plus"))
+        image.backgroundColor = .red
+        image.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        image.widthAnchor.constraint(equalToConstant: 50).isActive = true
+
+        let component = Component.TitledDescription(
+            texts: [.plain("Title"), .plain("Label 4 is also a fine label but definitely far too long to be considered a good label")],
+            detail: .plain("Detail"),
+            accessory: .custom(image),
+            styleSheet: styleSheet(2))
+
+        verifyComponentForAllSizes(component: component)
+    }
+
+    func test_considers_custom_accessory_view_size() {
+        let image = UIImageView(image: self.image(named: "plus"))
+        image.backgroundColor = .red
+        image.heightAnchor.constraint(equalToConstant: 150).isActive = true
+        image.widthAnchor.constraint(equalToConstant: 50).isActive = true
+
+        let component = Component.TitledDescription(
+            texts: [.plain("Title"), .plain("Label 4 is also a fine label but definitely far too long to be considered a good label")],
+            detail: .plain("Detail"),
+            accessory: .custom(image),
+            styleSheet: styleSheet(2))
+
+        verifyComponentForAllSizes(component: component)
+    }
+
     func test_has_image_fixed_size() {
         let component = Component.TitledDescription(
             texts: [.plain("Title"), .plain("Subtitle")],
