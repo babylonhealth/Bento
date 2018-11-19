@@ -11,6 +11,7 @@ extension Component {
             keyboardType: UIKeyboardType = .default,
             didBeginEditing: Optional<(UISearchBar) -> Void> = nil,
             textDidChange: Optional<(UISearchBar, String) -> Void> = nil,
+            showsCancelButton: Bool = false,
             cancelButtonClicked: Optional<(UISearchBar) -> Void> = nil,
             styleSheet: StyleSheet = StyleSheet()
             ) {
@@ -20,6 +21,7 @@ extension Component {
                 view.didBeginEditing = didBeginEditing
                 view.textDidChange = textDidChange
                 view.cancelButtonClicked = cancelButtonClicked
+                view.showsCancelButton = showsCancelButton
                 view.searchBar.height(styleSheet.searchBar.height)
             }
             self.styleSheet = styleSheet
@@ -33,7 +35,14 @@ extension Component.Search {
         let searchBar = UISearchBar()
 
         var textDidChange: Optional<(UISearchBar, String) -> Void> = nil
+
+        var showsCancelButton: Bool = false {
+            didSet {
+                searchBar.setShowsCancelButton(showsCancelButton, animated: true)
+            }
+        }
         var cancelButtonClicked: Optional<(UISearchBar) -> Void> = nil
+
         var didBeginEditing: Optional<(UISearchBar) -> Void> = nil
 
         public override init(frame: CGRect) {
