@@ -189,10 +189,10 @@ private extension Component.TitledDescription {
         return { width, inheritedMargins in
             guard width > 0 else { return 0 }
 
-            let xSpacing = styleSheet.horizontalSpacingBetweenElements
+            let xSpacing = styleSheet.content.spacing
             let verticalMargins = styleSheet.layoutMargins.verticalTotal
-                + (styleSheet.contentStackViewLayoutMarginsRelativeArrangement
-                    ? styleSheet.contentLayoutMargins.verticalTotal
+                + (styleSheet.content.isLayoutMarginsRelativeArrangement
+                    ? styleSheet.content.layoutMargins.verticalTotal
                     : 0)
 
             let detailWidth = detail?.width(using: styleSheet.detail) ?? 0
@@ -209,8 +209,8 @@ private extension Component.TitledDescription {
             let availableWidthForLabelBlock = width
                 - max(styleSheet.layoutMargins.left, inheritedMargins.left)
                 - max(styleSheet.layoutMargins.right, inheritedMargins.right)
-                - (styleSheet.contentStackViewLayoutMarginsRelativeArrangement
-                    ? styleSheet.contentLayoutMargins.horizontalTotal
+                - (styleSheet.content.isLayoutMarginsRelativeArrangement
+                    ? styleSheet.content.layoutMargins.horizontalTotal
                     : 0)
                 - imageWidthPlusSpacing(measuring: image, styleSheet: styleSheet)
                 - detailWidthPlusSpacing
@@ -266,7 +266,7 @@ private extension Component.TitledDescription {
             }
         }
 
-        return min(width, maxImageWidth) + styleSheet.horizontalSpacingBetweenElements
+        return min(width, maxImageWidth) + styleSheet.content.spacing
     }
 }
 
@@ -508,6 +508,35 @@ private extension Component.TitledDescription.View {
 }
 
 public extension Component.TitledDescription {
+    public final class ContentStyleSheet: ViewStyleSheet<BaseStackView> {
+        public var spacing: CGFloat
+        public var distribution: UIStackView.Distribution
+        public var alignment: UIStackView.Alignment
+        public var isLayoutMarginsRelativeArrangement: Bool
+
+        public init(
+            spacing: CGFloat = 16,
+            distribution: UIStackView.Distribution = .fill,
+            alignment: UIStackView.Alignment = .center,
+            isLayoutMarginsRelativeArrangement: Bool = false
+            ) {
+            self.spacing = spacing
+            self.distribution = distribution
+            self.alignment = alignment
+            self.isLayoutMarginsRelativeArrangement = isLayoutMarginsRelativeArrangement
+        }
+
+        public override func apply(to element: BaseStackView) {
+            super.apply(to: element)
+            element.spacing = spacing
+            element.distribution = distribution
+            element.alignment = alignment
+            element.isLayoutMarginsRelativeArrangement = isLayoutMarginsRelativeArrangement
+            element.cornerRadius = cornerRadius
+            element.borderColor = borderColor?.cgColor
+            element.borderWidth = borderWidth
+        }
+    }
 
     public final class StyleSheet: BaseViewStyleSheet<View> {
 
@@ -516,18 +545,13 @@ public extension Component.TitledDescription {
             case content
         }
 
-        public var horizontalSpacingBetweenElements: CGFloat
         public var verticalSpacingBetweenElements: CGFloat
-        public var contentStackViewLayoutMarginsRelativeArrangement: Bool
-        public var verticalAlignment: UIStackView.Alignment
         public var textBlockWidthFraction: CGFloat?
         public var highlightingTarget: HighlightingTarget
-        public var contentLayoutMargins: UIEdgeInsets
-        public var contentCornerRadius: CGFloat
-        public var contentBackgroundColor: UIColor?
         public var badgeOffset: CGPoint
         public var badgeSize: CGSize
 
+        public let content: ContentStyleSheet
         public let imageOrLabel: ImageOrLabelView.StyleSheet
         public private(set) var textStyles: [LabelStyleSheet] // [WLT] Oct-11-2018 Change to 'public let' when legacy code is removed.
         /// Note that the detail label will be forced to have a single line so the
@@ -552,21 +576,15 @@ public extension Component.TitledDescription {
             get { return textStyles[1] }
             set { textStyles[1] = newValue }
         }
-
         @available(*, deprecated, message: "Please use the designated initialiser.")
         public convenience init(
-            horizontalSpacingBetweenElements: CGFloat = 16.0,
             verticalSpacingBetweenElements: CGFloat = 8.0,
-            contentStackViewLayoutMarginsRelativeArrangement: Bool = false,
-            verticalAlignment: UIStackView.Alignment = .center,
             titleWidthFraction: CGFloat? = nil,
             highlightingTarget: HighlightingTarget = HighlightingTarget.container,
-            contentLayoutMargins: UIEdgeInsets = UIEdgeInsets.zero,
-            contentCornerRadius: CGFloat = 0,
-            contentBackgroundColor: UIColor? = nil,
             badgeOffset: CGPoint = .zero,
             badgeSize: CGSize = CGSize(width: 12, height: 12),
             enforcesMinimumHeight: Bool = true,
+            content: ContentStyleSheet = .init(),
             imageOrLabel: ImageOrLabelView.StyleSheet = .init(),
             title: LabelStyleSheet = .init(),
             subtitle: LabelStyleSheet = .init(font: UIFont.preferredFont(forTextStyle: .footnote),
@@ -575,18 +593,13 @@ public extension Component.TitledDescription {
             badge: ViewStyleSheet<UIView> = ViewStyleSheet<UIView>()
         ) {
             self.init(
-                horizontalSpacingBetweenElements: horizontalSpacingBetweenElements,
                 verticalSpacingBetweenElements: verticalSpacingBetweenElements,
-                contentStackViewLayoutMarginsRelativeArrangement: contentStackViewLayoutMarginsRelativeArrangement,
-                verticalAlignment: verticalAlignment,
                 textBlockWidthFraction: titleWidthFraction,
                 highlightingTarget: highlightingTarget,
-                contentLayoutMargins: contentLayoutMargins,
-                contentCornerRadius: contentCornerRadius,
-                contentBackgroundColor: contentBackgroundColor,
                 badgeOffset: badgeOffset,
                 badgeSize: badgeSize,
                 enforcesMinimumHeight: enforcesMinimumHeight,
+                content: content,
                 imageOrLabel: imageOrLabel,
                 textStyles: [title, subtitle],
                 detail: detail,
@@ -595,18 +608,13 @@ public extension Component.TitledDescription {
         }
 
         public init(
-            horizontalSpacingBetweenElements: CGFloat = 16.0,
             verticalSpacingBetweenElements: CGFloat = 8.0,
-            contentStackViewLayoutMarginsRelativeArrangement: Bool = false,
-            verticalAlignment: UIStackView.Alignment = .center,
             textBlockWidthFraction: CGFloat? = nil,
             highlightingTarget: HighlightingTarget = HighlightingTarget.container,
-            contentLayoutMargins: UIEdgeInsets = UIEdgeInsets.zero,
-            contentCornerRadius: CGFloat = 0,
-            contentBackgroundColor: UIColor? = nil,
             badgeOffset: CGPoint = .zero,
             badgeSize: CGSize = CGSize(width: 12, height: 12),
             enforcesMinimumHeight: Bool = true,
+            content: ContentStyleSheet = .init(),
             imageOrLabel: ImageOrLabelView.StyleSheet = .init(),
             textStyles: [LabelStyleSheet] = [
             .init(),
@@ -616,18 +624,13 @@ public extension Component.TitledDescription {
             detail: LabelStyleSheet = .init(textAlignment: .trailing),
             badge: ViewStyleSheet<UIView> = ViewStyleSheet<UIView>()
         ) {
-            self.horizontalSpacingBetweenElements = horizontalSpacingBetweenElements
             self.verticalSpacingBetweenElements = verticalSpacingBetweenElements
-            self.contentStackViewLayoutMarginsRelativeArrangement = contentStackViewLayoutMarginsRelativeArrangement
-            self.verticalAlignment = verticalAlignment
             self.textBlockWidthFraction = textBlockWidthFraction
             self.highlightingTarget = highlightingTarget
-            self.contentLayoutMargins = contentLayoutMargins
-            self.contentCornerRadius = contentCornerRadius
-            self.contentBackgroundColor = contentBackgroundColor
             self.badgeOffset = badgeOffset
             self.badgeSize = badgeSize
             self.imageOrLabel = imageOrLabel
+            self.content = content
             self.textStyles = textStyles
             self.detail = detail
             self.badge = badge
@@ -638,13 +641,6 @@ public extension Component.TitledDescription {
             super.apply(to: view)
             view.numberOfLabels = textStyles.count
 
-            view.contentStackView.spacing = horizontalSpacingBetweenElements
-            view.contentStackView.alignment = verticalAlignment
-            view.contentStackView.isLayoutMarginsRelativeArrangement = contentStackViewLayoutMarginsRelativeArrangement
-            view.contentStackView.layoutMargins = contentLayoutMargins
-            view.contentStackView.cornerRadius = contentCornerRadius
-            view.contentStackView.backgroundColor = contentBackgroundColor
-
             view.badgeCenterYOffset.constant = badgeOffset.y
             view.badgeCenterXOffset.constant = badgeOffset.x
             view.badgeView.width.constant = badgeSize.width
@@ -654,6 +650,7 @@ public extension Component.TitledDescription {
             view.textBlockWidthFraction = textBlockWidthFraction
             view.enforcesMinimumHeight = enforcesMinimumHeight
 
+            content.apply(to: view.contentStackView)
             imageOrLabel.apply(to: view.imageOrLabelView)
             badge.apply(to: view.badgeView)
 
