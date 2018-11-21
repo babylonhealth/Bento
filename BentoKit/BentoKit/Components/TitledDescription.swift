@@ -509,19 +509,18 @@ private extension Component.TitledDescription.View {
 
 public extension Component.TitledDescription {
     public final class ContentStyleSheet: ViewStyleSheet<BaseStackView> {
+        public typealias Alignment = UIStackView.Alignment
+
         public var spacing: CGFloat
-        public var distribution: UIStackView.Distribution
-        public var alignment: UIStackView.Alignment
+        public var alignment: Alignment
         public var isLayoutMarginsRelativeArrangement: Bool
 
         public init(
             spacing: CGFloat = 16,
-            distribution: UIStackView.Distribution = .fill,
-            alignment: UIStackView.Alignment = .center,
+            alignment: Alignment = .center,
             isLayoutMarginsRelativeArrangement: Bool = false
             ) {
             self.spacing = spacing
-            self.distribution = distribution
             self.alignment = alignment
             self.isLayoutMarginsRelativeArrangement = isLayoutMarginsRelativeArrangement
         }
@@ -529,7 +528,6 @@ public extension Component.TitledDescription {
         public override func apply(to element: BaseStackView) {
             super.apply(to: element)
             element.spacing = spacing
-            element.distribution = distribution
             element.alignment = alignment
             element.isLayoutMarginsRelativeArrangement = isLayoutMarginsRelativeArrangement
             element.cornerRadius = cornerRadius
