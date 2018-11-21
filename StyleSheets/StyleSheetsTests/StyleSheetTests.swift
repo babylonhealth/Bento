@@ -21,7 +21,7 @@ class StyleSheetTests: XCTestCase {
         let styleSheet = ButtonStyleSheet()
         testStyleSheet(styleSheet,
                        in: button,
-                       exemptions: ["textFont", "masksToBounds", "cornerRadius", "titleColors", "images", "backgroundImages", "numberOfLines", "borderColor", "borderWidth", "textAlignment"])
+                       exemptions: ["textFont", "masksToBounds", "cornerRadius", "titleColors", "images", "backgroundImages", "numberOfLines", "borderColor", "borderWidth", "textAlignment", "lineBreakMode"])
     }
 
     func test_imageview_style_sheet() {

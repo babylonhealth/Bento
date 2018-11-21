@@ -6,6 +6,7 @@ open class LabelStyleSheet: ViewStyleSheet<UILabel>, TextBoundComputing {
     public var textColor: UIColor
     public var textAlignment: TextAlignment
     public var numberOfLines: Int
+    public var lineBreakMode: NSLineBreakMode
     
     public var textAttributes: [NSAttributedString.Key: Any] {
         return [
@@ -20,12 +21,14 @@ open class LabelStyleSheet: ViewStyleSheet<UILabel>, TextBoundComputing {
         font: UIFont = UIFont.preferredFont(forTextStyle: .body),
         textColor: UIColor = .black,
         textAlignment: TextAlignment = .leading,
-        numberOfLines: Int = 0
+        numberOfLines: Int = 0,
+        lineBrealMode: NSLineBreakMode = .byTruncatingTail
         ) {
         self.font = font
         self.textColor = textColor
         self.textAlignment = textAlignment
         self.numberOfLines = numberOfLines
+        self.lineBreakMode = lineBrealMode
         
         super.init(backgroundColor: backgroundColor)
     }
@@ -37,5 +40,6 @@ open class LabelStyleSheet: ViewStyleSheet<UILabel>, TextBoundComputing {
         element.textColor = textColor
         element.textAlignment = textAlignment.systemValue(for: element.effectiveUserInterfaceLayoutDirection)
         element.numberOfLines = numberOfLines
+        element.lineBreakMode = lineBreakMode
     }
 }

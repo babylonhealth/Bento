@@ -13,7 +13,8 @@ open class ButtonStyleSheet: ViewStyleSheet<UIButton>, TextBoundComputing {
     open var textAttributes: [NSAttributedString.Key: Any] {
         return [.font: textFont]
     }
-    public var numberOfLines = 1
+    public var numberOfLines: Int
+    public var lineBreakMode: NSLineBreakMode
     
     public init(
         textFont: UIFont = UIFont.preferredFont(forTextStyle: .body),
@@ -21,7 +22,9 @@ open class ButtonStyleSheet: ViewStyleSheet<UIButton>, TextBoundComputing {
         titleColors: [State : UIColor?] = [:],
         images: [State : UIImage?] = [:],
         backgroundImages: [State : UIImage?] = [:],
-        contentEdgeInsets: UIEdgeInsets = .zero
+        contentEdgeInsets: UIEdgeInsets = .zero,
+        numberOfLines: Int = 1,
+        lineBreakMode: NSLineBreakMode = .byTruncatingMiddle
         ) {
         self.textFont = textFont
         self.contentHorizontalAlignment = contentHorizontalAlignment
@@ -29,6 +32,8 @@ open class ButtonStyleSheet: ViewStyleSheet<UIButton>, TextBoundComputing {
         self.images = images
         self.backgroundImages = backgroundImages
         self.contentEdgeInsets = contentEdgeInsets
+        self.numberOfLines = numberOfLines
+        self.lineBreakMode = lineBreakMode
     }
     
     open override func apply(to button: UIButton) {
@@ -37,6 +42,7 @@ open class ButtonStyleSheet: ViewStyleSheet<UIButton>, TextBoundComputing {
         button.titleLabel?.font = textFont
         button.titleLabel?.numberOfLines = numberOfLines
         button.titleLabel?.textAlignment = textAlignment.systemValue(for: button.effectiveUserInterfaceLayoutDirection)
+        button.titleLabel?.lineBreakMode = lineBreakMode
         button.contentHorizontalAlignment = contentHorizontalAlignment
         
         titleColors
