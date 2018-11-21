@@ -538,7 +538,7 @@ public extension Component.TitledDescription {
         }
     }
 
-    public final class StyleSheet: BaseViewStyleSheet<View> {
+    public final class StyleSheet: InteractiveViewStyleSheet<View> {
 
         public enum HighlightingTarget {
             case container
