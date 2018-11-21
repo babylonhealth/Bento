@@ -109,6 +109,9 @@ public extension Reactive where Base: ImageOrLabelView {
 private extension ImageOrLabelView {
 
     func setup() {
+        if #available(iOS 11, *) {
+            insetsLayoutMarginsFromSafeArea = false
+        }
         backgroundColor = .clear
         label.add(to: self).pinEdges(to: self)
         imageView.add(to: self).pinEdges(to: layoutMarginsGuide)
