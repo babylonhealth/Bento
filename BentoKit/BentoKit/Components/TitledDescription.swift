@@ -542,6 +542,7 @@ public extension Component.TitledDescription {
         /// `numberOfLines` parameter of `LabelStyleSheet` is ignored.
         public let detail: LabelStyleSheet
         public let badge: ViewStyleSheet<UIView>
+        public let accessory: InteractiveViewStyleSheet<InteractiveView>
 
         @available(*, deprecated, message: "Please use textBlockWidthFraction.")
         public var titleWidthFraction: CGFloat? {
@@ -580,7 +581,8 @@ public extension Component.TitledDescription {
             subtitle: LabelStyleSheet = .init(font: UIFont.preferredFont(forTextStyle: .footnote),
                                               textColor: .gray),
             detail: LabelStyleSheet = .init(textAlignment: .trailing),
-            badge: ViewStyleSheet<UIView> = ViewStyleSheet<UIView>()
+            badge: ViewStyleSheet<UIView> = ViewStyleSheet<UIView>(),
+            accessory: InteractiveViewStyleSheet<InteractiveView> = InteractiveViewStyleSheet<InteractiveView>()
         ) {
             self.init(
                 horizontalSpacingBetweenElements: horizontalSpacingBetweenElements,
@@ -598,7 +600,8 @@ public extension Component.TitledDescription {
                 imageOrLabel: imageOrLabel,
                 textStyles: [title, subtitle],
                 detail: detail,
-                badge: badge
+                badge: badge,
+                accessory: accessory
             )
         }
 
@@ -622,7 +625,8 @@ public extension Component.TitledDescription {
                   textColor: .gray)
             ],
             detail: LabelStyleSheet = .init(textAlignment: .trailing),
-            badge: ViewStyleSheet<UIView> = ViewStyleSheet<UIView>()
+            badge: ViewStyleSheet<UIView> = ViewStyleSheet<UIView>(),
+            accessory: InteractiveViewStyleSheet<InteractiveView> = InteractiveViewStyleSheet<InteractiveView>()
         ) {
             self.horizontalSpacingBetweenElements = horizontalSpacingBetweenElements
             self.verticalSpacingBetweenElements = verticalSpacingBetweenElements
@@ -639,6 +643,7 @@ public extension Component.TitledDescription {
             self.textStyles = textStyles
             self.detail = detail
             self.badge = badge
+            self.accessory = accessory
             super.init(enforcesMinimumHeight: enforcesMinimumHeight)
         }
 
@@ -664,6 +669,7 @@ public extension Component.TitledDescription {
 
             imageOrLabel.apply(to: view.imageOrLabelView)
             badge.apply(to: view.badgeView)
+            accessory.apply(to: view.accessoryView)
 
             switch highlightingTarget {
             case .container:
