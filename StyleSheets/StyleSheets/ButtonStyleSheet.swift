@@ -14,6 +14,7 @@ open class ButtonStyleSheet: ViewStyleSheet<UIButton>, TextBoundComputing {
         return [.font: textFont]
     }
     public var numberOfLines = 1
+    public var lineBreakMode: NSLineBreakMode = .byTruncatingMiddle
     
     public init(
         textFont: UIFont = UIFont.preferredFont(forTextStyle: .body),
@@ -37,6 +38,7 @@ open class ButtonStyleSheet: ViewStyleSheet<UIButton>, TextBoundComputing {
         button.titleLabel?.font = textFont
         button.titleLabel?.numberOfLines = numberOfLines
         button.titleLabel?.textAlignment = textAlignment.systemValue(for: button.effectiveUserInterfaceLayoutDirection)
+        button.titleLabel?.lineBreakMode = lineBreakMode
         button.contentHorizontalAlignment = contentHorizontalAlignment
         
         titleColors
