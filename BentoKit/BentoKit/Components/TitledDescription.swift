@@ -307,7 +307,7 @@ extension Component.TitledDescription {
             self.labelsContainer = stack(.vertical,
                                          spacing: 8.0,
                                          distribution: .fill,
-                                         alignment: .leading,
+                                         alignment: .fill,
                                          views: labels)
 
             super.init(frame: frame)
