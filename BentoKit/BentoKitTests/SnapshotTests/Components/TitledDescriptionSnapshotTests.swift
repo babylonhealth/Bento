@@ -246,4 +246,19 @@ final class TitledDescriptionSnapshotTests: SnapshotTestCase {
 
         verifyComponentForAllSizes(component: component)
     }
+
+    func test_long_text_with_2_lines_limit() {
+        let component = Component.TitledDescription(
+            texts: [
+                .plain(Array(repeating: "Label 1 ", count: 20).joined()),
+                .plain(Array(repeating: "Label 2 ", count: 20).joined()),
+            ],
+            accessory: .chevron,
+            styleSheet: styleSheet(2)
+                .compose(\.textStyles[0].numberOfLines, 2)
+                .compose(\.textStyles[1].numberOfLines, 2)
+        )
+
+        verifyComponentForAllSizes(component: component)
+    }
 }

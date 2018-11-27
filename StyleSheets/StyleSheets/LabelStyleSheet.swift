@@ -1,7 +1,7 @@
 import UIKit
 
 open class LabelStyleSheet: ViewStyleSheet<UILabel>, TextBoundComputing {
-    
+    private static let prototype = UILabel()
     public var font: UIFont
     public var textColor: UIColor
     public var textAlignment: TextAlignment
@@ -15,7 +15,7 @@ open class LabelStyleSheet: ViewStyleSheet<UILabel>, TextBoundComputing {
                 .with { $0.alignment = textAlignment.systemValue() }
         ]
     }
-    
+
     public init(
         backgroundColor: UIColor? = .clear,
         font: UIFont = UIFont.preferredFont(forTextStyle: .body),
@@ -23,7 +23,7 @@ open class LabelStyleSheet: ViewStyleSheet<UILabel>, TextBoundComputing {
         textAlignment: TextAlignment = .leading,
         numberOfLines: Int = 0,
         lineBrealMode: NSLineBreakMode = .byTruncatingTail
-        ) {
+    ) {
         self.font = font
         self.textColor = textColor
         self.textAlignment = textAlignment
@@ -41,5 +41,27 @@ open class LabelStyleSheet: ViewStyleSheet<UILabel>, TextBoundComputing {
         element.textAlignment = textAlignment.systemValue(for: element.effectiveUserInterfaceLayoutDirection)
         element.numberOfLines = numberOfLines
         element.lineBreakMode = lineBreakMode
+    }
+
+    public func height(of string: NSAttributedString, fittingWidth width: CGFloat) -> CGFloat {
+        apply(to: LabelStyleSheet.prototype)
+        LabelStyleSheet.prototype.attributedText = string
+        return LabelStyleSheet.prototype
+            .systemLayoutSizeFitting(
+                CGSize(width: width, height: UIView.layoutFittingCompressedSize.height),
+                withHorizontalFittingPriority: .required,
+                verticalFittingPriority: .defaultLow
+            ).height
+    }
+
+    public func height(of string: NSString, fittingWidth width: CGFloat) -> CGFloat {
+        apply(to: LabelStyleSheet.prototype)
+        LabelStyleSheet.prototype.text = string as String
+        return LabelStyleSheet.prototype
+            .systemLayoutSizeFitting(
+                CGSize(width: width, height: UIView.layoutFittingCompressedSize.height),
+                withHorizontalFittingPriority: .required,
+                verticalFittingPriority: .defaultLow
+            ).height
     }
 }

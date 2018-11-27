@@ -2,6 +2,10 @@ import UIKit
 
 public protocol TextBoundComputing {
     var textAttributes: [NSAttributedString.Key: Any] { get }
+
+    func height(of string: String, fittingWidth width: CGFloat) -> CGFloat
+    func height(of string: NSAttributedString, fittingWidth width: CGFloat) -> CGFloat
+    func height(of string: NSString, fittingWidth width: CGFloat) -> CGFloat
 }
 
 extension TextBoundComputing {
