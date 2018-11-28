@@ -5,7 +5,6 @@ public protocol TextBoundComputing {
 
     func height(of string: String, fittingWidth width: CGFloat) -> CGFloat
     func height(of string: NSAttributedString, fittingWidth width: CGFloat) -> CGFloat
-    func height(of string: NSString, fittingWidth width: CGFloat) -> CGFloat
 }
 
 extension TextBoundComputing {
@@ -26,14 +25,6 @@ extension TextBoundComputing {
     }
     
     public func height(of string: String, fittingWidth width: CGFloat) -> CGFloat {
-        return height(of: string as NSString, fittingWidth: width)
-    }
-    
-    public func height(of string: NSAttributedString, fittingWidth width: CGFloat) -> CGFloat {
-        return height(of: string.string as NSString, fittingWidth: width)
-    }
-    
-    public func height(of string: NSString, fittingWidth width: CGFloat) -> CGFloat {
         return string
             .boundingRect(with: CGSize(width: width, height: .greatestFiniteMagnitude),
                           options: .usesLineFragmentOrigin,
@@ -41,5 +32,9 @@ extension TextBoundComputing {
                           context: nil)
             .height
             .rounded(.up)
+    }
+    
+    public func height(of string: NSAttributedString, fittingWidth width: CGFloat) -> CGFloat {
+        return height(of: string.string, fittingWidth: width)
     }
 }

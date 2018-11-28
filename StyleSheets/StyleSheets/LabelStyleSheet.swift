@@ -54,7 +54,7 @@ open class LabelStyleSheet: ViewStyleSheet<UILabel>, TextBoundComputing {
             ).height
     }
 
-    public func height(of string: NSString, fittingWidth width: CGFloat) -> CGFloat {
+    public func height(of string: String, fittingWidth width: CGFloat) -> CGFloat {
         apply(to: LabelStyleSheet.prototype)
         LabelStyleSheet.prototype.text = string as String
         return LabelStyleSheet.prototype
@@ -62,6 +62,7 @@ open class LabelStyleSheet: ViewStyleSheet<UILabel>, TextBoundComputing {
                 CGSize(width: width, height: UIView.layoutFittingCompressedSize.height),
                 withHorizontalFittingPriority: .required,
                 verticalFittingPriority: .defaultLow
-            ).height
+            )
+            .height
     }
 }
