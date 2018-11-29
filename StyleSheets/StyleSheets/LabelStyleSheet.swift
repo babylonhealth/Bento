@@ -1,7 +1,6 @@
 import UIKit
 
 open class LabelStyleSheet: ViewStyleSheet<UILabel>, TextBoundComputing {
-    
     public var font: UIFont
     public var textColor: UIColor
     public var textAlignment: TextAlignment
@@ -15,20 +14,20 @@ open class LabelStyleSheet: ViewStyleSheet<UILabel>, TextBoundComputing {
                 .with { $0.alignment = textAlignment.systemValue() }
         ]
     }
-    
+
     public init(
         backgroundColor: UIColor? = .clear,
         font: UIFont = UIFont.preferredFont(forTextStyle: .body),
         textColor: UIColor = .black,
         textAlignment: TextAlignment = .leading,
         numberOfLines: Int = 0,
-        lineBrealMode: NSLineBreakMode = .byTruncatingTail
-        ) {
+        lineBreakMode: NSLineBreakMode = .byTruncatingTail
+    ) {
         self.font = font
         self.textColor = textColor
         self.textAlignment = textAlignment
         self.numberOfLines = numberOfLines
-        self.lineBreakMode = lineBrealMode
+        self.lineBreakMode = lineBreakMode
         
         super.init(backgroundColor: backgroundColor)
     }
