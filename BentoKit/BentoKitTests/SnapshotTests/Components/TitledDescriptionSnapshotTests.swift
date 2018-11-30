@@ -261,4 +261,27 @@ final class TitledDescriptionSnapshotTests: SnapshotTestCase {
 
         verifyComponentForAllSizes(component: component)
     }
+
+    func test_long_text() {
+        recordMode = true
+        let component = Component.TitledDescription(
+            title: "healthcheck detail self assess title",
+            detail: "Today",
+            accessory: .none,
+            styleSheet: Component.TitledDescription.StyleSheet(
+                title: LabelStyleSheet(font: UIFont.preferredFont(for: .title3, weight: .bold), numberOfLines: 2),
+                subtitle: LabelStyleSheet(font: UIFont.preferredFont(for: .body, weight: .regular)),
+                detail: LabelStyleSheet(font: UIFont.preferredFont(for: .footnote, weight: .regular))
+            ).compose(\.layoutMargins, UIEdgeInsets(top: 32, left: 16, bottom: 8, right: 16))
+        )
+
+        verifyComponentForAllSizes(component: component)
+    }
+}
+
+extension UIFont {
+    public static func preferredFont(for textStyle: UIFont.TextStyle, weight: UIFont.Weight) -> UIFont {
+        let discriptor = UIFontDescriptor.preferredFontDescriptor(withTextStyle: textStyle)
+        return UIFont.systemFont(ofSize: discriptor.pointSize, weight: weight)
+    }
 }
