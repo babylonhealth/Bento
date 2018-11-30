@@ -173,20 +173,26 @@ extension Component.TextInput {
     public final class StyleSheet: BaseViewStyleSheet<View> {
         let titleStyle: View.TitleStyle
         let title: LabelStyleSheet
+        let text: TextStyleSheet<UITextField>
 
         public init(
             titleStyle: View.TitleStyle = .fillProportionally(0.25),
-            title: LabelStyleSheet = .init(font: UIFont.preferredFont(forTextStyle: .body),
-                                           textAlignment: .leading)
+            title: LabelStyleSheet = LabelStyleSheet(
+                font: UIFont.preferredFont(forTextStyle: .body),
+                textAlignment: .leading
+            ),
+            text: TextStyleSheet<UITextField> = TextStyleSheet()
         ) {
             self.titleStyle = titleStyle
             self.title = title
+            self.text = text
         }
 
         public override func apply(to element: Component.TextInput.View) {
             super.apply(to: element)
             element.titleStyle = titleStyle
             title.apply(to: element.titleLabel)
+            text.apply(to: element.textField)
         }
     }
 }
