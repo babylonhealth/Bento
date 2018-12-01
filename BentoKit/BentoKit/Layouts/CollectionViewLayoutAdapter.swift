@@ -84,9 +84,9 @@ public final class BoxCollectionViewLayoutProxy<SectionId: Hashable, NodeId: Has
         return layout.targetContentOffset(forProposedContentOffset: proposedContentOffset)
     }
     
-    public override func prepare(forCollectionViewUpdates updateItems: [UICollectionViewUpdateItem]) {
-        layout.prepare(forCollectionViewUpdates: updateItems)
-    }
+//    public override func prepare(forCollectionViewUpdates updateItems: [UICollectionViewUpdateItem]) {
+//        layout.prepare(forCollectionViewUpdates: updateItems)
+//    }
     
     public override func finalizeCollectionViewUpdates() {
         layout.finalizeCollectionViewUpdates()

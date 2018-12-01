@@ -9,11 +9,10 @@ import UIKit
 import BentoKit
 
 final class MoviesListViewController: UIViewController {
-    @IBOutlet var collectionView: BoxCollectionView!
+    @IBOutlet var collectionView: UICollectionView!
     private lazy var viewModel = MoviesViewModel()
     private lazy var renderer = MoviesRenderer()
     private lazy var adapter = BoxCollectionViewLayoutProxy<MoviesRenderer.SectionId, MoviesRenderer.RowId>()
-    private var keyboardChangeDisposable: Disposable?
     private let (retrySignal, retryObserver) = Signal<Void, NoError>.pipe()
 
     override func viewDidLoad() {
@@ -34,21 +33,6 @@ final class MoviesListViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         viewModel.send(action: .reload)
-
-        keyboardChangeDisposable = NotificationCenter.default.reactive
-            .keyboard(.willChangeFrame)
-            .skipRepeats { lhs, rhs in lhs.endFrame == rhs.endFrame }
-            .take(duringLifetimeOf: self)
-            .observe(on: UIScheduler())
-            .observeValues { [weak collectionView] context in
-                guard let collectionView = collectionView else { return }
-
-                func animate() {
-                    collectionView.keyboardFrame = context.endFrame
-                }
-
-                UIView.animate(withDuration: context.animationDuration, animations: animate)
-            }
     }
 
     private func render(content: MoviesRenderer.Content) {

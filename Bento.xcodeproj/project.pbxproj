@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		25FAC55B219E1C0500740807 /* BentoKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25FAC55A219E1C0500740807 /* BentoKit.framework */; };
+		25FAC55D21A0483C00740807 /* PinnedSectionsExampleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25FAC55C21A0483C00740807 /* PinnedSectionsExampleViewController.swift */; };
 		515F94097C1F82B7E5C2DE0C /* Section.swift in Sources */ = {isa = PBXBuildFile; fileRef = 515F9EAF847DD1D68DE3A48C /* Section.swift */; };
 		5829D269200FB092001E020D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5829D268200FB092001E020D /* AppDelegate.swift */; };
 		5829D26B200FB092001E020D /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5829D26A200FB092001E020D /* ViewController.swift */; };
@@ -121,6 +122,7 @@
 
 /* Begin PBXFileReference section */
 		25FAC55A219E1C0500740807 /* BentoKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = BentoKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		25FAC55C21A0483C00740807 /* PinnedSectionsExampleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinnedSectionsExampleViewController.swift; sourceTree = "<group>"; };
 		515F9EAF847DD1D68DE3A48C /* Section.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Section.swift; sourceTree = "<group>"; };
 		5829D265200FB092001E020D /* Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5829D268200FB092001E020D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -290,6 +292,7 @@
 				58FC444C207CFBE200DA3614 /* MoviesListViewController.swift */,
 				5829D268200FB092001E020D /* AppDelegate.swift */,
 				5829D26A200FB092001E020D /* ViewController.swift */,
+				25FAC55C21A0483C00740807 /* PinnedSectionsExampleViewController.swift */,
 				5829D26C200FB092001E020D /* Main.storyboard */,
 				5829D26F200FB092001E020D /* Assets.xcassets */,
 				5829D271200FB092001E020D /* LaunchScreen.storyboard */,
@@ -604,6 +607,7 @@
 				5829D26B200FB092001E020D /* ViewController.swift in Sources */,
 				58FC4447207CFBD700DA3614 /* ButtonComponentView.swift in Sources */,
 				58FC4441207CFBD700DA3614 /* MovieComponentView.swift in Sources */,
+				25FAC55D21A0483C00740807 /* PinnedSectionsExampleViewController.swift in Sources */,
 				65E3ECA8211340CE00869DF3 /* PersonalDetailsViewController.swift in Sources */,
 				61B40919208523F60063DE25 /* IntroViewModel.swift in Sources */,
 				58FC444D207CFBE200DA3614 /* BookAppointmentViewController.swift in Sources */,
