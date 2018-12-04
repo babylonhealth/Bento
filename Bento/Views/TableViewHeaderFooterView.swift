@@ -37,6 +37,10 @@ final class TableViewHeaderFooterView: UITableViewHeaderFooterView {
         return component
     }
 
+    // NOTE: Self sizing overriding point.
+    override func sizeThatFits(_ size: CGSize) -> CGSize {
+        return containedView?.sizeThatFits(size) ?? super.sizeThatFits(size)
+    }
 }
 
 extension TableViewHeaderFooterView: BentoReusableView {}

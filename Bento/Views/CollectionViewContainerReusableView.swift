@@ -37,6 +37,11 @@ final class CollectionViewContainerReusableView: UICollectionReusableView {
 
         return component
     }
+
+    // NOTE: Self sizing overriding point.
+    override func sizeThatFits(_ size: CGSize) -> CGSize {
+        return containedView?.sizeThatFits(size) ?? super.sizeThatFits(size)
+    }
 }
 
 extension CollectionViewContainerReusableView: BentoReusableView {}

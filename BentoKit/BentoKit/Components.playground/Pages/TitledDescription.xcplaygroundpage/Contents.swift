@@ -21,8 +21,8 @@ button.widthAnchor.constraint(equalToConstant: 37).isActive = true
 
 let component = Component.TitledDescription(
     texts: [
-        TextValue.plain("Text 1"),
-        TextValue.plain("Text 2"),
+        TextValue.plain("Text 1 Text 1 Text 1 Text 1 Text 1 Text 1 Text 1 Text 1 Text 1 Text 1 Text 1 Text 1 Text 1 Text 1 Text 1 "),
+        TextValue.plain("Text 2 Text 2 Text 2 Text 2 Text 2 Text 2 Text 2 Text 2 Text 2"),
         TextValue.plain("Text 3"),
         TextValue.plain("Text 4")
     ],

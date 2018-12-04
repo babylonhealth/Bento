@@ -17,7 +17,7 @@ public extension Component {
     /// While `TitledDescription` supports asynchronous loading for its image
     /// view, you are obligated to ensure a consistent fixed size across all
     /// changes.
-    public final class TitledDescription: AutoRenderable, Deletable, HeightCustomizing, Focusable, ComponentLifecycleAware {
+    public final class TitledDescription: AutoRenderable, Deletable, Focusable, ComponentLifecycleAware {
         public typealias Accessory = AccessoryView.Accessory
 
         private let _willDisplayItem: (() -> Void)?
@@ -33,16 +33,6 @@ public extension Component {
 
         public func delete() {
             didDelete?()
-        }
-
-        public func estimatedHeight(forWidth width: CGFloat,
-                                    inheritedMargins: UIEdgeInsets) -> CGFloat {
-            return heightComputer(width, inheritedMargins)
-        }
-
-        public func height(forWidth width: CGFloat,
-                           inheritedMargins: UIEdgeInsets) -> CGFloat {
-            return heightComputer(width, inheritedMargins)
         }
 
         @available(*, deprecated, message: "Please use the designated initialiser.")
@@ -142,14 +132,6 @@ public extension Component {
                 view.highlightingGesture.didRebindView()
             }
 
-            self.heightComputer = TitledDescription.heightComputer(
-                styleSheet: styleSheet,
-                image: image,
-                texts: texts,
-                detail: detail,
-                accessory: accessory
-            )
-
             switch inputNodes {
             case .none:
                 self.focusEligibility = .ineligible
@@ -164,7 +146,6 @@ public extension Component {
             self._didEndDisplayingItem = didEndDisplayingItem
         }
 
-        private let heightComputer: (CGFloat, UIEdgeInsets) -> CGFloat
         private let didDelete: (() -> Void)?
         
         public func willDisplayItem() {
@@ -174,107 +155,6 @@ public extension Component {
         public func didEndDisplayingItem() {
             _didEndDisplayingItem?()
         }
-    }
-}
-
-private extension Component.TitledDescription {
-
-    static func heightComputer(
-        styleSheet: StyleSheet,
-        image: Property<ImageOrLabel>?,
-        texts: [TextValue],
-        detail: TextValue?,
-        accessory: Accessory
-    ) -> (CGFloat, UIEdgeInsets) -> CGFloat {
-        return { width, inheritedMargins in
-            guard width > 0 else { return 0 }
-
-            let xSpacing = styleSheet.content.spacing
-            let verticalMargins = styleSheet.layoutMargins.verticalTotal
-                + (styleSheet.content.isLayoutMarginsRelativeArrangement
-                    ? styleSheet.content.layoutMargins.verticalTotal
-                    : 0)
-
-            let detailWidth = detail?.width(using: styleSheet.detail) ?? 0
-            let detailHeight = detail?.height(using: styleSheet.detail,
-                                              fittingWidth: detailWidth) ?? 0
-
-            let detailWidthPlusSpacing: CGFloat
-            if detail != nil && detailWidth > 0 {
-                detailWidthPlusSpacing = detailWidth + xSpacing
-            } else {
-                detailWidthPlusSpacing = 0
-            }
-
-            let accessorySize: CGSize
-            if case let .custom(view) = accessory {
-                view.layoutIfNeeded()
-                accessorySize = view.frame.size
-            } else {
-                accessorySize = CGSize(width: 24, height: 24)
-            }
-            let availableWidthForLabelBlock = width
-                - max(styleSheet.layoutMargins.left, inheritedMargins.left)
-                - max(styleSheet.layoutMargins.right, inheritedMargins.right)
-                - (styleSheet.content.isLayoutMarginsRelativeArrangement
-                    ? styleSheet.content.layoutMargins.horizontalTotal
-                    : 0)
-                - imageWidthPlusSpacing(measuring: image, styleSheet: styleSheet)
-                - detailWidthPlusSpacing
-                - (accessory != .none ? accessorySize.width + xSpacing : 0)
-
-            assert(availableWidthForLabelBlock > 0,
-                   "availableWidthForLabelBlock (\(availableWidthForLabelBlock)) ≤ 0")
-
-            let textHeights = texts
-                .enumerated()
-                .filter { $0.element.isNotEmpty }
-                .map { entry -> CGFloat in
-                    let (index, text) = entry
-                    return text.height(using: styleSheet.textStyles[index],
-                                       fittingWidth: availableWidthForLabelBlock)
-            }
-
-            let textHeightsPlusSpacing = textHeights.reduce(0, +) +
-                CGFloat(max(0, textHeights.count - 1)) * styleSheet.verticalSpacingBetweenElements
-
-            return max(
-                verticalMargins + max(
-                    textHeightsPlusSpacing,
-                    styleSheet.imageOrLabel.fixedSize?.height ?? 0,
-                    detailHeight,
-                    accessorySize.height
-                ),
-                styleSheet.enforcesMinimumHeight ? 44 : 0
-            )
-        }
-    }
-
-    static func imageWidthPlusSpacing(measuring image: Property<ImageOrLabel>?,
-                                      styleSheet: StyleSheet) -> CGFloat {
-        let width: CGFloat
-
-        if let size = styleSheet.imageOrLabel.fixedSize {
-            width = size.width
-        } else {
-            switch image?.value {
-            case let .image(image)?:
-                width = image.size.width
-                    + styleSheet.imageOrLabel.layoutMargins.left
-                    + styleSheet.imageOrLabel.layoutMargins.right
-            case let .text(text)?:
-                width = (text as NSString)
-                    .size(withAttributes: [.font: styleSheet.imageOrLabel.label.font])
-                    .width
-                    .rounded(.up)
-            case .none?:
-                width = 0
-            case nil:
-                return 0
-            }
-        }
-
-        return min(width, maxImageWidth) + styleSheet.content.spacing
     }
 }
 
@@ -417,6 +297,10 @@ extension Component.TitledDescription.View {
     public override func resignFirstResponder() -> Bool {
         highlightingGesture.isHighlighted = false
         return super.resignFirstResponder()
+    }
+
+    public override func sizeThatFits(_ size: CGSize) -> CGSize {
+        return super.sizeThatFits(size)
     }
 }
 

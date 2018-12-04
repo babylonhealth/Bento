@@ -36,6 +36,11 @@ final class TableViewContainerCell: UITableViewCell {
 
         return component
     }
+
+    // NOTE: Self sizing overriding point.
+    override func sizeThatFits(_ size: CGSize) -> CGSize {
+        return containedView?.sizeThatFits(size) ?? super.sizeThatFits(size)
+    }
 }
 
 extension TableViewContainerCell: BentoReusableView {}
