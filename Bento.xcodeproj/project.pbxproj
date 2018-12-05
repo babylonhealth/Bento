@@ -26,6 +26,7 @@
 		58BA7584201633CC0050D5F1 /* Renderable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58BA7583201633CC0050D5F1 /* Renderable.swift */; };
 		58BA7586201634120050D5F1 /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58BA7585201634120050D5F1 /* Helpers.swift */; };
 		58D0F12D207F573B00A24E96 /* TableViewAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58D0F12C207F573B00A24E96 /* TableViewAnimation.swift */; };
+		58D27BA721B83B2700DC9600 /* DeletableTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58D27BA621B83B2700DC9600 /* DeletableTests.swift */; };
 		58E98E5B2016571F00F78BAE /* IconTextCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 58E98E552016571F00F78BAE /* IconTextCell.xib */; };
 		58E98E5C2016571F00F78BAE /* ToggleCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 58E98E562016571F00F78BAE /* ToggleCell.xib */; };
 		58E98E5D2016571F00F78BAE /* ToggleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58E98E572016571F00F78BAE /* ToggleCell.swift */; };
@@ -146,6 +147,7 @@
 		58BA7583201633CC0050D5F1 /* Renderable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Renderable.swift; sourceTree = "<group>"; };
 		58BA7585201634120050D5F1 /* Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helpers.swift; sourceTree = "<group>"; };
 		58D0F12C207F573B00A24E96 /* TableViewAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewAnimation.swift; sourceTree = "<group>"; };
+		58D27BA621B83B2700DC9600 /* DeletableTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeletableTests.swift; sourceTree = "<group>"; };
 		58E98E552016571F00F78BAE /* IconTextCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IconTextCell.xib; sourceTree = "<group>"; };
 		58E98E562016571F00F78BAE /* ToggleCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ToggleCell.xib; sourceTree = "<group>"; };
 		58E98E572016571F00F78BAE /* ToggleCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToggleCell.swift; sourceTree = "<group>"; };
@@ -380,6 +382,7 @@
 				740921B720ACE5EC00B59F5C /* ConcatenationTests.swift */,
 				9A784700205EB5E000FA597E /* TestRenderable.swift */,
 				9A784702205EB61D00FA597E /* TestId.swift */,
+				58D27BA621B83B2700DC9600 /* DeletableTests.swift */,
 				58FC4421207CF29F00DA3614 /* Info.plist */,
 			);
 			path = BentoTests;
@@ -672,6 +675,7 @@
 				58FC4427207CF2BB00DA3614 /* AnyRenderableTests.swift in Sources */,
 				58FC442A207CF2BB00DA3614 /* NodeTests.swift in Sources */,
 				58FC4428207CF2BB00DA3614 /* TestId.swift in Sources */,
+				58D27BA721B83B2700DC9600 /* DeletableTests.swift in Sources */,
 				58FC4429207CF2BB00DA3614 /* TestRenderable.swift in Sources */,
 				740921B620ACDDDA00B59F5C /* IfTests.swift in Sources */,
 				58FC442B207CF2BB00DA3614 /* SectionTests.swift in Sources */,

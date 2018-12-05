@@ -32,3 +32,33 @@ public extension Renderable where View: UIView & NibLoadable {
         return View.loadFromNib()
     }
 }
+
+extension Renderable where View: UIView {
+    func asAnyRenderable() -> AnyRenderableBox<Self> {
+        return AnyRenderableBox(self)
+    }
+}
+
+public extension Renderable where View: UIView {
+
+    func deletable(
+        deleteActionText: String,
+        backgroundColor: UIColor? = nil,
+        didDelete: @escaping () -> Void
+    ) -> AnyRenderable {
+        return DeletableComponent(
+            source: self.asAnyRenderable(),
+            deleteActionText: deleteActionText,
+            backgroundColor: backgroundColor,
+            didDelete: didDelete
+        ).asAnyRenderable()
+    }
+
+    func on(willDisplayItem: (() -> Void)? = nil, didEndDisplayingItem: (() -> Void)? = nil) -> AnyRenderable {
+        return LifecycleComponent(
+            source: self.asAnyRenderable(),
+            willDisplayView: willDisplayItem,
+            didEndDisplayingView: didEndDisplayingItem
+        ).asAnyRenderable()
+    }
+}
