@@ -22,23 +22,6 @@ class AnyRenderableTests: XCTestCase {
         renderable.render(in: testView)
         expect(testView.hasInvoked) == true
     }
-
-    func testDefaultEqualityImplementation() {
-        let base = AnyRenderable(TestDefaultEqualityRenderable())
-
-        expect(base) == base
-        expect(base) != AnyRenderable(TestDefaultEqualityRenderable())
-        expect(base) != AnyRenderable(TestCustomEqualityRenderable(value: 0))
-    }
-
-    func testComponentCustomEquality() {
-        let base = AnyRenderable(TestCustomEqualityRenderable(value: 0))
-
-        expect(base) == base
-        expect(base) == AnyRenderable(TestCustomEqualityRenderable(value: 0))
-        expect(base) != AnyRenderable(TestCustomEqualityRenderable(value: 1))
-        expect(base) != AnyRenderable(TestDefaultEqualityRenderable())
-    }
 }
 
 private class TestView: UIView {
