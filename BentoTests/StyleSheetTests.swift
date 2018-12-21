@@ -1,184 +1,115 @@
-@testable import Bento
-import UIKit
 import XCTest
+import UIKit
+@testable import StyleSheets
 
 class StyleSheetTests: XCTestCase {
-    func test_view_style_sheet() {
-        let view = UIView()
-        let styleSheet = ViewStyleSheet()
-        testStyleSheet(styleSheet, in: view, exemptions: [
-            "cornerRadius",
-            "masksToBounds",
-            "borderColor",
-            "borderWidth",
-            "shadowColor",
-            "shadowRadius",
-            "shadowOffset",
-            "shadowOpacity"
-        ])
+    func test_application() {
+        var view = View()
+
+        let inverse = stub1.apply(to: &view)
+        XCTAssert(view.banana == "🍌")
+        XCTAssert(view.orange == "🍊")
+        XCTAssert(view.apple == "🍎")
+
+        let expectedInverse = StyleSheet<View>().with {
+            $0.set(\.banana, "banana")
+            $0.set(\.orange, "orange")
+            $0.set(\.apple, "apple")
+        }
+        XCTAssert(inverse == expectedInverse)
+
+        inverse.apply(to: &view)
+
+        XCTAssert(view.banana == "banana")
+        XCTAssert(view.orange == "orange")
+        XCTAssert(view.apple == "apple")
     }
 
-    func test_label_style_sheet() {
-        let label = UILabel()
-        let styleSheet = LabelStyleSheet(font: .boldSystemFont(ofSize: 11.0))
-        testStyleSheet(styleSheet, in: label, exemptions: [
-            "cornerRadius",
-            "masksToBounds",
-            "borderColor",
-            "borderWidth",
-            "shadowColor",
-            "shadowRadius",
-            "shadowOffset",
-            "shadowOpacity"
-        ])
+    func test_subscript_nilClearsRecordOfNonOptionalProperty() {
+        var styleSheet = StyleSheet<View>()
+
+        styleSheet.set(\.banana, "banana")
+        XCTAssert(styleSheet.value(for: \.banana) == "banana")
+
+        styleSheet.removeValue(for: \.banana)
+        XCTAssert(styleSheet.value(for: \.banana) == nil)
     }
 
-    func test_button_style_sheet() {
-        let button = UIButton()
-        let styleSheet = ButtonStyleSheet()
-        testStyleSheet(
-            styleSheet,
-            in: button,
-            exemptions: [
-                "textFont",
-                "masksToBounds",
-                "cornerRadius",
-                "titleColors",
-                "images",
-                "backgroundImages",
-                "numberOfLines",
-                "borderColor",
-                "borderWidth",
-                "textAlignment",
-                "lineBreakMode",
-                "shadowColor",
-                "shadowRadius",
-                "shadowOffset",
-                "shadowOpacity"
-            ]
-        )
+    func test_subscript_nilPopulatesRecordOfOptionalProperty() {
+        var styleSheet = StyleSheet<View>()
+
+        styleSheet.set(\.inbox, "banana")
+        XCTAssert(styleSheet.value(for: \.inbox) == "banana")
+
+        styleSheet.set(\.inbox, nil)
+        XCTAssert(styleSheet.value(for: \.inbox) == .some(.none))
+
+        styleSheet.removeValue(for: \.inbox)
+        XCTAssert(styleSheet.value(for: \.inbox) == nil)
     }
 
-    func test_imageview_style_sheet() {
-        let imageView = UIImageView()
-        let styleSheet = ImageViewStyleSheet(contentMode: .scaleAspectFill)
-        testStyleSheet(styleSheet, in: imageView, exemptions: [
-            "cornerRadius",
-            "masksToBounds",
-            "size",
-            "borderColor",
-            "borderWidth",
-            "shadowColor",
-            "shadowRadius",
-            "shadowOffset",
-            "shadowOpacity"
-        ])
+    func test_equality_emptyInstanceIsEqual() {
+        XCTAssert(StyleSheet<View>() == StyleSheet<View>())
     }
 
-    func test_stackview_style_sheet() {
-        let stackView = UIStackView()
-        let styleSheet = StackViewStyleSheet(axis: .vertical, spacing: 8, distribution: .fill, alignment: .fill)
-        testStyleSheet(styleSheet, in: stackView, exemptions: [
-            "cornerRadius",
-            "masksToBounds",
-            "borderColor",
-            "borderWidth",
-            "shadowColor",
-            "shadowRadius",
-            "shadowOffset",
-            "shadowOpacity"
-        ])
+    func test_equality_sameInstanceIsEqual() {
+        XCTAssert(stub1 == stub1)
     }
 
-    func test_test_field_styleSheet() {
-        let textField = TextField(frame: .zero)
-        let styleSheet = TextFieldStylesheet()
-
-        testStyleSheet(styleSheet, in: textField, exemptions: [
-            "cornerRadius",
-            "masksToBounds",
-            "borderColor",
-            "borderWidth",
-            "isSecureTextEntry",
-            "clearButtonMode",
-            "shadowColor",
-            "shadowRadius",
-            "shadowOffset",
-            "shadowOpacity"
-        ])
-        XCTAssertTrue(textField.isClearButtonModeCalled)
-        XCTAssertTrue(textField.isSecureTextEntryCalled)
-        XCTAssertTrue(textField.isBorderStyleCalled)
+    func test_equality_immutableCopiesAreEqual() {
+        let localStub = stub1
+        XCTAssert(localStub == stub1)
+        XCTAssert(stub1 == localStub)
     }
 
-    func testStyleSheet<S: StyleSheetProtocol, Element>(
-        _ styleSheet: S,
-        in element: Element,
-        exemptions: Set<String> = []
-    ) where S.Element == Element, Element: NSObject {
-        let observer = PropertyObserver()
+    func test_equality_addingNewEntryMakesItUnequal() {
+        let changed = stub1.setting(\.eggplant, "🍆")
+        XCTAssert(changed != stub1)
+        XCTAssert(stub1 != changed)
+    }
 
-        let properties = Set(extract(propertiesFrom: Mirror(reflecting: styleSheet)))
+    func test_equality_removingExistingEntryMakesItUnequal() {
+        let changed = stub1.with { $0.removeValue(for: \.banana) }
+        XCTAssert(changed != stub1)
+        XCTAssert(stub1 != changed)
+    }
 
-        properties.forEach { property in
-            element.addObserver(observer, forKeyPath: property, options: .new, context: nil)
+    func test_equality_changingExistingEntryMakesItUnequal() {
+        let changed = stub1.setting(\.orange, "🥕🍊🧡")
+        XCTAssert(changed != stub1)
+        XCTAssert(stub1 != changed)
+    }
+
+    func test_equality_repopulatingTheSameValuesShouldBeEqual() {
+        let changed = stub1.with {
+            $0.removeValue(for: \.banana)
+            $0.removeValue(for: \.orange)
+            $0.removeValue(for: \.apple)
         }
 
-        styleSheet.apply(to: element)
+        XCTAssert(changed != stub1)
 
-        let observedKeys = Set(observer.changes.map { $0.key })
+        let changed2 = changed.with {
+            $0.set(\.banana, "🍌")
+            $0.set(\.orange, "🍊")
+            $0.set(\.apple, "🍎")
+        }
 
-        let symmetricDifference = observedKeys
-            .symmetricDifference(properties)
-            .subtracting(exemptions)
-
-        XCTAssert(
-            symmetricDifference.isEmpty,
-            "\(type(of: styleSheet)) didn't use all the properties to configure \(type(of: element)) - properties missing: \(symmetricDifference)"
-        )
+        XCTAssert(changed2 == stub1)
     }
 }
 
-private func extract(propertiesFrom mirror: Mirror?) -> [String] {
-    guard let mirror = mirror else { return [] }
-    return mirror.children.compactMap { $0.label } + extract(propertiesFrom: mirror.superclassMirror)
+struct View {
+    var banana = "banana"
+    var orange = "orange"
+    var apple = "apple"
+    var eggplant = "eggplant"
+
+    var inbox: String? = nil
 }
 
-private final class PropertyObserver: NSObject {
-    public var changes: [String: Any] = [:]
-
-    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey: Any]?, context: UnsafeMutableRawPointer?) {
-        guard
-            let keyPath = keyPath,
-            let value = change?[.newKey]
-        else { fatalError() }
-
-        changes[keyPath] = value
-    }
-}
-
-final class TextField: UITextField {
-    var isSecureTextEntryCalled = false
-
-    override var isSecureTextEntry: Bool {
-        didSet {
-            isSecureTextEntryCalled = true
-        }
-    }
-
-    var isBorderStyleCalled = false
-
-    override var borderStyle: UITextField.BorderStyle {
-        didSet {
-            isBorderStyleCalled = true
-        }
-    }
-
-    var isClearButtonModeCalled = false
-
-    override var clearButtonMode: UITextField.ViewMode {
-        didSet {
-            isClearButtonModeCalled = true
-        }
-    }
+private let stub1 = StyleSheet<View>().with {
+    $0.set(\.banana, "🍌")
+    $0.set(\.orange, "🍊")
+    $0.set(\.apple, "🍎")
 }
