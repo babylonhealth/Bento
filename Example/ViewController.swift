@@ -130,11 +130,13 @@ class ViewController: UIViewController {
                 .deletable(deleteActionText: "Delete", didDelete: {
                     print("Delete")
                 })
+                .on(willDisplayItem: nil, didEndDisplayingItem: nil)
         case .wifi:
             return RowId.note <> IconTextComponent(image: #imageLiteral(resourceName: "wifi"), title: "WIFI On")
                 .deletable(deleteActionText: "Delete", didDelete: {
                     print("Delete")
                 })
+                .on(willDisplayItem: nil, didEndDisplayingItem: nil)
         }
     }
 }

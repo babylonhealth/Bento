@@ -14,16 +14,16 @@ final class DeletableComponent<Base: Renderable>: AnyRenderableBox<Base>, Deleta
     private let didDelete: () -> Void
 
     init(
-        source: AnyRenderableBox<Base>,
+        source: Base,
         deleteActionText: String,
         backgroundColor: UIColor?,
         didDelete: @escaping () -> Void
     ) {
         self.deleteActionText = deleteActionText
         self.backgroundColor = backgroundColor
-        self.source = source
+        self.source = AnyRenderableBox<Base>(source)
         self.didDelete = didDelete
-        super.init(source.base)
+        super.init(source)
     }
 
     override func cast<T>(to type: T.Type) -> T? {

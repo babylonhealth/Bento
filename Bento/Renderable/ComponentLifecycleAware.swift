@@ -14,14 +14,14 @@ final class LifecycleComponent<Base: Renderable>: AnyRenderableBox<Base>, Compon
     private let _didEndDisplayingView: (() -> Void)?
 
     init(
-        source: AnyRenderableBox<Base>,
+        source: Base,
         willDisplayView: (() -> Void)?,
         didEndDisplayingView: (() -> Void)?
     ) {
-        self.source = source
+        self.source = AnyRenderableBox(source)
         self._willDisplayView = willDisplayView
         self._didEndDisplayingView = didEndDisplayingView
-        super.init(source.base)
+        super.init(source)
     }
 
     override func cast<T>(to type: T.Type) -> T? {
