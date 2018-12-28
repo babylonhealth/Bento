@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		255123E821D2817700ED0252 /* SelectableComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 255123E721D2817700ED0252 /* SelectableComponent.swift */; };
+		255123EA21D2873B00ED0252 /* AccessoryProviding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 255123E921D2873B00ED0252 /* AccessoryProviding.swift */; };
 		515F94097C1F82B7E5C2DE0C /* Section.swift in Sources */ = {isa = PBXBuildFile; fileRef = 515F9EAF847DD1D68DE3A48C /* Section.swift */; };
 		5829D269200FB092001E020D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5829D268200FB092001E020D /* AppDelegate.swift */; };
 		5829D26B200FB092001E020D /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5829D26A200FB092001E020D /* ViewController.swift */; };
@@ -123,6 +125,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		255123E721D2817700ED0252 /* SelectableComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectableComponent.swift; sourceTree = "<group>"; };
+		255123E921D2873B00ED0252 /* AccessoryProviding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessoryProviding.swift; sourceTree = "<group>"; };
 		515F9EAF847DD1D68DE3A48C /* Section.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Section.swift; sourceTree = "<group>"; };
 		5829D265200FB092001E020D /* Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5829D268200FB092001E020D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -367,6 +371,8 @@
 				65E3ECA1211317EA00869DF3 /* FocusCoordinator.swift */,
 				65E3ECA521133C9400869DF3 /* UIKit+CollectionViewFocus.swift */,
 				582D9986217F87B100C67B0D /* ComponentLifecycleAware.swift */,
+				255123E721D2817700ED0252 /* SelectableComponent.swift */,
+				255123E921D2873B00ED0252 /* AccessoryProviding.swift */,
 			);
 			path = Renderable;
 			sourceTree = "<group>";
@@ -634,6 +640,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				255123EA21D2873B00ED0252 /* AccessoryProviding.swift in Sources */,
 				582D9951217E196E00C67B0D /* MenuItemsResponding.swift in Sources */,
 				9AF4786A21205E3100F87E21 /* Supplement.swift in Sources */,
 				65496FB8211C323F00511D8A /* TableViewContainerCell.swift in Sources */,
@@ -663,6 +670,7 @@
 				65E3ECAC2113591500869DF3 /* FocusableView.swift in Sources */,
 				A9509880661501C40B50E453 /* TableViewHeaderFooterView.swift in Sources */,
 				515F94097C1F82B7E5C2DE0C /* Section.swift in Sources */,
+				255123E821D2817700ED0252 /* SelectableComponent.swift in Sources */,
 				9A4DB3E1212CB3710079D5AE /* Changeset+MutationIndexPairs.swift in Sources */,
 				65E3ECA421133BF700869DF3 /* FocusEligibilitySource.swift in Sources */,
 			);

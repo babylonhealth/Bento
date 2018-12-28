@@ -50,6 +50,9 @@ open class TableViewAdapterBase<SectionID: Hashable, ItemID: Hashable>
         }
 
         cell.bind(component)
+        // steal background color of the component view
+        cell.backgroundColor = cell.containedView?.backgroundColor
+        cell.contentView.backgroundColor = cell.containedView?.backgroundColor
         return cell
 
     }
@@ -71,6 +74,23 @@ open class TableViewAdapterBase<SectionID: Hashable, ItemID: Hashable>
     @objc open func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         return sections[section].supplements.keys.contains(.footer) ? UITableViewAutomaticDimension : .leastNonzeroMagnitude
     }
+    
+    @objc(tableView:didSelectRowAtIndexPath:)
+    open func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard let component = sections[indexPath.section].items[indexPath.row].component(as: Selectable.self)  else {
+            return
+        }
+        component.select()
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
+    
+    @objc(tableView:accessoryButtonTappedForRowWithIndexPath:)
+    open func tableView(_ tableView: UITableView, accessoryButtonTappedForRowWith indexPath: IndexPath) {
+        guard let accessoryProviding = sections[indexPath.section].items[indexPath.row].component(as: AccessoryProviding.self) else {
+            return
+        }
+        accessoryProviding.selectAccessory()
+    }
 
     @objc(tableView:editActionsForRowAtIndexPath:)
     open func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
@@ -85,7 +105,7 @@ open class TableViewAdapterBase<SectionID: Hashable, ItemID: Hashable>
             }
         ]
     }
-
+    
     @available(iOS 11.0, *)
     @objc(tableView:trailingSwipeActionsConfigurationForRowAtIndexPath:)
     open func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {

@@ -130,13 +130,34 @@ class ViewController: UIViewController {
                 .deletable(deleteActionText: "Delete", didDelete: {
                     print("Delete")
                 })
+                .accessory(.disclosureIndicator) {
+                    print("DidSelect, accessory")
+                }
+                .selectable(selectionColor: .green) {
+                    print("DidSelect")
+                }
                 .on(willDisplayItem: nil, didEndDisplayingItem: nil)
         case .wifi:
+            let view = UIButton(type: .contactAdd)
+            view.frame = CGRect(origin: .zero, size: CGSize(width: 40, height: 40))
+            view.backgroundColor = .red
             return RowId.note <> IconTextComponent(image: #imageLiteral(resourceName: "wifi"), title: "WIFI On")
                 .deletable(deleteActionText: "Delete", didDelete: {
                     print("Delete")
                 })
+                .selectable {
+                    print("DidSelect")
+                }
                 .on(willDisplayItem: nil, didEndDisplayingItem: nil)
+        }
+    }
+}
+
+final class View: UIView {
+    override var backgroundColor: UIColor? {
+        didSet {
+            let newValue = backgroundColor
+            print(backgroundColor)
         }
     }
 }

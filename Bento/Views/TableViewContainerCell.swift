@@ -14,13 +14,13 @@ final class TableViewContainerCell: UITableViewCell {
         selectionStyle = .none
         backgroundColor = .clear
         contentView.backgroundColor = .clear
+        selectedBackgroundView = UIView()
     }
-
+    
     required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        selectionStyle = .none
+        fatalError("init(coder:) has not been implemented")
     }
-
+    
     override func responds(to aSelector: Selector!) -> Bool {
         guard let component = component?.cast(to: MenuItemsResponding.self) else {
             return super.responds(to: aSelector)

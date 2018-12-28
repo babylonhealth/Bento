@@ -18,6 +18,8 @@ extension BentoReusableView {
             }
 
             component.render(in: renderingView)
+            applyAccessoryProvidingBehavior(for: component)
+            applySelectableBehavior(for: component)
         } else {
             containedView = nil
         }
@@ -35,6 +37,33 @@ extension BentoReusableView {
             .cast(to: ComponentLifecycleAware.self)?
             .didEndDisplayingItem()
         (containedView as? ViewLifecycleAware)?.didEndDisplayingView()
+    }
+    
+    private func applySelectableBehavior(for component: AnyRenderable) {
+        guard let cell = self as? UITableViewCell else { return }
+        if let selectable = component.cast(to: Selectable.self) {
+            if let color = selectable.selectionColor {
+                cell.selectionStyle = .default
+                cell.selectedBackgroundView = cell.selectedBackgroundView ?? UIView()
+                cell.selectedBackgroundView?.backgroundColor = color
+            }
+            else {
+                cell.selectionStyle = .default
+                // set system color if it was modified
+                cell.selectedBackgroundView?.backgroundColor = UIColor(red:0.83, green:0.83, blue:0.83, alpha:1)
+            }
+        } else {
+            cell.selectionStyle = .none
+        }
+    }
+    
+    private func applyAccessoryProvidingBehavior(for component: AnyRenderable) {
+        guard let cell = self as? UITableViewCell else { return }
+        if let accessoryProviding = component.cast(to: AccessoryProviding.self) {
+            cell.accessoryType = accessoryProviding.accessory.cellType
+        } else {
+            cell.accessoryType = .none
+        }
     }
 }
 

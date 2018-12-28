@@ -55,4 +55,20 @@ public extension Renderable where View: UIView {
             didEndDisplayingView: didEndDisplayingItem
         ).asAnyRenderable()
     }
+    
+    func selectable(selectionColor: UIColor? = nil, didSelect: @escaping () -> Void) -> AnyRenderable {
+        return SelectableComponent(
+            base: self,
+            selectionColor: selectionColor,
+            didSelect: didSelect
+        ).asAnyRenderable()
+    }
+    
+    func accessory(_ accessory: AccessoryType, didSelect: (() -> Void)? = nil) -> AnyRenderable {
+        return AccessoryProvidingComponent(
+            source: self,
+            accessory: accessory,
+            didSelectAccessory: didSelect
+        ).asAnyRenderable()
+    }
 }
