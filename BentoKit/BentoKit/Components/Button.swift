@@ -59,7 +59,7 @@ extension Component.Button {
             }
         }()
 
-        fileprivate let button = Button(type: .system).with {
+        public let button = Button(type: .system).with {
             $0.setContentHuggingPriority(.required, for: .vertical)
         }
 
@@ -153,14 +153,14 @@ public extension Component.Button {
     }
 }
 
-private final class Button: UIButton {
+public class Button: UIButton {
     var autoRoundCorners: Bool = false {
         didSet {
             setNeedsLayout()
         }
     }
 
-    override func layoutSubviews() {
+    override public func layoutSubviews() {
         super.layoutSubviews()
         layer.cornerRadius = autoRoundCorners ? bounds.height * 0.5 : layer.cornerRadius
     }
