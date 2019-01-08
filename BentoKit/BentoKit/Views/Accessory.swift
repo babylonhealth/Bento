@@ -72,6 +72,7 @@ public final class AccessoryView: InteractiveView {
         case .none:
             view = nil
         }
+        invalidateIntrinsicContentSize()
     }
 }
 
