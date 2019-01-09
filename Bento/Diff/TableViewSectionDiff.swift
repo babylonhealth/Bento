@@ -15,19 +15,25 @@ struct TableViewSectionDiff<SectionId: Hashable, RowId: Hashable> {
     }
 
     func apply(to tableView: UITableView) {
+        /// Since we are going to always rebind visible components, there is no point to evaluate
+        /// component equation. However, we still force all instances of components to be treated as
+        /// unequal, so as to preserve all positional information for in-place updates to visible cells.
         let diff = SectionedChangeset(previous: oldSections,
                                       current: newSections,
                                       sectionIdentifier: { $0.id },
-                                      areMetadataEqual: Section.hasEqualMetadata,
+                                      areMetadataEqual: const(false),
                                       items: { $0.items },
                                       itemIdentifier: { $0.id },
-                                      areItemsEqual: ==)
+                                      areItemsEqual: const(false))
         apply(diff: diff, to: tableView)
     }
 
     private func apply(diff: SectionedChangeset, to tableView: UITableView) {
         tableView.beginUpdates()
-        for (source, destination) in diff.sections.mutationIndexPairs {
+        
+        let visibleSections = tableView.visibleSections
+
+        for (source, destination) in diff.sections.positionsOfMutations(amongVisible: visibleSections) {
             if let headerView = tableView.headerView(forSection: source) {
                let component = newSections[destination].supplements[.header]
                 (headerView as? BentoReusableView)?.bind(component)
@@ -38,6 +44,7 @@ struct TableViewSectionDiff<SectionId: Hashable, RowId: Hashable> {
                 (footerView as? BentoReusableView)?.bind(component)
             }
         }
+
         tableView.insertSections(diff.sections.inserts, with: animation.sectionInsertion)
         tableView.deleteSections(diff.sections.removals, with: animation.sectionDeletion)
         tableView.moveSections(diff.sections.moves, animation: animation)
@@ -48,14 +55,22 @@ struct TableViewSectionDiff<SectionId: Hashable, RowId: Hashable> {
     private func apply(sectionMutations: [SectionedChangeset.MutatedSection],
                        to tableView: UITableView,
                        with animation: TableViewAnimation) {
+        let visibleIndexPaths = tableView.indexPathsForVisibleRows ?? []
+
         for sectionMutation in sectionMutations {
             tableView.deleteRows(at: sectionMutation.deletedIndexPaths, with: animation.rowDeletion)
             tableView.insertRows(at: sectionMutation.insertedIndexPaths, with: animation.rowInsertion)
             tableView.perform(moves: sectionMutation.movedIndexPaths)
 
-            for (source, destination) in sectionMutation.changeset.mutationIndexPairs {
-                if let cell = tableView.cellForRow(at: [sectionMutation.source, source]) as? BentoReusableView {
-                    let node = newSections[sectionMutation.destination].items[destination]
+            let visibleRows = Set(
+                visibleIndexPaths.lazy
+                    .filter { $0.section == sectionMutation.source }
+                    .map { $0.item }
+            )
+
+            for (source, destination) in sectionMutation.changeset.positionsOfMutations(amongVisible: visibleRows) {
+                if let cell = tableView.cellForRow(at: IndexPath(item: source, section: sectionMutation.source)) as? BentoReusableView {
+                   let node = newSections[sectionMutation.destination].items[destination]
                     cell.bind(node.component)
                 }
             }

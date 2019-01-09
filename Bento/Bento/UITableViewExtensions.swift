@@ -59,3 +59,16 @@ extension UITableView {
         return objc_getAssociatedObject(self, AssociatedKey.adapter) as AnyObject?
     }
 }
+
+extension UITableView {
+    var visibleSections: Set<Int> {
+        let isVisible = (0 ..< numberOfSections)
+            .map(rect(forSection:))
+            .map(bounds.intersects)
+        
+        return Set(
+            zip(isVisible, 0 ..< numberOfSections)
+                .compactMap { $0 ? $1 : nil }
+        )
+    }
+}
