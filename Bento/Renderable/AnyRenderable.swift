@@ -29,14 +29,14 @@ struct AnyRenderable: Renderable {
 
     func sizeBoundTo(width: CGFloat, inheritedMargins: UIEdgeInsets) -> CGSize {
         return rendered(inheritedMargins: inheritedMargins)
-            .systemLayoutSizeFitting(CGSize(width: width, height: UILayoutFittingCompressedSize.height),
+            .systemLayoutSizeFitting(CGSize(width: width, height: UIView.layoutFittingCompressedSize.height),
                                      withHorizontalFittingPriority: .required,
                                      verticalFittingPriority: .defaultLow)
     }
 
     func sizeBoundTo(height: CGFloat, inheritedMargins: UIEdgeInsets) -> CGSize {
         return rendered(inheritedMargins: inheritedMargins)
-            .systemLayoutSizeFitting(CGSize(width: UILayoutFittingCompressedSize.width, height: height),
+            .systemLayoutSizeFitting(CGSize(width: UIView.layoutFittingCompressedSize.width, height: height),
                                      withHorizontalFittingPriority: .defaultLow,
                                      verticalFittingPriority: .required)
     }
