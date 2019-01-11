@@ -65,11 +65,11 @@ open class TableViewAdapterBase<SectionID: Hashable, ItemID: Hashable>
     }
 
     @objc open func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return sections[section].supplements.keys.contains(.header) ? UITableViewAutomaticDimension : .leastNonzeroMagnitude
+        return sections[section].supplements.keys.contains(.header) ? UITableView.automaticDimension : .leastNonzeroMagnitude
     }
 
     @objc open func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        return sections[section].supplements.keys.contains(.footer) ? UITableViewAutomaticDimension : .leastNonzeroMagnitude
+        return sections[section].supplements.keys.contains(.footer) ? UITableView.automaticDimension : .leastNonzeroMagnitude
     }
 
     @objc(tableView:editActionsForRowAtIndexPath:)
