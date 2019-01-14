@@ -42,6 +42,22 @@ open class BoxViewController<ViewModel: BoxViewModel, Renderer: BoxRenderer, App
         }
     }
 
+    private var lifetimeObserver: ScreenLifecycleObserving? {
+        return viewModel as? ScreenLifecycleObserving
+    }
+
+    private var isPresentedInitially: Bool {
+        return (parent != nil && isMovingToParent)
+            || (presentingViewController != nil && isBeingPresented)
+            || (parent == nil && presentingViewController == nil)
+    }
+
+    private var isRemovedPermanently: Bool {
+        return (parent != nil && isMovingFromParent)
+            || (presentingViewController != nil && isBeingDismissed)
+            || (parent == nil && presentingViewController == nil)
+    }
+
     public init(viewModel: ViewModel,
                 renderer: Renderer.Type,
                 rendererConfig: Renderer.Config,
@@ -66,6 +82,8 @@ open class BoxViewController<ViewModel: BoxViewModel, Renderer: BoxRenderer, App
         super.viewDidLoad()
         setupTableViews()
         setupLayout()
+
+        lifetimeObserver?.send(.didLoad)
     }
 
     open override func viewWillAppear(_ animated: Bool) {
@@ -78,11 +96,15 @@ open class BoxViewController<ViewModel: BoxViewModel, Renderer: BoxRenderer, App
 
             bindViewModel()
         }
+
+        lifetimeObserver?.send(.willAppear(isPresentedInitially: isPresentedInitially))
     }
 
     open override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         hasViewAppeared.value = true
+
+        lifetimeObserver?.send(.didAppear(isPresentedInitially: isPresentedInitially))
 
         keyboardChangeDisposable = NotificationCenter.default.reactive
             .keyboard(.willChangeFrame)
@@ -117,11 +139,16 @@ open class BoxViewController<ViewModel: BoxViewModel, Renderer: BoxRenderer, App
     open override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         hasViewAppeared.value = false
+
+        lifetimeObserver?.send(.willDisappear(isRemovedPermanently: isRemovedPermanently))
+
     }
 
     open override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         keyboardChangeDisposable?.dispose()
+
+        lifetimeObserver?.send(.didDisappear(isRemovedPermanently: isRemovedPermanently))
     }
 
     open override func viewDidLayoutSubviews() {
