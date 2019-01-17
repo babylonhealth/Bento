@@ -6,6 +6,8 @@ import ReactiveCocoa
 public typealias ImageOrLabel = ImageOrLabelView.Content
 
 open class ImageOrLabelView: UIView {
+    public static let labelAccessibilityId = "BentoKit.ImageOrLabelView.image"
+    public static let imageAccessibilityId = "BentoKit.ImageOrLabelView.label"
 
     public static func labelStyleSheet(font: UIFont) -> LabelStyleSheet {
         return LabelStyleSheet(font: font,
@@ -115,6 +117,8 @@ private extension ImageOrLabelView {
         backgroundColor = .clear
         label.add(to: self).pinEdges(to: self)
         imageView.add(to: self).pinEdges(to: layoutMarginsGuide)
+        imageView.accessibilityIdentifier = ImageOrLabelView.labelAccessibilityId
+        label.accessibilityIdentifier = ImageOrLabelView.imageAccessibilityId
     }
 
     func setImage(_ image: UIImage?) {
@@ -126,12 +130,18 @@ private extension ImageOrLabelView {
         switch content {
         case let .image(image):
             label.text = nil
+            label.isHidden = true
+            imageView.isHidden = false
             setImage(image)
         case let .text(text):
             label.text = text
+            label.isHidden = false
+            imageView.isHidden = true
             setImage(nil)
         case .none:
             label.text = nil
+            label.isHidden = true
+            imageView.isHidden = true
             setImage(nil)
         }
         invalidateIntrinsicContentSize()
