@@ -51,8 +51,8 @@ public extension Renderable where View: UIView {
     func on(willDisplayItem: (() -> Void)? = nil, didEndDisplayingItem: (() -> Void)? = nil) -> AnyRenderable {
         return LifecycleComponent(
             source: self,
-            willDisplayView: willDisplayItem,
-            didEndDisplayingView: didEndDisplayingItem
+            willDisplayItem: willDisplayItem,
+            didEndDisplayingItem: didEndDisplayingItem
         ).asAnyRenderable()
     }
 }

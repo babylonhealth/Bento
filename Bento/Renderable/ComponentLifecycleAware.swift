@@ -10,17 +10,17 @@ public protocol ViewLifecycleAware {
 
 final class LifecycleComponent<Base: Renderable>: AnyRenderableBox<Base>, ComponentLifecycleAware where Base.View: UIView {
     private let source: AnyRenderableBox<Base>
-    private let _willDisplayView: (() -> Void)?
-    private let _didEndDisplayingView: (() -> Void)?
+    private let _willDisplayItem: (() -> Void)?
+    private let _didEndDisplayingItem: (() -> Void)?
 
     init(
         source: Base,
-        willDisplayView: (() -> Void)?,
-        didEndDisplayingView: (() -> Void)?
+        willDisplayItem: (() -> Void)?,
+        didEndDisplayingItem: (() -> Void)?
     ) {
         self.source = AnyRenderableBox(source)
-        self._willDisplayView = willDisplayView
-        self._didEndDisplayingView = didEndDisplayingView
+        self._willDisplayItem = willDisplayItem
+        self._didEndDisplayingItem = didEndDisplayingItem
         super.init(source)
     }
 
@@ -32,10 +32,10 @@ final class LifecycleComponent<Base: Renderable>: AnyRenderableBox<Base>, Compon
     }
 
     func willDisplayItem() {
-        _willDisplayView?()
+        _willDisplayItem?()
     }
 
     func didEndDisplayingItem() {
-        _willDisplayView?()
+        _willDisplayItem?()
     }
 }
