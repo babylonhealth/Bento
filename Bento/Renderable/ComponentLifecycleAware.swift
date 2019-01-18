@@ -36,6 +36,6 @@ final class LifecycleComponent<Base: Renderable>: AnyRenderableBox<Base>, Compon
     }
 
     func didEndDisplayingItem() {
-        _willDisplayItem?()
+        _didEndDisplayingItem?()
     }
 }

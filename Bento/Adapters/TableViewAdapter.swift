@@ -51,7 +51,6 @@ open class TableViewAdapterBase<SectionID: Hashable, ItemID: Hashable>
 
         cell.bind(component)
         return cell
-
     }
 
     @objc open func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {

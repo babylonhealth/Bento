@@ -6,7 +6,7 @@ import Nimble
 final class DeletableTests: XCTestCase {
     func test_it_has_correct_title() {
         let section = Section(id: 0)
-            |---+ Node(id: 0, component: Component()
+            |---+ Node(id: 0, component: DummyComponent()
                 .deletable(deleteActionText: "Remove", didDelete: {}))
         let tableView = UITableView()
         let adapter = TableViewAdapterBase<Int, Int>(with: tableView)
@@ -22,7 +22,7 @@ final class DeletableTests: XCTestCase {
     func test_it_calls_delete() {
         var called = false
         let section = Section(id: 0)
-            |---+ Node(id: 0, component: Component()
+            |---+ Node(id: 0, component: DummyComponent()
                 .deletable(deleteActionText: "", didDelete: {
                     called = true
                 })
@@ -42,15 +42,14 @@ final class DeletableTests: XCTestCase {
     }
 
     func test_it_is_deletable_after_composing_with_other() {
-        let component = Component()
+        let component = DummyComponent()
             .deletable(deleteActionText: "Delete", didDelete: {})
             .on()
 
         expect(component.cast(to: Deletable.self)).toNot(beNil())
     }
-
-    final class Component: Renderable {
-        func render(in view: UIView) {}
-    }
 }
 
+final class DummyComponent: Renderable {
+    func render(in view: UIView) {}
+}

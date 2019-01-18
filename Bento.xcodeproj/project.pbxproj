@@ -15,6 +15,7 @@
 		5829D273200FB092001E020D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5829D271200FB092001E020D /* LaunchScreen.storyboard */; };
 		582D9951217E196E00C67B0D /* MenuItemsResponding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 582D9950217E196E00C67B0D /* MenuItemsResponding.swift */; };
 		582D9987217F87B100C67B0D /* ComponentLifecycleAware.swift in Sources */ = {isa = PBXBuildFile; fileRef = 582D9986217F87B100C67B0D /* ComponentLifecycleAware.swift */; };
+		5830C5E721F22DDC0029044B /* ComponentLifecycleAware.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5830C5E621F22DDC0029044B /* ComponentLifecycleAware.swift */; };
 		58467B03202B33F200577C77 /* TableViewSectionDiff.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58467B02202B33F200577C77 /* TableViewSectionDiff.swift */; };
 		584A6F9E20C7E36D006395E8 /* IntroComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 584A6F9D20C7E36D006395E8 /* IntroComponent.swift */; };
 		584A6FA020C7E470006395E8 /* IntroComponentView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 584A6F9F20C7E470006395E8 /* IntroComponentView.xib */; };
@@ -133,6 +134,7 @@
 		5829D274200FB092001E020D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		582D9950217E196E00C67B0D /* MenuItemsResponding.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuItemsResponding.swift; sourceTree = "<group>"; };
 		582D9986217F87B100C67B0D /* ComponentLifecycleAware.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComponentLifecycleAware.swift; sourceTree = "<group>"; };
+		5830C5E621F22DDC0029044B /* ComponentLifecycleAware.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComponentLifecycleAware.swift; sourceTree = "<group>"; };
 		58467B02202B33F200577C77 /* TableViewSectionDiff.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewSectionDiff.swift; sourceTree = "<group>"; };
 		584A6F9D20C7E36D006395E8 /* IntroComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroComponent.swift; sourceTree = "<group>"; };
 		584A6F9F20C7E470006395E8 /* IntroComponentView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = IntroComponentView.xib; sourceTree = "<group>"; };
@@ -383,6 +385,7 @@
 				9A784700205EB5E000FA597E /* TestRenderable.swift */,
 				9A784702205EB61D00FA597E /* TestId.swift */,
 				58D27BA621B83B2700DC9600 /* DeletableTests.swift */,
+				5830C5E621F22DDC0029044B /* ComponentLifecycleAware.swift */,
 				58FC4421207CF29F00DA3614 /* Info.plist */,
 			);
 			path = BentoTests;
@@ -677,6 +680,7 @@
 				58FC4428207CF2BB00DA3614 /* TestId.swift in Sources */,
 				58D27BA721B83B2700DC9600 /* DeletableTests.swift in Sources */,
 				58FC4429207CF2BB00DA3614 /* TestRenderable.swift in Sources */,
+				5830C5E721F22DDC0029044B /* ComponentLifecycleAware.swift in Sources */,
 				740921B620ACDDDA00B59F5C /* IfTests.swift in Sources */,
 				58FC442B207CF2BB00DA3614 /* SectionTests.swift in Sources */,
 				740921B820ACE5EC00B59F5C /* ConcatenationTests.swift in Sources */,
