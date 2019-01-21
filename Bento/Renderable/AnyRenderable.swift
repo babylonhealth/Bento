@@ -33,14 +33,14 @@ public struct AnyRenderable: Renderable {
 
     func sizeBoundTo(width: CGFloat, inheritedMargins: UIEdgeInsets) -> CGSize {
         return rendered(inheritedMargins: inheritedMargins)
-            .systemLayoutSizeFitting(CGSize(width: width, height: UILayoutFittingCompressedSize.height),
+            .systemLayoutSizeFitting(CGSize(width: width, height: UIView.layoutFittingCompressedSize.height),
                                      withHorizontalFittingPriority: .required,
                                      verticalFittingPriority: .defaultLow)
     }
 
     func sizeBoundTo(height: CGFloat, inheritedMargins: UIEdgeInsets) -> CGSize {
         return rendered(inheritedMargins: inheritedMargins)
-            .systemLayoutSizeFitting(CGSize(width: UILayoutFittingCompressedSize.width, height: height),
+            .systemLayoutSizeFitting(CGSize(width: UIView.layoutFittingCompressedSize.width, height: height),
                                      withHorizontalFittingPriority: .defaultLow,
                                      verticalFittingPriority: .required)
     }
@@ -61,10 +61,6 @@ public struct AnyRenderable: Renderable {
                                           right: max(margins.right, inheritedMargins.right))
 
         return view
-    }
-
-    public static func ==(lhs: AnyRenderable, rhs: AnyRenderable) -> Bool {
-        return lhs.base.equals(to: rhs.base)
     }
 }
 
@@ -98,12 +94,6 @@ class AnyRenderableBox<Base: Renderable>: AnyRenderableBoxBase where Base.View: 
         }
         return base as? T
     }
-
-    override func equals(to other: AnyRenderableBoxBase) -> Bool {
-        guard let other = other as? AnyRenderableBox<Base>
-            else { return false }
-        return self.base == other.base
-    }
 }
 
 class AnyRenderableBoxBase {
@@ -118,6 +108,5 @@ class AnyRenderableBoxBase {
     }
     func render(in view: UIView) { fatalError() }
     func generate() -> UIView { fatalError() }
-    func equals(to other: AnyRenderableBoxBase) -> Bool { fatalError() }
     func cast<T>(to type: T.Type) -> T? { fatalError() }
 }

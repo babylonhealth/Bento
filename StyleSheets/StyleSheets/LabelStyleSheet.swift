@@ -1,9 +1,6 @@
 import UIKit
 
-open class LabelStyleSheet: ViewStyleSheet<UILabel>, TextBoundComputing {
-    public var font: UIFont
-    public var textColor: UIColor
-    public var textAlignment: TextAlignment
+open class LabelStyleSheet: TextStyleSheet<UILabel>, TextBoundComputing {
     public var numberOfLines: Int
     public var lineBreakMode: NSLineBreakMode
     
@@ -23,21 +20,15 @@ open class LabelStyleSheet: ViewStyleSheet<UILabel>, TextBoundComputing {
         numberOfLines: Int = 0,
         lineBreakMode: NSLineBreakMode = .byTruncatingTail
     ) {
-        self.font = font
-        self.textColor = textColor
-        self.textAlignment = textAlignment
         self.numberOfLines = numberOfLines
         self.lineBreakMode = lineBreakMode
         
-        super.init(backgroundColor: backgroundColor)
+        super.init(backgroundColor: backgroundColor, font: font, textColor: textColor, textAlignment: textAlignment)
     }
     
     open override func apply(to element: UILabel) {
         super.apply(to: element)
         
-        element.font = font
-        element.textColor = textColor
-        element.textAlignment = textAlignment.systemValue(for: element.effectiveUserInterfaceLayoutDirection)
         element.numberOfLines = numberOfLines
         element.lineBreakMode = lineBreakMode
     }

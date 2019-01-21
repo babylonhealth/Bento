@@ -1,6 +1,6 @@
 import UIKit
 
-public struct Node<Identifier: Hashable>: Equatable {
+public struct Node<Identifier: Hashable> {
     public let id: Identifier
     let component: AnyRenderable
 
@@ -11,10 +11,6 @@ public struct Node<Identifier: Hashable>: Equatable {
 
     public init<R: Renderable>(id: Identifier, component: R) where R.View: UIView {
         self.init(id: id, component: AnyRenderable(component))
-    }
-
-    public static func == (lhs: Node, rhs: Node) -> Bool {
-        return lhs.id == rhs.id && lhs.component == rhs.component
     }
 
     public func component<T>(as type: T.Type) -> T? {

@@ -141,6 +141,7 @@ open class BoxViewController<ViewModel: BoxViewModel, Renderer: BoxRenderer, App
     open override func viewSafeAreaInsetsDidChange() {
         super.viewSafeAreaInsetsDidChange()
 
+        adjustTopTableViewInset()
         adjustBottomTableViewInset()
         updatePreferredContentHeight()
     }
