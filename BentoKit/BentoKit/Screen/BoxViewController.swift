@@ -324,6 +324,7 @@ open class BoxViewController<ViewModel: BoxViewModel, Renderer: BoxRenderer, App
 
         if UIView.areAnimationsEnabled {
             tableView.transition(to: screen.formStyle, removeAll: self.removeAll) { willReload in
+                guard !self.isBeingUninstalled else { return }
                 self.tableView.render(mainBox, animated: willReload.isFalse)
                 self.topTableView.render(self.topBox, animated: willReload.isFalse)
                 self.bottomTableView.render(self.bottomBox, animated: willReload.isFalse)
@@ -333,6 +334,7 @@ open class BoxViewController<ViewModel: BoxViewModel, Renderer: BoxRenderer, App
                 self.tableView.endUpdates()
             }
         } else {
+            guard !isBeingUninstalled else { return }
             tableView.formStyle = screen.formStyle
             tableView.render(mainBox, animated: false)
             tableView.layoutIfNeeded()
@@ -417,6 +419,18 @@ private extension UIView {
         let origin = convert(bounds.origin, to: tableView)
         if let indexPath = tableView.indexPathForRow(at: origin) {
             tableView.scrollToRow(at: indexPath, at: .top, animated: true)
+        }
+    }
+}
+
+private extension UIViewController {
+    var isBeingUninstalled: Bool {
+        if let viewController = presentingViewController?.presentedViewController {
+            return viewController.isBeingDismissed
+        } else if let parent = parent {
+            return parent.isBeingDismissed
+        } else {
+            return isBeingDismissed
         }
     }
 }
