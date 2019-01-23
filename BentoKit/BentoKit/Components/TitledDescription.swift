@@ -17,23 +17,12 @@ public extension Component {
     /// While `TitledDescription` supports asynchronous loading for its image
     /// view, you are obligated to ensure a consistent fixed size across all
     /// changes.
-    public final class TitledDescription: AutoRenderable, Deletable, HeightCustomizing, Focusable, ComponentLifecycleAware {
+    public final class TitledDescription: AutoRenderable, HeightCustomizing, Focusable {
         public typealias Accessory = AccessoryView.Accessory
 
-        private let _willDisplayItem: (() -> Void)?
-        private let _didEndDisplayingItem: (() -> Void)?
         public let focusEligibility: FocusEligibility
         public let configurator: (View) -> Void
-        public let deleteActionText: String
         public let styleSheet: StyleSheet
-
-        public var canBeDeleted: Bool {
-            return didDelete != nil
-        }
-
-        public func delete() {
-            didDelete?()
-        }
 
         public func estimatedHeight(forWidth width: CGFloat,
                                     inheritedMargins: UIEdgeInsets) -> CGFloat {
@@ -58,9 +47,6 @@ public extension Component {
             inputNodes: CustomInput? = nil,
             didTap: Optional<() -> Void> = nil,
             didTapAccessory: Optional<() -> Void> = nil,
-            deleteAction: DeleteAction = .none,
-            willDisplayItem: (() -> Void)? = nil,
-            didEndDisplayingItem: (() -> Void)? = nil,
             styleSheet: StyleSheet = .init()
         ) {
             let titleText: TextValue
@@ -94,9 +80,6 @@ public extension Component {
                 inputNodes: inputNodes,
                 didTap: didTap,
                 didTapAccessory: didTapAccessory,
-                deleteAction: deleteAction,
-                willDisplayItem: willDisplayItem,
-                didEndDisplayingItem: didEndDisplayingItem,
                 styleSheet: styleSheet
             )
         }
@@ -111,9 +94,6 @@ public extension Component {
             inputNodes: CustomInput? = nil,
             didTap: (() -> Void)? = nil,
             didTapAccessory: (() -> Void)? = nil,
-            deleteAction: DeleteAction = .none,
-            willDisplayItem: (() -> Void)? = nil,
-            didEndDisplayingItem: (() -> Void)? = nil,
             styleSheet: StyleSheet = .init()
         ) {
             self.configurator = { view in
@@ -158,22 +138,9 @@ public extension Component {
                 self.focusEligibility = .eligible(isPopulated ? .populated : .empty)
             }
             self.styleSheet = styleSheet
-            self.deleteActionText = deleteAction.title ?? ""
-            self.didDelete = deleteAction.callback
-            self._willDisplayItem = willDisplayItem
-            self._didEndDisplayingItem = didEndDisplayingItem
         }
 
         private let heightComputer: (CGFloat, UIEdgeInsets) -> CGFloat
-        private let didDelete: (() -> Void)?
-        
-        public func willDisplayItem() {
-            _willDisplayItem?()
-        }
-        
-        public func didEndDisplayingItem() {
-            _didEndDisplayingItem?()
-        }
     }
 }
 

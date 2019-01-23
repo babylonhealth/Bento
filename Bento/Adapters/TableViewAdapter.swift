@@ -51,7 +51,6 @@ open class TableViewAdapterBase<SectionID: Hashable, ItemID: Hashable>
 
         cell.bind(component)
         return cell
-
     }
 
     @objc open func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -75,8 +74,7 @@ open class TableViewAdapterBase<SectionID: Hashable, ItemID: Hashable>
     @objc(tableView:editActionsForRowAtIndexPath:)
     open func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
         let item = sections[indexPath.section].items[indexPath.row]
-        guard let component = item.component(as: Deletable.self),
-              component.canBeDeleted else {
+        guard let component = item.component(as: Deletable.self) else {
             return nil
         }
 
@@ -91,8 +89,7 @@ open class TableViewAdapterBase<SectionID: Hashable, ItemID: Hashable>
     @objc(tableView:trailingSwipeActionsConfigurationForRowAtIndexPath:)
     open func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let item = sections[indexPath.section].items[indexPath.row]
-        guard let component = item.component(as: Deletable.self),
-              component.canBeDeleted else {
+        guard let component = item.component(as: Deletable.self) else {
             return UISwipeActionsConfiguration(actions: [])
         }
 
