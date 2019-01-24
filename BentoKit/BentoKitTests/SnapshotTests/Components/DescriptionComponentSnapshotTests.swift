@@ -105,4 +105,24 @@ final class DescriptionComponentSnapshotTests: SnapshotTestCase {
 
         verifyComponentForAllSizes(component: component)
     }
+
+
+    func test_long_text_with_2_lines() {
+        let styleSheet = Component.Description.StyleSheet(
+            text: LabelStyleSheet (
+                font: UIFont.preferredFont(forTextStyle: .title3),
+                numberOfLines: 2
+            ).compose(\.backgroundColor, .green ),
+            accessoryButton: ButtonStyleSheet()
+                .compose(\.tintColor, .gray)
+            )
+            .compose(\.layoutMargins.left, 16)
+            .compose(\.layoutMargins.right, 16)
+
+        let component = Component.Description(text: Array(repeating: "Text ", count: 20).joined(),
+                                              accessoryIcon: image(named: "info"),
+                                              styleSheet: styleSheet)
+
+        verifyComponentForAllSizes(component: component)
+    }
 }

@@ -24,6 +24,24 @@ public final class ListPickerAdapter<Option: BentoKit.Option>: NSObject, UIPicke
     public func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         didPickItem?(items[row])
     }
+
+    public func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView {
+        let label: UILabel
+
+        if let view = view as? UILabel {
+            label = view
+        } else {
+            label = UILabel(frame: CGRect(x: 0, y: 0, width: pickerView.frame.width, height: 0)).with {
+                $0.textAlignment = .center
+                $0.numberOfLines = 0
+            }
+        }
+
+        label.text = items[row].displayName
+        label.sizeToFit()
+
+        return label
+    }
 }
 
 extension UIPickerView {

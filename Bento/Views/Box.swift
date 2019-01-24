@@ -42,19 +42,19 @@ public struct Box<SectionID: Hashable, ItemID: Hashable> {
 
 public extension UICollectionView {
     func render<SectionID, ItemID>(_ box: Box<SectionID, ItemID>, completion: (() -> Void)? = nil) {
-        let adapter: CollectionViewDataSource<SectionID, ItemID> = getAdapter()
-        adapter.update(sections: box.sections, completion: completion)
+        let adapter: CollectionViewAdapterBase<SectionID, ItemID> = getAdapter()
+        adapter.update(sections: box.sections, animated: false, completion: completion)
         didRenderBox()
     }
 
     func render<SectionID, ItemID>(_ box: Box<SectionID, ItemID>, animated: Bool) {
-        let adapter: CollectionViewDataSource<SectionID, ItemID> = getAdapter()
-        adapter.update(sections: box.sections, animated: animated)
+        let adapter: CollectionViewAdapterBase<SectionID, ItemID> = getAdapter()
+        adapter.update(sections: box.sections, animated: animated, completion: nil)
         didRenderBox()
     }
 
     func render<SectionID, ItemID>(_ box: Box<SectionID, ItemID>, with layout: UICollectionViewLayout) {
-        let adapter: CollectionViewDataSource<SectionID, ItemID> = getAdapter()
+        let adapter: CollectionViewAdapterBase<SectionID, ItemID> = getAdapter()
         adapter.update(sections: box.sections, layout: layout)
         didRenderBox()
     }

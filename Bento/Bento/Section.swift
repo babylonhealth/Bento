@@ -1,6 +1,6 @@
 import UIKit
 
-public struct Section<SectionID: Hashable, ItemID: Hashable>: Equatable {
+public struct Section<SectionID: Hashable, ItemID: Hashable> {
     public typealias Item = Node<ItemID>
 
     public let id: SectionID
@@ -68,16 +68,6 @@ public struct Section<SectionID: Hashable, ItemID: Hashable>: Equatable {
 
     public func componentSize(of supplement: Supplement, fittingSize size: CGSize, inheritedMargins: UIEdgeInsets = .zero) -> CGSize? {
         return supplements[supplement]?.sizeBoundTo(size: size, inheritedMargins: inheritedMargins)
-    }
-
-    public static func hasEqualMetadata(_ lhs: Section, _ rhs: Section) -> Bool {
-        return lhs.supplements == rhs.supplements
-    }
-
-    public static func == (lhs: Section, rhs: Section) -> Bool {
-        return lhs.id == rhs.id
-            && hasEqualMetadata(lhs, rhs)
-            && lhs.items == rhs.items
     }
 
     public static func |---+ (lhs: Section, rhs: Item) -> Section {

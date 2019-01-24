@@ -5,8 +5,8 @@ public typealias TableViewAdapter<SectionID: Hashable, ItemID: Hashable> = Table
 
 open class TableViewAdapterBase<SectionID: Hashable, ItemID: Hashable>
     : NSObject, FocusEligibilitySourceImplementing {
-    public final var sections: [Section<SectionID, ItemID>] = []
-    internal weak var tableView: UITableView?
+    public private(set) var sections: [Section<SectionID, ItemID>] = []
+    internal private(set) weak var tableView: UITableView?
 
     public init(with tableView: UITableView) {
         self.sections = []
@@ -51,7 +51,6 @@ open class TableViewAdapterBase<SectionID: Hashable, ItemID: Hashable>
 
         cell.bind(component)
         return cell
-
     }
 
     @objc open func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -65,18 +64,17 @@ open class TableViewAdapterBase<SectionID: Hashable, ItemID: Hashable>
     }
 
     @objc open func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return sections[section].supplements.keys.contains(.header) ? UITableViewAutomaticDimension : .leastNonzeroMagnitude
+        return sections[section].supplements.keys.contains(.header) ? UITableView.automaticDimension : .leastNonzeroMagnitude
     }
 
     @objc open func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        return sections[section].supplements.keys.contains(.footer) ? UITableViewAutomaticDimension : .leastNonzeroMagnitude
+        return sections[section].supplements.keys.contains(.footer) ? UITableView.automaticDimension : .leastNonzeroMagnitude
     }
 
     @objc(tableView:editActionsForRowAtIndexPath:)
     open func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
         let item = sections[indexPath.section].items[indexPath.row]
-        guard let component = item.component(as: Deletable.self),
-              component.canBeDeleted else {
+        guard let component = item.component(as: Deletable.self) else {
             return nil
         }
 
@@ -91,8 +89,7 @@ open class TableViewAdapterBase<SectionID: Hashable, ItemID: Hashable>
     @objc(tableView:trailingSwipeActionsConfigurationForRowAtIndexPath:)
     open func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let item = sections[indexPath.section].items[indexPath.row]
-        guard let component = item.component(as: Deletable.self),
-              component.canBeDeleted else {
+        guard let component = item.component(as: Deletable.self) else {
             return UISwipeActionsConfiguration(actions: [])
         }
 
@@ -137,6 +134,27 @@ open class TableViewAdapterBase<SectionID: Hashable, ItemID: Hashable>
         guard let view = view as? BentoReusableView else { return }
         view.didEndDisplayingView()
     }
+
+    @objc(tableView:shouldShowMenuForRowAtIndexPath:)
+    open func tableView(_ tableView: UITableView, shouldShowMenuForRowAt indexPath: IndexPath) -> Bool {
+        guard let component = sections[indexPath.section].items[indexPath.row].component(as: MenuItemsResponding.self) else {
+            return false
+        }
+        UIMenuController.shared.menuItems = component.menuItems
+        return true
+    }
+
+    @objc(tableView:canPerformAction:forRowAtIndexPath:withSender:)
+    open func tableView(_ tableView: UITableView, canPerformAction action: Selector, forRowAt indexPath: IndexPath, withSender sender: Any?) -> Bool {
+        guard let component = sections[indexPath.section].items[indexPath.row].component(as: MenuItemsResponding.self) else {
+            return false
+        }
+
+        return component.responds(to: action)
+    }
+
+    @objc(tableView:performAction:forRowAtIndexPath:withSender:)
+    open func tableView(_ tableView: UITableView, performAction action: Selector, forRowAt indexPath: IndexPath, withSender sender: Any?) {}
 
     private func deleteRow(at indexPath: IndexPath, actionPerformed: ((Bool) -> Void)?) {
         let item = sections[indexPath.section].items[indexPath.row]

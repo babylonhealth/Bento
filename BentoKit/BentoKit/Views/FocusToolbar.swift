@@ -8,15 +8,14 @@ public final class FocusToolbar: UIToolbar {
     private var view: (UIView & FocusableView)?
 
     public init(view: UIView & FocusableView) {
-        let bundle = Bundle(for: FocusToolbar.self)
         backwardButton = UIBarButtonItem(
-            image: UIImage(named: "arrow_down", in: bundle, compatibleWith: nil)!,
+            image: UIImage(named: "arrow_down", in: Resources.bundle, compatibleWith: nil)!,
             style: .plain,
             target: nil,
             action: nil
         )
         forwardButton = UIBarButtonItem(
-            image: UIImage(named: "arrow_up", in: bundle, compatibleWith: nil)!,
+            image: UIImage(named: "arrow_up", in: Resources.bundle, compatibleWith: nil)!,
             style: .plain,
             target: nil,
             action: nil

@@ -39,6 +39,17 @@ tableView.render(box)
 
 ### How does it work? 🤔
 
+### Setup
+
+Bento automatically performs the data source and delegate setup upon the very first time `UITableView` or `UICollectionView` is asked to render a Bento `Box`.
+
+In other words, for Bento to work, it cannot be overriden with your own data source and delegate. If you wish to respond to delegate messages which Bento does not support as a feature, you may consider supplying a custom adapter using `prepareForBoxRendering(_:)`.
+
+| Collection View | Adapter Base Class | Required Protocol Conformances |
+| ---- | ---- | ---- |
+| `UITableView` | `TableViewAdapterBase` | `UITableViewDataSource` & `UITableViewDelegate` |
+| `UICollectionView` | `CollectionViewAdapterBase` | `UITableViewDataSource` & `UITableViewDelegate` |
+
 #### Box 📦
 
 `Box ` is a fundamental component of the library, essentially a virtual representation of the `UITableView` content. It has two generic parameters - `SectionId` and `RowId` - which are unique identifiers for  `Section<SectionId, RowId>` and `Node<RowId>`, used by the [diffing engine](https://github.com/RACCommunity/FlexibleDiff) to perform animated changes of the `UITableView` content.
@@ -72,7 +83,7 @@ Identity, one of the key concepts, is used by the diffing algorithm to perform c
 
  (More info [here](https://github.com/RACCommunity/FlexibleDiff).)
 
-`SectionId` and `RowId` define the identity of `Section` and `Row`, respectively.
+`SectionID` and `ItemID` define the identity of sections and their items, respectively.
 
 #### Renderable 🖼
 

@@ -115,6 +115,36 @@ final class TitledDescriptionSnapshotTests: SnapshotTestCase {
         verifyComponentForAllSizes(component: component)
     }
 
+    func test_with_custom_accessory_view() {
+        let image = UIImageView(image: self.image(named: "plus"))
+        image.backgroundColor = .red
+        image.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        image.widthAnchor.constraint(equalToConstant: 50).isActive = true
+
+        let component = Component.TitledDescription(
+            texts: [.plain("Title"), .plain("Label 4 is also a fine label but definitely far too long to be considered a good label")],
+            detail: .plain("Detail"),
+            accessory: .custom(image),
+            styleSheet: styleSheet(2))
+
+        verifyComponentForAllSizes(component: component)
+    }
+
+    func test_considers_custom_accessory_view_size() {
+        let image = UIImageView(image: self.image(named: "plus"))
+        image.backgroundColor = .red
+        image.heightAnchor.constraint(equalToConstant: 150).isActive = true
+        image.widthAnchor.constraint(equalToConstant: 50).isActive = true
+
+        let component = Component.TitledDescription(
+            texts: [.plain("Title"), .plain("Label 4 is also a fine label but definitely far too long to be considered a good label")],
+            detail: .plain("Detail"),
+            accessory: .custom(image),
+            styleSheet: styleSheet(2))
+
+        verifyComponentForAllSizes(component: component)
+    }
+
     func test_has_image_fixed_size() {
         let component = Component.TitledDescription(
             texts: [.plain("Title"), .plain("Subtitle")],
@@ -212,6 +242,21 @@ final class TitledDescriptionSnapshotTests: SnapshotTestCase {
                 .compose(\.imageOrLabel.fixedSize, CGSize(width: 100, height: 100))
                 .compose(\.imageOrLabel.cornerRadius, 50)
                 .compose(\.imageOrLabel.image.contentMode, .scaleAspectFill)
+        )
+
+        verifyComponentForAllSizes(component: component)
+    }
+
+    func test_long_text_with_2_lines_limit() {
+        let component = Component.TitledDescription(
+            texts: [
+                .plain(Array(repeating: "Label 1 ", count: 20).joined()),
+                .plain(Array(repeating: "Label 2 ", count: 20).joined()),
+            ],
+            accessory: .chevron,
+            styleSheet: styleSheet(2)
+                .compose(\.textStyles[0].numberOfLines, 2)
+                .compose(\.textStyles[1].numberOfLines, 2)
         )
 
         verifyComponentForAllSizes(component: component)

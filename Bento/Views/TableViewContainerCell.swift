@@ -9,7 +9,7 @@ final class TableViewContainerCell: UITableViewCell {
 
     var component: AnyRenderable?
 
-    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         selectionStyle = .none
         backgroundColor = .clear
@@ -20,6 +20,22 @@ final class TableViewContainerCell: UITableViewCell {
         super.init(coder: aDecoder)
         selectionStyle = .none
     }
+
+    override func responds(to aSelector: Selector!) -> Bool {
+        guard let component = component?.cast(to: MenuItemsResponding.self) else {
+            return super.responds(to: aSelector)
+        }
+
+        return component.responds(to: aSelector) || super.responds(to: aSelector)
+    }
+
+    override func forwardingTarget(for aSelector: Selector!) -> Any? {
+        guard let component = component?.cast(to: MenuItemsResponding.self) else {
+            return super.forwardingTarget(for: aSelector)
+        }
+
+        return component
+    }
 }
 
-extension TableViewContainerCell: BentoView {}
+extension TableViewContainerCell: BentoReusableView {}

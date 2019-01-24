@@ -1,15 +1,15 @@
 import UIKit
 
 public struct TableViewAnimation {
-    let sectionInsertion: UITableViewRowAnimation
-    let sectionDeletion: UITableViewRowAnimation
-    let rowDeletion: UITableViewRowAnimation
-    let rowInsertion: UITableViewRowAnimation
+    let sectionInsertion: UITableView.RowAnimation
+    let sectionDeletion: UITableView.RowAnimation
+    let rowDeletion: UITableView.RowAnimation
+    let rowInsertion: UITableView.RowAnimation
 
-    public init(sectionInsertion: UITableViewRowAnimation = .fade,
-                sectionDeletion: UITableViewRowAnimation = .fade,
-                rowDeletion: UITableViewRowAnimation = .fade,
-                rowInsertion: UITableViewRowAnimation = .fade) {
+    public init(sectionInsertion: UITableView.RowAnimation = .fade,
+                sectionDeletion: UITableView.RowAnimation = .fade,
+                rowDeletion: UITableView.RowAnimation = .fade,
+                rowInsertion: UITableView.RowAnimation = .fade) {
         self.sectionInsertion = sectionInsertion
         self.sectionDeletion = sectionDeletion
         self.rowDeletion = rowDeletion

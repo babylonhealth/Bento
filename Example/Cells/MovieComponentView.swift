@@ -2,7 +2,7 @@ import UIKit
 import Bento
 import Kingfisher
 
-final class MovieComponent: Renderable, Deletable {
+final class MovieComponent: Renderable {
     private let movie: Movie
     private let didDelete: (() -> Void)?
 

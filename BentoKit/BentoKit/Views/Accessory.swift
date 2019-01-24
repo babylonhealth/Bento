@@ -42,6 +42,10 @@ public final class AccessoryView: InteractiveView {
     }
 
     public override var intrinsicContentSize: CGSize {
+        if case let .custom(view) = accessory {
+            view.layoutIfNeeded()
+            return view.frame.size
+        }
         return CGSize(width: 24, height: 24)
     }
 
@@ -50,26 +54,25 @@ public final class AccessoryView: InteractiveView {
 
         switch new {
         case .chevron:
-            view = UIImage(named: "chevronNext",
-                           in: Bundle(for: AccessoryView.self),
-                           compatibleWith: nil)
+            view = UIImage(named: "chevronNext", in: Resources.bundle, compatibleWith: nil)
                 .map(UIImageView.init)
         case .activityIndicator:
             view = UIActivityIndicatorView(style: .gray)
                 .with { $0.startAnimating() }
         case .checkmark:
-            view = UIImage(named: "tickIcon",
-                           in: Bundle(for: AccessoryView.self),
-                           compatibleWith: nil)
+            view = UIImage(named: "tickIcon", in: Resources.bundle, compatibleWith: nil)
                 .map(UIImageView.init)
         case let .icon(image):
             view = UIImageView(image: image)
         case let .tintedIcon(image, tintColor):
             view = UIImageView(image: image)
                 .with { $0.tintColor = tintColor }
+        case let .custom(customView):
+            view = customView
         case .none:
             view = nil
         }
+        invalidateIntrinsicContentSize()
     }
 }
 
@@ -81,6 +84,7 @@ extension AccessoryView {
         case checkmark
         case icon(UIImage)
         case tintedIcon(UIImage, UIColor)
+        case custom(UIView)
         case none
     }
 }

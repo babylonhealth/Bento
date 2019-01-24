@@ -65,7 +65,8 @@ open class BaseStackView: UIStackView, BaseViewProtocol {
     }
 
     private var minimumHeightConstraint: NSLayoutConstraint!
-    private lazy var backgroundView: UIView = {
+    
+    fileprivate lazy var backgroundView: UIView = {
         let view = UIView()
 
         insertSubview(view, at: 0)
@@ -80,6 +81,24 @@ open class BaseStackView: UIStackView, BaseViewProtocol {
         }
         set {
             backgroundView.backgroundColor = newValue
+        }
+    }
+
+    public var borderColor: CGColor? {
+        get {
+            return backgroundView.layer.borderColor
+        }
+        set {
+            backgroundView.layer.borderColor = newValue
+        }
+    }
+
+    public var borderWidth: CGFloat {
+        get {
+            return backgroundView.layer.borderWidth
+        }
+        set {
+            backgroundView.layer.borderWidth = newValue
         }
     }
 

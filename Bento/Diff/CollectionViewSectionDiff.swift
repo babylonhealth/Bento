@@ -15,13 +15,16 @@ struct CollectionViewSectionDiff<SectionID: Hashable, ItemID: Hashable> {
     }
 
     func apply(to collectionView: UICollectionView, completion: (() -> Void)? = nil) {
+        /// Since we are going to always rebind visible components, there is no point to evaluate
+        /// component equation. However, we still force all instances of components to be treated as
+        /// unequal, so as to preserve all positional information for in-place updates to visible cells.
         let diff = SectionedChangeset(previous: oldSections,
                                       current: newSections,
                                       sectionIdentifier: { $0.id },
-                                      areMetadataEqual: Section.hasEqualMetadata,
+                                      areMetadataEqual: const(false),
                                       items: { $0.items },
                                       itemIdentifier: { $0.id },
-                                      areItemsEqual: ==)
+                                      areItemsEqual: const(false))
         apply(diff: diff, to: collectionView, completion: completion)
     }
 
@@ -29,10 +32,10 @@ struct CollectionViewSectionDiff<SectionID: Hashable, ItemID: Hashable> {
         let diff = SectionedChangeset(previous: oldSections,
                                       current: newSections,
                                       sectionIdentifier: { $0.id },
-                                      areMetadataEqual: Section.hasEqualMetadata,
+                                      areMetadataEqual: const(false),
                                       items: { $0.items },
                                       itemIdentifier: { $0.id },
-                                      areItemsEqual: ==)
+                                      areItemsEqual: const(false))
 
         collectionView.performBatchUpdates({
             collectionView.setCollectionViewLayout(layout, animated: true)
@@ -52,12 +55,12 @@ struct CollectionViewSectionDiff<SectionID: Hashable, ItemID: Hashable> {
 
             let groups = Dictionary(grouping: collectionView.indexPathsForVisibleSupplementaryElements(ofKind: elementKind)) { $0.section }
 
-            for (source, destination) in diff.sections.mutationIndexPairs {
+            for (source, destination) in diff.sections.positionsOfMutations(amongVisible: groups.keys) {
                 if let indexPaths = groups[source] {
                     for indexPath in indexPaths {
                         let view = collectionView.supplementaryView(forElementKind: elementKind, at: indexPath)
                         let component = newSections[destination].supplements[supplement]
-                        (view as? BentoView)?.bind(component)
+                        (view as? BentoReusableView)?.bind(component)
                     }
                 }
             }
@@ -105,8 +108,13 @@ extension UICollectionView {
             deleteItems(at: sectionMutation.deletedIndexPaths)
             insertItems(at: sectionMutation.insertedIndexPaths)
             perform(moves: sectionMutation.movedCollectionIndexPaths)
+            
+            let visibleItems = Set(
+                indexPathsForVisibleItems
+                    .compactMap { $0.section == sectionMutation.source ? $0.row : nil }
+            )
 
-            for (source, destination) in sectionMutation.changeset.mutationIndexPairs {
+            for (source, destination) in sectionMutation.changeset.positionsOfMutations(amongVisible: visibleItems) {
                 if let cell = cellForItem(at: [sectionMutation.source, source]) as? CollectionViewContainerCell {
                     let component = newSections[sectionMutation.destination]
                         .items[destination]

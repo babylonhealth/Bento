@@ -9,7 +9,13 @@ final class OptionPickerSnapshotTests: SnapshotTestCase {
     }
 
     func test_default() {
-        let items = Array(repeating: "Hello", count: 5)
+        let items = [
+            "Hello",
+            "This is a very long option string, really, really, really long",
+            "Be the change you want to see in the world",
+            "Don't be Evil",
+            "Review your peers"
+        ]
         let component = Component.OptionPicker(options: items, selected: nil)
 
         verifyComponentForAllSizes(component: component)

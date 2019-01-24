@@ -8,9 +8,9 @@ extension Supplement {
     internal var elementKind: String {
         switch self {
         case .header:
-            return UICollectionElementKindSectionHeader
+            return UICollectionView.elementKindSectionHeader
         case .footer:
-            return UICollectionElementKindSectionFooter
+            return UICollectionView.elementKindSectionFooter
         case let .custom(kind):
             return kind
         }
@@ -18,9 +18,9 @@ extension Supplement {
 
     internal init(collectionViewSupplementaryKind kind: String) {
         switch kind {
-        case UICollectionElementKindSectionHeader:
+        case UICollectionView.elementKindSectionHeader:
             self = .header
-        case UICollectionElementKindSectionFooter:
+        case UICollectionView.elementKindSectionFooter:
             self = .footer
         default:
             self = .custom(kind)

@@ -1,7 +1,7 @@
 import UIKit
 
-struct AnyRenderable: Renderable {
-    var reuseIdentifier: String {
+public struct AnyRenderable: Renderable {
+    public var reuseIdentifier: String {
         return base.reuseIdentifier
     }
 
@@ -15,11 +15,15 @@ struct AnyRenderable: Renderable {
         self.base = AnyRenderableBox(base)
     }
 
-    func generate() -> UIView {
+    init(_ base: AnyRenderableBoxBase) {
+        self.base = base
+    }
+
+    public func generate() -> UIView {
         return base.generate()
     }
 
-    func render(in view: UIView) {
+    public func render(in view: UIView) {
         base.render(in: view)
     }
 
@@ -29,14 +33,14 @@ struct AnyRenderable: Renderable {
 
     func sizeBoundTo(width: CGFloat, inheritedMargins: UIEdgeInsets) -> CGSize {
         return rendered(inheritedMargins: inheritedMargins)
-            .systemLayoutSizeFitting(CGSize(width: width, height: UILayoutFittingCompressedSize.height),
+            .systemLayoutSizeFitting(CGSize(width: width, height: UIView.layoutFittingCompressedSize.height),
                                      withHorizontalFittingPriority: .required,
                                      verticalFittingPriority: .defaultLow)
     }
 
     func sizeBoundTo(height: CGFloat, inheritedMargins: UIEdgeInsets) -> CGSize {
         return rendered(inheritedMargins: inheritedMargins)
-            .systemLayoutSizeFitting(CGSize(width: UILayoutFittingCompressedSize.width, height: height),
+            .systemLayoutSizeFitting(CGSize(width: UIView.layoutFittingCompressedSize.width, height: height),
                                      withHorizontalFittingPriority: .defaultLow,
                                      verticalFittingPriority: .required)
     }
@@ -58,13 +62,9 @@ struct AnyRenderable: Renderable {
 
         return view
     }
-
-    static func ==(lhs: AnyRenderable, rhs: AnyRenderable) -> Bool {
-        return lhs.base.equals(to: rhs.base)
-    }
 }
 
-private class AnyRenderableBox<Base: Renderable>: AnyRenderableBoxBase where Base.View: UIView {
+class AnyRenderableBox<Base: Renderable>: AnyRenderableBoxBase where Base.View: UIView {
     override var reuseIdentifier: String {
         return base.reuseIdentifier
     }
@@ -73,7 +73,7 @@ private class AnyRenderableBox<Base: Renderable>: AnyRenderableBoxBase where Bas
         return Base.View.self
     }
 
-    fileprivate let base: Base
+    let base: Base
 
     init(_ base: Base) {
         self.base = base
@@ -89,25 +89,24 @@ private class AnyRenderableBox<Base: Renderable>: AnyRenderableBoxBase where Bas
     }
 
     override func cast<T>(to type: T.Type) -> T? {
+        if let anyRenderable = base as? AnyRenderable {
+            return anyRenderable.cast(to: type)
+        }
         return base as? T
-    }
-
-    override func equals(to other: AnyRenderableBoxBase) -> Bool {
-        guard let other = other as? AnyRenderableBox<Base>
-            else { return false }
-        return self.base == other.base
     }
 }
 
-private class AnyRenderableBoxBase {
+class AnyRenderableBoxBase {
     var reuseIdentifier: String { fatalError() }
 
     var viewType: Any.Type { fatalError() }
 
     init() {}
 
+    func asAnyRenderable() -> AnyRenderable {
+        return AnyRenderable(self)
+    }
     func render(in view: UIView) { fatalError() }
     func generate() -> UIView { fatalError() }
-    func equals(to other: AnyRenderableBoxBase) -> Bool { fatalError() }
     func cast<T>(to type: T.Type) -> T? { fatalError() }
 }

@@ -41,10 +41,6 @@ class ViewController: UIViewController {
                 |-+ renderFirstSection()
                 |---+ renderToggle()
                 |---+ renderIconText()
-                |-+ renderSecondSection()
-                |---+ renderIconText()
-                |---+ renderToggle()
-                |-+ renderThirdSection()
 
             tableView.render(box)
         case .wifi:
@@ -52,11 +48,6 @@ class ViewController: UIViewController {
                 |-+ renderFirstSection()
                 |---+ renderIconText()
                 |---+ renderToggle()
-                |-+ renderSecondSection()
-                |---+ renderToggle()
-                |---+ renderIconText()
-                |-+ renderThirdSection()
-                |-+ renderForthSection()
 
             tableView.render(box)
         }
@@ -65,8 +56,8 @@ class ViewController: UIViewController {
     private func setupTableView() {
         tableView.estimatedSectionFooterHeight = 18
         tableView.estimatedSectionHeaderHeight = 18
-        tableView.sectionHeaderHeight = UITableViewAutomaticDimension
-        tableView.sectionFooterHeight = UITableViewAutomaticDimension
+        tableView.sectionHeaderHeight = UITableView.automaticDimension
+        tableView.sectionFooterHeight = UITableView.automaticDimension
     }
 
     private func renderFirstSection() -> Section<SectionId, RowId> {
@@ -136,8 +127,16 @@ class ViewController: UIViewController {
         switch state {
         case .airplaneMode:
             return RowId.note <> IconTextComponent(image: #imageLiteral(resourceName: "wifi"), title: "WIFI Off")
+                .deletable(deleteActionText: "Delete", didDelete: {
+                    print("Delete")
+                })
+                .on(willDisplayItem: nil, didEndDisplayingItem: nil)
         case .wifi:
             return RowId.note <> IconTextComponent(image: #imageLiteral(resourceName: "wifi"), title: "WIFI On")
+                .deletable(deleteActionText: "Delete", didDelete: {
+                    print("Delete")
+                })
+                .on(willDisplayItem: nil, didEndDisplayingItem: nil)
         }
     }
 }

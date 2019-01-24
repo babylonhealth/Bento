@@ -132,8 +132,11 @@ public struct BarButtonItem {
         return item
     }
 
-    public func applyNonAppearanceChanges(to item: UIBarButtonItem) {
-        item.didTap = callback
+    public func applyNonAppearanceChanges(to item: UIBarButtonItem, willTriggerAction: (() -> Void)? = nil) {
+        item.didTap = {
+            willTriggerAction?()
+            self.callback?()
+        }
         item.isEnabled = isEnabled
         item.accessibilityIdentifier = accessibilityIdentifier
     }
