@@ -18,6 +18,8 @@ extension BentoReusableView {
             }
 
             component.render(in: renderingView)
+            component.cast(to: RenderObserving.self)?
+                .didRender(view: renderingView)
         } else {
             containedView = nil
         }

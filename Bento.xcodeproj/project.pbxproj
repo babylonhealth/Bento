@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		515F94097C1F82B7E5C2DE0C /* Section.swift in Sources */ = {isa = PBXBuildFile; fileRef = 515F9EAF847DD1D68DE3A48C /* Section.swift */; };
+		5800DB1921FF0F90003AC2DD /* RenderObserving.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5800DB1821FF0F90003AC2DD /* RenderObserving.swift */; };
 		5829D269200FB092001E020D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5829D268200FB092001E020D /* AppDelegate.swift */; };
 		5829D26B200FB092001E020D /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5829D26A200FB092001E020D /* ViewController.swift */; };
 		5829D26E200FB092001E020D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5829D26C200FB092001E020D /* Main.storyboard */; };
@@ -16,6 +17,7 @@
 		582D9951217E196E00C67B0D /* MenuItemsResponding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 582D9950217E196E00C67B0D /* MenuItemsResponding.swift */; };
 		582D9987217F87B100C67B0D /* ComponentLifecycleAware.swift in Sources */ = {isa = PBXBuildFile; fileRef = 582D9986217F87B100C67B0D /* ComponentLifecycleAware.swift */; };
 		5830C5E721F22DDC0029044B /* ComponentLifecycleAware.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5830C5E621F22DDC0029044B /* ComponentLifecycleAware.swift */; };
+		58465CD521FF17E300D9742F /* RenderObservingComponentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58465CD421FF17E300D9742F /* RenderObservingComponentTests.swift */; };
 		58467B03202B33F200577C77 /* TableViewSectionDiff.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58467B02202B33F200577C77 /* TableViewSectionDiff.swift */; };
 		584A6F9E20C7E36D006395E8 /* IntroComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 584A6F9D20C7E36D006395E8 /* IntroComponent.swift */; };
 		584A6FA020C7E470006395E8 /* IntroComponentView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 584A6F9F20C7E470006395E8 /* IntroComponentView.xib */; };
@@ -123,6 +125,7 @@
 
 /* Begin PBXFileReference section */
 		515F9EAF847DD1D68DE3A48C /* Section.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Section.swift; sourceTree = "<group>"; };
+		5800DB1821FF0F90003AC2DD /* RenderObserving.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RenderObserving.swift; sourceTree = "<group>"; };
 		5829D265200FB092001E020D /* Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5829D268200FB092001E020D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5829D26A200FB092001E020D /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -133,6 +136,7 @@
 		582D9950217E196E00C67B0D /* MenuItemsResponding.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuItemsResponding.swift; sourceTree = "<group>"; };
 		582D9986217F87B100C67B0D /* ComponentLifecycleAware.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComponentLifecycleAware.swift; sourceTree = "<group>"; };
 		5830C5E621F22DDC0029044B /* ComponentLifecycleAware.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComponentLifecycleAware.swift; sourceTree = "<group>"; };
+		58465CD421FF17E300D9742F /* RenderObservingComponentTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RenderObservingComponentTests.swift; sourceTree = "<group>"; };
 		58467B02202B33F200577C77 /* TableViewSectionDiff.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewSectionDiff.swift; sourceTree = "<group>"; };
 		584A6F9D20C7E36D006395E8 /* IntroComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroComponent.swift; sourceTree = "<group>"; };
 		584A6F9F20C7E470006395E8 /* IntroComponentView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = IntroComponentView.xib; sourceTree = "<group>"; };
@@ -367,6 +371,7 @@
 				65E3ECA1211317EA00869DF3 /* FocusCoordinator.swift */,
 				65E3ECA521133C9400869DF3 /* UIKit+CollectionViewFocus.swift */,
 				582D9986217F87B100C67B0D /* ComponentLifecycleAware.swift */,
+				5800DB1821FF0F90003AC2DD /* RenderObserving.swift */,
 			);
 			path = Renderable;
 			sourceTree = "<group>";
@@ -382,6 +387,7 @@
 				9A784702205EB61D00FA597E /* TestId.swift */,
 				58D27BA621B83B2700DC9600 /* DeletableTests.swift */,
 				5830C5E621F22DDC0029044B /* ComponentLifecycleAware.swift */,
+				58465CD421FF17E300D9742F /* RenderObservingComponentTests.swift */,
 				58FC4421207CF29F00DA3614 /* Info.plist */,
 			);
 			path = BentoTests;
@@ -665,6 +671,7 @@
 				515F94097C1F82B7E5C2DE0C /* Section.swift in Sources */,
 				9A4DB3E1212CB3710079D5AE /* ChangesetExtensions.swift in Sources */,
 				65E3ECA421133BF700869DF3 /* FocusEligibilitySource.swift in Sources */,
+				5800DB1921FF0F90003AC2DD /* RenderObserving.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -674,6 +681,7 @@
 			files = (
 				58FC4427207CF2BB00DA3614 /* AnyRenderableTests.swift in Sources */,
 				58FC4428207CF2BB00DA3614 /* TestId.swift in Sources */,
+				58465CD521FF17E300D9742F /* RenderObservingComponentTests.swift in Sources */,
 				58D27BA721B83B2700DC9600 /* DeletableTests.swift in Sources */,
 				58FC4429207CF2BB00DA3614 /* TestRenderable.swift in Sources */,
 				5830C5E721F22DDC0029044B /* ComponentLifecycleAware.swift in Sources */,

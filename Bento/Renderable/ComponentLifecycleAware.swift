@@ -1,3 +1,15 @@
+import UIKit
+
+extension Renderable where View: UIView {
+    public func on(willDisplayItem: (() -> Void)? = nil, didEndDisplayingItem: (() -> Void)? = nil) -> AnyRenderable {
+        return LifecycleComponent(
+            source: self,
+            willDisplayItem: willDisplayItem,
+            didEndDisplayingItem: didEndDisplayingItem
+        ).asAnyRenderable()
+    }
+}
+
 protocol ComponentLifecycleAware {
     func willDisplayItem()
     func didEndDisplayingItem()
@@ -19,8 +31,8 @@ final class LifecycleComponent<Base: Renderable>: AnyRenderableBox<Base>, Compon
         didEndDisplayingItem: (() -> Void)?
     ) {
         self.source = AnyRenderableBox(source)
-        self._willDisplayItem = willDisplayItem
-        self._didEndDisplayingItem = didEndDisplayingItem
+        _willDisplayItem = willDisplayItem
+        _didEndDisplayingItem = didEndDisplayingItem
         super.init(source)
     }
 
