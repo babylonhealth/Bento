@@ -7,6 +7,7 @@ extension Component {
 
         public let configurator: (View) -> Void
         public let styleSheet: StyleSheet
+        public let type: UIButton.ButtonType
 
         private let heightComputer: (CGFloat, UIEdgeInsets) -> CGFloat
 
@@ -15,8 +16,10 @@ extension Component {
             isEnabled: Bool = true,
             isLoading: Bool = false,
             didTap: (() -> Void)? = nil,
+            type: UIButton.ButtonType = .system,
             styleSheet: StyleSheet
         ) {
+            self.type = type
             self.configurator = { view in
                 view.isLoading = isLoading
                 view.button.isEnabled = isEnabled
@@ -39,6 +42,10 @@ extension Component {
             self.styleSheet = styleSheet
         }
 
+        public func generate() -> View {
+            return View(type: type)
+        }
+
         public func height(forWidth width: CGFloat, inheritedMargins: UIEdgeInsets) -> CGFloat {
             return heightComputer(width, inheritedMargins)
         }
@@ -59,9 +66,7 @@ extension Component.Button {
             }
         }()
 
-        public let button = Button(type: .system).with {
-            $0.setContentHuggingPriority(.required, for: .vertical)
-        }
+        public let button: Button
 
         private lazy var huggingConstraints: [NSLayoutConstraint] = [
             button.leadingAnchor.constraint(greaterThanOrEqualTo: layoutMarginsGuide.leadingAnchor)
@@ -97,7 +102,21 @@ extension Component.Button {
         public var didTap: (() -> Void)?
 
         public override init(frame: CGRect) {
+            button = Button(type: .system)
             super.init(frame: frame)
+
+            postInit()
+        }
+
+        public init(type: UIButton.ButtonType) {
+            button = Button(type: type)
+            super.init(frame: .zero)
+
+            postInit()
+        }
+
+        private func postInit() {
+            button.setContentHuggingPriority(.required, for: .vertical)
             button.addTarget(self, action: #selector(buttonPressed), for: .touchUpInside)
             setupLayout()
         }
@@ -130,7 +149,7 @@ extension Component.Button {
 }
 
 public extension Component.Button {
-    public final class StyleSheet: BaseViewStyleSheet<View> {
+    public final class StyleSheet: InteractiveViewStyleSheet<View> {
         public let button: ButtonStyleSheet
         public let activityIndicator: ActivityIndicatorStyleSheet
         public var hugsContent: Bool
