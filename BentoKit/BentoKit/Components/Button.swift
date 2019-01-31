@@ -7,7 +7,6 @@ extension Component {
 
         public let configurator: (View) -> Void
         public let styleSheet: StyleSheet
-        public let type: UIButton.ButtonType
 
         private let heightComputer: (CGFloat, UIEdgeInsets) -> CGFloat
 
@@ -16,10 +15,8 @@ extension Component {
             isEnabled: Bool = true,
             isLoading: Bool = false,
             didTap: (() -> Void)? = nil,
-            type: UIButton.ButtonType = .system,
             styleSheet: StyleSheet
         ) {
-            self.type = type
             self.configurator = { view in
                 view.isLoading = isLoading
                 view.button.isEnabled = isEnabled
@@ -42,10 +39,6 @@ extension Component {
             self.styleSheet = styleSheet
         }
 
-        public func generate() -> View {
-            return View(type: type)
-        }
-
         public func height(forWidth width: CGFloat, inheritedMargins: UIEdgeInsets) -> CGFloat {
             return heightComputer(width, inheritedMargins)
         }
@@ -66,21 +59,65 @@ extension Component.Button {
             }
         }()
 
-        public let button: Button
+        public var button = Button(type: .system)
 
-        private lazy var huggingConstraints: [NSLayoutConstraint] = [
-            button.leadingAnchor.constraint(greaterThanOrEqualTo: layoutMarginsGuide.leadingAnchor)
-                .withPriority(.defaultHigh),
-            layoutMarginsGuide.trailingAnchor.constraint(greaterThanOrEqualTo: button.trailingAnchor)
-                .withPriority(.defaultHigh)
-        ]
+        fileprivate var buttonType: UIButton.ButtonType = .system {
+            didSet {
+                guard oldValue != buttonType else { return }
 
-        private lazy var strictConstraints: [NSLayoutConstraint] = [
-            button.leadingAnchor.constraint(equalTo: layoutMarginsGuide.leadingAnchor)
-                .withPriority(.defaultHigh),
-            layoutMarginsGuide.trailingAnchor.constraint(equalTo: button.trailingAnchor)
-                .withPriority(.defaultHigh)
-        ]
+                activityIndicator.removeFromSuperview()
+                button.removeFromSuperview()
+                button = Button(type: buttonType)
+
+                _huggingConstraints = []
+                _strictConstraints = []
+
+                button.setContentHuggingPriority(.required, for: .vertical)
+                button.addTarget(self, action: #selector(buttonPressed), for: .touchUpInside)
+                setupLayout()
+
+                if hugsContent {
+                    huggingConstraints.forEach { $0.isActive = hugsContent }
+                    strictConstraints.forEach { $0.isActive = hugsContent == false }
+                }
+
+                if isLoading {
+                    activityIndicator.startAnimating()
+                }
+            }
+        }
+
+        private var _huggingConstraints: [NSLayoutConstraint] = []
+        private var huggingConstraints: [NSLayoutConstraint] {
+            guard _huggingConstraints.isEmpty else {
+                return _huggingConstraints
+            }
+
+            _huggingConstraints = [
+                button.leadingAnchor.constraint(greaterThanOrEqualTo: layoutMarginsGuide.leadingAnchor)
+                    .withPriority(.defaultHigh),
+                layoutMarginsGuide.trailingAnchor.constraint(greaterThanOrEqualTo: button.trailingAnchor)
+                    .withPriority(.defaultHigh)
+            ]
+
+            return _huggingConstraints
+        }
+
+        private var _strictConstraints: [NSLayoutConstraint] = []
+        private var strictConstraints: [NSLayoutConstraint] {
+            guard _strictConstraints.isEmpty else {
+                return _strictConstraints
+            }
+
+            _strictConstraints = [
+                button.leadingAnchor.constraint(equalTo: layoutMarginsGuide.leadingAnchor)
+                    .withPriority(.defaultHigh),
+                layoutMarginsGuide.trailingAnchor.constraint(equalTo: button.trailingAnchor)
+                    .withPriority(.defaultHigh)
+            ]
+
+            return _strictConstraints
+        }
 
         fileprivate var hugsContent: Bool = false {
             didSet {
@@ -102,20 +139,8 @@ extension Component.Button {
         public var didTap: (() -> Void)?
 
         public override init(frame: CGRect) {
-            button = Button(type: .system)
             super.init(frame: frame)
 
-            postInit()
-        }
-
-        public init(type: UIButton.ButtonType) {
-            button = Button(type: type)
-            super.init(frame: .zero)
-
-            postInit()
-        }
-
-        private func postInit() {
             button.setContentHuggingPriority(.required, for: .vertical)
             button.addTarget(self, action: #selector(buttonPressed), for: .touchUpInside)
             setupLayout()
@@ -154,16 +179,25 @@ public extension Component.Button {
         public let activityIndicator: ActivityIndicatorStyleSheet
         public var hugsContent: Bool
         public var autoRoundCorners: Bool
+        public var buttonType: UIButton.ButtonType
 
-        public init(button: ButtonStyleSheet, activityIndicator: ActivityIndicatorStyleSheet = .init(), hugsContent: Bool = false, autoRoundCorners: Bool = false) {
+        public init(
+            button: ButtonStyleSheet,
+            activityIndicator: ActivityIndicatorStyleSheet = .init(),
+            hugsContent: Bool = false,
+            autoRoundCorners: Bool = false,
+            buttonType: UIButton.ButtonType = .system
+        ) {
             self.button = button
             self.activityIndicator = activityIndicator
             self.hugsContent = hugsContent
             self.autoRoundCorners = autoRoundCorners
+            self.buttonType = buttonType
         }
 
         public override func apply(to element: Component.Button.View) {
             super.apply(to: element)
+            element.buttonType = buttonType
             button.apply(to: element.button)
             activityIndicator.apply(to: element.activityIndicator)
             element.hugsContent = hugsContent
