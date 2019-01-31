@@ -58,6 +58,7 @@
 		61B64BB12086561B0092082C /* IntroRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61B64BB02086561B0092082C /* IntroRenderer.swift */; };
 		61B64BB420873DA10092082C /* CollectionViewSectionDiff.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61B64BB320873DA10092082C /* CollectionViewSectionDiff.swift */; };
 		61B64BB6208745730092082C /* CollectionViewContainerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61B64BB5208745730092082C /* CollectionViewContainerCell.swift */; };
+		65020C322203186400DC8F42 /* NativeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65020C312203186400DC8F42 /* NativeView.swift */; };
 		65496FB8211C323F00511D8A /* TableViewContainerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 587F0717201B355800ACD219 /* TableViewContainerCell.swift */; };
 		65496FB9211C323F00511D8A /* TableViewAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9509BC2762C8B4277B973D8 /* TableViewAdapter.swift */; };
 		65A69EDF218B8892005D90AC /* UICollectionViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65A69EDE218B8891005D90AC /* UICollectionViewExtensions.swift */; };
@@ -79,7 +80,6 @@
 		9A4DB3E1212CB3710079D5AE /* ChangesetExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A4DB3E0212CB3710079D5AE /* ChangesetExtensions.swift */; };
 		9AF4786A21205E3100F87E21 /* Supplement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AF4786921205E3100F87E21 /* Supplement.swift */; };
 		9AF4786C2120CA7500F87E21 /* BentoReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AF4786B2120CA7500F87E21 /* BentoReusableView.swift */; };
-		A67A873520B5D2D100BC2BAC /* RenderableTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A67A873420B5D2D100BC2BAC /* RenderableTests.swift */; };
 		A6C9C8B92180781A00261906 /* ReactiveFeedback.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A6C9C8B62180780E00261906 /* ReactiveFeedback.framework */; };
 		A6C9C8BA2180782500261906 /* Kingfisher.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A6C9C8B82180780E00261906 /* Kingfisher.framework */; };
 		A6C9C8BB2180782500261906 /* ReactiveCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A6C9C8B42180780E00261906 /* ReactiveCocoa.framework */; };
@@ -178,6 +178,7 @@
 		61B64BB02086561B0092082C /* IntroRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroRenderer.swift; sourceTree = "<group>"; };
 		61B64BB320873DA10092082C /* CollectionViewSectionDiff.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewSectionDiff.swift; sourceTree = "<group>"; };
 		61B64BB5208745730092082C /* CollectionViewContainerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewContainerCell.swift; sourceTree = "<group>"; };
+		65020C312203186400DC8F42 /* NativeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NativeView.swift; sourceTree = "<group>"; };
 		65A69EDE218B8891005D90AC /* UICollectionViewExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UICollectionViewExtensions.swift; sourceTree = "<group>"; };
 		65A69EE0218B8AB6005D90AC /* CustomCollectionViewAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCollectionViewAdapter.swift; sourceTree = "<group>"; };
 		65BA922D20AF388F004AEF18 /* UITableViewExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITableViewExtensions.swift; sourceTree = "<group>"; };
@@ -201,7 +202,6 @@
 		9A784702205EB61D00FA597E /* TestId.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestId.swift; sourceTree = "<group>"; };
 		9AF4786921205E3100F87E21 /* Supplement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Supplement.swift; sourceTree = "<group>"; };
 		9AF4786B2120CA7500F87E21 /* BentoReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BentoReusableView.swift; sourceTree = "<group>"; };
-		A67A873420B5D2D100BC2BAC /* RenderableTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RenderableTests.swift; sourceTree = "<group>"; };
 		A6C9C8AE218072CD00261906 /* Framework.Debug.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Framework.Debug.xcconfig; sourceTree = "<group>"; };
 		A6C9C8AF218072CD00261906 /* Framework.Base.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Framework.Base.xcconfig; sourceTree = "<group>"; };
 		A6C9C8B0218072CD00261906 /* Framework.Release.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Framework.Release.xcconfig; sourceTree = "<group>"; };
@@ -367,6 +367,7 @@
 				65E3ECA1211317EA00869DF3 /* FocusCoordinator.swift */,
 				65E3ECA521133C9400869DF3 /* UIKit+CollectionViewFocus.swift */,
 				582D9986217F87B100C67B0D /* ComponentLifecycleAware.swift */,
+				65020C312203186400DC8F42 /* NativeView.swift */,
 			);
 			path = Renderable;
 			sourceTree = "<group>";
@@ -374,7 +375,6 @@
 		58FC441E207CF29F00DA3614 /* BentoTests */ = {
 			isa = PBXGroup;
 			children = (
-				A67A873420B5D2D100BC2BAC /* RenderableTests.swift */,
 				9A3EF77F205D866F00D043AC /* AnyRenderableTests.swift */,
 				740921B520ACDDDA00B59F5C /* IfTests.swift */,
 				740921B720ACE5EC00B59F5C /* ConcatenationTests.swift */,
@@ -647,6 +647,7 @@
 				65BA922E20AF388F004AEF18 /* UITableViewExtensions.swift in Sources */,
 				65A69EDF218B8892005D90AC /* UICollectionViewExtensions.swift in Sources */,
 				58BA7584201633CC0050D5F1 /* Renderable.swift in Sources */,
+				65020C322203186400DC8F42 /* NativeView.swift in Sources */,
 				5857BECA2056F02C0085EB9C /* If.swift in Sources */,
 				A9509FB12CAD89179FAA03B0 /* Box.swift in Sources */,
 				582D9987217F87B100C67B0D /* ComponentLifecycleAware.swift in Sources */,
@@ -679,7 +680,6 @@
 				5830C5E721F22DDC0029044B /* ComponentLifecycleAware.swift in Sources */,
 				740921B620ACDDDA00B59F5C /* IfTests.swift in Sources */,
 				740921B820ACE5EC00B59F5C /* ConcatenationTests.swift in Sources */,
-				A67A873520B5D2D100BC2BAC /* RenderableTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

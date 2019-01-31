@@ -8,7 +8,7 @@ public protocol ViewLifecycleAware {
     func didEndDisplayingView()
 }
 
-final class LifecycleComponent<Base: Renderable>: AnyRenderableBox<Base>, ComponentLifecycleAware where Base.View: UIView {
+final class LifecycleComponent<Base: Renderable>: AnyRenderableBox<Base>, ComponentLifecycleAware {
     private let source: AnyRenderableBox<Base>
     private let _willDisplayItem: (() -> Void)?
     private let _didEndDisplayingItem: (() -> Void)?

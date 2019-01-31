@@ -5,23 +5,36 @@ import UIKit
 
 class AnyRenderableTests: XCTestCase {
     func testShouldPassthroughBehaviours() {
-        let testView = TestView()
-
-        let base = TestRenderable(reuseIdentifier: "Test",
-                                  generate: { testView },
-                                  render: { $0.hasInvoked = true })
-        let renderable = AnyRenderable(base)
-
-        expect(renderable.reuseIdentifier) == "Test"
-
-        let view = renderable.generate()
-        expect(view) === testView
-
-        expect(testView.hasInvoked) == false
-
-        renderable.render(in: testView)
-        expect(testView.hasInvoked) == true
+        verifyBehaviorPassthrough(AnyRenderable.init)
     }
+
+    func testShouldPassthroughBehavioursWhenBeingNested() {
+        verifyBehaviorPassthrough { AnyRenderable(AnyRenderable($0)) }
+    }
+
+    func testShouldPassthroughBehavioursWhenBeingNestedTwice() {
+        verifyBehaviorPassthrough { AnyRenderable(AnyRenderable(AnyRenderable($0))) }
+    }
+
+    private func verifyBehaviorPassthrough(_ factory: (TestRenderable) -> AnyRenderable) {
+        let base = TestRenderable(render: { $0.hasInvoked = true })
+        let renderable = factory(base)
+
+        expect(renderable.viewType) === TestView.self
+
+        let view = renderable.viewType.generate()
+        expect(type(of: view)) === TestView.self
+
+        if let view = view as? TestView {
+            expect(view.hasInvoked) == false
+
+            renderable.render(in: view)
+            expect(view.hasInvoked) == true
+        } else {
+            fail("Expecting `TestView` in `view`, got `\(String(describing: type(of: view)))`.")
+        }
+    }
+
 }
 
 private class TestView: UIView {
@@ -29,23 +42,13 @@ private class TestView: UIView {
 }
 
 private final class TestRenderable: Renderable {
-    let reuseIdentifier: String
-    let generateAction: () -> TestView
     let renderAction: (TestView) -> Void
 
-    init(reuseIdentifier: String,
-         generate: @escaping () -> TestView,
-         render: @escaping (TestView) -> Void) {
-        self.reuseIdentifier = reuseIdentifier
-        self.generateAction = generate
+    init(render: @escaping (TestView) -> Void) {
         self.renderAction = render
     }
 
     func render(in view: TestView) {
         renderAction(view)
-    }
-
-    func generate() -> TestView {
-        return generateAction()
     }
 }
