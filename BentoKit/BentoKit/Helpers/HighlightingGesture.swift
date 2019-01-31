@@ -29,6 +29,7 @@ public final class HighlightingGesture: UIGestureRecognizer {
             stylingViewDidChange(from: oldValue, to: stylingView)
         }
     }
+    public var interactionBehavior: InteractionBehavior = .becomeFirstResponder
 
     private var normalColor: UIColor?
     private var startPoint = CGPoint.zero
@@ -61,7 +62,10 @@ public final class HighlightingGesture: UIGestureRecognizer {
         case .ended:
             if let view = view {
                 precondition(view.canBecomeFirstResponder, "`HighlightingGesture` should be used only with views that can become first responder.")
-                view.becomeFirstResponder()
+
+                if interactionBehavior.contains(.becomeFirstResponder) {
+                    view.becomeFirstResponder()
+                }
 
                 switch didTap {
                 case .manual?:
