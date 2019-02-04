@@ -65,6 +65,8 @@ extension Component.Button {
         private var huggingConstraints: [NSLayoutConstraint] = []
         private var strictConstraints: [NSLayoutConstraint] = []
 
+        fileprivate var interactionBehavior: InteractionBehavior = .becomeFirstResponder
+
         fileprivate var buttonType: UIButton.ButtonType = .system {
             didSet {
                 guard oldValue != buttonType else { return }
