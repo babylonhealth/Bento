@@ -17,5 +17,5 @@ Pod::Spec.new do |s|
   s.source_files  = 'Bento/*.swift', 'Bento/**/*.swift'
 
   s.swift_version = "4.2"
-  s.dependency "FlexibleDiff", "= 0.0.5"
+  s.dependency "FlexibleDiff", "= 0.0.7"
 end

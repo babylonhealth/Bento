@@ -14,7 +14,7 @@ s.author        = { "Babylon iOS" => "ios.development@babylonhealth.com" }
 s.ios.deployment_target = '10.0'
 
 # Switch back to use the version tag when we release 0.4.
-s.source        = { :git => "https://github.com/Babylonpartners/Bento.git", :branch => "develop" } #, :tag => "#{s.version}" }
+s.source        = { :git => "https://github.com/Babylonpartners/Bento.git", :branch => "master" } #, :tag => "#{s.version}" }
 s.swift_version = "4.2"
 s.source_files  = 'StyleSheets/StyleSheets/*.swift'
 end
