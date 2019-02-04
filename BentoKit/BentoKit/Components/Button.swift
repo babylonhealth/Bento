@@ -15,6 +15,7 @@ extension Component {
             isEnabled: Bool = true,
             isLoading: Bool = false,
             didTap: (() -> Void)? = nil,
+            interactionBehavior: InteractionBehavior = .becomeFirstResponder,
             styleSheet: StyleSheet
         ) {
             self.configurator = { view in
@@ -22,6 +23,7 @@ extension Component {
                 view.button.isEnabled = isEnabled
                 view.button.setTitle(title, for: .normal)
                 view.didTap = didTap
+                view.interactionBehavior = interactionBehavior
             }
             self.heightComputer = { width, inheritedMargins in
                 let contentWidth = width
@@ -147,7 +149,10 @@ extension Component.Button {
         }
 
         @objc private func buttonPressed() {
-            becomeFirstResponder()
+            if interactionBehavior.contains(.becomeFirstResponder) {
+                becomeFirstResponder()
+            }
+
             didTap?()
         }
     }

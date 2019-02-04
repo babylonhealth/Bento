@@ -12,10 +12,12 @@ extension Component {
                     styleSheet: StyleSheet,
                     accessibilityIdentifier: String? = nil,
                     accessoryViewAccessibilityIdentifier: String? = nil,
-                    didTapAccessory: (() -> Void)? = nil) {
+                    didTapAccessory: (() -> Void)? = nil,
+                    interactionBehavior: InteractionBehavior = .becomeFirstResponder) {
             configurator = { view in
                 view.imageView.image = image
                 view.didTapAccessory = didTapAccessory
+                view.interactionBehavior = interactionBehavior
                 view.accessoryButton.isHidden = didTapAccessory == nil
                 view.imageView.accessibilityIdentifier = accessibilityIdentifier
                 view.accessoryButton.accessibilityIdentifier = accessoryViewAccessibilityIdentifier
@@ -32,6 +34,7 @@ extension Component.Image {
         fileprivate let imageView = UIImageView()
         fileprivate let accessoryButton = UIButton(type: .custom)
         var didTapAccessory: (() -> Void)?
+        fileprivate var interactionBehavior: InteractionBehavior = .becomeFirstResponder
 
         public override init(frame: CGRect) {
             super.init(frame: frame)
@@ -60,6 +63,10 @@ extension Component.Image {
 
         @objc
         private func accessoryButtonPressed() {
+            if interactionBehavior.contains(.becomeFirstResponder) {
+                becomeFirstResponder()
+            }
+
             didTapAccessory?()
         }
     }
