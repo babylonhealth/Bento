@@ -19,6 +19,7 @@ In our experience it makes UI-related code easier to build and maintain. Our aim
 - [Installation](#installation-)
 - [Development installation](#development-installation-)
 - [State of the project](#state-of-the-project-%EF%B8%8F)
+- [Development Resources](#development-resources)
 - [Contributing](#contributing-%EF%B8%8F)
 
 ### What's it like? 🧐
@@ -223,6 +224,11 @@ Feature | Status
 `UICollectionView` | ✅
 Carthage Support | ✅
 Free functions as alternative to the operators | ❌
+
+### Development Resources
+- [Bento Component Contract](Bento/Diff/ComponentContract.md)
+
+  Define requirements that must be complied by the components from Bento, and best practices for developing a custom component.
 
 ### Contributing ✍️
 
