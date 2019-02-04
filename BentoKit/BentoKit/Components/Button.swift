@@ -60,63 +60,18 @@ extension Component.Button {
         }()
 
         public var button = Button(type: .system)
+        private var huggingConstraints: [NSLayoutConstraint] = []
+        private var strictConstraints: [NSLayoutConstraint] = []
 
         fileprivate var buttonType: UIButton.ButtonType = .system {
             didSet {
                 guard oldValue != buttonType else { return }
 
-                activityIndicator.removeFromSuperview()
-                button.removeFromSuperview()
                 button = Button(type: buttonType)
-
-                _huggingConstraints = []
-                _strictConstraints = []
-
-                button.setContentHuggingPriority(.required, for: .vertical)
                 button.addTarget(self, action: #selector(buttonPressed), for: .touchUpInside)
+
                 setupLayout()
-
-                if hugsContent {
-                    huggingConstraints.forEach { $0.isActive = hugsContent }
-                    strictConstraints.forEach { $0.isActive = hugsContent == false }
-                }
-
-                if isLoading {
-                    activityIndicator.startAnimating()
-                }
             }
-        }
-
-        private var _huggingConstraints: [NSLayoutConstraint] = []
-        private var huggingConstraints: [NSLayoutConstraint] {
-            guard _huggingConstraints.isEmpty else {
-                return _huggingConstraints
-            }
-
-            _huggingConstraints = [
-                button.leadingAnchor.constraint(greaterThanOrEqualTo: layoutMarginsGuide.leadingAnchor)
-                    .withPriority(.defaultHigh),
-                layoutMarginsGuide.trailingAnchor.constraint(greaterThanOrEqualTo: button.trailingAnchor)
-                    .withPriority(.defaultHigh)
-            ]
-
-            return _huggingConstraints
-        }
-
-        private var _strictConstraints: [NSLayoutConstraint] = []
-        private var strictConstraints: [NSLayoutConstraint] {
-            guard _strictConstraints.isEmpty else {
-                return _strictConstraints
-            }
-
-            _strictConstraints = [
-                button.leadingAnchor.constraint(equalTo: layoutMarginsGuide.leadingAnchor)
-                    .withPriority(.defaultHigh),
-                layoutMarginsGuide.trailingAnchor.constraint(equalTo: button.trailingAnchor)
-                    .withPriority(.defaultHigh)
-            ]
-
-            return _strictConstraints
         }
 
         fileprivate var hugsContent: Bool = false {
@@ -141,7 +96,6 @@ extension Component.Button {
         public override init(frame: CGRect) {
             super.init(frame: frame)
 
-            button.setContentHuggingPriority(.required, for: .vertical)
             button.addTarget(self, action: #selector(buttonPressed), for: .touchUpInside)
             setupLayout()
         }
@@ -152,18 +106,44 @@ extension Component.Button {
         }
 
         private func setupLayout() {
+            activityIndicator.removeFromSuperview()
+            button.removeFromSuperview()
+
             button
                 .add(to: self)
                 .pinTop(to: layoutMarginsGuide)
                 .pinBottom(to: layoutMarginsGuide)
 
+
             button.centerXAnchor.constraint(equalTo: layoutMarginsGuide.centerXAnchor)
                 .activated()
-            strictConstraints.forEach { $0.isActive = true }
+
+            button.setContentHuggingPriority(.required, for: .vertical)
+            huggingConstraints = [
+                button.leadingAnchor.constraint(greaterThanOrEqualTo: layoutMarginsGuide.leadingAnchor)
+                    .withPriority(.defaultHigh),
+                layoutMarginsGuide.trailingAnchor.constraint(greaterThanOrEqualTo: button.trailingAnchor)
+                    .withPriority(.defaultHigh)
+            ]
+            strictConstraints = [
+                button.leadingAnchor.constraint(equalTo: layoutMarginsGuide.leadingAnchor)
+                    .withPriority(.defaultHigh),
+                layoutMarginsGuide.trailingAnchor.constraint(equalTo: button.trailingAnchor)
+                    .withPriority(.defaultHigh)
+            ]
+
+            if hugsContent {
+                huggingConstraints.forEach { $0.isActive = hugsContent }
+                strictConstraints.forEach { $0.isActive = hugsContent == false }
+            }
 
             activityIndicator
                 .add(to: self)
                 .pinCenter(to: button)
+
+            if isLoading {
+                activityIndicator.startAnimating()
+            }
         }
 
         @objc private func buttonPressed() {
