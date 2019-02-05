@@ -61,25 +61,22 @@ extension Component.Button {
             }
         }()
 
-        public let button = Button(type: .system).with {
-            $0.setContentHuggingPriority(.required, for: .vertical)
-        }
+        public var button = Button(type: .system)
+        private var huggingConstraints: [NSLayoutConstraint] = []
+        private var strictConstraints: [NSLayoutConstraint] = []
 
         fileprivate var interactionBehavior: InteractionBehavior = .becomeFirstResponder
 
-        private lazy var huggingConstraints: [NSLayoutConstraint] = [
-            button.leadingAnchor.constraint(greaterThanOrEqualTo: layoutMarginsGuide.leadingAnchor)
-                .withPriority(.defaultHigh),
-            layoutMarginsGuide.trailingAnchor.constraint(greaterThanOrEqualTo: button.trailingAnchor)
-                .withPriority(.defaultHigh)
-        ]
+        fileprivate var buttonType: UIButton.ButtonType = .system {
+            didSet {
+                guard oldValue != buttonType else { return }
 
-        private lazy var strictConstraints: [NSLayoutConstraint] = [
-            button.leadingAnchor.constraint(equalTo: layoutMarginsGuide.leadingAnchor)
-                .withPriority(.defaultHigh),
-            layoutMarginsGuide.trailingAnchor.constraint(equalTo: button.trailingAnchor)
-                .withPriority(.defaultHigh)
-        ]
+                button = Button(type: buttonType)
+                button.addTarget(self, action: #selector(buttonPressed), for: .touchUpInside)
+
+                setupLayout()
+            }
+        }
 
         fileprivate var hugsContent: Bool = false {
             didSet {
@@ -102,6 +99,7 @@ extension Component.Button {
 
         public override init(frame: CGRect) {
             super.init(frame: frame)
+
             button.addTarget(self, action: #selector(buttonPressed), for: .touchUpInside)
             setupLayout()
         }
@@ -112,18 +110,42 @@ extension Component.Button {
         }
 
         private func setupLayout() {
+            activityIndicator.removeFromSuperview()
+            button.removeFromSuperview()
+
             button
                 .add(to: self)
                 .pinTop(to: layoutMarginsGuide)
                 .pinBottom(to: layoutMarginsGuide)
 
+
             button.centerXAnchor.constraint(equalTo: layoutMarginsGuide.centerXAnchor)
                 .activated()
-            strictConstraints.forEach { $0.isActive = true }
+
+            button.setContentHuggingPriority(.required, for: .vertical)
+            huggingConstraints = [
+                button.leadingAnchor.constraint(greaterThanOrEqualTo: layoutMarginsGuide.leadingAnchor)
+                    .withPriority(.defaultHigh),
+                layoutMarginsGuide.trailingAnchor.constraint(greaterThanOrEqualTo: button.trailingAnchor)
+                    .withPriority(.defaultHigh)
+            ]
+            strictConstraints = [
+                button.leadingAnchor.constraint(equalTo: layoutMarginsGuide.leadingAnchor)
+                    .withPriority(.defaultHigh),
+                layoutMarginsGuide.trailingAnchor.constraint(equalTo: button.trailingAnchor)
+                    .withPriority(.defaultHigh)
+            ]
+
+            huggingConstraints.forEach { $0.isActive = hugsContent }
+            strictConstraints.forEach { $0.isActive = hugsContent == false }
 
             activityIndicator
                 .add(to: self)
                 .pinCenter(to: button)
+
+            if isLoading {
+                activityIndicator.startAnimating()
+            }
         }
 
         @objc private func buttonPressed() {
@@ -137,21 +159,30 @@ extension Component.Button {
 }
 
 public extension Component.Button {
-    public final class StyleSheet: BaseViewStyleSheet<View> {
+    public final class StyleSheet: InteractiveViewStyleSheet<View> {
         public let button: ButtonStyleSheet
         public let activityIndicator: ActivityIndicatorStyleSheet
         public var hugsContent: Bool
         public var autoRoundCorners: Bool
+        public var buttonType: UIButton.ButtonType
 
-        public init(button: ButtonStyleSheet, activityIndicator: ActivityIndicatorStyleSheet = .init(), hugsContent: Bool = false, autoRoundCorners: Bool = false) {
+        public init(
+            button: ButtonStyleSheet,
+            activityIndicator: ActivityIndicatorStyleSheet = .init(),
+            hugsContent: Bool = false,
+            autoRoundCorners: Bool = false,
+            buttonType: UIButton.ButtonType = .system
+        ) {
             self.button = button
             self.activityIndicator = activityIndicator
             self.hugsContent = hugsContent
             self.autoRoundCorners = autoRoundCorners
+            self.buttonType = buttonType
         }
 
         public override func apply(to element: Component.Button.View) {
             super.apply(to: element)
+            element.buttonType = buttonType
             button.apply(to: element.button)
             activityIndicator.apply(to: element.activityIndicator)
             element.hugsContent = hugsContent
