@@ -12,9 +12,10 @@ class StyleSheetTests: XCTestCase {
         XCTAssert(view.apple == "🍎")
 
         let expectedInverse = StyleSheet<View>().with {
-            $0.set(\.banana, "banana")
-            $0.set(\.orange, "orange")
+            // NOTE: The order should be reversed with regard to `stub1`.
             $0.set(\.apple, "apple")
+            $0.set(\.orange, "orange")
+            $0.set(\.banana, "banana")
         }
         XCTAssert(inverse == expectedInverse)
 
@@ -97,6 +98,54 @@ class StyleSheetTests: XCTestCase {
 
         XCTAssert(changed2 == stub1)
     }
+
+    func test_application_partially_overlapping_keyPaths_1() {
+        var view = View()
+
+        let original = StyleSheet<View>().with {
+            $0.set(\.nested, View.Nested(red: "$R", orange: "$O"))
+            $0.set(\.nested.red, "🔴")
+            $0.set(\.nested.orange, "🔶")
+        }
+
+        let inverse = original.apply(to: &view)
+        XCTAssert(view.nested == View.Nested(red: "🔴", orange: "🔶"))
+
+        let expectedInverse = StyleSheet<View>().with {
+            $0.set(\.nested.orange, "$O")
+            $0.set(\.nested.red, "$R")
+            $0.set(\.nested, View.Nested(red: "red", orange: "orange"))
+        }
+        XCTAssert(inverse == expectedInverse)
+
+        inverse.apply(to: &view)
+
+        XCTAssert(view.nested == View.Nested(red: "red", orange: "orange"))
+    }
+
+    func test_application_partially_overlapping_keyPaths_2() {
+        var view = View()
+
+        let original = StyleSheet<View>().with {
+            $0.set(\.nested.red, "🔴")
+            $0.set(\.nested.orange, "🔶")
+            $0.set(\.nested, View.Nested(red: "$R", orange: "$O"))
+        }
+
+        let inverse = original.apply(to: &view)
+        XCTAssert(view.nested == View.Nested(red: "$R", orange: "$O"))
+
+        let expectedInverse = StyleSheet<View>().with {
+            $0.set(\.nested, View.Nested(red: "🔴", orange: "🔶"))
+            $0.set(\.nested.orange, "orange")
+            $0.set(\.nested.red, "red")
+        }
+        XCTAssert(inverse == expectedInverse)
+
+        inverse.apply(to: &view)
+
+        XCTAssert(view.nested == View.Nested(red: "red", orange: "orange"))
+    }
 }
 
 struct View {
@@ -106,6 +155,18 @@ struct View {
     var eggplant = "eggplant"
 
     var inbox: String? = nil
+
+    var nested = Nested()
+
+    struct Nested: Equatable {
+        var red: String
+        var orange: String
+
+        init(red: String = "red", orange: String = "orange") {
+            self.red = red
+            self.orange = orange
+        }
+    }
 }
 
 private let stub1 = StyleSheet<View>().with {
