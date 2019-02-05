@@ -136,10 +136,8 @@ extension Component.Button {
                     .withPriority(.defaultHigh)
             ]
 
-            if hugsContent {
-                huggingConstraints.forEach { $0.isActive = hugsContent }
-                strictConstraints.forEach { $0.isActive = hugsContent == false }
-            }
+            huggingConstraints.forEach { $0.isActive = hugsContent }
+            strictConstraints.forEach { $0.isActive = hugsContent == false }
 
             activityIndicator
                 .add(to: self)
