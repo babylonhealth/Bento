@@ -4,7 +4,7 @@ import Foundation
 public struct StyleSheet<View>: Equatable {
     public typealias Inverse = StyleSheet<View>
     
-    private var nodes: [PartialKeyPath<View>: ErasedProperty<View>]
+    private var nodes: [AnyPartialWritableKeyPath: Any]
 
     public init() {
         nodes = [:]
@@ -13,27 +13,32 @@ public struct StyleSheet<View>: Equatable {
     @discardableResult
     public func apply(to view: inout View) -> Inverse {
         defer {
-            nodes.forEach { $0.value.apply(to: &view) }
+            nodes.forEach { keyPath, value in keyPath.wrapped.apply(to: &view, erasedValue: value) }
         }
         
         return StyleSheet().with {
-            $0.nodes = self.nodes.mapValues { $0.current(in: view) }
+            $0.nodes = Dictionary(
+                uniqueKeysWithValues: self.nodes
+                    .map { keyPath, value in (keyPath, keyPath.wrapped.current(in: view)) }
+            )
         }
     }
 
     /// Retrieve the value at the specific key path.
     public func value<Value: Equatable>(for keyPath: WritableKeyPath<View, Value>) -> Value? {
-        return (nodes[keyPath] as! KeyedProperty<View, Value>?)?.value
+        let keyPath = AnyPartialWritableKeyPath(keyPath)
+        return nodes[keyPath] as! Value?
     }
     
     // `with` + `set` leads to less transient CoW dictionary allocation.
     /// Set the specified key path to the given value.
     public mutating func set<Value: Equatable>(_ keyPath: WritableKeyPath<View, Value>, _ newValue: Value) {
-        nodes[keyPath] = KeyedProperty(keyPath: keyPath, value: newValue)
+        let keyPath = AnyPartialWritableKeyPath(keyPath)
+        nodes[keyPath] = newValue
     }
 
-    public mutating func removeValue<Value>(for keyPath: WritableKeyPath<View, Value>) {
-        nodes.removeValue(forKey: keyPath)
+    public mutating func removeValue<Value: Equatable>(for keyPath: WritableKeyPath<View, Value>) {
+        nodes.removeValue(forKey: AnyPartialWritableKeyPath(keyPath))
     }
     
     public func with(_ action: (inout StyleSheet<View>) -> Void) -> StyleSheet<View> {
@@ -45,51 +50,62 @@ public struct StyleSheet<View>: Equatable {
     public func setting<Value: Equatable>(_ keyPath: WritableKeyPath<View, Value>, _ value: Value) -> StyleSheet<View> {
         return with { $0.set(keyPath, value) }
     }
+
+    public static func == (lhs: StyleSheet<View>, rhs: StyleSheet<View>) -> Bool {
+        return lhs.nodes.keys == rhs.nodes.keys
+            && lhs.nodes.keys.allSatisfy { keyPath in
+                keyPath.wrapped.areEqual(lhs.nodes[keyPath]!, rhs.nodes[keyPath]!)
+            }
+    }
 }
 
-/// Represent a typed value pending application in a style sheet.
-private final class KeyedProperty<Root, Value: Equatable>: ErasedProperty<Root> {
-    let keyPath: WritableKeyPath<Root, Value>
-    let value: Value
-    
-    init(keyPath: WritableKeyPath<Root, Value>, value: Value) {
-        self.keyPath = keyPath
-        self.value = value
+private struct AnyPartialWritableKeyPath: Hashable {
+    let wrapped: PartialWritableKeyPath
+
+    init(_ wrapped: PartialWritableKeyPath) {
+        self.wrapped = wrapped
     }
-    
-    override func apply(to root: inout Root) {
-        root[keyPath: keyPath] = value
+
+    static func == (lhs: AnyPartialWritableKeyPath, rhs: AnyPartialWritableKeyPath) -> Bool {
+        return lhs.wrapped.keyPath == rhs.wrapped.keyPath
     }
-    
-    override func current(in root: Root) -> Self {
-        return type(of: self).init(keyPath: keyPath, value: root[keyPath: keyPath])
+
+    func hash(into hasher: inout Hasher) {
+        wrapped.keyPath.hash(into: &hasher)
     }
-    
-    override func equal(to other: ErasedProperty<Root>) -> Bool {
-        guard let other = other as? KeyedProperty<Root, Value>, keyPath == other.keyPath else {
+}
+
+private protocol PartialWritableKeyPath {
+    var keyPath: AnyKeyPath { get }
+
+    func apply<AssertedRoot>(to root: inout AssertedRoot, erasedValue: Any)
+    func current<AssertedRoot>(in root: AssertedRoot) -> Any
+    func areEqual(_ lhs: Any, _ rhs: Any) -> Bool
+}
+
+extension WritableKeyPath: PartialWritableKeyPath where Value: Equatable {
+    var keyPath: AnyKeyPath {
+        return self
+    }
+
+    func apply<AssertedRoot>(to root: inout AssertedRoot, erasedValue: Any) {
+        root[keyPath: coerced()] = erasedValue as! Value
+    }
+
+    func current<AssertedRoot>(in root: AssertedRoot) -> Any {
+        return root[keyPath: coerced()]
+    }
+
+    func areEqual(_ lhs: Any, _ rhs: Any) -> Bool {
+        guard let lhs = lhs as? Value, let rhs = rhs as? Value else {
             return false
         }
-        
-        return value == other.value
-    }
-}
 
-/// Value-type-erased base class of `KeyedProperty`, allowing style sheets to carry
-/// and manipulate collections of heterogeneous values.
-private class ErasedProperty<Root>: Equatable {
-    func apply(to root: inout Root) {
-        fatalError()
+        return lhs == rhs
     }
-    
-    func equal(to other: ErasedProperty<Root>) -> Bool {
-        fatalError()
-    }
-    
-    func current(in root: Root) -> Self {
-        fatalError()
-    }
-    
-    static func == (lhs: ErasedProperty<Root>, rhs: ErasedProperty<Root>) -> Bool {
-        return lhs.equal(to: rhs)
+
+    private func coerced<AssertedRoot>() -> WritableKeyPath<AssertedRoot, Value> {
+        precondition(AssertedRoot.self is Root.Type, "")
+        return unsafeDowncast(self, to: WritableKeyPath<AssertedRoot, Value>.self)
     }
 }
