@@ -8,5 +8,5 @@ public enum LayoutEquivalence {
 
     /// The component does not have a definition of layout equivalence. Bento must treat all instances as always
     /// different from each other.
-    case unknown
+    public static var unknown: LayoutEquivalence { return .different }
 }
