@@ -7,7 +7,7 @@ protocol Deletable {
     func delete()
 }
 
-final class DeletableComponent<Base: Renderable>: AnyRenderableBox<Base>, Deletable where Base.View: UIView  {
+final class DeletableComponent<Base: Renderable>: NoLayoutBehavior<Base>, Deletable where Base.View: UIView  {
     let deleteActionText: String
     let backgroundColor: UIColor?
     private let source: AnyRenderableBox<Base>

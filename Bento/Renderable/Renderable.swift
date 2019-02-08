@@ -6,10 +6,34 @@ public protocol Renderable {
     var reuseIdentifier: String { get }
 
     func generate() -> View
+
+    /// Render `self` to the given view.
+    ///
+    /// - parameters:
+    ///   - view: The view to render `self` in.
     func render(in view: View)
+
+    /// Evaluate whether two instances of `Self` result in compatible layouts.
+    ///
+    /// In absence of a layout compatibility definition, Bento would be conservative regarding caching of information at
+    /// the given ID path.
+    ///
+    /// - important: Layout evaluation is performed only on the root component, in the case of infinitely nested
+    ///              `AnyRenderable` wrapping with or without added behaviors.
+    ///
+    /// - parameters:
+    ///   - lhs: The first component to evaluate.
+    ///   - rhs: The second component to evaluate.
+    ///
+    /// - returns: A `LayoutEquivalence` value specifying the layout compatibility.
+    static func layoutEquivalence(_ lhs: Self, _ rhs: Self) -> LayoutEquivalence
 }
 
 public extension Renderable {
+    static func layoutEquivalence(_ lhs: Self, _ rhs: Self) -> LayoutEquivalence {
+        return .unknown
+    }
+
     var reuseIdentifier: String {
         return String(reflecting: View.self)
     }
