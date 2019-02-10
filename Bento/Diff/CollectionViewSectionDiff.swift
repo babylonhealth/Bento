@@ -14,7 +14,7 @@ struct CollectionViewSectionDiff<SectionID: Hashable, ItemID: Hashable> {
         self.supplements = knownSupplements
     }
 
-    func apply(to collectionView: UICollectionView, completion: (() -> Void)? = nil) {
+    func apply(to collectionView: UICollectionView, updateAdapter: @escaping () -> Void, completion: (() -> Void)? = nil) {
         /// Since we are going to always rebind visible components, there is no point to evaluate
         /// component equation. However, we still force all instances of components to be treated as
         /// unequal, so as to preserve all positional information for in-place updates to visible cells.
@@ -25,13 +25,16 @@ struct CollectionViewSectionDiff<SectionID: Hashable, ItemID: Hashable> {
                                       items: { $0.items },
                                       itemIdentifier: { $0.id },
                                       areItemsEqual: const(false))
-        apply(diff: diff, to: collectionView, completion: completion)
-    }
-
-    private func apply(diff: SectionedChangeset, to collectionView: UICollectionView, completion: (() -> Void)?) {
-        collectionView.performBatchUpdates({
-            self.performBatchUpdates(with: diff, for: collectionView)
-        }, completion: { _ in completion?() })
+        collectionView.performBatchUpdates(
+            {
+                // NOTE: As per docs of `performBatchUpdates`, we should update our data source only within the `update`
+                //       block, since UICollectionView might need to reload itself before proceeding to perform the
+                //       batch update.
+                updateAdapter()
+                self.performBatchUpdates(with: diff, for: collectionView)
+            },
+            completion: { _ in completion?() }
+        )
     }
 
     private func performBatchUpdates(with diff: SectionedChangeset, for collectionView: UICollectionView) {
@@ -63,9 +66,11 @@ struct CollectionViewSectionDiff<SectionID: Hashable, ItemID: Hashable> {
 
 extension SectionedChangeset.MutatedSection {
     var movedCollectionIndexPaths: [UICollectionView.Move] {
-        return changeset.moves.map {
-            let source = IndexPath(row: $0.source, section: self.source)
-            let destination = IndexPath(row: $0.destination, section: self.source)
+        let (sourceSection, destSection) = (self.source, self.destination)
+
+        return changeset.moves.map { row in
+            let source = IndexPath(row: row.source, section: sourceSection)
+            let destination = IndexPath(row: row.destination, section: destSection)
 
             return UICollectionView.Move(source: source, destination: destination)
         }

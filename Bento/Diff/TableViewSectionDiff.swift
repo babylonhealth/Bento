@@ -14,7 +14,7 @@ struct TableViewSectionDiff<SectionId: Hashable, RowId: Hashable> {
         self.animation = animation
     }
 
-    func apply(to tableView: UITableView) {
+    func apply(to tableView: UITableView, updateAdapter: @escaping () -> Void) {
         /// Since we are going to always rebind visible components, there is no point to evaluate
         /// component equation. However, we still force all instances of components to be treated as
         /// unequal, so as to preserve all positional information for in-place updates to visible cells.
@@ -25,12 +25,27 @@ struct TableViewSectionDiff<SectionId: Hashable, RowId: Hashable> {
                                       items: { $0.items },
                                       itemIdentifier: { $0.id },
                                       areItemsEqual: const(false))
-        apply(diff: diff, to: tableView)
+
+        // NOTE: While UITableView has no documented requirement of data sources only being updated within the `update`
+        //       block, unlike UICollectionView, we do the same thing here for the sake of consistency.
+
+        if #available(iOS 11, *) {
+            tableView.performBatchUpdates(
+                {
+                    updateAdapter()
+                    self.apply(diff: diff, to: tableView)
+                },
+                completion: nil
+            )
+        } else {
+            tableView.beginUpdates()
+            updateAdapter()
+            apply(diff: diff, to: tableView)
+            tableView.endUpdates()
+        }
     }
 
     private func apply(diff: SectionedChangeset, to tableView: UITableView) {
-        tableView.beginUpdates()
-        
         let visibleSections = tableView.visibleSections
 
         for (source, destination) in diff.sections.positionsOfMutations(amongVisible: visibleSections) {
@@ -49,7 +64,6 @@ struct TableViewSectionDiff<SectionId: Hashable, RowId: Hashable> {
         tableView.deleteSections(diff.sections.removals, with: animation.sectionDeletion)
         tableView.moveSections(diff.sections.moves, animation: animation)
         apply(sectionMutations: diff.mutatedSections, to: tableView, with: animation)
-        tableView.endUpdates()
     }
 
     private func apply(sectionMutations: [SectionedChangeset.MutatedSection],
