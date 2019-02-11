@@ -25,7 +25,7 @@ public final class AccessoryView: InteractiveView {
             view?.contentMode = .scaleAspectFit
             view?.translatesAutoresizingMaskIntoConstraints = false
             view?.add(to: self)
-                .centerInSuperview()
+                .pinEdges(to: self)
 
             isHidden = view == nil
         }
