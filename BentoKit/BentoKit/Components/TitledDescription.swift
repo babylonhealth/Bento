@@ -180,15 +180,24 @@ private extension Component.TitledDescription {
             } else {
                 accessorySize = CGSize(width: 24, height: 24)
             }
-            let availableWidthForLabelBlock = width
-                - max(styleSheet.layoutMargins.left, inheritedMargins.left)
-                - max(styleSheet.layoutMargins.right, inheritedMargins.right)
-                - (styleSheet.content.isLayoutMarginsRelativeArrangement
-                    ? styleSheet.content.layoutMargins.horizontalTotal
-                    : 0)
-                - imageWidthPlusSpacing(measuring: image, styleSheet: styleSheet)
-                - detailWidthPlusSpacing
-                - (accessory != .none ? accessorySize.width + xSpacing : 0)
+            let availableWidthForLabelBlock: CGFloat
+            if let textBlockWidthFraction = styleSheet.textBlockWidthFraction {
+                availableWidthForLabelBlock = (
+                    width
+                        - max(styleSheet.layoutMargins.left, inheritedMargins.left)
+                        - max(styleSheet.layoutMargins.right, inheritedMargins.right)
+                    ) * textBlockWidthFraction
+            } else {
+                availableWidthForLabelBlock = width
+                    - max(styleSheet.layoutMargins.left, inheritedMargins.left)
+                    - max(styleSheet.layoutMargins.right, inheritedMargins.right)
+                    - (styleSheet.content.isLayoutMarginsRelativeArrangement
+                        ? styleSheet.content.layoutMargins.horizontalTotal
+                        : 0)
+                    - imageWidthPlusSpacing(measuring: image, styleSheet: styleSheet)
+                    - detailWidthPlusSpacing
+                    - (accessory != .none ? accessorySize.width + xSpacing : 0)
+            }
 
             assert(availableWidthForLabelBlock > 0,
                    "availableWidthForLabelBlock (\(availableWidthForLabelBlock)) ≤ 0")

@@ -261,4 +261,37 @@ final class TitledDescriptionSnapshotTests: SnapshotTestCase {
 
         verifyComponentForAllSizes(component: component)
     }
+
+    func test_long_detail_with_fraction() {
+        let component = Component.TitledDescription(
+            texts: [
+                .plain(Array(repeating: "Address", count: 10).joined(separator: " "))
+            ],
+            detail: "Megahight.com, 1 Lily Close 1 Lily Close",
+            accessory: .chevron,
+            styleSheet: Component.TitledDescription.StyleSheet(textBlockWidthFraction: 0.25)
+                .compose(\.detail.textColor, .gray)
+                .compose(\.detail.backgroundColor, .green)
+                .compose(\.textStyles[0].backgroundColor, .red)
+            )
+
+        verifyComponentForAllSizes(component: component)
+    }
+
+    func test_long_detail_with_fraction_and_fixed_number_of_lines() {
+        let component = Component.TitledDescription(
+            texts: [
+                .plain(Array(repeating: "Address", count: 10).joined(separator: " "))
+            ],
+            detail: "Megahight.com, 1 Lily Close 1 Lily Close",
+            accessory: .chevron,
+            styleSheet: Component.TitledDescription.StyleSheet(textBlockWidthFraction: 0.25)
+                .compose(\.detail.textColor, .gray)
+                .compose(\.detail.backgroundColor, .green)
+                .compose(\.textStyles[0].backgroundColor, .red)
+                .compose(\.textStyles[0].numberOfLines, 2)
+        )
+
+        verifyComponentForAllSizes(component: component)
+    }
 }
