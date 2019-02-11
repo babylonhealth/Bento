@@ -180,7 +180,7 @@ final class BookAppointmentViewModel {
                 |---+ RowId.consultant <> IconTitleDetailsComponent(icon: #imageLiteral(resourceName:"consultantIcon"),
                                                                title: "Consultant type",
                                                                subtitle: render(consultantType: appointment.consultantType))
-                |---+ RowId.date <> IconTitleDetailsComponent(icon: #imageLiteral(resourceName:"timeIcon"),
+                |---+ RowId.date <> IconTitleDetailsComponent(icon: #imageLiteral(resourceName: "timeIcon"),
                                                                title: "Date & time",
                                                                subtitle: dateFormatter.string(from: appointment.date))
                 |-+ Section(id: SectionId.audioVideo,
