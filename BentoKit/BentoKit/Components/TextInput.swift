@@ -173,9 +173,9 @@ extension Component.TextInput.View: FocusableView {
 
 extension Component.TextInput {
     public final class StyleSheet: BaseViewStyleSheet<View> {
-        let titleStyle: View.TitleStyle
-        let title: LabelStyleSheet
-        let text: TextStyleSheet<UITextField>
+        public var titleStyle: View.TitleStyle
+        public let title: LabelStyleSheet
+        public let text: TextFieldStylesheet
 
         public init(
             titleStyle: View.TitleStyle = .fillProportionally(0.25),
@@ -183,7 +183,7 @@ extension Component.TextInput {
                 font: UIFont.preferredFont(forTextStyle: .body),
                 textAlignment: .leading
             ),
-            text: TextStyleSheet<UITextField> = TextStyleSheet()
+            text: TextFieldStylesheet = TextFieldStylesheet()
         ) {
             self.titleStyle = titleStyle
             self.title = title

@@ -54,3 +54,16 @@ open class TextStyleSheet<T: UIView & TextViewConfiguratorProtocol>: ViewStyleSh
         element.set(font: font, textColor: textColor, textAlignment: textAlignment)
     }
 }
+
+open class TextFieldStylesheet: TextStyleSheet<UITextField> {
+    public var borderStyle: UITextField.BorderStyle = .none
+    public var isSecureTextEntry: Bool = false
+    public var clearButtonMode: UITextField.ViewMode = .never
+
+    open override func apply(to element: UITextField) {
+        super.apply(to: element)
+        element.borderStyle = borderStyle
+        element.isSecureTextEntry = isSecureTextEntry
+        element.clearButtonMode = clearButtonMode
+    }
+}
