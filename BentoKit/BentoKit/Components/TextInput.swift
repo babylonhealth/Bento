@@ -14,6 +14,7 @@ extension Component {
             placeholder: String? = nil,
             text: TextValue? = nil,
             keyboardType: UIKeyboardType = .default,
+            isEnabled: Bool = true,
             accessory: Accessory = .none,
             textWillChange: Optional<(TextChange) -> Bool> = nil,
             textDidChange: Optional<(String?) -> Void> = nil,
@@ -25,6 +26,7 @@ extension Component {
                 view.titleLabel.isHidden = title?.isEmpty ?? true
                 view.textField.placeholder = placeholder
                 view.textField.keyboardType = keyboardType
+                view.textField.isEnabled = isEnabled
                 text?.apply(to: view.textField)
                 view.accessoryView.accessory = accessory.toAccessoryViewAccessory
                 view.accessoryView.didTap = didTapAccessory
