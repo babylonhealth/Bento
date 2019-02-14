@@ -31,10 +31,12 @@ extension Component {
                     - max(styleSheet.layoutMargins.right, inheritedMargins.right)
                     - styleSheet.button.contentEdgeInsets.horizontalTotal
 
+                let titleHeight = styleSheet.button.height(of: title ?? "", fittingWidth: contentWidth)
+                let imageHeight = styleSheet.button.image(for: .normal)?.size.height ?? 0
+
                 return styleSheet.layoutMargins.verticalTotal
                     + max(
-                        styleSheet.button.contentEdgeInsets.verticalTotal
-                            + styleSheet.button.height(of: title ?? "", fittingWidth: contentWidth),
+                        styleSheet.button.contentEdgeInsets.verticalTotal + max(titleHeight, imageHeight),
                         styleSheet.enforcesMinimumHeight ? 44.0 : 0.0
                     )
             }
@@ -62,8 +64,10 @@ extension Component.Button {
         }()
 
         public var button = Button(type: .system)
-        private var huggingConstraints: [NSLayoutConstraint] = []
-        private var strictConstraints: [NSLayoutConstraint] = []
+
+        private var leadingConstraint: NSLayoutConstraint?
+        private var trailingConstraint: NSLayoutConstraint?
+        private var centerXConstraint: NSLayoutConstraint?
 
         fileprivate var interactionBehavior: InteractionBehavior = .becomeFirstResponder
 
@@ -80,8 +84,13 @@ extension Component.Button {
 
         fileprivate var hugsContent: Bool = false {
             didSet {
-                huggingConstraints.forEach { $0.isActive = hugsContent }
-                strictConstraints.forEach { $0.isActive = hugsContent == false }
+                setupHorizontalConstraints()
+            }
+        }
+
+        fileprivate var alignment: Alignment = .center {
+            didSet {
+                setupHorizontalConstraints()
             }
         }
 
@@ -118,26 +127,9 @@ extension Component.Button {
                 .pinTop(to: layoutMarginsGuide)
                 .pinBottom(to: layoutMarginsGuide)
 
-
-            button.centerXAnchor.constraint(equalTo: layoutMarginsGuide.centerXAnchor)
-                .activated()
+            setupHorizontalConstraints()
 
             button.setContentHuggingPriority(.required, for: .vertical)
-            huggingConstraints = [
-                button.leadingAnchor.constraint(greaterThanOrEqualTo: layoutMarginsGuide.leadingAnchor)
-                    .withPriority(.defaultHigh),
-                layoutMarginsGuide.trailingAnchor.constraint(greaterThanOrEqualTo: button.trailingAnchor)
-                    .withPriority(.defaultHigh)
-            ]
-            strictConstraints = [
-                button.leadingAnchor.constraint(equalTo: layoutMarginsGuide.leadingAnchor)
-                    .withPriority(.defaultHigh),
-                layoutMarginsGuide.trailingAnchor.constraint(equalTo: button.trailingAnchor)
-                    .withPriority(.defaultHigh)
-            ]
-
-            huggingConstraints.forEach { $0.isActive = hugsContent }
-            strictConstraints.forEach { $0.isActive = hugsContent == false }
 
             activityIndicator
                 .add(to: self)
@@ -146,6 +138,43 @@ extension Component.Button {
             if isLoading {
                 activityIndicator.startAnimating()
             }
+        }
+
+        private func setupHorizontalConstraints() {
+            centerXConstraint?.isActive = false
+            leadingConstraint?.isActive = false
+            trailingConstraint?.isActive = false
+
+            centerXConstraint = button.centerXAnchor.constraint(equalTo: layoutMarginsGuide.centerXAnchor)
+            leadingConstraint = {
+                switch (alignment, hugsContent) {
+                case (.leading, _),
+                     (.center, false):
+                    return button.leadingAnchor.constraint(equalTo: layoutMarginsGuide.leadingAnchor)
+                        .withPriority(.defaultHigh)
+                case (.trailing, _),
+                     (.center, true):
+                    return button.leadingAnchor.constraint(greaterThanOrEqualTo: layoutMarginsGuide.leadingAnchor)
+                        .withPriority(.defaultHigh)
+                }
+            }()
+
+            trailingConstraint = {
+                switch (alignment, hugsContent) {
+                case (.leading, _),
+                     (.center, true):
+                    return layoutMarginsGuide.trailingAnchor.constraint(greaterThanOrEqualTo: button.trailingAnchor)
+                        .withPriority(.defaultHigh)
+                case (.trailing, _),
+                     (.center, false):
+                    return layoutMarginsGuide.trailingAnchor.constraint(equalTo: button.trailingAnchor)
+                        .withPriority(.defaultHigh)
+                }
+            }()
+
+            leadingConstraint?.isActive = true
+            trailingConstraint?.isActive = true
+            centerXConstraint?.isActive = (alignment == .center)
         }
 
         @objc private func buttonPressed() {
@@ -163,6 +192,7 @@ public extension Component.Button {
         public let button: ButtonStyleSheet
         public let activityIndicator: ActivityIndicatorStyleSheet
         public var hugsContent: Bool
+        public var alignment: Alignment
         public var autoRoundCorners: Bool
         public var buttonType: UIButton.ButtonType
 
@@ -170,12 +200,14 @@ public extension Component.Button {
             button: ButtonStyleSheet,
             activityIndicator: ActivityIndicatorStyleSheet = .init(),
             hugsContent: Bool = false,
+            alignment: Alignment = .center,
             autoRoundCorners: Bool = false,
             buttonType: UIButton.ButtonType = .system
         ) {
             self.button = button
             self.activityIndicator = activityIndicator
             self.hugsContent = hugsContent
+            self.alignment = alignment
             self.autoRoundCorners = autoRoundCorners
             self.buttonType = buttonType
         }
@@ -186,8 +218,15 @@ public extension Component.Button {
             button.apply(to: element.button)
             activityIndicator.apply(to: element.activityIndicator)
             element.hugsContent = hugsContent
+            element.alignment = alignment
             element.button.autoRoundCorners = autoRoundCorners
         }
+    }
+
+    public enum Alignment {
+        case leading
+        case trailing
+        case center
     }
 }
 
