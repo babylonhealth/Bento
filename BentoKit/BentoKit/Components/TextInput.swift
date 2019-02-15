@@ -14,6 +14,7 @@ extension Component {
             placeholder: String? = nil,
             text: TextValue? = nil,
             keyboardType: UIKeyboardType = .default,
+            isEnabled: Bool = true,
             accessory: Accessory = .none,
             textWillChange: Optional<(TextChange) -> Bool> = nil,
             textDidChange: Optional<(String?) -> Void> = nil,
@@ -25,6 +26,7 @@ extension Component {
                 view.titleLabel.isHidden = title?.isEmpty ?? true
                 view.textField.placeholder = placeholder
                 view.textField.keyboardType = keyboardType
+                view.textField.isEnabled = isEnabled
                 text?.apply(to: view.textField)
                 view.accessoryView.accessory = accessory.toAccessoryViewAccessory
                 view.accessoryView.didTap = didTapAccessory
@@ -171,9 +173,9 @@ extension Component.TextInput.View: FocusableView {
 
 extension Component.TextInput {
     public final class StyleSheet: BaseViewStyleSheet<View> {
-        let titleStyle: View.TitleStyle
-        let title: LabelStyleSheet
-        let text: TextStyleSheet<UITextField>
+        public var titleStyle: View.TitleStyle
+        public let title: LabelStyleSheet
+        public let text: TextFieldStylesheet
 
         public init(
             titleStyle: View.TitleStyle = .fillProportionally(0.25),
@@ -181,7 +183,7 @@ extension Component.TextInput {
                 font: UIFont.preferredFont(forTextStyle: .body),
                 textAlignment: .leading
             ),
-            text: TextStyleSheet<UITextField> = TextStyleSheet()
+            text: TextFieldStylesheet = TextFieldStylesheet()
         ) {
             self.titleStyle = titleStyle
             self.title = title
