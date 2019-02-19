@@ -70,7 +70,7 @@ class AnyRenderableBox<Base: Renderable>: AnyRenderableBoxBase where Base.View: 
     }
 
     override var viewType: Any.Type {
-        return Base.View.self
+        return (base as? AnyRenderable)?.viewType ?? Base.View.self
     }
 
     let base: Base
