@@ -164,6 +164,6 @@ extension UICollectionView: TestableContainer {
     }
 
     fileprivate func invalidateLayout() {
-        collectionViewLayout.invalidateLayout()
+        reloadData()
     }
 }
