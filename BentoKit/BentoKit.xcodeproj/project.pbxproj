@@ -83,6 +83,7 @@
 		B5234D63216EB0060061AD8B /* ImageOrLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5234D62216EB0060061AD8B /* ImageOrLabel.swift */; };
 		B5BD11C6219301D500DC6A51 /* Search.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5BD11C5219301D500DC6A51 /* Search.swift */; };
 		B5BD11C821930A2400DC6A51 /* SearchSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5BD11C721930A2400DC6A51 /* SearchSnapshotTests.swift */; };
+		F21326B2221EF0850017F944 /* FocusTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = F21326B1221EF0850017F944 /* FocusTextField.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -190,6 +191,7 @@
 		B5234D62216EB0060061AD8B /* ImageOrLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageOrLabel.swift; sourceTree = "<group>"; };
 		B5BD11C5219301D500DC6A51 /* Search.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Search.swift; sourceTree = "<group>"; };
 		B5BD11C721930A2400DC6A51 /* SearchSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchSnapshotTests.swift; sourceTree = "<group>"; };
+		F21326B1221EF0850017F944 /* FocusTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FocusTextField.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -339,6 +341,7 @@
 				580B6140215D343E00A69E87 /* InteractiveView.swift */,
 				585B4B1E215E721600C8304A /* BentoTableView.swift */,
 				7421E0272192D9B70014F631 /* Resources.swift */,
+				F21326B1221EF0850017F944 /* FocusTextField.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -635,6 +638,7 @@
 				580B614A215D353B00A69E87 /* InputNodes.swift in Sources */,
 				B5BD11C6219301D500DC6A51 /* Search.swift in Sources */,
 				65020C3022030CB000DC8F42 /* InteractionBehavior.swift in Sources */,
+				F21326B2221EF0850017F944 /* FocusTextField.swift in Sources */,
 				580B6134215D2F6800A69E87 /* TextInput.swift in Sources */,
 				A6EC2DB0218B28AA002B128F /* BoxViewModel.swift in Sources */,
 				580B611F215D2F6100A69E87 /* HeightCustomizing.swift in Sources */,
