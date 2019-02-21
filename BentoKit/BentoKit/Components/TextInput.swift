@@ -65,9 +65,7 @@ extension Component.TextInput {
             case fillProportionally(CGFloat)
         }
 
-        fileprivate let contentView = UIView().with {
-            $0.translatesAutoresizingMaskIntoConstraints = false
-        }
+        fileprivate let contentView = UIView()
 
         private var titleLabelWidthConstraint: NSLayoutConstraint? {
             willSet { titleLabelWidthConstraint?.isActive = false }
