@@ -52,7 +52,7 @@ extension Component.MultilineTextInput {
         fileprivate let sendButton = UIButton(type: .system).with {
             $0.translatesAutoresizingMaskIntoConstraints = false
             $0.setContentHuggingPriority(.required, for: .vertical)
-            $0.setContentHuggingPriority(.defaultHigh, for: .horizontal)
+            $0.setContentHuggingPriority(.required, for: .horizontal)
             $0.setContentCompressionResistancePriority(.required, for: .horizontal)
             $0.setContentCompressionResistancePriority(.required, for: .vertical)
             $0.widthAnchor.constraint(greaterThanOrEqualToConstant: 30).activated()
@@ -67,6 +67,7 @@ extension Component.MultilineTextInput {
         public override init(frame: CGRect) {
             super.init(frame: frame)
 
+            textView.delegate = self
             sendButton.addTarget(
                 self,
                 action: #selector(sendButtonPressed),
@@ -75,16 +76,15 @@ extension Component.MultilineTextInput {
 
             contentView.add(to: self).pinEdges(to: layoutMarginsGuide)
 
-            textView.delegate = self
-            textView.add(to: contentView).pinEdges(to: contentView.layoutMarginsGuide)
+            stack(.horizontal, spacing: 4, alignment: .bottom)(
+                textView,
+                sendButton
+            )
+            .add(to: contentView)
+            .pinEdges(to: contentView.layoutMarginsGuide)
+
 
             contentView.addSubview(placeholderLabel)
-            contentView.addSubview(sendButton)
-
-            NSLayoutConstraint.activate([
-                contentView.layoutMarginsGuide.trailingAnchor.constraint(equalTo: sendButton.trailingAnchor),
-                contentView.layoutMarginsGuide.bottomAnchor.constraint(equalTo: sendButton.bottomAnchor)
-            ])
 
             // Pin the placeholder label to the layout margins guide. The bottom
             // edge should have lower priority than 1000 so that the UITextView
