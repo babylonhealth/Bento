@@ -19,6 +19,10 @@ public extension Renderable where View: UIView {
     func generate() -> View {
         return View()
     }
+
+    public func asAnyRenderable() -> AnyRenderable {
+        return AnyRenderable(self)
+    }
 }
 
 public extension Renderable where View: UIView & NibLoadable {
