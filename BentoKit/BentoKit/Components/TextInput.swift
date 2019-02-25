@@ -4,6 +4,7 @@ import Foundation
 
 extension Component {
     public final class TextInput: AutoRenderable, Focusable {
+        public typealias Accessory = FocusTextField.Accessory
 
         public let configurator: (View) -> Void
         public let styleSheet: StyleSheet
@@ -108,7 +109,7 @@ extension Component.TextInput {
     public final class StyleSheet: BaseViewStyleSheet<View> {
         public var titleStyle: View.TitleStyle
         public let title: LabelStyleSheet
-        public let text: FocusTextField.StyleSheet
+        public let text: TextFieldStylesheet
         public let content: ViewStyleSheet<UIView>
 
         public init(
@@ -117,7 +118,7 @@ extension Component.TextInput {
                 font: UIFont.preferredFont(forTextStyle: .body),
                 textAlignment: .leading
             ),
-            text: FocusTextField.StyleSheet = FocusTextField.StyleSheet(),
+            text: TextFieldStylesheet = TextFieldStylesheet(),
             content: ViewStyleSheet<UIView> = ViewStyleSheet(layoutMargins: .zero)
         ) {
             self.titleStyle = titleStyle
@@ -130,7 +131,7 @@ extension Component.TextInput {
             super.apply(to: element)
             element.titleStyle = titleStyle
             title.apply(to: element.titleLabel)
-            text.apply(to: element.textField)
+            text.apply(to: element.textField.textField)
             content.apply(to: element.contentView)
         }
     }

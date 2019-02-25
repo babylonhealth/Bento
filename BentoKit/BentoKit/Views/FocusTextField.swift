@@ -6,8 +6,10 @@ public final class FocusTextField: UIView, UITextFieldDelegate {
     public let accessoryView = AccessoryView()
     public let textField = UITextField()
 
-    var textWillChange: Optional<(TextChange) -> Bool> = nil
-    var textDidChange: Optional<(String?) -> Void> = nil
+    public var textWillChange: Optional<(TextChange) -> Bool> = nil
+    public var textDidChange: Optional<(String?) -> Void> = nil
+    public var didBeginEditing: (() -> ())?
+    public var didEndEditing: (() -> ())?
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -53,11 +55,17 @@ public final class FocusTextField: UIView, UITextFieldDelegate {
     @objc public func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
         updateReturnKey()
         textField.inputAccessoryView = FocusToolbar(view: self)
+        didBeginEditing?()
         return true
     }
 
     public func textFieldDidEndEditing(_ textField: UITextField, reason: UITextField.DidEndEditingReason) {
         textField.inputAccessoryView = nil
+        didEndEditing?()
+    }
+
+    public override func becomeFirstResponder() -> Bool {
+        return textField.becomeFirstResponder()
     }
 
     private func updateReturnKey() {
@@ -110,23 +118,6 @@ extension FocusTextField {
             case .none:
                 return .none
             }
-        }
-    }
-}
-
-extension FocusTextField {
-    public final class StyleSheet: ViewStyleSheet<FocusTextField> {
-        public let text: TextFieldStylesheet
-
-        public init(
-            text: TextFieldStylesheet = TextFieldStylesheet()
-            ) {
-            self.text = text
-        }
-
-        public override func apply(to element: FocusTextField) {
-            super.apply(to: element)
-            text.apply(to: element.textField)
         }
     }
 }
