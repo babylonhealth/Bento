@@ -36,6 +36,16 @@ class StyleSheetTests: XCTestCase {
         testStyleSheet(styleSheet, in: stackView, exemptions: ["cornerRadius", "masksToBounds", "borderColor", "borderWidth"])
     }
 
+    func test_test_field_styleSheet() {
+        let textField = TextField(frame: .zero)
+        let styleSheet = TextFieldStylesheet()
+
+        testStyleSheet(styleSheet, in: textField, exemptions: ["cornerRadius", "masksToBounds", "borderColor", "borderWidth", "isSecureTextEntry", "clearButtonMode"])
+        XCTAssertTrue(textField.isClearButtonModeCalled)
+        XCTAssertTrue(textField.isSecureTextEntryCalled)
+        XCTAssertTrue(textField.isBorderStyleCalled)
+    }
+
     func testStyleSheet<S: StyleSheetProtocol, Element>(
         _ styleSheet: S,
         in element: Element,
@@ -82,5 +92,31 @@ private final class PropertyObserver: NSObject {
             else { fatalError() }
 
         changes[keyPath] = value
+    }
+}
+
+final class TextField: UITextField {
+    var isSecureTextEntryCalled = false
+
+    override var isSecureTextEntry: Bool {
+        didSet {
+            isSecureTextEntryCalled = true
+        }
+    }
+
+    var isBorderStyleCalled = false
+
+    override var borderStyle: UITextField.BorderStyle {
+        didSet {
+            isBorderStyleCalled = true
+        }
+    }
+
+    var isClearButtonModeCalled = false
+
+    override var clearButtonMode: UITextField.ViewMode {
+        didSet {
+            isClearButtonModeCalled = true
+        }
     }
 }

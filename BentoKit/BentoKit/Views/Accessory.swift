@@ -13,6 +13,11 @@ public final class AccessoryView: InteractiveView {
         }
     }
 
+    public var interactionBehavior: InteractionBehavior {
+        get { return highlightingGesture.interactionBehavior }
+        set { highlightingGesture.interactionBehavior = newValue }
+    }
+
     private var view: UIView? {
         didSet {
             oldValue?.removeFromSuperview()

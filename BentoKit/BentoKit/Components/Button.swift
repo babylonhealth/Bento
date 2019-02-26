@@ -15,6 +15,7 @@ extension Component {
             isEnabled: Bool = true,
             isLoading: Bool = false,
             didTap: (() -> Void)? = nil,
+            interactionBehavior: InteractionBehavior = .becomeFirstResponder,
             styleSheet: StyleSheet
         ) {
             self.configurator = { view in
@@ -22,6 +23,7 @@ extension Component {
                 view.button.isEnabled = isEnabled
                 view.button.setTitle(title, for: .normal)
                 view.didTap = didTap
+                view.interactionBehavior = interactionBehavior
             }
             self.heightComputer = { width, inheritedMargins in
                 let contentWidth = width
@@ -29,10 +31,12 @@ extension Component {
                     - max(styleSheet.layoutMargins.right, inheritedMargins.right)
                     - styleSheet.button.contentEdgeInsets.horizontalTotal
 
+                let titleHeight = styleSheet.button.height(of: title ?? "", fittingWidth: contentWidth)
+                let imageHeight = styleSheet.button.image(for: .normal)?.size.height ?? 0
+
                 return styleSheet.layoutMargins.verticalTotal
                     + max(
-                        styleSheet.button.contentEdgeInsets.verticalTotal
-                            + styleSheet.button.height(of: title ?? "", fittingWidth: contentWidth),
+                        styleSheet.button.contentEdgeInsets.verticalTotal + max(titleHeight, imageHeight),
                         styleSheet.enforcesMinimumHeight ? 44.0 : 0.0
                     )
             }
@@ -59,28 +63,34 @@ extension Component.Button {
             }
         }()
 
-        public let button = Button(type: .system).with {
-            $0.setContentHuggingPriority(.required, for: .vertical)
+        public var button = Button(type: .system)
+
+        private var leadingConstraint: NSLayoutConstraint?
+        private var trailingConstraint: NSLayoutConstraint?
+        private var centerXConstraint: NSLayoutConstraint?
+
+        fileprivate var interactionBehavior: InteractionBehavior = .becomeFirstResponder
+
+        fileprivate var buttonType: UIButton.ButtonType = .system {
+            didSet {
+                guard oldValue != buttonType else { return }
+
+                button = Button(type: buttonType)
+                button.addTarget(self, action: #selector(buttonPressed), for: .touchUpInside)
+
+                setupLayout()
+            }
         }
-
-        private lazy var huggingConstraints: [NSLayoutConstraint] = [
-            button.leadingAnchor.constraint(greaterThanOrEqualTo: layoutMarginsGuide.leadingAnchor)
-                .withPriority(.defaultHigh),
-            layoutMarginsGuide.trailingAnchor.constraint(greaterThanOrEqualTo: button.trailingAnchor)
-                .withPriority(.defaultHigh)
-        ]
-
-        private lazy var strictConstraints: [NSLayoutConstraint] = [
-            button.leadingAnchor.constraint(equalTo: layoutMarginsGuide.leadingAnchor)
-                .withPriority(.defaultHigh),
-            layoutMarginsGuide.trailingAnchor.constraint(equalTo: button.trailingAnchor)
-                .withPriority(.defaultHigh)
-        ]
 
         fileprivate var hugsContent: Bool = false {
             didSet {
-                huggingConstraints.forEach { $0.isActive = hugsContent }
-                strictConstraints.forEach { $0.isActive = hugsContent == false }
+                setupHorizontalConstraints()
+            }
+        }
+
+        fileprivate var alignment: Alignment = .center {
+            didSet {
+                setupHorizontalConstraints()
             }
         }
 
@@ -98,6 +108,7 @@ extension Component.Button {
 
         public override init(frame: CGRect) {
             super.init(frame: frame)
+
             button.addTarget(self, action: #selector(buttonPressed), for: .touchUpInside)
             setupLayout()
         }
@@ -108,48 +119,114 @@ extension Component.Button {
         }
 
         private func setupLayout() {
+            activityIndicator.removeFromSuperview()
+            button.removeFromSuperview()
+
             button
                 .add(to: self)
                 .pinTop(to: layoutMarginsGuide)
                 .pinBottom(to: layoutMarginsGuide)
 
-            button.centerXAnchor.constraint(equalTo: layoutMarginsGuide.centerXAnchor)
-                .activated()
-            strictConstraints.forEach { $0.isActive = true }
+            setupHorizontalConstraints()
+
+            button.setContentHuggingPriority(.required, for: .vertical)
 
             activityIndicator
                 .add(to: self)
                 .pinCenter(to: button)
+
+            if isLoading {
+                activityIndicator.startAnimating()
+            }
+        }
+
+        private func setupHorizontalConstraints() {
+            centerXConstraint?.isActive = false
+            leadingConstraint?.isActive = false
+            trailingConstraint?.isActive = false
+
+            centerXConstraint = button.centerXAnchor.constraint(equalTo: layoutMarginsGuide.centerXAnchor)
+            leadingConstraint = {
+                switch (alignment, hugsContent) {
+                case (.leading, _),
+                     (.center, false):
+                    return button.leadingAnchor.constraint(equalTo: layoutMarginsGuide.leadingAnchor)
+                        .withPriority(.defaultHigh)
+                case (.trailing, _),
+                     (.center, true):
+                    return button.leadingAnchor.constraint(greaterThanOrEqualTo: layoutMarginsGuide.leadingAnchor)
+                        .withPriority(.defaultHigh)
+                }
+            }()
+
+            trailingConstraint = {
+                switch (alignment, hugsContent) {
+                case (.leading, _),
+                     (.center, true):
+                    return layoutMarginsGuide.trailingAnchor.constraint(greaterThanOrEqualTo: button.trailingAnchor)
+                        .withPriority(.defaultHigh)
+                case (.trailing, _),
+                     (.center, false):
+                    return layoutMarginsGuide.trailingAnchor.constraint(equalTo: button.trailingAnchor)
+                        .withPriority(.defaultHigh)
+                }
+            }()
+
+            leadingConstraint?.isActive = true
+            trailingConstraint?.isActive = true
+            centerXConstraint?.isActive = (alignment == .center)
         }
 
         @objc private func buttonPressed() {
-            becomeFirstResponder()
+            if interactionBehavior.contains(.becomeFirstResponder) {
+                becomeFirstResponder()
+            }
+
             didTap?()
         }
     }
 }
 
 public extension Component.Button {
-    public final class StyleSheet: BaseViewStyleSheet<View> {
+    public final class StyleSheet: InteractiveViewStyleSheet<View> {
         public let button: ButtonStyleSheet
         public let activityIndicator: ActivityIndicatorStyleSheet
         public var hugsContent: Bool
+        public var alignment: Alignment
         public var autoRoundCorners: Bool
+        public var buttonType: UIButton.ButtonType
 
-        public init(button: ButtonStyleSheet, activityIndicator: ActivityIndicatorStyleSheet = .init(), hugsContent: Bool = false, autoRoundCorners: Bool = false) {
+        public init(
+            button: ButtonStyleSheet,
+            activityIndicator: ActivityIndicatorStyleSheet = .init(),
+            hugsContent: Bool = false,
+            alignment: Alignment = .center,
+            autoRoundCorners: Bool = false,
+            buttonType: UIButton.ButtonType = .system
+        ) {
             self.button = button
             self.activityIndicator = activityIndicator
             self.hugsContent = hugsContent
+            self.alignment = alignment
             self.autoRoundCorners = autoRoundCorners
+            self.buttonType = buttonType
         }
 
         public override func apply(to element: Component.Button.View) {
             super.apply(to: element)
+            element.buttonType = buttonType
             button.apply(to: element.button)
             activityIndicator.apply(to: element.activityIndicator)
             element.hugsContent = hugsContent
+            element.alignment = alignment
             element.button.autoRoundCorners = autoRoundCorners
         }
+    }
+
+    public enum Alignment {
+        case leading
+        case trailing
+        case center
     }
 }
 

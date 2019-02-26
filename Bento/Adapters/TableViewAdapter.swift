@@ -21,8 +21,7 @@ open class TableViewAdapterBase<SectionID: Hashable, ItemID: Hashable>
         let diff = TableViewSectionDiff(oldSections: self.sections,
                                         newSections: sections,
                                         animation: animation)
-        self.sections = sections
-        diff.apply(to: tableView)
+        diff.apply(to: tableView, updateAdapter: { self.sections = sections })
     }
 
     func update(sections: [Section<SectionID, ItemID>]) {

@@ -7,6 +7,9 @@ public protocol Renderable {
 }
 
 public extension Renderable {
+    func asAnyRenderable() -> AnyRenderable {
+        return AnyRenderable(self)
+    }
 
     func deletable(
         deleteActionText: String,

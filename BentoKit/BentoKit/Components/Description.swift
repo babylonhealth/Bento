@@ -19,9 +19,11 @@ extension Component {
                     accessoryIcon: UIImage? = nil,
                     didTap: (() -> Void)? = nil,
                     didTapAccessoryButton: (() -> Void)? = nil,
+                    interactionBehavior: InteractionBehavior = .becomeFirstResponder,
                     styleSheet: StyleSheet) {
             self.configurator = { view in
                 view.textLabel.text = text
+                view.interactionBehavior = interactionBehavior
                 view.didTap = didTap
                 view.didTapAccessoryButton = didTapAccessoryButton
                 view.accessoryButton.isHidden = accessoryIcon == nil
@@ -70,6 +72,8 @@ extension Component.Description {
             $0.addTarget(self, action: #selector(accessoryButtonPressed), for: .touchUpInside)
         }
 
+        fileprivate var interactionBehavior: InteractionBehavior = .becomeFirstResponder
+
         fileprivate var didTap: (() -> Void)? {
             didSet {
                 highlightingGesture.didTap = didTap.map(HighlightingGesture.TapAction.resign)
@@ -101,7 +105,10 @@ extension Component.Description {
         }
 
         @objc private func accessoryButtonPressed() {
-            becomeFirstResponder()
+            if interactionBehavior.contains(.becomeFirstResponder) {
+                becomeFirstResponder()
+            }
+
             didTapAccessoryButton?()
         }
     }

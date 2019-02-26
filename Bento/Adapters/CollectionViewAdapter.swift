@@ -32,8 +32,7 @@ open class CollectionViewAdapterBase<SectionID: Hashable, ItemID: Hashable>
         let diff = CollectionViewSectionDiff(oldSections: self.sections,
                                              newSections: sections,
                                              knownSupplements: knownSupplements)
-        self.sections = sections
-        diff.apply(to: collectionView, completion: completion)
+        diff.apply(to: collectionView, updateAdapter: { self.sections = sections }, completion: completion)
     }
 
     @objc(numberOfSectionsInCollectionView:)
