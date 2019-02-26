@@ -21,6 +21,9 @@ class AnyRenderableTests: XCTestCase {
         let renderable = factory(base)
 
         expect(renderable.viewType) === TestView.self
+        expect(renderable.componentType) === TestRenderable.self
+        expect(renderable.fullyQualifiedTypeName) == String(reflecting: TestRenderable.self)
+        expect(renderable.fullyQualifiedTypeName) == "BentoTests.TestRenderable"
 
         let view = renderable.viewType.generate()
         expect(type(of: view)) === TestView.self
@@ -37,11 +40,13 @@ class AnyRenderableTests: XCTestCase {
 
 }
 
-private class TestView: UIView {
+internal class TestView: UIView {
     var hasInvoked = false
 }
 
-private final class TestRenderable: Renderable {
+// NOTE: Marked as internal so that the fully qualified type name (needed by a test assertion) does not depend on the
+//       source location.
+internal final class TestRenderable: Renderable {
     let renderAction: (TestView) -> Void
 
     init(render: @escaping (TestView) -> Void) {

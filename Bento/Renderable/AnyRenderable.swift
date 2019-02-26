@@ -1,13 +1,25 @@
 import UIKit
 
 public struct AnyRenderable: Renderable {
-    var viewType: NativeView.Type {
+    /// The runtime view type of the wrapped `Renderable`.
+    public var viewType: NativeView.Type {
         return base.viewType
+    }
+
+    /// The runtime component type of the wrapped `Renderable`.
+    public var componentType: Any.Type {
+        return base.componentType
+    }
+
+    internal var fullyQualifiedTypeName: String {
+        /// NOTE: `String.init(reflecting:)` gives the fully qualified type name.
+        //        Tests would catch unexpeced type name printing behavior due to Swift runtime changes.
+        return String(reflecting: componentType)
     }
 
     private let base: AnyRenderableBoxBase
 
-    init<Base: Renderable>(_ base: Base) {
+    public init<Base: Renderable>(_ base: Base) {
         self.base = AnyRenderableBox(base)
     }
 
@@ -61,6 +73,10 @@ class AnyRenderableBox<Base: Renderable>: AnyRenderableBoxBase {
         return (base as? AnyRenderable)?.viewType ?? Base.View.self
     }
 
+    override var componentType: Any.Type {
+        return (base as? AnyRenderable)?.componentType ?? Base.self
+    }
+
     let base: Base
 
     init(_ base: Base) {
@@ -82,6 +98,7 @@ class AnyRenderableBox<Base: Renderable>: AnyRenderableBoxBase {
 
 class AnyRenderableBoxBase {
     var viewType: NativeView.Type { fatalError() }
+    var componentType: Any.Type { fatalError() }
 
     init() {}
 
