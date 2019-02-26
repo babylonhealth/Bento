@@ -91,13 +91,6 @@ extension Component.MultilineTextInput {
         @available(*, unavailable)
         public required init?(coder aDecoder: NSCoder) { fatalError() }
 
-        @objc
-        private func sendButtonPressed() {
-            guard let text = textView.text, text.isEmpty.isFalse else { return }
-            textView.resignFirstResponder()
-            didFinishEditing?(text)
-        }
-
         public override func resignFirstResponder() -> Bool {
             textView.resignFirstResponder()
             return super.resignFirstResponder()
