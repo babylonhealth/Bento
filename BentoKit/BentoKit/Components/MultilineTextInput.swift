@@ -14,19 +14,18 @@ extension Component {
         public init(
             text: String,
             placeholder: String,
-            showsSendButton: Bool = false,
+            showsFocusToolbar: Bool = true,
             didChangeText: Optional<(String) -> Void> = nil,
             didFinishEditing: @escaping (String) -> Void,
             styleSheet: StyleSheet
         ) {
             self.configurator = { view in
+                view.showsFocusToolbar = showsFocusToolbar
                 view.textView.text = text
                 view.placeholderLabel.text = placeholder
                 view.placeholderLabel.isHidden = text.isEmpty == false
                 view.didFinishEditing = didFinishEditing
                 view.didChangeText = didChangeText
-                view.sendButton.isEnabled = text.isEmpty.isFalse
-                view.sendButton.isHidden = showsSendButton.isFalse
             }
             self.focusEligibility = text.isEmpty == false ? .eligible(.populated) : .eligible(.empty)
             self.styleSheet = styleSheet
@@ -45,57 +44,48 @@ extension Component.MultilineTextInput {
             $0.textContainer.lineFragmentPadding = 0.0
         }
 
+        fileprivate var textContainerInset = UIEdgeInsets.zero {
+            didSet {
+                textView.textContainerInset = textContainerInset
+                placeHolderConstraints.forEach { $0.isActive = false }
+
+                // Pin the placeholder label to the contentView. The bottom
+                // edge should have lower priority than 1000 so that the UITextView
+                // can take precedence when the content height is being determined.
+                placeHolderConstraints = [
+                    contentView.layoutMarginsGuide.topAnchor.constraint(equalTo: placeholderLabel.topAnchor, constant: textContainerInset.top),
+                    contentView.layoutMarginsGuide.leadingAnchor.constraint(equalTo: placeholderLabel.leadingAnchor, constant: textContainerInset.left),
+                    contentView.layoutMarginsGuide.trailingAnchor.constraint(equalTo: placeholderLabel.trailingAnchor, constant: textContainerInset.right),
+                    contentView.layoutMarginsGuide.bottomAnchor.constraint(equalTo: placeholderLabel.bottomAnchor, constant: textContainerInset.bottom)
+                        .withPriority(.defaultHigh),
+                ]
+
+                placeHolderConstraints.forEach { $0.isActive = true }
+            }
+        }
+
+        fileprivate var showsFocusToolbar = true
+
         fileprivate let placeholderLabel = UILabel().with {
             $0.translatesAutoresizingMaskIntoConstraints = false
         }
-        fileprivate let contentView = UIView()
-        fileprivate let sendButton = UIButton(type: .system).with {
-            $0.translatesAutoresizingMaskIntoConstraints = false
-            $0.setContentHuggingPriority(.required, for: .vertical)
-            $0.setContentHuggingPriority(.required, for: .horizontal)
-            $0.setContentCompressionResistancePriority(.required, for: .horizontal)
-            $0.setContentCompressionResistancePriority(.required, for: .vertical)
-            $0.widthAnchor.constraint(greaterThanOrEqualToConstant: 30).activated()
-            $0.heightAnchor.constraint(greaterThanOrEqualToConstant: 30).activated()
-        }
 
-        var didFinishEditing: Optional<(String) -> Void> = nil
-        var didChangeText: Optional<(String) -> Void> = nil
+        fileprivate let contentView = UIView()
+
+        fileprivate var didFinishEditing: Optional<(String) -> Void> = nil
+        fileprivate var didChangeText: Optional<(String) -> Void> = nil
 
         private var lastKnownContentHeight: CGFloat = 0.0
+        private var placeHolderConstraints = [NSLayoutConstraint]()
 
         public override init(frame: CGRect) {
             super.init(frame: frame)
 
             textView.delegate = self
-            sendButton.addTarget(
-                self,
-                action: #selector(sendButtonPressed),
-                for: .primaryActionTriggered
-            )
 
             contentView.add(to: self).pinEdges(to: layoutMarginsGuide)
-
-            stack(.horizontal, spacing: 4, alignment: .bottom)(
-                textView,
-                sendButton
-            )
-            .add(to: contentView)
-            .pinEdges(to: contentView.layoutMarginsGuide)
-
-
+            textView.add(to: contentView).pinEdges(to: contentView.layoutMarginsGuide)
             contentView.addSubview(placeholderLabel)
-
-            // Pin the placeholder label to the layout margins guide. The bottom
-            // edge should have lower priority than 1000 so that the UITextView
-            // can take precedence when the content height is being determined.
-            NSLayoutConstraint.activate([
-                contentView.layoutMarginsGuide.topAnchor.constraint(equalTo: placeholderLabel.topAnchor),
-                contentView.layoutMarginsGuide.leadingAnchor.constraint(equalTo: placeholderLabel.leadingAnchor),
-                contentView.layoutMarginsGuide.trailingAnchor.constraint(equalTo: placeholderLabel.trailingAnchor),
-                contentView.layoutMarginsGuide.bottomAnchor.constraint(equalTo: placeholderLabel.bottomAnchor)
-                    .withPriority(.defaultHigh),
-            ])
         }
 
         @available(*, unavailable)
@@ -106,6 +96,11 @@ extension Component.MultilineTextInput {
             guard let text = textView.text, text.isEmpty.isFalse else { return }
             textView.resignFirstResponder()
             didFinishEditing?(text)
+        }
+
+        public override func resignFirstResponder() -> Bool {
+            textView.resignFirstResponder()
+            return super.resignFirstResponder()
         }
     }
 }
@@ -128,8 +123,6 @@ extension Component.MultilineTextInput.View: UITextViewDelegate {
     }
 
     public func textViewDidChange(_ textView: UITextView) {
-        sendButton.isEnabled = textView.text.isEmpty.isFalse
-
         didChangeText?(textView.text)
         placeholderLabel.isHidden = textView.text.isEmpty == false
 
@@ -150,7 +143,7 @@ extension Component.MultilineTextInput.View: UITextViewDelegate {
     }
 
     public func textViewShouldBeginEditing(_ textView: UITextView) -> Bool {
-        textView.inputAccessoryView = sendButton.isHidden ? FocusToolbar(view: self) : nil
+        textView.inputAccessoryView = showsFocusToolbar ? FocusToolbar(view: self) : nil
         return true
     }
 
@@ -165,7 +158,6 @@ extension Component.MultilineTextInput {
         public var textContainerInset: UIEdgeInsets
         public var text: TextStyleSheet<UITextView>
         public var content: ViewStyleSheet<UIView>
-        public var send: ButtonStyleSheet
 
         public convenience init(
             font: UIFont,
@@ -182,23 +174,20 @@ extension Component.MultilineTextInput {
             placeholderTextColor: UIColor,
             textContainerInset: UIEdgeInsets = .zero,
             text: TextStyleSheet<UITextView> = TextStyleSheet(),
-            content: ViewStyleSheet<UIView> = ViewStyleSheet(layoutMargins: .zero),
-            send: ButtonStyleSheet = ButtonStyleSheet().compose(\.layoutMargins, .zero)
+            content: ViewStyleSheet<UIView> = ViewStyleSheet(layoutMargins: .zero)
         ) {
             self.placeholderTextColor = placeholderTextColor
             self.textContainerInset = textContainerInset
             self.text = text
             self.content = content
-            self.send = send
         }
 
         public override func apply(to view: View) {
             view.placeholderLabel.font = text.font
             view.placeholderLabel.textColor = placeholderTextColor
-            view.textView.textContainerInset = textContainerInset
+            view.textContainerInset = textContainerInset
             text.apply(to: view.textView)
             content.apply(to: view.contentView)
-            send.apply(to: view.sendButton)
             super.apply(to: view)
         }
     }
