@@ -66,48 +66,4 @@ final class MultilineTextInputSnapshotTests: SnapshotTestCase {
 
         verifyComponentForAllSizes(component: component)
     }
-
-    func test_ShowingPlaceholder_WhenHavingNoText_WithContentStyle_WithSendButton() {
-        let component = Component.MultilineTextInput(
-            text: "",
-            placeholder: "No Text",
-            showsSendButton: true,
-            didFinishEditing: { _ in },
-            styleSheet: Component.MultilineTextInput.StyleSheet(
-                placeholderTextColor: .darkGray,
-                content: ViewStyleSheet()
-                    .compose(\.backgroundColor, .lightGray)
-                    .compose(\.cornerRadius, 10)
-                    .compose(\.masksToBounds, true),
-                send: ButtonStyleSheet()
-                .compose(\.backgroundColor, .red)
-                .compose(\.cornerRadius, 5)
-                .compose(\.masksToBounds, true)
-            )
-        )
-
-        verifyComponentForAllSizes(component: component)
-    }
-
-    func test_ShowingMultilineText_WithContentStyle_WithSendButton() {
-        let component = Component.MultilineTextInput(
-            text: loremIpsum,
-            placeholder: "",
-            showsSendButton: true,
-            didFinishEditing: { _ in },
-            styleSheet: Component.MultilineTextInput.StyleSheet(
-                placeholderTextColor: .darkGray,
-                content: ViewStyleSheet()
-                    .compose(\.backgroundColor, .lightGray)
-                    .compose(\.cornerRadius, 10)
-                    .compose(\.masksToBounds, true),
-                send: ButtonStyleSheet()
-                .compose(\.backgroundColor, .red)
-                .compose(\.cornerRadius, 5)
-                .compose(\.masksToBounds, true)
-            )
-        )
-
-        verifyComponentForAllSizes(component: component)
-    }
 }
