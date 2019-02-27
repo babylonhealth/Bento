@@ -13,7 +13,7 @@ extension BentoReusableView {
             if let view = containedView, type(of: view) == component.viewType {
                 renderingView = view
             } else {
-                renderingView = component.generate()
+                renderingView = component.viewType.generate()
                 containedView = renderingView
             }
 

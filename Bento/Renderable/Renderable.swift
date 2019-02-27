@@ -1,37 +1,15 @@
 import UIKit
 
 public protocol Renderable {
-    associatedtype View
+    associatedtype View: NativeView
 
-    var reuseIdentifier: String { get }
-
-    func generate() -> View
     func render(in view: View)
 }
 
 public extension Renderable {
-    var reuseIdentifier: String {
-        return String(reflecting: View.self)
-    }
-}
-
-public extension Renderable where View: UIView {
-    func generate() -> View {
-        return View()
-    }
-
-    public func asAnyRenderable() -> AnyRenderable {
+    func asAnyRenderable() -> AnyRenderable {
         return AnyRenderable(self)
     }
-}
-
-public extension Renderable where View: UIView & NibLoadable {
-    func generate() -> View {
-        return View.loadFromNib()
-    }
-}
-
-public extension Renderable where View: UIView {
 
     func deletable(
         deleteActionText: String,

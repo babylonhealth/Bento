@@ -1,26 +1,30 @@
 import UIKit
 
 public struct AnyRenderable: Renderable {
-    public var reuseIdentifier: String {
-        return base.reuseIdentifier
+    /// The runtime view type of the wrapped `Renderable`.
+    public var viewType: NativeView.Type {
+        return base.viewType
     }
 
-    var viewType: Any.Type {
-        return base.viewType
+    /// The runtime component type of the wrapped `Renderable`.
+    public var componentType: Any.Type {
+        return base.componentType
+    }
+
+    internal var fullyQualifiedTypeName: String {
+        /// NOTE: `String.init(reflecting:)` gives the fully qualified type name.
+        //        Tests would catch unexpeced type name printing behavior due to Swift runtime changes.
+        return String(reflecting: componentType)
     }
 
     private let base: AnyRenderableBoxBase
 
-    init<Base: Renderable>(_ base: Base) where Base.View: UIView {
+    public init<Base: Renderable>(_ base: Base) {
         self.base = AnyRenderableBox(base)
     }
 
     init(_ base: AnyRenderableBoxBase) {
         self.base = base
-    }
-
-    public func generate() -> UIView {
-        return base.generate()
     }
 
     public func render(in view: UIView) {
@@ -51,7 +55,7 @@ public struct AnyRenderable: Renderable {
     }
 
     private func rendered(inheritedMargins: UIEdgeInsets) -> UIView {
-        let view = generate()
+        let view = viewType.generate()
         render(in: view)
 
         let margins = view.layoutMargins
@@ -64,13 +68,13 @@ public struct AnyRenderable: Renderable {
     }
 }
 
-class AnyRenderableBox<Base: Renderable>: AnyRenderableBoxBase where Base.View: UIView {
-    override var reuseIdentifier: String {
-        return base.reuseIdentifier
+class AnyRenderableBox<Base: Renderable>: AnyRenderableBoxBase {
+    override var viewType: NativeView.Type {
+        return (base as? AnyRenderable)?.viewType ?? Base.View.self
     }
 
-    override var viewType: Any.Type {
-        return (base as? AnyRenderable)?.viewType ?? Base.View.self
+    override var componentType: Any.Type {
+        return (base as? AnyRenderable)?.componentType ?? Base.self
     }
 
     let base: Base
@@ -84,10 +88,6 @@ class AnyRenderableBox<Base: Renderable>: AnyRenderableBoxBase where Base.View: 
         base.render(in: view as! Base.View)
     }
 
-    override func generate() -> UIView {
-        return base.generate()
-    }
-
     override func cast<T>(to type: T.Type) -> T? {
         if let anyRenderable = base as? AnyRenderable {
             return anyRenderable.cast(to: type)
@@ -97,9 +97,8 @@ class AnyRenderableBox<Base: Renderable>: AnyRenderableBoxBase where Base.View: 
 }
 
 class AnyRenderableBoxBase {
-    var reuseIdentifier: String { fatalError() }
-
-    var viewType: Any.Type { fatalError() }
+    var viewType: NativeView.Type { fatalError() }
+    var componentType: Any.Type { fatalError() }
 
     init() {}
 
@@ -107,6 +106,5 @@ class AnyRenderableBoxBase {
         return AnyRenderable(self)
     }
     func render(in view: UIView) { fatalError() }
-    func generate() -> UIView { fatalError() }
     func cast<T>(to type: T.Type) -> T? { fatalError() }
 }

@@ -13,19 +13,19 @@ public struct Section<SectionID: Hashable, ItemID: Hashable> {
         self.supplements = [:]
     }
 
-    public init<Header: Renderable>(id: SectionID, header: Header, items: [Item] = []) where Header.View: UIView {
+    public init<Header: Renderable>(id: SectionID, header: Header, items: [Item] = []) {
         self.id = id
         self.items = items
         self.supplements = [.header: AnyRenderable(header)]
     }
 
-    public init<Footer: Renderable>(id: SectionID, footer: Footer, items: [Item] = []) where Footer.View: UIView {
+    public init<Footer: Renderable>(id: SectionID, footer: Footer, items: [Item] = []) {
         self.id = id
         self.items = items
         self.supplements = [.footer: AnyRenderable(footer)]
     }
 
-    public init<Header: Renderable, Footer: Renderable>(id: SectionID, header: Header, footer: Footer, items: [Item] = []) where Header.View: UIView, Footer.View: UIView {
+    public init<Header: Renderable, Footer: Renderable>(id: SectionID, header: Header, footer: Footer, items: [Item] = []) {
         self.id = id
         self.items = items
         self.supplements = [.header: AnyRenderable(header),
@@ -38,13 +38,13 @@ public struct Section<SectionID: Hashable, ItemID: Hashable> {
         self.supplements = supplements
     }
 
-    public func adding<R: Renderable>(_ supplement: Supplement, _ component: R) -> Section where R.View: UIView {
+    public func adding<R: Renderable>(_ supplement: Supplement, _ component: R) -> Section {
         var section = self
         section.supplements[supplement] = AnyRenderable(component)
         return section
     }
 
-    public func removing<R: Renderable>(_ supplement: Supplement, _ component: R) -> Section where R.View: UIView {
+    public func removing<R: Renderable>(_ supplement: Supplement, _ component: R) -> Section {
         var section = self
         section.supplements[supplement] = AnyRenderable(component)
         return section

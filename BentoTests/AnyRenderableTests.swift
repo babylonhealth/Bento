@@ -4,27 +4,8 @@ import UIKit
 @testable import Bento
 
 class AnyRenderableTests: XCTestCase {
-    func testShouldPassthroughBehaviours() {
-        let testView = TestView()
-
-        let base = TestRenderable(reuseIdentifier: "Test",
-                                  generate: { testView },
-                                  render: { $0.hasInvoked = true })
-        let renderable = AnyRenderable(base)
-
-        expect(renderable.reuseIdentifier) == "Test"
-
-        let view = renderable.generate()
-        expect(view) === testView
-
-        expect(testView.hasInvoked) == false
-
-        renderable.render(in: testView)
-        expect(testView.hasInvoked) == true
-    }
-
     func test_should_see_view_type_through_nested_wrapping() {
-        let component = TestRenderable(reuseIdentifier: "", generate: { TestView() }, render: { _ in })
+        let component = TestRenderable(render: { _ in })
 
         func wrapping(component: TestRenderable, count: Int) -> AnyRenderable {
             precondition(count >= 1)
@@ -41,30 +22,56 @@ class AnyRenderableTests: XCTestCase {
         expect(wrapping(component: component, count: 6).viewType) === TestView.self
         expect(wrapping(component: component, count: 7).viewType) === TestView.self
     }
+
+    func testShouldPassthroughBehaviours() {
+        verifyBehaviorPassthrough(AnyRenderable.init)
+    }
+
+    func testShouldPassthroughBehavioursWhenBeingNested() {
+        verifyBehaviorPassthrough { AnyRenderable(AnyRenderable($0)) }
+    }
+
+    func testShouldPassthroughBehavioursWhenBeingNestedTwice() {
+        verifyBehaviorPassthrough { AnyRenderable(AnyRenderable(AnyRenderable($0))) }
+    }
+
+    private func verifyBehaviorPassthrough(_ factory: (TestRenderable) -> AnyRenderable) {
+        let base = TestRenderable(render: { $0.hasInvoked = true })
+        let renderable = factory(base)
+
+        expect(renderable.viewType) === TestView.self
+        expect(renderable.componentType) === TestRenderable.self
+        expect(renderable.fullyQualifiedTypeName) == String(reflecting: TestRenderable.self)
+        expect(renderable.fullyQualifiedTypeName) == "BentoTests.TestRenderable"
+
+        let view = renderable.viewType.generate()
+        expect(type(of: view)) === TestView.self
+
+        if let view = view as? TestView {
+            expect(view.hasInvoked) == false
+
+            renderable.render(in: view)
+            expect(view.hasInvoked) == true
+        } else {
+            fail("Expecting `TestView` in `view`, got `\(String(describing: type(of: view)))`.")
+        }
+    }
 }
 
-private class TestView: UIView {
+internal class TestView: UIView {
     var hasInvoked = false
 }
 
-private final class TestRenderable: Renderable {
-    let reuseIdentifier: String
-    let generateAction: () -> TestView
+// NOTE: Marked as internal so that the fully qualified type name (needed by a test assertion) does not depend on the
+//       source location.
+internal final class TestRenderable: Renderable {
     let renderAction: (TestView) -> Void
 
-    init(reuseIdentifier: String,
-         generate: @escaping () -> TestView,
-         render: @escaping (TestView) -> Void) {
-        self.reuseIdentifier = reuseIdentifier
-        self.generateAction = generate
+    init(render: @escaping (TestView) -> Void) {
         self.renderAction = render
     }
 
     func render(in view: TestView) {
         renderAction(view)
-    }
-
-    func generate() -> TestView {
-        return generateAction()
     }
 }
