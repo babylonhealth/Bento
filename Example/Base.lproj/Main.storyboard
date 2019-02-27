@@ -50,7 +50,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="4Uf-QW-6Qg">
-                                <rect key="frame" x="0.0" y="20" width="375" height="598"/>
+                                <rect key="frame" x="0.0" y="64" width="375" height="554"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </tableView>
                         </subviews>
@@ -64,13 +64,31 @@
                         <viewLayoutGuide key="safeArea" id="SG3-Fz-uuB"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="Sign Up" id="TDD-5a-wsT"/>
+                    <navigationItem key="navigationItem" largeTitleDisplayMode="always" id="iIQ-Ew-fXs"/>
                     <connections>
                         <outlet property="tableView" destination="4Uf-QW-6Qg" id="cC1-kC-DXh"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ojG-kr-Gxk" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1385" y="745"/>
+            <point key="canvasLocation" x="-1356" y="769"/>
+        </scene>
+        <!--Item-->
+        <scene sceneID="Lbo-G6-MYf">
+            <objects>
+                <navigationController id="CKt-rX-xWu" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Item" id="mwd-Yq-Skw"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="a0a-ET-eXp">
+                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="M2f-tH-3jX" kind="relationship" relationship="rootViewController" id="BXq-Np-VrS"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="W3T-Ut-LSi" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1983" y="769"/>
         </scene>
         <!--Movies List View Controller-->
         <scene sceneID="sTv-Y1-NuI">
@@ -117,7 +135,7 @@
                         <segue destination="Oya-eA-AAR" kind="relationship" relationship="viewControllers" id="LZH-43-MBN"/>
                         <segue destination="PRy-Vb-AeU" kind="relationship" relationship="viewControllers" id="wEh-Q6-b9y"/>
                         <segue destination="A84-rP-dBm" kind="relationship" relationship="viewControllers" id="kc6-x5-QYg"/>
-                        <segue destination="M2f-tH-3jX" kind="relationship" relationship="viewControllers" id="wBt-Fe-Eke"/>
+                        <segue destination="CKt-rX-xWu" kind="relationship" relationship="viewControllers" id="cfh-W4-QxQ"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zmd-KD-IGq" userLabel="First Responder" sceneMemberID="firstResponder"/>
