@@ -32,38 +32,4 @@ final class MultilineTextInputSnapshotTests: SnapshotTestCase {
 
         verifyComponentForAllSizes(component: component)
     }
-
-    func test_ShowingPlaceholder_WhenHavingNoText_WithContentStyle() {
-        let component = Component.MultilineTextInput(
-            text: "",
-            placeholder: "No Text",
-            didFinishEditing: { _ in },
-            styleSheet: Component.MultilineTextInput.StyleSheet(
-                placeholderTextColor: .darkGray,
-                content: ViewStyleSheet()
-                    .compose(\.backgroundColor, .lightGray)
-                    .compose(\.cornerRadius, 10)
-                    .compose(\.masksToBounds, true)
-            )
-        )
-
-        verifyComponentForAllSizes(component: component)
-    }
-
-    func test_ShowingMultilineText_WithContentStyle() {
-        let component = Component.MultilineTextInput(
-            text: loremIpsum,
-            placeholder: "",
-            didFinishEditing: { _ in },
-            styleSheet: Component.MultilineTextInput.StyleSheet(
-                placeholderTextColor: .darkGray,
-                content: ViewStyleSheet()
-                    .compose(\.backgroundColor, .lightGray)
-                    .compose(\.cornerRadius, 10)
-                    .compose(\.masksToBounds, true)
-            )
-        )
-
-        verifyComponentForAllSizes(component: component)
-    }
 }
