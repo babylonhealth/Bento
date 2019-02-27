@@ -75,6 +75,9 @@ extension Component.Button {
             didSet {
                 guard oldValue != buttonType else { return }
 
+                activityIndicator.removeFromSuperview()
+                button.removeFromSuperview()
+
                 button = Button(type: buttonType)
                 button.addTarget(self, action: #selector(buttonPressed), for: .touchUpInside)
 
@@ -119,9 +122,6 @@ extension Component.Button {
         }
 
         private func setupLayout() {
-            activityIndicator.removeFromSuperview()
-            button.removeFromSuperview()
-
             button
                 .add(to: self)
                 .pinTop(to: layoutMarginsGuide)
