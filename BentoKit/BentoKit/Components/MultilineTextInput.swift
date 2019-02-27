@@ -53,10 +53,10 @@ extension Component.MultilineTextInput {
                 // edge should have lower priority than 1000 so that the UITextView
                 // can take precedence when the content height is being determined.
                 placeHolderConstraints = [
-                    contentView.layoutMarginsGuide.topAnchor.constraint(equalTo: placeholderLabel.topAnchor, constant: textContainerInset.top),
-                    contentView.layoutMarginsGuide.leadingAnchor.constraint(equalTo: placeholderLabel.leadingAnchor, constant: textContainerInset.left),
-                    contentView.layoutMarginsGuide.trailingAnchor.constraint(equalTo: placeholderLabel.trailingAnchor, constant: textContainerInset.right),
-                    contentView.layoutMarginsGuide.bottomAnchor.constraint(equalTo: placeholderLabel.bottomAnchor, constant: textContainerInset.bottom)
+                    layoutMarginsGuide.topAnchor.constraint(equalTo: placeholderLabel.topAnchor, constant: textContainerInset.top),
+                    layoutMarginsGuide.leadingAnchor.constraint(equalTo: placeholderLabel.leadingAnchor, constant: textContainerInset.left),
+                    layoutMarginsGuide.trailingAnchor.constraint(equalTo: placeholderLabel.trailingAnchor, constant: textContainerInset.right),
+                    layoutMarginsGuide.bottomAnchor.constraint(equalTo: placeholderLabel.bottomAnchor, constant: textContainerInset.bottom)
                         .withPriority(.defaultHigh),
                 ]
 
@@ -70,8 +70,6 @@ extension Component.MultilineTextInput {
             $0.translatesAutoresizingMaskIntoConstraints = false
         }
 
-        fileprivate let contentView = UIView()
-
         fileprivate var didFinishEditing: Optional<(String) -> Void> = nil
         fileprivate var didChangeText: Optional<(String) -> Void> = nil
 
@@ -83,9 +81,8 @@ extension Component.MultilineTextInput {
 
             textView.delegate = self
 
-            contentView.add(to: self).pinEdges(to: layoutMarginsGuide)
-            textView.add(to: contentView).pinEdges(to: contentView.layoutMarginsGuide)
-            contentView.addSubview(placeholderLabel)
+            textView.add(to: self).pinEdges(to: layoutMarginsGuide)
+            addSubview(placeholderLabel)
         }
 
         @available(*, unavailable)
@@ -150,7 +147,6 @@ extension Component.MultilineTextInput {
         public var placeholderTextColor: UIColor
         public var textContainerInset: UIEdgeInsets
         public var text: TextStyleSheet<UITextView>
-        public var content: ViewStyleSheet<UIView>
 
         public convenience init(
             font: UIFont,
@@ -166,13 +162,11 @@ extension Component.MultilineTextInput {
         public init(
             placeholderTextColor: UIColor,
             textContainerInset: UIEdgeInsets = .zero,
-            text: TextStyleSheet<UITextView> = TextStyleSheet(),
-            content: ViewStyleSheet<UIView> = ViewStyleSheet(layoutMargins: .zero)
+            text: TextStyleSheet<UITextView> = TextStyleSheet()
         ) {
             self.placeholderTextColor = placeholderTextColor
             self.textContainerInset = textContainerInset
             self.text = text
-            self.content = content
         }
 
         public override func apply(to view: View) {
@@ -180,7 +174,6 @@ extension Component.MultilineTextInput {
             view.placeholderLabel.textColor = placeholderTextColor
             view.textContainerInset = textContainerInset
             text.apply(to: view.textView)
-            content.apply(to: view.contentView)
             super.apply(to: view)
         }
     }
