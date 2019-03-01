@@ -3,23 +3,23 @@ import ReactiveSwift
 import Result
 import Bento
 
-public struct IntroContent: Hashable {
+public struct FoodItem: Hashable {
     let image: UIImage
     let title: String
     let body: String
 }
 
-struct IntroViewModel {
+struct FoodListViewModel {
     let state: SignalProducer<State, NoError>
 
     enum State {
         case loading
-        case loaded([IntroContent])
+        case loaded([FoodItem])
     }
 
-    init(content: [IntroContent]) {
+    init(content: [FoodItem]) {
         state = SignalProducer.timer(interval: DispatchTimeInterval.seconds(1), on: QueueScheduler.main)
-            .map { tick -> [IntroContent] in
+            .map { tick -> [FoodItem] in
                 return content.shuffled()
             }
             .map(State.loaded)

@@ -1,7 +1,7 @@
 import Bento
 import UIKit
 
-final class IntroComponent: Renderable {
+final class FoodItemComponent: Renderable {
     private let title: String
     private let body: String
     private let image: UIImage
@@ -14,14 +14,14 @@ final class IntroComponent: Renderable {
         self.image = image
     }
 
-    func render(in view: IntroComponentView) {
+    func render(in view: FoodItemView) {
         view.imageView.image = image
         view.titleLabel.text = title
         view.subtitleLabel.text = body
     }
 }
 
-final class IntroComponentView: UIView, NibLoadable {
+final class FoodItemView: UIView, NibLoadable {
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var subtitleLabel: UILabel!
