@@ -21,8 +21,7 @@ open class TableViewAdapterBase<SectionID: Hashable, ItemID: Hashable>
         let diff = TableViewSectionDiff(oldSections: self.sections,
                                         newSections: sections,
                                         animation: animation)
-        self.sections = sections
-        diff.apply(to: tableView)
+        diff.apply(to: tableView, updateAdapter: { self.sections = sections })
     }
 
     func update(sections: [Section<SectionID, ItemID>]) {
@@ -42,7 +41,7 @@ open class TableViewAdapterBase<SectionID: Hashable, ItemID: Hashable>
     @objc(tableView:cellForRowAtIndexPath:)
     open func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let component = node(at: indexPath).component
-        let reuseIdentifier = component.reuseIdentifier
+        let reuseIdentifier = component.fullyQualifiedTypeName
 
         guard let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier) as? TableViewContainerCell else {
             tableView.register(TableViewContainerCell.self, forCellReuseIdentifier: reuseIdentifier)
@@ -179,9 +178,9 @@ open class TableViewAdapterBase<SectionID: Hashable, ItemID: Hashable>
     }
 
     private func render(_ component: AnyRenderable, in tableView: UITableView) -> UIView {
-        guard let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: component.reuseIdentifier) as? TableViewHeaderFooterView else {
+        guard let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: component.fullyQualifiedTypeName) as? TableViewHeaderFooterView else {
             tableView.register(TableViewHeaderFooterView.self,
-                               forHeaderFooterViewReuseIdentifier: component.reuseIdentifier)
+                               forHeaderFooterViewReuseIdentifier: component.fullyQualifiedTypeName)
             return render(component, in: tableView)
         }
         header.bind(component)

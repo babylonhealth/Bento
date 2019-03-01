@@ -32,8 +32,7 @@ open class CollectionViewAdapterBase<SectionID: Hashable, ItemID: Hashable>
         let diff = CollectionViewSectionDiff(oldSections: self.sections,
                                              newSections: sections,
                                              knownSupplements: knownSupplements)
-        self.sections = sections
-        diff.apply(to: collectionView, completion: completion)
+        diff.apply(to: collectionView, updateAdapter: { self.sections = sections }, completion: completion)
     }
 
     internal func update(sections: [Section<SectionID, ItemID>], layout: UICollectionViewLayout) {
@@ -65,7 +64,7 @@ open class CollectionViewAdapterBase<SectionID: Hashable, ItemID: Hashable>
     @objc(collectionView:cellForItemAtIndexPath:)
     open func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let component = node(at: indexPath).component
-        let reuseIdentifier = component.reuseIdentifier
+        let reuseIdentifier = component.fullyQualifiedTypeName
         collectionView.register(CollectionViewContainerCell.self, forCellWithReuseIdentifier: reuseIdentifier)
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! CollectionViewContainerCell
 
@@ -79,7 +78,7 @@ open class CollectionViewAdapterBase<SectionID: Hashable, ItemID: Hashable>
         knownSupplements.insert(supplement)
 
         let component = sections[indexPath.section].supplements[supplement]
-        let reuseIdentifier = component?.reuseIdentifier ?? emptyReuseIdentifier
+        let reuseIdentifier = component?.fullyQualifiedTypeName ?? emptyReuseIdentifier
 
         collectionView.register(CollectionViewContainerReusableView.self,
                                 forSupplementaryViewOfKind: kind,

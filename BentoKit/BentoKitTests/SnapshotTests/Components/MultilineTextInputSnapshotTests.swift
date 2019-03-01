@@ -1,3 +1,4 @@
+import Bento
 import BentoKit
 import StyleSheets
 import UIKit
@@ -5,11 +6,10 @@ import UIKit
 final class MultilineTextInputSnapshotTests: SnapshotTestCase {
     private let loremIpsum = String(repeating: "Lorem Ipsum ", count: 32)
     private let styleSheet = Component.MultilineTextInput.StyleSheet(
-            font: UIFont.preferredFont(forTextStyle: .body),
-            textColor: .black,
             placeholderTextColor: .lightGray
         )
         .compose(\.layoutMargins, UIEdgeInsets(top: 8, left: 16, bottom: 8, right: 16))
+
     override func setUp() {
         super.setUp()
         self.recordMode = false

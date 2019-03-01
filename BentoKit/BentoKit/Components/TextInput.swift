@@ -14,6 +14,7 @@ extension Component {
             placeholder: String? = nil,
             text: TextValue? = nil,
             keyboardType: UIKeyboardType = .default,
+            isEnabled: Bool = true,
             accessory: Accessory = .none,
             textWillChange: Optional<(TextChange) -> Bool> = nil,
             textDidChange: Optional<(String?) -> Void> = nil,
@@ -25,6 +26,7 @@ extension Component {
                 view.titleLabel.isHidden = title?.isEmpty ?? true
                 view.textField.placeholder = placeholder
                 view.textField.keyboardType = keyboardType
+                view.textField.isEnabled = isEnabled
                 text?.apply(to: view.textField)
                 view.accessoryView.accessory = accessory.toAccessoryViewAccessory
                 view.accessoryView.didTap = didTapAccessory
@@ -63,7 +65,7 @@ extension Component.TextInput {
             case fillProportionally(CGFloat)
         }
 
-        private let container: UIStackView
+        fileprivate let contentView = UIView()
 
         private var titleLabelWidthConstraint: NSLayoutConstraint? {
             willSet { titleLabelWidthConstraint?.isActive = false }
@@ -81,10 +83,10 @@ extension Component.TextInput {
                     titleLabelWidthConstraint = nil
                 case let .fillProportionally(proportion):
                     titleLabelWidthConstraint = titleLabel.widthAnchor.constraint(
-                        equalTo: container.widthAnchor,
+                        equalTo: contentView.widthAnchor,
                         multiplier: proportion
-                        )
-                        .withPriority(.required)
+                    )
+                    .withPriority(.required)
                 }
             }
         }
@@ -93,6 +95,16 @@ extension Component.TextInput {
         var textDidChange: Optional<(String?) -> Void> = nil
 
         override init(frame: CGRect) {
+            super.init(frame: frame)
+            setupLayout()
+        }
+
+        private func setupLayout() {
+            preservesSuperviewLayoutMargins = true
+
+            contentView
+                .add(to: self)
+                .pinEdges(to: layoutMarginsGuide)
 
             titleLabel.setContentHuggingPriority(.required, for: .horizontal)
             titleLabel.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
@@ -100,14 +112,11 @@ extension Component.TextInput {
             textField.setContentHuggingPriority(.defaultLow, for: .horizontal)
             textField.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
 
-            container = stack(.horizontal, spacing: 16.0, distribution: .fill, alignment: .center)(
+            stack(.horizontal, spacing: 16.0, distribution: .fill, alignment: .center)(
                 titleLabel, textField, accessoryView
             )
-
-            super.init(frame: frame)
-
-            preservesSuperviewLayoutMargins = true
-            container.add(to: self).pinEdges(to: layoutMarginsGuide)
+            .add(to: contentView)
+            .pinEdges(to: contentView.layoutMarginsGuide)
 
             textField.addTarget(self, action: #selector(textDidChangeOn(_:)), for: UIControl.Event.editingChanged)
             textField.delegate = self
@@ -171,9 +180,10 @@ extension Component.TextInput.View: FocusableView {
 
 extension Component.TextInput {
     public final class StyleSheet: BaseViewStyleSheet<View> {
-        let titleStyle: View.TitleStyle
-        let title: LabelStyleSheet
-        let text: TextStyleSheet<UITextField>
+        public var titleStyle: View.TitleStyle
+        public let title: LabelStyleSheet
+        public let text: TextFieldStylesheet
+        public let content: ViewStyleSheet<UIView>
 
         public init(
             titleStyle: View.TitleStyle = .fillProportionally(0.25),
@@ -181,11 +191,13 @@ extension Component.TextInput {
                 font: UIFont.preferredFont(forTextStyle: .body),
                 textAlignment: .leading
             ),
-            text: TextStyleSheet<UITextField> = TextStyleSheet()
+            text: TextFieldStylesheet = TextFieldStylesheet(),
+            content: ViewStyleSheet<UIView> = ViewStyleSheet(layoutMargins: .zero)
         ) {
             self.titleStyle = titleStyle
             self.title = title
             self.text = text
+            self.content = content
         }
 
         public override func apply(to element: Component.TextInput.View) {
@@ -193,6 +205,7 @@ extension Component.TextInput {
             element.titleStyle = titleStyle
             title.apply(to: element.titleLabel)
             text.apply(to: element.textField)
+            content.apply(to: element.contentView)
         }
     }
 }

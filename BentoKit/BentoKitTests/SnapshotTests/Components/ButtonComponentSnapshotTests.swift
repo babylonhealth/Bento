@@ -72,4 +72,47 @@ final class ButtonComponentSnapshotTests: SnapshotTestCase {
         )
         verifyComponentForAllSizes(component: component)
     }
+
+    func test_leading_alignment() {
+        UIView.setAnimationsEnabled(false)
+        let styleSheet = self.styleSheet
+            .compose(\.backgroundColor, .cyan)
+            .compose(\.alignment, .leading)
+
+        let component = Component.Button(
+            title: "Play",
+            isLoading: false,
+            styleSheet: styleSheet
+        )
+        verifyComponentForAllSizes(component: component)
+    }
+
+    func test_trailing_alignment() {
+        UIView.setAnimationsEnabled(false)
+        let styleSheet = self.styleSheet
+            .compose(\.backgroundColor, .cyan)
+            .compose(\.alignment, .trailing)
+
+        let component = Component.Button(
+            title: "Play",
+            isLoading: false,
+            styleSheet: styleSheet
+        )
+        verifyComponentForAllSizes(component: component)
+    }
+
+    func test_custom_hugs_content() {
+        UIView.setAnimationsEnabled(false)
+        let styleSheet = self.styleSheet
+            .compose(\.backgroundColor, .cyan)
+            .compose(\.hugsContent, true)
+            .compose(\.buttonType, .custom)
+
+        let component = Component.Button(
+            title: "Play",
+            isLoading: false,
+            styleSheet: styleSheet
+        )
+        verifyComponentForAllSizes(component: component)
+    }
 }

@@ -9,7 +9,7 @@ public struct Node<Identifier: Hashable> {
         self.component = component
     }
 
-    public init<R: Renderable>(id: Identifier, component: R) where R.View: UIView {
+    public init<R: Renderable>(id: Identifier, component: R) {
         self.init(id: id, component: AnyRenderable(component))
     }
 
@@ -30,7 +30,7 @@ public struct Node<Identifier: Hashable> {
     }
 }
 
-public func <> <RowId, R: Renderable>(id: RowId, component: R) -> Node<RowId> where R.View: UIView {
+public func <> <RowId, R: Renderable>(id: RowId, component: R) -> Node<RowId> {
     return Node(id: id, component: component)
 }
 

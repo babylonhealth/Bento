@@ -23,7 +23,6 @@ Pod::Spec.new do |s|
 # Switch back to use the master spec when we release 0.4.
   s.dependency "Bento"
   s.dependency "StyleSheets"
-  s.dependency "FlexibleDiff", "= 0.0.5"
   s.dependency "ReactiveSwift", "~> 4.0.0"
   s.dependency "ReactiveCocoa", "~> 8.0.2"
 end
