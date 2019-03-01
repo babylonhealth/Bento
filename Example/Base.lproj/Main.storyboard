@@ -10,7 +10,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Book Appointment View Controller-->
+        <!--Appointment-->
         <scene sceneID="nB7-XK-XpC">
             <objects>
                 <viewController id="Oya-eA-AAR" customClass="BookAppointmentViewController" customModule="Example" customModuleProvider="target" sceneMemberID="viewController">
@@ -32,7 +32,9 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Tia-Gx-9Jx"/>
                     </view>
-                    <tabBarItem key="tabBarItem" systemItem="contacts" id="LGC-Qf-JQl"/>
+                    <tabBarItem key="tabBarItem" title="Appointment" image="appointment" id="LGC-Qf-JQl">
+                        <inset key="landscapeImageInsets" minX="18" minY="0.0" maxX="18" maxY="0.0"/>
+                    </tabBarItem>
                     <connections>
                         <outlet property="tableView" destination="N2c-mL-sRr" id="PCu-t1-3TF"/>
                     </connections>
@@ -63,7 +65,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="SG3-Fz-uuB"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Sign Up" id="TDD-5a-wsT"/>
+                    <tabBarItem key="tabBarItem" title="Sign Up" image="profile" id="TDD-5a-wsT"/>
                     <navigationItem key="navigationItem" largeTitleDisplayMode="always" id="iIQ-Ew-fXs"/>
                     <connections>
                         <outlet property="tableView" destination="4Uf-QW-6Qg" id="cC1-kC-DXh"/>
@@ -73,11 +75,11 @@
             </objects>
             <point key="canvasLocation" x="-1356" y="769"/>
         </scene>
-        <!--Item-->
+        <!--Sign Up-->
         <scene sceneID="Lbo-G6-MYf">
             <objects>
                 <navigationController id="CKt-rX-xWu" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Item" id="mwd-Yq-Skw"/>
+                    <tabBarItem key="tabBarItem" title="Sign Up" image="profile" landscapeImage="profile" id="mwd-Yq-Skw"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="a0a-ET-eXp">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -90,7 +92,7 @@
             </objects>
             <point key="canvasLocation" x="-1983" y="769"/>
         </scene>
-        <!--Movies List View Controller-->
+        <!--Movies-->
         <scene sceneID="sTv-Y1-NuI">
             <objects>
                 <viewController id="PRy-Vb-AeU" customClass="MoviesListViewController" customModule="Example" customModuleProvider="target" sceneMemberID="viewController">
@@ -112,7 +114,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="wq0-Nx-ZID"/>
                     </view>
-                    <tabBarItem key="tabBarItem" systemItem="featured" id="dQy-mc-Vp6"/>
+                    <tabBarItem key="tabBarItem" title="Movies" image="movies" id="dQy-mc-Vp6"/>
                     <connections>
                         <outlet property="tableView" destination="xTR-mu-uQj" id="vCX-TK-4pu"/>
                     </connections>
@@ -142,7 +144,7 @@
             </objects>
             <point key="canvasLocation" x="-1285" y="-39"/>
         </scene>
-        <!--View Controller-->
+        <!--Wifi-->
         <scene sceneID="6aa-Rh-2lx">
             <objects>
                 <viewController id="Jbv-fa-nMA" customClass="ViewController" customModule="Example" customModuleProvider="target" sceneMemberID="viewController">
@@ -164,7 +166,9 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="37E-dG-ERZ"/>
                     </view>
-                    <tabBarItem key="tabBarItem" systemItem="recents" id="Z8n-vV-QTa"/>
+                    <tabBarItem key="tabBarItem" title="Wifi" image="wifi-tabbar" id="Z8n-vV-QTa">
+                        <inset key="landscapeImageInsets" minX="24" minY="0.0" maxX="24" maxY="0.0"/>
+                    </tabBarItem>
                     <connections>
                         <outlet property="tableView" destination="mxQ-pP-w3i" id="fNF-wh-2ng"/>
                     </connections>
@@ -173,7 +177,7 @@
             </objects>
             <point key="canvasLocation" x="-332" y="-710"/>
         </scene>
-        <!--Intro View Controller-->
+        <!--Images-->
         <scene sceneID="XZ1-7F-rgR">
             <objects>
                 <viewController storyboardIdentifier="introViewController" autoresizesArchivedViewToFullSize="NO" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="A84-rP-dBm" customClass="IntroViewController" customModule="Example" customModuleProvider="target" sceneMemberID="viewController">
@@ -257,7 +261,10 @@
                         <viewLayoutGuide key="safeArea" id="FNV-tI-KUy"/>
                     </view>
                     <extendedEdge key="edgesForExtendedLayout" top="YES"/>
-                    <tabBarItem key="tabBarItem" systemItem="more" id="4Jh-xA-mBk"/>
+                    <tabBarItem key="tabBarItem" title="Images" image="images" selectedImage="images" id="4Jh-xA-mBk">
+                        <inset key="landscapeImageInsets" minX="11" minY="0.0" maxX="11" maxY="0.0"/>
+                        <inset key="largeContentSizeImageInsets" minX="10" minY="0.0" maxX="10" maxY="0.0"/>
+                    </tabBarItem>
                     <navigationItem key="navigationItem" id="OBa-fu-Lb8"/>
                     <connections>
                         <outlet property="collectionView" destination="KvO-8p-JmH" id="VE0-Yc-Ady"/>
@@ -268,4 +275,11 @@
             <point key="canvasLocation" x="-332" y="1347"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="appointment" width="25" height="25"/>
+        <image name="images" width="25" height="25"/>
+        <image name="movies" width="25" height="25"/>
+        <image name="profile" width="25" height="25"/>
+        <image name="wifi-tabbar" width="25" height="25"/>
+    </resources>
 </document>

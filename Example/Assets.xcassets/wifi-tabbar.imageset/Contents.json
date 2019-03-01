@@ -1,0 +1,23 @@
+{
+  "images" : [
+    {
+      "filename" : "wifi-tabbar~iphone@1x.png",
+      "scale" : "1x",
+      "idiom" : "iphone"
+    },
+    {
+      "filename" : "wifi-tabbar~iphone@2x.png",
+      "scale" : "2x",
+      "idiom" : "iphone"
+    },
+    {
+      "filename" : "wifi-tabbar~iphone@3x.png",
+      "scale" : "3x",
+      "idiom" : "iphone"
+    }
+  ],
+  "info" : {
+    "version" : 1,
+    "author" : "xcode"
+  }
+}
