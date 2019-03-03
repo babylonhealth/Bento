@@ -137,7 +137,7 @@ final class SignUpRenderer {
 
     private func securityQuestion(_ state: SignUpPresenter.State) -> Node<RowID> {
         let selected = state.chosenSecurityQuestion ?? "Choose security question..."
-        return RowID.secuirtyQuestion <> Component.TitledDescription(
+        return RowID.securityQuestion <> Component.TitledDescription(
             texts: [TextValue(stringLiteral: selected)],
             accessory: .none,
             inputNodes: Component.OptionPicker(
@@ -190,7 +190,7 @@ final class SignUpRenderer {
         case space
         case birthday
         case gender
-        case secuirtyQuestion
+        case securityQuestion
         case securityAnswer
         case signUpButton
     }

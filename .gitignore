@@ -193,3 +193,8 @@ vendor/
 # Snapshots
 
 Snapshots/FailureDiffs/
+
+
+# AppCode 
+.idea/*
+
