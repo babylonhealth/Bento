@@ -13,7 +13,6 @@ extension Component {
             title: String? = nil,
             placeholder: String? = nil,
             text: TextValue? = nil,
-            isSecureTextEntry: Bool = false,
             keyboardType: UIKeyboardType = .default,
             isEnabled: Bool = true,
             accessory: Accessory = .none,
@@ -28,7 +27,6 @@ extension Component {
                 view.textField.placeholder = placeholder
                 view.textField.keyboardType = keyboardType
                 view.textField.isEnabled = isEnabled
-                view.textField.isSecureTextEntry = isSecureTextEntry
                 text?.apply(to: view.textField)
                 view.accessoryView.accessory = accessory.toAccessoryViewAccessory
                 view.accessoryView.didTap = didTapAccessory

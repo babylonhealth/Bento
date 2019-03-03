@@ -11,6 +11,7 @@
 		044329EA2229096E004EFB29 /* SignUpRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 044329E92229096E004EFB29 /* SignUpRenderer.swift */; };
 		04C9A0842211967300C70E09 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C9A0832211967300C70E09 /* SignUpViewController.swift */; };
 		04C9A0862211995D00C70E09 /* BentoKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04C9A0852211995D00C70E09 /* BentoKit.framework */; };
+		04EBE74F222C031B002D38C4 /* Optional+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04EBE74E222C031B002D38C4 /* Optional+Extension.swift */; };
 		515F94097C1F82B7E5C2DE0C /* Section.swift in Sources */ = {isa = PBXBuildFile; fileRef = 515F9EAF847DD1D68DE3A48C /* Section.swift */; };
 		5829D269200FB092001E020D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5829D268200FB092001E020D /* AppDelegate.swift */; };
 		5829D26B200FB092001E020D /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5829D26A200FB092001E020D /* ViewController.swift */; };
@@ -131,6 +132,7 @@
 		044329E92229096E004EFB29 /* SignUpRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpRenderer.swift; sourceTree = "<group>"; };
 		04C9A0832211967300C70E09 /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		04C9A0852211995D00C70E09 /* BentoKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = BentoKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		04EBE74E222C031B002D38C4 /* Optional+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Optional+Extension.swift"; sourceTree = "<group>"; };
 		515F9EAF847DD1D68DE3A48C /* Section.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Section.swift; sourceTree = "<group>"; };
 		5829D265200FB092001E020D /* Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5829D268200FB092001E020D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -321,6 +323,7 @@
 				5829D26F200FB092001E020D /* Assets.xcassets */,
 				5829D271200FB092001E020D /* LaunchScreen.storyboard */,
 				5829D274200FB092001E020D /* Info.plist */,
+				04EBE74E222C031B002D38C4 /* Optional+Extension.swift */,
 			);
 			path = Example;
 			sourceTree = "<group>";
@@ -647,6 +650,7 @@
 				58FC4445207CFBD700DA3614 /* LoadingIndicatorView.swift in Sources */,
 				58E98E5F2016571F00F78BAE /* EmptySpaceCell.swift in Sources */,
 				5829D269200FB092001E020D /* AppDelegate.swift in Sources */,
+				04EBE74F222C031B002D38C4 /* Optional+Extension.swift in Sources */,
 				04C9A0842211967300C70E09 /* SignUpViewController.swift in Sources */,
 				61B4091A208523F60063DE25 /* IntroViewController.swift in Sources */,
 				58FC4449207CFBD700DA3614 /* IconTitleDetailsView.swift in Sources */,

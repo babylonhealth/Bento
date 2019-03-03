@@ -91,11 +91,11 @@ final class SignUpRenderer {
                     title: "Password",
                     placeholder: "********",
                     text: TextValue(stringLiteral: state.password ?? ""),
-                    isSecureTextEntry: !state.isPasswordRevealed,
                     accessory: .icon(showHideIcon),
                     textDidChange: presenter.didChangePassword,
                     didTapAccessory: presenter.didTogglePasswordVisibility,
                     styleSheet: inputStyleSheet
+                        .compose(\.text.isSecureTextEntry, !state.isPasswordRevealed)
                 )
             ),
             Node(
@@ -104,11 +104,11 @@ final class SignUpRenderer {
                     title: "Confirm password",
                     placeholder: "********",
                     text: TextValue(stringLiteral: state.passwordConfirmation ?? ""),
-                    isSecureTextEntry: !state.isPasswordRevealed,
                     accessory: .icon(showHideIcon),
                     textDidChange: presenter.didChangePasswordConfirmation,
                     didTapAccessory: presenter.didTogglePasswordVisibility,
                     styleSheet: inputStyleSheet
+                        .compose(\.text.isSecureTextEntry, !state.isPasswordRevealed)
                 )
             )
         ]
