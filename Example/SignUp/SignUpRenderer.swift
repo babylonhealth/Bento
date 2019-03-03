@@ -50,8 +50,9 @@ final class SignUpRenderer {
     }
 
     private func section(id: SectionID, text: String? = nil) -> Section<SectionID, RowID> {
+        let footer = Component.EmptySpace(height: 16)
         guard let text = text else {
-            return Section(id: id, footer: Component.EmptySpace(height: 16))
+            return Section(id: id, footer: footer)
         }
 
         return Section(
@@ -60,9 +61,7 @@ final class SignUpRenderer {
                 text: text,
                 styleSheet: headersStyleSheet
             ),
-            footer: Component.EmptySpace(
-                height: 16
-            )
+            footer: footer
         )
     }
 

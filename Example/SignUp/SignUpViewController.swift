@@ -9,7 +9,13 @@ protocol Navigator: class {
 }
 
 final class SignUpViewController: UIViewController, SignUpPresenterDelegate, Navigator {
-    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var tableView: UITableView! {
+        didSet {
+            tableView.keyboardDismissMode = .interactive
+            tableView.prepareForBoxRendering(with: adapter)
+            tableView.tableFooterView = UIView()
+        }
+    }
     private let presenter: SignUpPresenter
     private let renderer: SignUpRenderer
     private lazy var adapter: BoxTableViewAdapter<SignUpRenderer.SectionID, SignUpRenderer.RowID> = {
@@ -27,8 +33,7 @@ final class SignUpViewController: UIViewController, SignUpPresenterDelegate, Nav
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "SignUp"
-        tableView.prepareForBoxRendering(with: adapter)
-        tableView.tableFooterView = UIView()
+
         let gray = UIColor(red: 240/255, green: 240/255, blue: 240/255, alpha: 1)
         let backgroundColor = gray
         tableView.backgroundColor = backgroundColor

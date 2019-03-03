@@ -276,10 +276,10 @@
         </scene>
     </scenes>
     <resources>
-        <image name="appointment" width="25" height="25"/>
-        <image name="images" width="25" height="25"/>
-        <image name="movies" width="25" height="25"/>
-        <image name="profile" width="25" height="25"/>
+        <image name="appointment" width="24" height="24"/>
+        <image name="images" width="24" height="24"/>
+        <image name="movies" width="24" height="24"/>
+        <image name="profile" width="24" height="24"/>
         <image name="wifi-tabbar" width="25" height="25"/>
     </resources>
 </document>
