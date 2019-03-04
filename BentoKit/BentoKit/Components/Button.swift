@@ -151,11 +151,9 @@ extension Component.Button {
                 case (.leading, _),
                      (.center, false):
                     return button.leadingAnchor.constraint(equalTo: layoutMarginsGuide.leadingAnchor)
-                        .withPriority(.defaultHigh)
                 case (.trailing, _),
                      (.center, true):
                     return button.leadingAnchor.constraint(greaterThanOrEqualTo: layoutMarginsGuide.leadingAnchor)
-                        .withPriority(.defaultHigh)
                 }
             }()
 
@@ -164,11 +162,9 @@ extension Component.Button {
                 case (.leading, _),
                      (.center, true):
                     return layoutMarginsGuide.trailingAnchor.constraint(greaterThanOrEqualTo: button.trailingAnchor)
-                        .withPriority(.defaultHigh)
                 case (.trailing, _),
                      (.center, false):
                     return layoutMarginsGuide.trailingAnchor.constraint(equalTo: button.trailingAnchor)
-                        .withPriority(.defaultHigh)
                 }
             }()
 
