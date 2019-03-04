@@ -23,6 +23,7 @@
 		5874C80520C9342B004EB5EA /* CollectionViewAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5874C80420C9342B004EB5EA /* CollectionViewAdapter.swift */; };
 		5874C80720C93445004EB5EA /* CollectionViewContainerReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5874C80620C93445004EB5EA /* CollectionViewContainerReusableView.swift */; };
 		587A341F2100A09B00B25CCA /* Deletable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 587A341E2100A09B00B25CCA /* Deletable.swift */; };
+		588C339C22298EF2007C4AB8 /* CenterYLayoutExampleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 588C339B22298EF2007C4AB8 /* CenterYLayoutExampleViewController.swift */; };
 		58BA75602016303B0050D5F1 /* Bento.h in Headers */ = {isa = PBXBuildFile; fileRef = 58BA755E2016303B0050D5F1 /* Bento.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		58BA7584201633CC0050D5F1 /* Renderable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58BA7583201633CC0050D5F1 /* Renderable.swift */; };
 		58BA7586201634120050D5F1 /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58BA7585201634120050D5F1 /* Helpers.swift */; };
@@ -142,6 +143,7 @@
 		5874C80620C93445004EB5EA /* CollectionViewContainerReusableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionViewContainerReusableView.swift; sourceTree = "<group>"; };
 		587A341E2100A09B00B25CCA /* Deletable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Deletable.swift; sourceTree = "<group>"; };
 		587F0717201B355800ACD219 /* TableViewContainerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewContainerCell.swift; sourceTree = "<group>"; };
+		588C339B22298EF2007C4AB8 /* CenterYLayoutExampleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CenterYLayoutExampleViewController.swift; sourceTree = "<group>"; };
 		58BA755C2016303B0050D5F1 /* Bento.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Bento.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		58BA755E2016303B0050D5F1 /* Bento.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Bento.h; sourceTree = "<group>"; };
 		58BA755F2016303B0050D5F1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -294,7 +296,8 @@
 				588C339522296FBC007C4AB8 /* Movies */,
 				588C339422296FAD007C4AB8 /* PersonalDetails */,
 				588C339322296F8F007C4AB8 /* BookAppoitment */,
-				61B40915208523CE0063DE25 /* CollectionViewExample */,
+				61B40915208523CE0063DE25 /* FoodList */,
+				588C339A22298ECC007C4AB8 /* CenterYLayoutExample */,
 				58E98E542016570800F78BAE /* Cells */,
 				5829D268200FB092001E020D /* AppDelegate.swift */,
 				5829D26C200FB092001E020D /* Main.storyboard */,
@@ -348,6 +351,14 @@
 				5829D26A200FB092001E020D /* ViewController.swift */,
 			);
 			path = Basic;
+			sourceTree = "<group>";
+		};
+		588C339A22298ECC007C4AB8 /* CenterYLayoutExample */ = {
+			isa = PBXGroup;
+			children = (
+				588C339B22298EF2007C4AB8 /* CenterYLayoutExampleViewController.swift */,
+			);
+			path = CenterYLayoutExample;
 			sourceTree = "<group>";
 		};
 		58BA755D2016303B0050D5F1 /* Bento */ = {
@@ -422,7 +433,7 @@
 			path = BentoTests;
 			sourceTree = "<group>";
 		};
-		61B40915208523CE0063DE25 /* CollectionViewExample */ = {
+		61B40915208523CE0063DE25 /* FoodList */ = {
 			isa = PBXGroup;
 			children = (
 				61B40917208523F50063DE25 /* FoodListViewController.swift */,
@@ -432,7 +443,7 @@
 				584A6F9F20C7E470006395E8 /* FoodItemView.xib */,
 				65A69EE0218B8AB6005D90AC /* CustomCollectionViewAdapter.swift */,
 			);
-			path = CollectionViewExample;
+			path = FoodList;
 			sourceTree = "<group>";
 		};
 		7D7D5AFB203495BA731D7A3E /* Frameworks */ = {
@@ -661,6 +672,7 @@
 				58FC4449207CFBD700DA3614 /* IconTitleDetailsView.swift in Sources */,
 				58FC4444207CFBD700DA3614 /* SegmetControlView.swift in Sources */,
 				58E98E602016571F00F78BAE /* IconTextCell.swift in Sources */,
+				588C339C22298EF2007C4AB8 /* CenterYLayoutExampleViewController.swift in Sources */,
 				58FC444E207CFBE200DA3614 /* MoviesListViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

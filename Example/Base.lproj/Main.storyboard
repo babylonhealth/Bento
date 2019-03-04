@@ -125,6 +125,26 @@
                                             <segue destination="A84-rP-dBm" kind="show" id="yYm-I8-Ja3"/>
                                         </connections>
                                     </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="cE4-Kw-AIO" style="IBUITableViewCellStyleDefault" id="XOD-W8-GmG">
+                                        <rect key="frame" x="0.0" y="331.5" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="XOD-W8-GmG" id="LyT-KW-FM5">
+                                            <rect key="frame" x="0.0" y="0.0" width="341" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Center Y Layout" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="cE4-Kw-AIO">
+                                                    <rect key="frame" x="16" y="0.0" width="324" height="43.5"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <segue destination="ey2-6l-lHj" kind="show" id="5iu-sq-Jmr"/>
+                                        </connections>
+                                    </tableViewCell>
                                 </cells>
                             </tableViewSection>
                         </sections>
@@ -355,7 +375,58 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FJ7-16-vVq" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1262" y="-861"/>
+            <point key="canvasLocation" x="1217" y="-861"/>
+        </scene>
+        <!--CenterY Layout Example View Controller-->
+        <scene sceneID="xDo-fy-LeD">
+            <objects>
+                <viewController id="ey2-6l-lHj" customClass="CenterYLayoutExampleViewController" customModule="Example" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Swv-zG-muG">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="msJ-Tz-e1Q">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="cm4-Jz-drI">
+                                    <size key="itemSize" width="50" height="50"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells/>
+                            </collectionView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="msJ-Tz-e1Q" firstAttribute="leading" secondItem="hgR-9B-s93" secondAttribute="leading" id="6YH-9C-ZFk"/>
+                            <constraint firstItem="msJ-Tz-e1Q" firstAttribute="bottom" secondItem="hgR-9B-s93" secondAttribute="bottom" id="8Qu-Ic-4Vq"/>
+                            <constraint firstItem="msJ-Tz-e1Q" firstAttribute="trailing" secondItem="hgR-9B-s93" secondAttribute="trailing" id="CyX-zu-BDe"/>
+                            <constraint firstItem="msJ-Tz-e1Q" firstAttribute="top" secondItem="Swv-zG-muG" secondAttribute="top" id="MtD-CS-qmU"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="hgR-9B-s93"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="JMT-Hd-qrw">
+                        <rightBarButtonItems>
+                            <barButtonItem title="➕" id="36L-t7-mrh">
+                                <connections>
+                                    <action selector="increment" destination="ey2-6l-lHj" id="eYO-Kz-CuT"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem title="➖" id="b16-Ke-YeW">
+                                <connections>
+                                    <action selector="decrement" destination="ey2-6l-lHj" id="HP8-6O-ggK"/>
+                                </connections>
+                            </barButtonItem>
+                        </rightBarButtonItems>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="collectionView" destination="msJ-Tz-e1Q" id="Tdj-rv-TYh"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="HOE-Q8-m44" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1217" y="-206"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="N1n-O0-8DA">
