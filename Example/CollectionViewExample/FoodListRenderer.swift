@@ -1,16 +1,16 @@
 import Bento
 
-final class IntroRenderer {
+final class FoodListRenderer {
     enum SectionId {
         case intro
     }
 
     enum RowId: Hashable {
-        case introPage(IntroContent)
+        case introPage(FoodItem)
         case loading
     }
 
-    func render(state: IntroViewModel.State) -> Box<SectionId, RowId> {
+    func render(state: FoodListViewModel.State) -> Box<SectionId, RowId> {
         switch state {
         case .loading:
             return renderLoading()
@@ -26,7 +26,7 @@ final class IntroRenderer {
             |---+ RowId.loading <> LoadingIndicatorComponent(isLoading: true)
     }
 
-    private func render(pages: [IntroContent]) -> Box<SectionId, RowId> {
+    private func render(pages: [FoodItem]) -> Box<SectionId, RowId> {
         return Box<SectionId, RowId>(
             sections: [Section(
                 id: SectionId.intro,
@@ -34,7 +34,7 @@ final class IntroRenderer {
                 footer: IconTextComponent(image: nil, title: "Footer"),
                 items: pages.map { page in
                     return Node(id: RowId.introPage(page), component:
-                        IntroComponent(title: page.title,
+                        FoodItemComponent(title: page.title,
                                        body: page.body,
                                        image: page.image
                         )
