@@ -49,7 +49,7 @@ final class ButtonComponentSnapshotTests: SnapshotTestCase {
             .compose(\.backgroundColor, .cyan)
             .compose(\.button.numberOfLines, 0)
 
-        let longText = Array(repeating: "Long Text", count: 8).joined()
+        let longText = Array(repeating: "Long Text ", count: 16).joined()
 
         let component = Component.Button(
             title: longText,
