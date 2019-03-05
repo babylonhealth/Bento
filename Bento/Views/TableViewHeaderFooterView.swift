@@ -37,6 +37,14 @@ final class TableViewHeaderFooterView: UITableViewHeaderFooterView {
         return component
     }
 
+    override func systemLayoutSizeFitting(
+        _ targetSize: CGSize,
+        withHorizontalFittingPriority horizontalFittingPriority: UILayoutPriority,
+        verticalFittingPriority: UILayoutPriority
+    ) -> CGSize {
+        triggerPresizingLayoutPassIfNeeded(forTargetSize: targetSize)
+        return super.systemLayoutSizeFitting(targetSize, withHorizontalFittingPriority: horizontalFittingPriority, verticalFittingPriority: verticalFittingPriority)
+    }
 }
 
 extension TableViewHeaderFooterView: BentoReusableView {}

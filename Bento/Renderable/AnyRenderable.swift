@@ -36,25 +36,27 @@ public struct AnyRenderable: Renderable {
     }
 
     func sizeBoundTo(width: CGFloat, inheritedMargins: UIEdgeInsets) -> CGSize {
-        return rendered(inheritedMargins: inheritedMargins)
+        return rendered(size: CGSize(width: width, height: .greatestFiniteMagnitude),
+                                 inheritedMargins: inheritedMargins)
             .systemLayoutSizeFitting(CGSize(width: width, height: UIView.layoutFittingCompressedSize.height),
                                      withHorizontalFittingPriority: .required,
                                      verticalFittingPriority: .defaultLow)
     }
 
     func sizeBoundTo(height: CGFloat, inheritedMargins: UIEdgeInsets) -> CGSize {
-        return rendered(inheritedMargins: inheritedMargins)
+        return rendered(size: CGSize(width: .greatestFiniteMagnitude, height: height),
+                        inheritedMargins: inheritedMargins)
             .systemLayoutSizeFitting(CGSize(width: UIView.layoutFittingCompressedSize.width, height: height),
                                      withHorizontalFittingPriority: .defaultLow,
                                      verticalFittingPriority: .required)
     }
 
     func sizeBoundTo(size: CGSize, inheritedMargins: UIEdgeInsets) -> CGSize {
-        return rendered(inheritedMargins: inheritedMargins)
+        return rendered(size: size, inheritedMargins: inheritedMargins)
             .systemLayoutSizeFitting(size)
     }
 
-    private func rendered(inheritedMargins: UIEdgeInsets) -> UIView {
+    private func rendered(size: CGSize, inheritedMargins: UIEdgeInsets) -> UIView {
         let view = viewType.generate()
         render(in: view)
 
@@ -63,6 +65,8 @@ public struct AnyRenderable: Renderable {
                                           left: max(margins.left, inheritedMargins.left),
                                           bottom: max(margins.bottom, inheritedMargins.bottom),
                                           right: max(margins.right, inheritedMargins.right))
+
+        view.triggerPresizingLayoutPassIfNeeded(forTargetSize: size)
 
         return view
     }

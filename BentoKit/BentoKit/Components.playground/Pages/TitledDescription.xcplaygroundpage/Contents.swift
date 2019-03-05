@@ -21,10 +21,8 @@ button.widthAnchor.constraint(equalToConstant: 37).isActive = true
 
 let component = Component.TitledDescription(
     texts: [
-        TextValue.plain("Text 1"),
-        TextValue.plain("Text 2"),
-        TextValue.plain("Text 3"),
-        TextValue.plain("Text 4")
+        TextValue.plain(String(repeating: "Lorem Ipsum Hey ", count: 2)),
+        TextValue.plain(String(repeating: "Lorem Ipsum Nah ", count: 3))
     ],
     detail: TextValue.plain("Detail"),
     image: Property(value: ImageOrLabelView.Content.image(image)),
@@ -37,11 +35,12 @@ let component = Component.TitledDescription(
     },
     styleSheet: Component.TitledDescription.StyleSheet(
         textStyles: [
-        .init(),
-        .init(),
-        .init(),
-        .init()
-    ])
+            LabelStyleSheet(textColor: .red),
+            LabelStyleSheet(textColor: .orange),
+            LabelStyleSheet(textColor: .green),
+            LabelStyleSheet(textColor: .blue)
+        ]
+    )
 )
 
 PlaygroundPage.current.liveView = renderInTableView(component: component)
