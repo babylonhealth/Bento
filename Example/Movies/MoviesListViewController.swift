@@ -24,17 +24,6 @@ final class MoviesListViewController: UIViewController {
         viewModel.nearBottomBinding <~ tableView!.rac_nearBottomSignal
         viewModel.retryBinding <~ retrySignal
     }
-
-    func showAlert(for error: NSError) {
-        let alert = UIAlertController(title: "Error",
-                                      message: error.localizedDescription,
-                                      preferredStyle: .alert)
-        let action = UIAlertAction(title: "Retry", style: .cancel, handler: { _ in
-            self.retryObserver.send(value: ())
-        })
-        alert.addAction(action)
-        present(alert, animated: true, completion: nil)
-    }
 }
 
 
