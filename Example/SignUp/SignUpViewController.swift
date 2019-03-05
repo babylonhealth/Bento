@@ -8,7 +8,7 @@ protocol Navigator: class {
     func showAlert(title: String, message: String)
 }
 
-final class SignUpViewController: UIViewController, SignUpPresenterDelegate, Navigator {
+final class SignUpViewController: UIViewController, SignUpView, Navigator {
     @IBOutlet weak var tableView: UITableView! {
         didSet {
             tableView.keyboardDismissMode = .interactive
@@ -26,14 +26,13 @@ final class SignUpViewController: UIViewController, SignUpPresenterDelegate, Nav
         presenter = SignUpPresenter()
         renderer = SignUpRenderer(presenter: presenter)
         super.init(coder: aDecoder)
-        presenter.delegate = self
+        presenter.view = self
         presenter.navigator = self
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "SignUp"
-
         let gray = UIColor(red: 240/255, green: 240/255, blue: 240/255, alpha: 1)
         let backgroundColor = gray
         tableView.backgroundColor = backgroundColor

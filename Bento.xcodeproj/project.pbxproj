@@ -22,8 +22,8 @@
 		582D9987217F87B100C67B0D /* ComponentLifecycleAware.swift in Sources */ = {isa = PBXBuildFile; fileRef = 582D9986217F87B100C67B0D /* ComponentLifecycleAware.swift */; };
 		5830C5E721F22DDC0029044B /* ComponentLifecycleAware.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5830C5E621F22DDC0029044B /* ComponentLifecycleAware.swift */; };
 		58467B03202B33F200577C77 /* TableViewSectionDiff.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58467B02202B33F200577C77 /* TableViewSectionDiff.swift */; };
-		584A6F9E20C7E36D006395E8 /* IntroComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 584A6F9D20C7E36D006395E8 /* IntroComponent.swift */; };
-		584A6FA020C7E470006395E8 /* IntroComponentView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 584A6F9F20C7E470006395E8 /* IntroComponentView.xib */; };
+		584A6F9E20C7E36D006395E8 /* FoodItemComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 584A6F9D20C7E36D006395E8 /* FoodItemComponent.swift */; };
+		584A6FA020C7E470006395E8 /* FoodItemView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 584A6F9F20C7E470006395E8 /* FoodItemView.xib */; };
 		5857BECA2056F02C0085EB9C /* If.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5857BEC92056F02C0085EB9C /* If.swift */; };
 		5874C80520C9342B004EB5EA /* CollectionViewAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5874C80420C9342B004EB5EA /* CollectionViewAdapter.swift */; };
 		5874C80720C93445004EB5EA /* CollectionViewContainerReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5874C80620C93445004EB5EA /* CollectionViewContainerReusableView.swift */; };
@@ -58,9 +58,9 @@
 		58FC444A207CFBD700DA3614 /* MovieComponentView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 58FC4440207CFBD700DA3614 /* MovieComponentView.xib */; };
 		58FC444D207CFBE200DA3614 /* BookAppointmentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58FC444B207CFBE100DA3614 /* BookAppointmentViewController.swift */; };
 		58FC444E207CFBE200DA3614 /* MoviesListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58FC444C207CFBE200DA3614 /* MoviesListViewController.swift */; };
-		61B40919208523F60063DE25 /* IntroViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61B40916208523F50063DE25 /* IntroViewModel.swift */; };
-		61B4091A208523F60063DE25 /* IntroViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61B40917208523F50063DE25 /* IntroViewController.swift */; };
-		61B64BB12086561B0092082C /* IntroRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61B64BB02086561B0092082C /* IntroRenderer.swift */; };
+		61B40919208523F60063DE25 /* FoodListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61B40916208523F50063DE25 /* FoodListViewModel.swift */; };
+		61B4091A208523F60063DE25 /* FoodListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61B40917208523F50063DE25 /* FoodListViewController.swift */; };
+		61B64BB12086561B0092082C /* FoodListRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61B64BB02086561B0092082C /* FoodListRenderer.swift */; };
 		61B64BB420873DA10092082C /* CollectionViewSectionDiff.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61B64BB320873DA10092082C /* CollectionViewSectionDiff.swift */; };
 		61B64BB6208745730092082C /* CollectionViewContainerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61B64BB5208745730092082C /* CollectionViewContainerCell.swift */; };
 		65020C322203186400DC8F42 /* NativeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65020C312203186400DC8F42 /* NativeView.swift */; };
@@ -145,8 +145,8 @@
 		582D9986217F87B100C67B0D /* ComponentLifecycleAware.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComponentLifecycleAware.swift; sourceTree = "<group>"; };
 		5830C5E621F22DDC0029044B /* ComponentLifecycleAware.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComponentLifecycleAware.swift; sourceTree = "<group>"; };
 		58467B02202B33F200577C77 /* TableViewSectionDiff.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewSectionDiff.swift; sourceTree = "<group>"; };
-		584A6F9D20C7E36D006395E8 /* IntroComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroComponent.swift; sourceTree = "<group>"; };
-		584A6F9F20C7E470006395E8 /* IntroComponentView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = IntroComponentView.xib; sourceTree = "<group>"; };
+		584A6F9D20C7E36D006395E8 /* FoodItemComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodItemComponent.swift; sourceTree = "<group>"; };
+		584A6F9F20C7E470006395E8 /* FoodItemView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FoodItemView.xib; sourceTree = "<group>"; };
 		5857BEC92056F02C0085EB9C /* If.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = If.swift; sourceTree = "<group>"; };
 		5874C80420C9342B004EB5EA /* CollectionViewAdapter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionViewAdapter.swift; sourceTree = "<group>"; };
 		5874C80620C93445004EB5EA /* CollectionViewContainerReusableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionViewContainerReusableView.swift; sourceTree = "<group>"; };
@@ -184,9 +184,9 @@
 		58FC444B207CFBE100DA3614 /* BookAppointmentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookAppointmentViewController.swift; sourceTree = "<group>"; };
 		58FC444C207CFBE200DA3614 /* MoviesListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MoviesListViewController.swift; sourceTree = "<group>"; };
 		5B175A6421C0634800590F34 /* ComponentContract.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = ComponentContract.md; sourceTree = "<group>"; };
-		61B40916208523F50063DE25 /* IntroViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IntroViewModel.swift; sourceTree = "<group>"; };
-		61B40917208523F50063DE25 /* IntroViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IntroViewController.swift; sourceTree = "<group>"; };
-		61B64BB02086561B0092082C /* IntroRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroRenderer.swift; sourceTree = "<group>"; };
+		61B40916208523F50063DE25 /* FoodListViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FoodListViewModel.swift; sourceTree = "<group>"; };
+		61B40917208523F50063DE25 /* FoodListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FoodListViewController.swift; sourceTree = "<group>"; };
+		61B64BB02086561B0092082C /* FoodListRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodListRenderer.swift; sourceTree = "<group>"; };
 		61B64BB320873DA10092082C /* CollectionViewSectionDiff.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewSectionDiff.swift; sourceTree = "<group>"; };
 		61B64BB5208745730092082C /* CollectionViewContainerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewContainerCell.swift; sourceTree = "<group>"; };
 		65020C312203186400DC8F42 /* NativeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NativeView.swift; sourceTree = "<group>"; };
@@ -312,13 +312,13 @@
 			isa = PBXGroup;
 			children = (
 				044329E6222908FC004EFB29 /* SignUp */,
+				588C339622296FCE007C4AB8 /* Basic */,
+				588C339522296FBC007C4AB8 /* Movies */,
+				588C339422296FAD007C4AB8 /* PersonalDetails */,
+				588C339322296F8F007C4AB8 /* BookAppoitment */,
 				61B40915208523CE0063DE25 /* CollectionViewExample */,
 				58E98E542016570800F78BAE /* Cells */,
-				65E3ECA7211340CE00869DF3 /* PersonalDetailsViewController.swift */,
-				58FC444B207CFBE100DA3614 /* BookAppointmentViewController.swift */,
-				58FC444C207CFBE200DA3614 /* MoviesListViewController.swift */,
 				5829D268200FB092001E020D /* AppDelegate.swift */,
-				5829D26A200FB092001E020D /* ViewController.swift */,
 				5829D26C200FB092001E020D /* Main.storyboard */,
 				5829D26F200FB092001E020D /* Assets.xcassets */,
 				5829D271200FB092001E020D /* LaunchScreen.storyboard */,
@@ -339,6 +339,38 @@
 				A950967CC717BBF3B02B766D /* Box.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		588C339322296F8F007C4AB8 /* BookAppoitment */ = {
+			isa = PBXGroup;
+			children = (
+				58FC444B207CFBE100DA3614 /* BookAppointmentViewController.swift */,
+			);
+			path = BookAppoitment;
+			sourceTree = "<group>";
+		};
+		588C339422296FAD007C4AB8 /* PersonalDetails */ = {
+			isa = PBXGroup;
+			children = (
+				65E3ECA7211340CE00869DF3 /* PersonalDetailsViewController.swift */,
+			);
+			path = PersonalDetails;
+			sourceTree = "<group>";
+		};
+		588C339522296FBC007C4AB8 /* Movies */ = {
+			isa = PBXGroup;
+			children = (
+				58FC444C207CFBE200DA3614 /* MoviesListViewController.swift */,
+			);
+			path = Movies;
+			sourceTree = "<group>";
+		};
+		588C339622296FCE007C4AB8 /* Basic */ = {
+			isa = PBXGroup;
+			children = (
+				5829D26A200FB092001E020D /* ViewController.swift */,
+			);
+			path = Basic;
 			sourceTree = "<group>";
 		};
 		58BA755D2016303B0050D5F1 /* Bento */ = {
@@ -416,11 +448,11 @@
 		61B40915208523CE0063DE25 /* CollectionViewExample */ = {
 			isa = PBXGroup;
 			children = (
-				61B40917208523F50063DE25 /* IntroViewController.swift */,
-				61B40916208523F50063DE25 /* IntroViewModel.swift */,
-				61B64BB02086561B0092082C /* IntroRenderer.swift */,
-				584A6F9D20C7E36D006395E8 /* IntroComponent.swift */,
-				584A6F9F20C7E470006395E8 /* IntroComponentView.xib */,
+				61B40917208523F50063DE25 /* FoodListViewController.swift */,
+				61B40916208523F50063DE25 /* FoodListViewModel.swift */,
+				61B64BB02086561B0092082C /* FoodListRenderer.swift */,
+				584A6F9D20C7E36D006395E8 /* FoodItemComponent.swift */,
+				584A6F9F20C7E470006395E8 /* FoodItemView.xib */,
 				65A69EE0218B8AB6005D90AC /* CustomCollectionViewAdapter.swift */,
 			);
 			path = CollectionViewExample;
@@ -605,7 +637,7 @@
 				58FC4443207CFBD700DA3614 /* SegmetControlView.xib in Resources */,
 				5829D270200FB092001E020D /* Assets.xcassets in Resources */,
 				58E98E5E2016571F00F78BAE /* EmptySpaceCell.xib in Resources */,
-				584A6FA020C7E470006395E8 /* IntroComponentView.xib in Resources */,
+				584A6FA020C7E470006395E8 /* FoodItemView.xib in Resources */,
 				58FC4448207CFBD700DA3614 /* IconTitleDetailsView.xib in Resources */,
 				5829D26E200FB092001E020D /* Main.storyboard in Resources */,
 				58E98E5C2016571F00F78BAE /* ToggleCell.xib in Resources */,
@@ -635,16 +667,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				584A6F9E20C7E36D006395E8 /* IntroComponent.swift in Sources */,
+				584A6F9E20C7E36D006395E8 /* FoodItemComponent.swift in Sources */,
 				5829D26B200FB092001E020D /* ViewController.swift in Sources */,
 				58FC4447207CFBD700DA3614 /* ButtonComponentView.swift in Sources */,
 				58FC4441207CFBD700DA3614 /* MovieComponentView.swift in Sources */,
 				65E3ECA8211340CE00869DF3 /* PersonalDetailsViewController.swift in Sources */,
-				61B40919208523F60063DE25 /* IntroViewModel.swift in Sources */,
+				61B40919208523F60063DE25 /* FoodListViewModel.swift in Sources */,
 				65A69EE1218B8AB6005D90AC /* CustomCollectionViewAdapter.swift in Sources */,
 				58FC444D207CFBE200DA3614 /* BookAppointmentViewController.swift in Sources */,
 				65E3ECAA2113448200869DF3 /* TextFieldComponent.swift in Sources */,
-				61B64BB12086561B0092082C /* IntroRenderer.swift in Sources */,
+				61B64BB12086561B0092082C /* FoodListRenderer.swift in Sources */,
 				58E98E5D2016571F00F78BAE /* ToggleCell.swift in Sources */,
 				044329E82229090E004EFB29 /* SignUpPresetner.swift in Sources */,
 				58FC4445207CFBD700DA3614 /* LoadingIndicatorView.swift in Sources */,
@@ -653,6 +685,7 @@
 				04EBE74F222C031B002D38C4 /* Optional+Extension.swift in Sources */,
 				04C9A0842211967300C70E09 /* SignUpViewController.swift in Sources */,
 				61B4091A208523F60063DE25 /* IntroViewController.swift in Sources */,
+				61B4091A208523F60063DE25 /* FoodListViewController.swift in Sources */,
 				58FC4449207CFBD700DA3614 /* IconTitleDetailsView.swift in Sources */,
 				044329EA2229096E004EFB29 /* SignUpRenderer.swift in Sources */,
 				58FC4444207CFBD700DA3614 /* SegmetControlView.swift in Sources */,

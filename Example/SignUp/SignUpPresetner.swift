@@ -1,11 +1,11 @@
 import Foundation
 
-protocol SignUpPresenterDelegate: class {
+protocol SignUpView: class {
     func render(_ state: SignUpPresenter.State)
 }
 
 final class SignUpPresenter {
-    weak var delegate: SignUpPresenterDelegate?
+    weak var view: SignUpView?
     weak var navigator: Navigator?
 
     var state = State() {
@@ -51,7 +51,7 @@ final class SignUpPresenter {
     }
 
     private func renderState() {
-        delegate?.render(state)
+        view?.render(state)
     }
 
     struct State {
