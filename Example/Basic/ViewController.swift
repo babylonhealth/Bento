@@ -1,5 +1,8 @@
 import UIKit
 import Bento
+import BentoKit
+import StyleSheets
+import ReactiveSwift
 
 class ViewController: UIViewController {
     enum State {
@@ -110,16 +113,30 @@ class ViewController: UIViewController {
     }
 
     private func renderToggle() -> Node<RowId> {
-        let component = ToggleComponent(isOn: self.state == .airplaneMode,
-                                        title: "Airplane mode",
-                                        icon: #imageLiteral(resourceName:"plane"),
-                                        onToggle: { isOn in
-                                            if isOn {
-                                                self.state = State.airplaneMode
-                                            } else {
-                                                self.state = State.wifi
-                                            }
-                                        })
+        let x = #imageLiteral(resourceName: "plane").withRenderingMode(.alwaysOriginal)
+
+        let component = Component.Toggle(
+            title: "Airplane mode",
+            image: Property(value: .image(x)),
+            isOn: self.state == .airplaneMode,
+            isEnabled: true,
+            styleSheet: Component.Toggle.StyleSheet(
+                text: LabelStyleSheet(),
+                imageOrLabel: ImageOrLabelView.StyleSheet()
+                    .compose(\.tintColor, .red)
+                    .compose(\.backgroundColor, .clear)
+                )
+                .compose(\.imageOrLabel.image.contentMode, .left),
+                //.compose(\.imageOrLabel.fixedSize, CGSize(width: 128, height: 128)),
+            didChangeValue: { isOn in
+                if isOn {
+                    self.state = State.airplaneMode
+                } else {
+                    self.state = State.wifi
+                }
+            }
+        )
+
         return RowId.toggle <> component
     }
 
