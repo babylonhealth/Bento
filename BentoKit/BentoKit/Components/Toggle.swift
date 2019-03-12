@@ -40,19 +40,21 @@ extension Component {
 
             self.heightComputer = { width, inheritedMargins in
                 let verticalMargins = styleSheet.layoutMargins.verticalTotal
-                let imageWidth: CGFloat = image != nil
-                    ? (image?.size.width ?? 0) + Dimensions.horizontalElementsSpacing
-                    : 0.0
+                let imageWidth: CGFloat = image?.size.width ?? 0
+
                 let textBoundWidth = width
                     - max(styleSheet.layoutMargins.left, inheritedMargins.left)
                     - max(styleSheet.layoutMargins.right, inheritedMargins.right)
                     - Dimensions.toggleWidth
                     - Dimensions.horizontalElementsSpacing
                     - imageWidth
+
                 let textHeight = styleSheet.text.height(of: title, fittingWidth: textBoundWidth)
+
                 return max(
                     styleSheet.enforcesMinimumHeight ? Dimensions.minimumCellHeight : 0.0,
-                    textHeight + verticalMargins
+                    textHeight + verticalMargins,
+                    image?.size.height ?? 0
                 )
             }
         }
@@ -104,6 +106,11 @@ extension Component.Toggle {
                     imageView,
                     textLabel
             )
+
+            imageView.setContentHuggingPriority(.required, for: .horizontal)
+            imageView.setContentHuggingPriority(.required, for: .vertical)
+            imageView.setContentCompressionResistancePriority(.cellRequired, for: .vertical)
+            imageView.setContentCompressionResistancePriority(.required, for: .horizontal)
 
             super.init(frame: frame)
 
