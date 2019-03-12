@@ -40,7 +40,9 @@ extension Component {
 
             self.heightComputer = { width, inheritedMargins in
                 let verticalMargins = styleSheet.layoutMargins.verticalTotal
-                let imageWidth: CGFloat = image?.size.width ?? 0
+                let imageWidth: CGFloat = image != nil
+                    ? (image?.size.width ?? 0) + Dimensions.horizontalElementsSpacing
+                    : 0.0
 
                 let textBoundWidth = width
                     - max(styleSheet.layoutMargins.left, inheritedMargins.left)
