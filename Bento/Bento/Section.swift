@@ -1,7 +1,7 @@
 import UIKit
 
 /// Section is kept usually by a Box while section keeps array of nodes. SectionID needs to be provided for diff algorithm
-/// Section can have a visual representation if components are provided (header and/or footer).
+/// Section **can have** a visual representation if components are provided (header and/or footer).
 /// To simplify, you can think Section is in Bento the same what a section is for UITableView.
 public struct Section<SectionID: Hashable, ItemID: Hashable> {
     public typealias Item = Node<ItemID>

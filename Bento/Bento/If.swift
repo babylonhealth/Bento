@@ -1,3 +1,11 @@
+/// It adds possibility to add a Box/Section/Node into existing Box when given condition is met (equals true).
+/// It's represented by `|-?` or `|---?` operators.
+/// ```
+///  Box.empty
+///      |-? .iff(state.isSectionVisible) {
+///          renderSection()
+///      }
+/// ```
 public struct If<T> {
     let condition: () -> Bool
     let generator: () -> T
@@ -15,6 +23,16 @@ public struct If<T> {
     }
 }
 
+/// Special case of `If` operator.
+/// It allows to use Optional<T> and add a Box/Section/Node into existing Box only when the optional is not nil.
+/// Oposite to `If` operator, `Some` unwrapps the optional and passes the unwrapped value to the closure.
+/// It's also represented by `|-?` or `|---?` operators.
+/// ```
+///  Box.empty
+///      |-? .some(state.someOptionalValue) { unwrappedValue in
+///          render(unwrappedValue)
+///      }
+/// ```
 public struct Some<T, U> {
     let optional: T?
     let generator: (T) -> U
