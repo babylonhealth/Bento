@@ -36,7 +36,7 @@ final class ToggleSnapshotTests: SnapshotTestCase {
     func test_toggle_with_image() {
         let component = Component.Toggle(
             title: title,
-            image: .image(fromColor: .blue),
+            image: .image(fromColor: .blue, size: CGSize(width: 32, height: 32)),
             styleSheet: styleSheet
         )
         verifyComponentForAllSizes(component: component)
