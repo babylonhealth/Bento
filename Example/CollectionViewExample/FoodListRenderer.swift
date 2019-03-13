@@ -23,7 +23,7 @@ final class FoodListRenderer {
         return Box<SectionId, RowId>.empty
             |-+ Section(id: SectionId.intro,
                         header: IconTextComponent(image: nil, title: "Loading"))
-            |---+ RowId.loading <> LoadingIndicatorComponent(isLoading: true)
+            |---+ Node(id: RowId.loading, component: LoadingIndicatorComponent(isLoading: true))
     }
 
     private func render(pages: [FoodItem]) -> Box<SectionId, RowId> {
