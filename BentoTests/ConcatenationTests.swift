@@ -19,7 +19,7 @@ class ConcatenationTests: XCTestCase {
         let optional: String? = nil
 
         let box = Box<TestSectionId, TestRowId>.empty
-            |-? .some(optional) { _ in
+            |-? optional.map { _ in
                 section
             }
 
@@ -31,7 +31,7 @@ class ConcatenationTests: XCTestCase {
         let optional: String? = "something"
 
         let box = Box<TestSectionId, TestRowId>.empty
-            |-? .some(optional) { _ in
+            |-? optional.map { _ in
                 section
             }
 
@@ -56,7 +56,7 @@ class ConcatenationTests: XCTestCase {
         let optional: String? = nil
 
         let result: Section<TestSectionId, TestRowId> = section
-            |---? .some(optional) { _ in
+            |---? optional.map { _ in
                 node
             }
 
@@ -70,7 +70,7 @@ class ConcatenationTests: XCTestCase {
         let optional: String? = "something"
 
         let result: Section<TestSectionId, TestRowId> = section
-            |---? .some(optional) { _ in
+            |---? optional.map { _ in
                 node
             }
 
