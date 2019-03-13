@@ -119,57 +119,69 @@ final class SignUpRenderer {
         let yearsInSeconds: TimeInterval = 31556952
         let eighteenYearsAgo = Date().addingTimeInterval(-18 * yearsInSeconds)
         let chosenBirthday = state.chosenBirthday.map(SignUpRenderer.dateFormatter.string) ?? ""
-        return Node(id: RowID.birthday, component: Component.TitledDescription(
-            texts: [TextValue(stringLiteral: "Birthday")],
-            detail: TextValue(stringLiteral: chosenBirthday),
-            accessory: .none,
-            inputNodes: Component.DatePicker(
-                date: state.chosenBirthday ?? eighteenYearsAgo,
-                datePickerMode: .date,
-                styleSheet: Component.DatePicker.StyleSheet(),
-                didPickDate: self.presenter.didChooseBirthday
-            ),
-            styleSheet: descriptionStyleSheet
-        ))
+        return Node(
+            id: RowID.birthday,
+            component: Component.TitledDescription(
+                texts: [TextValue(stringLiteral: "Birthday")],
+                detail: TextValue(stringLiteral: chosenBirthday),
+                accessory: .none,
+                inputNodes: Component.DatePicker(
+                    date: state.chosenBirthday ?? eighteenYearsAgo,
+                    datePickerMode: .date,
+                    styleSheet: Component.DatePicker.StyleSheet(),
+                    didPickDate: self.presenter.didChooseBirthday
+                ),
+                styleSheet: descriptionStyleSheet
+            )
+        )
     }
 
     private func securityQuestion(_ state: SignUpPresenter.State) -> Node<RowID> {
         let selected = state.chosenSecurityQuestion ?? "Choose security question..."
-        return Node(id: RowID.securityQuestion, component: Component.TitledDescription(
-            texts: [TextValue(stringLiteral: selected)],
-            accessory: .none,
-            inputNodes: Component.OptionPicker(
-                options: [
-                    "In what city were you born?",
-                    "What street did you grow up on?",
-                    "What is your favorite movie?"
-                ],
-                selected: selected,
-                didPickItem: self.presenter.didChooseSecurityQuestion,
-                styleSheet: Component.OptionPicker.StyleSheet()
-            ),
-            styleSheet: descriptionStyleSheet
-        ))
+        return Node(
+            id: RowID.securityQuestion,
+            component: Component.TitledDescription(
+                texts: [TextValue(stringLiteral: selected)],
+                accessory: .none,
+                inputNodes: Component.OptionPicker(
+                    options: [
+                        "In what city were you born?",
+                        "What street did you grow up on?",
+                        "What is your favorite movie?"
+                    ],
+                    selected: selected,
+                    didPickItem: self.presenter.didChooseSecurityQuestion,
+                    styleSheet: Component.OptionPicker.StyleSheet()
+                ),
+                styleSheet: descriptionStyleSheet
+            )
+        )
     }
 
     private func securityQuestionAnswer(_ state: SignUpPresenter.State) -> Node<RowID> {
-        return Node(id: RowID.securityAnswer, component: Component.TextInput(
-            title: nil,
-            placeholder: "Answer",
-            text: TextValue(stringLiteral: state.securityQuestionAnswer ?? ""),
-            textDidChange: self.presenter.didChangeSecurityAnswer,
-            styleSheet: inputStyleSheet
-        ))
+        return Node(
+            id: RowID.securityAnswer,
+            component: Component.TextInput(
+                title: nil,
+                placeholder: "Answer",
+                text: TextValue(stringLiteral: state.securityQuestionAnswer ?? ""),
+                textDidChange: self.presenter.didChangeSecurityAnswer,
+                styleSheet: inputStyleSheet
+            )
+        )
     }
 
     private func signUpButton(_ state: SignUpPresenter.State) -> Node<RowID> {
-        return Node(id: RowID.signUpButton, component: Component.Button(
-            title: "Sign Up",
-            isEnabled: state.isSignUpButtonEnabled,
-            didTap: self.presenter.didPressSignUp,
-            styleSheet: Component.Button.StyleSheet(
-                button: ButtonStyleSheet()
-            ))
+        return Node(
+            id: RowID.signUpButton,
+            component: Component.Button(
+                title: "Sign Up",
+                isEnabled: state.isSignUpButtonEnabled,
+                didTap: self.presenter.didPressSignUp,
+                styleSheet: Component.Button.StyleSheet(
+                    button: ButtonStyleSheet()
+                )
+            )
         )
     }
 

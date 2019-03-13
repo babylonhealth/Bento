@@ -126,17 +126,23 @@ class ViewController: UIViewController {
     private func renderIconText() -> Node<RowId> {
         switch state {
         case .airplaneMode:
-            return Node(id: RowId.note, component: IconTextComponent(image: #imageLiteral(resourceName: "wifi"), title: "WIFI Off")
-                .deletable(deleteActionText: "Delete", didDelete: {
-                    print("Delete")
-                })
-                .on(willDisplayItem: nil, didEndDisplayingItem: nil))
+            return Node(
+                id: RowId.note,
+                component: IconTextComponent(image: #imageLiteral(resourceName: "wifi"), title: "WIFI Off")
+                    .deletable(deleteActionText: "Delete", didDelete: {
+                        print("Delete")
+                    })
+                    .on(willDisplayItem: nil, didEndDisplayingItem: nil)
+                )
         case .wifi:
-            return Node(id: RowId.note, component: IconTextComponent(image: #imageLiteral(resourceName: "wifi"), title: "WIFI On")
-                .deletable(deleteActionText: "Delete", didDelete: {
-                    print("Delete")
-                })
-                .on(willDisplayItem: nil, didEndDisplayingItem: nil))
+            return Node(
+                id: RowId.note,
+                component: IconTextComponent(image: #imageLiteral(resourceName: "wifi"), title: "WIFI On")
+                    .deletable(deleteActionText: "Delete", didDelete: {
+                        print("Delete")
+                    })
+                    .on(willDisplayItem: nil, didEndDisplayingItem: nil)
+                )
         }
     }
 }
