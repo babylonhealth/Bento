@@ -7,6 +7,6 @@ precedencegroup NodeConstruction {
 
 infix operator ++ : NodeConstruction
 
-public func ++ <RowId, R: Renderable>(id: RowId, component: R) -> Node<RowId> where R.View: UIView {
+public func ++ <RowId, R: Renderable>(id: RowId, component: R) -> Node<RowId> {
     return Node(id: id, component: component)
 }

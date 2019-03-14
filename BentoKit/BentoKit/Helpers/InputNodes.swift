@@ -31,7 +31,7 @@ extension Node: CustomInput {
     }
 }
 
-extension CustomInput where Self: Renderable, Self.View: UIView {
+extension CustomInput where Self: Renderable {
     public func makeCustomInputBox() -> AnyBox {
         return AnyBox(
             Box<Int, Int>.empty
