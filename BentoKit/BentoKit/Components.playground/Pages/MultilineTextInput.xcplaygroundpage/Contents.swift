@@ -6,7 +6,7 @@ import PlaygroundSupport
 import StyleSheets
 
 let component = Component.MultilineTextInput(
-    text: "Text",
+    text: "This is UITextView.\nClick me!",
     placeholder: "Placeholder",
     didFinishEditing: {
         print("didFinishEditing", $0)

@@ -29,15 +29,11 @@ let component = Component.TitledDescription(
     detail: TextValue.plain("Detail"),
     image: Property(value: ImageOrLabelView.Content.image(image)),
     accessory: Component.TitledDescription.Accessory.custom(button),
-    isEnabled: true,
     didTap: {
         print("didTap")
-},
+    },
     didTapAccessory: {
         print("didTapAccessory")
-},
-    deleteAction: .action(title: "Delete") {
-        print("didDelete")
     },
     styleSheet: Component.TitledDescription.StyleSheet(
         textStyles: [
