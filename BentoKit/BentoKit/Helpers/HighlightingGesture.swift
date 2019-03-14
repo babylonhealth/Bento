@@ -34,7 +34,7 @@ public final class HighlightingGesture: UIGestureRecognizer {
     private var normalColor: UIColor?
     private var startPoint = CGPoint.zero
 
-    init() {
+    public init() {
         super.init(target: nil, action: nil)
         self.isEnabled = false
         self.delegate = self
