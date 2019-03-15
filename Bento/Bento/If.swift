@@ -1,5 +1,5 @@
 extension Optional {
-    public static func iff(_ condition: @autoclosure @escaping () -> Bool, _ generator: @autoclosure @escaping () -> Wrapped) -> Wrapped? {
+    public static func iff(_ condition: @autoclosure () -> Bool, _ generator: @autoclosure () -> Wrapped) -> Wrapped? {
         if condition() {
             return generator()
         } else {
@@ -7,7 +7,7 @@ extension Optional {
         }
     }
 
-    public static func iff(_ condition: @autoclosure @escaping () -> Bool, _ generator: @escaping () -> Wrapped) -> Wrapped? {
+    public static func iff(_ condition: @autoclosure () -> Bool, _ generator: () -> Wrapped) -> Wrapped? {
         if condition() {
             return generator()
         } else {
@@ -15,7 +15,7 @@ extension Optional {
         }
     }
 
-    public static func iff(_ condition: @escaping () -> Bool, _ generator: @escaping () -> Wrapped) -> Wrapped? {
+    public static func iff(_ condition: () -> Bool, _ generator: () -> Wrapped) -> Wrapped? {
         if condition() {
             return generator()
         } else {
