@@ -30,10 +30,6 @@ public struct Node<Identifier: Hashable> {
     }
 }
 
-public func <> <RowId, R: Renderable>(id: RowId, component: R) -> Node<RowId> {
-    return Node(id: id, component: component)
-}
-
 public func |---+<Identifier>(lhs: Node<Identifier>, rhs: Node<Identifier>) -> [Node<Identifier>] {
     return [lhs, rhs]
 }

@@ -22,7 +22,7 @@ public final class AccessoryView: InteractiveView {
         didSet {
             oldValue?.removeFromSuperview()
 
-            view?.contentMode = .scaleAspectFit
+            view?.contentMode = .center
             view?.translatesAutoresizingMaskIntoConstraints = false
             view?.add(to: self)
                 .pinEdges(to: self)

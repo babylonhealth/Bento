@@ -41,18 +41,22 @@ extension Component {
             self.heightComputer = { width, inheritedMargins in
                 let verticalMargins = styleSheet.layoutMargins.verticalTotal
                 let imageWidth: CGFloat = image != nil
-                    ? Dimensions.imageViewWidth + Dimensions.horizontalElementsSpacing
+                    ? (image?.size.width ?? 0) + Dimensions.horizontalElementsSpacing
                     : 0.0
+
                 let textBoundWidth = width
                     - max(styleSheet.layoutMargins.left, inheritedMargins.left)
                     - max(styleSheet.layoutMargins.right, inheritedMargins.right)
                     - Dimensions.toggleWidth
                     - Dimensions.horizontalElementsSpacing
                     - imageWidth
+
                 let textHeight = styleSheet.text.height(of: title, fittingWidth: textBoundWidth)
+
                 return max(
                     styleSheet.enforcesMinimumHeight ? Dimensions.minimumCellHeight : 0.0,
-                    textHeight + verticalMargins
+                    textHeight + verticalMargins,
+                    image?.size.height ?? 0
                 )
             }
         }
@@ -69,7 +73,7 @@ extension Component {
 
 extension Component.Toggle {
     public final class View: BaseView {
-        fileprivate let imageView = UIImageView().width(32).height(32)
+        fileprivate let imageView = UIImageView()
         fileprivate let toggle = UISwitch().width(50)
         fileprivate let textLabel = UILabel().with {
             $0.numberOfLines = 0
@@ -104,6 +108,11 @@ extension Component.Toggle {
                     imageView,
                     textLabel
             )
+
+            imageView.setContentHuggingPriority(.required, for: .horizontal)
+            imageView.setContentHuggingPriority(.required, for: .vertical)
+            imageView.setContentCompressionResistancePriority(.cellRequired, for: .vertical)
+            imageView.setContentCompressionResistancePriority(.required, for: .horizontal)
 
             super.init(frame: frame)
 
@@ -143,7 +152,6 @@ extension Component.Toggle {
 extension Component.Toggle {
     enum Dimensions {
         static let toggleWidth: CGFloat = 50
-        static let imageViewWidth: CGFloat = 32
         static let horizontalElementsSpacing: CGFloat = 9
         static let minimumCellHeight: CGFloat = 44
     }

@@ -36,10 +36,27 @@ final class ToggleSnapshotTests: SnapshotTestCase {
     func test_toggle_with_image() {
         let component = Component.Toggle(
             title: title,
-            image: .image(fromColor: .blue),
+            image: .image(fromColor: .blue, size: CGSize(width: 32, height: 32)),
             styleSheet: styleSheet
         )
         verifyComponentForAllSizes(component: component)
     }
 
+    func test_toggle_with_large_image() {
+        let component = Component.Toggle(
+            title: title,
+            image: .image(fromColor: .red, size: CGSize(width: 128, height: 128)),
+            styleSheet: styleSheet
+        )
+        verifyComponentForAllSizes(component: component)
+    }
+
+    func test_toggle_with_large_image_small_title() {
+        let component = Component.Toggle(
+            title: "Some small title",
+            image: .image(fromColor: .red, size: CGSize(width: 128, height: 128)),
+            styleSheet: styleSheet
+        )
+        verifyComponentForAllSizes(component: component)
+    }
 }
