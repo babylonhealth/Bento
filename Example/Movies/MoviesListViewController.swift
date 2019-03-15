@@ -205,9 +205,12 @@ final class PaginationViewModel {
 
         private func render(movies: [Movie], observer: @escaping (Action) -> Void) -> Box<SectionId, RowId> {
             let rows = movies.enumerated().map { (index, movie) in
-                return RowId.movie(movie) <> MovieComponent(movie: movie, didDelete: {
-                    observer(.deleteMovieAtIndex(index))
-                })
+                return Node(
+                    id: RowId.movie(movie),
+                    component: MovieComponent(movie: movie, didDelete: {
+                        observer(.deleteMovieAtIndex(index))
+                    })
+                )
             }
             return Box.empty
                 |-+ Section(id: SectionId.noId)

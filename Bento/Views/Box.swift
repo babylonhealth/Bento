@@ -1,10 +1,5 @@
 import UIKit
 
-precedencegroup ComposingPrecedence {
-    associativity: left
-    higherThan: NodeConcatenationPrecedence
-}
-
 precedencegroup NodeConcatenationPrecedence {
     associativity: left
     higherThan: SectionConcatenationPrecedence
@@ -20,7 +15,6 @@ infix operator |-?: SectionConcatenationPrecedence
 infix operator |---+: NodeConcatenationPrecedence
 infix operator |---*: NodeConcatenationPrecedence
 infix operator |---?: NodeConcatenationPrecedence
-infix operator <>: ComposingPrecedence
 
 public struct Box<SectionID: Hashable, ItemID: Hashable> {
     public typealias Section = Bento.Section<SectionID, ItemID>
