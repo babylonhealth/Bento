@@ -1,5 +1,7 @@
 import UIKit
 
+/// Protocol which every Component needs to conform.
+/// - View: UIView subtype which the component is releated with.
 public protocol Renderable {
     associatedtype View: NativeView
 

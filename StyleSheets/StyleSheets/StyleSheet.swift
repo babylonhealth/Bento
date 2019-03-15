@@ -1,5 +1,6 @@
 import UIKit
 
+///Protocol for StyleSheets to allow using `compose()` to modify it's value using KeyPaths
 public protocol StyleSheetProtocol {
     associatedtype Element
 
