@@ -1,10 +1,5 @@
 import UIKit
 
-precedencegroup ComposingPrecedence {
-    associativity: left
-    higherThan: NodeConcatenationPrecedence
-}
-
 precedencegroup NodeConcatenationPrecedence {
     associativity: left
     higherThan: SectionConcatenationPrecedence
@@ -20,7 +15,6 @@ infix operator |-?: SectionConcatenationPrecedence
 infix operator |---+: NodeConcatenationPrecedence
 infix operator |---*: NodeConcatenationPrecedence
 infix operator |---?: NodeConcatenationPrecedence
-infix operator <>: ComposingPrecedence
 
 /// Box keeps array of section which should be displayed on the screen
 /// Box **doesn't have** a visual representation

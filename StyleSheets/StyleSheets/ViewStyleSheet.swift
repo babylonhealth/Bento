@@ -16,6 +16,10 @@ open class ViewStyleSheet<View: UIView>: StyleSheetProtocol {
     public var masksToBounds: Bool
     public var borderColor: UIColor?
     public var borderWidth: CGFloat
+    public var shadowColor: UIColor?
+    public var shadowRadius: CGFloat
+    public var shadowOffset: CGSize
+    public var shadowOpacity: Float
     
     // MARK: Content Margins
     
@@ -32,8 +36,12 @@ open class ViewStyleSheet<View: UIView>: StyleSheetProtocol {
         cornerRadius: CGFloat = 0.0,
         masksToBounds: Bool = false,
         borderColor: UIColor? = nil,
-        borderWidth: CGFloat = 0
-        ) {
+        borderWidth: CGFloat = 0,
+        shadowColor: UIColor? = nil,
+        shadowRadius: CGFloat = 0,
+        shadowOffset: CGSize = .zero,
+        shadowOpacity: Float = 0
+    ) {
         self.backgroundColor = backgroundColor
         self.tintColor = tintColor
         self.clipsToBounds = clipsToBounds
@@ -44,6 +52,10 @@ open class ViewStyleSheet<View: UIView>: StyleSheetProtocol {
         self.masksToBounds = masksToBounds
         self.borderColor = borderColor
         self.borderWidth = borderWidth
+        self.shadowColor = shadowColor
+        self.shadowRadius = shadowRadius
+        self.shadowOffset = shadowOffset
+        self.shadowOpacity = shadowOpacity
     }
     
     open func apply(to element: View) {
@@ -54,6 +66,10 @@ open class ViewStyleSheet<View: UIView>: StyleSheetProtocol {
         element.layer.masksToBounds = masksToBounds
         element.layer.borderColor = borderColor?.cgColor
         element.layer.borderWidth = borderWidth
+        element.layer.shadowColor = shadowColor?.cgColor
+        element.layer.shadowRadius = shadowRadius
+        element.layer.shadowOffset = shadowOffset
+        element.layer.shadowOpacity = shadowOpacity
         element.layoutMargins = layoutMargins
         element.transform = transform
     }

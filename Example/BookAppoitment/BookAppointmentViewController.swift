@@ -160,35 +160,35 @@ final class BookAppointmentViewModel {
             return Box<SectionId, RowId>.empty
                 |-+ Section(id: SectionId.user,
                             header: EmptySpaceComponent(spec: EmptySpaceComponent.Spec(height: 20, color: .clear)))
-                |---+ RowId.user <> IconTitleDetailsComponent(icon: #imageLiteral(resourceName:"chuck_norris_walker"),
+                |---+ Node(id: RowId.user, component: IconTitleDetailsComponent(icon: #imageLiteral(resourceName:"chuck_norris_walker"),
                                                                title: "\(patient.firstName) \(patient.lastName)",
-                                                               subtitle: "")
+                                                               subtitle: ""))
                 |-+ Section(id: SectionId.consultantDate,
                             header: EmptySpaceComponent(spec: EmptySpaceComponent.Spec(height: 20, color: .clear)))
-                |---+ RowId.loading <> LoadingIndicatorComponent(isLoading: true)
+                |---+ Node(id: RowId.loading, component: LoadingIndicatorComponent(isLoading: true))
         }
 
         private func render(appointment: Appointment, onBook: @escaping () -> Void) -> Box<SectionId, RowId> {
             return Box<SectionId, RowId>.empty
                 |-+ Section(id: SectionId.user,
                             header: EmptySpaceComponent(spec: EmptySpaceComponent.Spec(height: 20, color: .clear)))
-                |---+ RowId.user <> IconTitleDetailsComponent(icon: #imageLiteral(resourceName:"chuck_norris_walker"),
+                |---+ Node(id: RowId.user, component: IconTitleDetailsComponent(icon: #imageLiteral(resourceName:"chuck_norris_walker"),
                                                                title: "\(patient.firstName) \(patient.lastName)",
-                                                               subtitle: "")
+                                                               subtitle: ""))
                 |-+ Section(id: SectionId.consultantDate,
                             header: EmptySpaceComponent(spec: EmptySpaceComponent.Spec(height: 20, color: .clear)))
-                |---+ RowId.consultant <> IconTitleDetailsComponent(icon: #imageLiteral(resourceName:"consultantIcon"),
+                |---+ Node(id: RowId.consultant, component: IconTitleDetailsComponent(icon: #imageLiteral(resourceName:"consultantIcon"),
                                                                title: "Consultant type",
-                                                               subtitle: render(consultantType: appointment.consultantType))
-                |---+ RowId.date <> IconTitleDetailsComponent(icon: #imageLiteral(resourceName: "timeIcon"),
+                                                               subtitle: render(consultantType: appointment.consultantType)))
+                |---+ Node(id: RowId.date, component: IconTitleDetailsComponent(icon: #imageLiteral(resourceName: "timeIcon"),
                                                                title: "Date & time",
-                                                               subtitle: dateFormatter.string(from: appointment.date))
+                                                               subtitle: dateFormatter.string(from: appointment.date)))
                 |-+ Section(id: SectionId.audioVideo,
                             header: EmptySpaceComponent(spec: EmptySpaceComponent.Spec(height: 20, color: .clear)))
-                |---+ RowId.audioVideo <> SegmetControlComponent(firstIcon: #imageLiteral(resourceName:"video"),
+                |---+ Node(id: RowId.audioVideo, component: SegmetControlComponent(firstIcon: #imageLiteral(resourceName:"video"),
                                                             secondIcon: #imageLiteral(resourceName:"phone"),
                                                             selectedIndex: appointment.appointmentType == .video ? 0 : 1,
-                                                            onSegmentSelected: { print("Selected index", $0) })
+                                                            onSegmentSelected: { print("Selected index", $0) }))
                 |-+ Section(id: SectionId.audioVideo,
                             header: EmptySpaceComponent(spec: EmptySpaceComponent.Spec(height: 20, color: .clear)))
                 |-+ Section(id: SectionId.audioVideo,
