@@ -16,8 +16,7 @@ In our experience it makes UI-related code easier to build and maintain. Our aim
 - [Installation](#installation-)
 - [What's it like?](#whats-it-like-)
 - [How does it work?](#how-does-it-work-)
-- [BentoKit]
-- [StyleSheets]
+- [BentoKit & StyleSheets](#bentokit-&-stylesheets-)
 - [Examples](#examples-)
 - [Development installation](#development-installation-)
 - [State of the project](#state-of-the-project-%EF%B8%8F)
@@ -33,6 +32,7 @@ target 'MyApp' do
     pod 'Bento'
 end
 ```
+
 * Carthage
 
 ```
@@ -187,29 +187,39 @@ let box = Box.empty
 ```
 ```swift
 let box = Box.empty
-    |-? .anOptional.map { unwrappedOptional in  // <-- the value of anOptional unwrapped
+    |-? anOptional.map { unwrappedOptional in  // <-- the value of anOptional unwrapped
         Section()  // <-- Section only added if `anOptional` is not `nil`
     }
 ```
 
-`|---?` works in exactly the same way for `Node`s
+`|---?` works in exactly the same way for `Node`.
 
-### BentoKit 🍱
+### BentoKit & StyleSheets 🎨
+BentoKit it's a set of generic components like `TiteledDescription`, `Description`, `TextInput`, `EmptySpace` etc. BentoKit uses StyleSheets to style components.
 
-```swift
-let box = .empty
-	|-+
-```
-
-### StyleSheets 🎨
-StyleSheets is a way to provide how particular view should be rendered. Component's job is to provide what should be displayed while StyleSheets provide a style how it's done. UIFonts, colors, alignment should go into StyleSheet. 
+StyleSheets are a way to define **how** particular view should be rendered. Component's job is to provide **what** should be displayed while StyleSheets provide a style **how** it's done. Fonts, colors, alignment should go into StyleSheet. 
 
 StyleSheets support KeyPaths for easier composition.
 
 ```swift
 let styleSheet = LabelStyleSheet()
-	.compose(\.numberOfLines, 3)
-  .compose(\.font, UIFont.preferredFont(forTextStyle: .body))
+    .compose(\.numberOfLines, 3)
+    .compose(\.font, UIFont.preferredFont(forTextStyle: .body))
+```
+
+StyleSheets can be used with BentoKit's components. All you need to do is to use correct stylesheet:
+
+```swift
+return .empty
+  |-+ Section(id: .first)
+  |---+ Node(
+         id: .componentId,
+         component: Component.Description(
+             text: "Text",
+             styleSheet: Component.Description.StyleSheet()
+                 .compose(\.text.font, UIFont.preferredFont(forTextStyle: .body))
+         )
+   )
 ```
 
 ### Examples 😎
