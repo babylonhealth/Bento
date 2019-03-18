@@ -30,6 +30,10 @@ In our experience it makes UI-related code easier to build and maintain. Our aim
 ```ruby
 target 'MyApp' do
     pod 'Bento'
+    
+    # Optionally, if you want to install BentoKit & StyleSheets
+    pod 'BentoKit'
+    pod 'StyleSheets'
 end
 ```
 
