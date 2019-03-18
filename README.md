@@ -16,7 +16,7 @@ In our experience it makes UI-related code easier to build and maintain. Our aim
 - [Installation](#installation-)
 - [What's it like?](#whats-it-like-)
 - [How does it work?](#how-does-it-work-)
-- [BentoKit & StyleSheets](#bentokit-&-stylesheets-)
+- [BentoKit & StyleSheets](#bentokit--stylesheets-)
 - [Examples](#examples-)
 - [Development installation](#development-installation-)
 - [State of the project](#state-of-the-project-%EF%B8%8F)
