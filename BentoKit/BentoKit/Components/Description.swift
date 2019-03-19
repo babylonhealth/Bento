@@ -116,7 +116,7 @@ extension Component.Description {
 
 extension Component.Description {
 
-    public final class StyleSheet: BaseViewStyleSheet<View> {
+    public final class StyleSheet: InteractiveViewStyleSheet<View> {
         public let text: LabelStyleSheet
         public let accessoryButton: ButtonStyleSheet
         public var horizontalSpacing: CGFloat
