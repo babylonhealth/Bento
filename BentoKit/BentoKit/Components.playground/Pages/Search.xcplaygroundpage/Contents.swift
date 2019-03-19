@@ -8,7 +8,6 @@ import StyleSheets
 let bundle = Bundle(for: Component.TextInput.self)
 let styleSheet = Component.Search.StyleSheet()
     .compose(\.searchBar.textInputBackgroundColor, UIColor.gray.withAlphaComponent(0.25))
-    .compose(\.searchBar.showsCancelButton, true)
 let component = Component.Search(
     placeholder: "Placeholder",
     keyboardType: .default,
@@ -18,6 +17,7 @@ let component = Component.Search(
     textDidChange: { _, text in
         print("textDidChange", text)
 },
+    showsCancelButton: true,
     cancelButtonClicked: {
         print("cancelButtonClicked")
         $0.endEditing(true)
