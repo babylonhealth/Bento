@@ -34,54 +34,6 @@ public extension Component {
             return heightComputer(width, inheritedMargins)
         }
 
-        @available(*, deprecated, message: "Please use the designated initialiser.")
-        public convenience init(
-            title: String,
-            attributedText: NSAttributedString? = nil,
-            subtitle: String? = nil,
-            detail: String? = nil,
-            image: Property<BentoKit.ImageOrLabel>? = nil,
-            accessory: Accessory = .chevron,
-            badgeIcon: UIImage? = nil,
-            inputNodes: CustomInput? = nil,
-            didTap: Optional<() -> Void> = nil,
-            didTapAccessory: Optional<() -> Void> = nil,
-            styleSheet: StyleSheet = .init()
-        ) {
-            let titleText: TextValue
-            if let attributedText = attributedText {
-                titleText = .rich(attributedText)
-            } else {
-                titleText = .plain(title)
-            }
-
-            let texts: [TextValue]
-            if let subtitle = subtitle {
-                texts = [titleText, .plain(subtitle)]
-            } else {
-                texts = [titleText]
-            }
-
-            let detailText: TextValue?
-            if let detail = detail {
-                detailText = TextValue.plain(detail)
-            } else {
-                detailText = nil
-            }
-
-            self.init(
-                texts: texts,
-                detail: detailText,
-                image: image,
-                accessory: accessory,
-                badgeIcon: badgeIcon,
-                inputNodes: inputNodes,
-                didTap: didTap,
-                didTapAccessory: didTapAccessory,
-                styleSheet: styleSheet
-            )
-        }
-
         public init(
             texts: [TextValue] = [],
             detail: TextValue? = nil,
@@ -541,56 +493,6 @@ public extension Component.TitledDescription {
         public let detail: LabelStyleSheet
         public let badge: ViewStyleSheet<UIView>
         public let accessory: InteractiveViewStyleSheet<InteractiveView>
-
-        @available(*, deprecated, message: "Please use textBlockWidthFraction.")
-        public var titleWidthFraction: CGFloat? {
-            get { return textBlockWidthFraction }
-            set { textBlockWidthFraction = newValue }
-        }
-
-        @available(*, deprecated, message: "Please use textStyles.")
-        public var title: LabelStyleSheet {
-            get { return textStyles[0] }
-            set { textStyles[0] = newValue }
-        }
-
-        @available(*, deprecated, message: "Please use textStyles.")
-        public var subtitle: LabelStyleSheet {
-            get { return textStyles[1] }
-            set { textStyles[1] = newValue }
-        }
-        @available(*, deprecated, message: "Please use the designated initialiser.")
-        public convenience init(
-            verticalSpacingBetweenElements: CGFloat = 8.0,
-            titleWidthFraction: CGFloat? = nil,
-            highlightingTarget: HighlightingTarget = HighlightingTarget.container,
-            badgeOffset: CGPoint = .zero,
-            badgeSize: CGSize = CGSize(width: 12, height: 12),
-            enforcesMinimumHeight: Bool = true,
-            content: ContentStyleSheet = .init(),
-            imageOrLabel: ImageOrLabelView.StyleSheet = .init(),
-            title: LabelStyleSheet = .init(),
-            subtitle: LabelStyleSheet = .init(font: UIFont.preferredFont(forTextStyle: .footnote),
-                                              textColor: .gray),
-            detail: LabelStyleSheet = .init(textAlignment: .trailing),
-            badge: ViewStyleSheet<UIView> = ViewStyleSheet<UIView>(),
-            accessory: InteractiveViewStyleSheet<InteractiveView> = InteractiveViewStyleSheet<InteractiveView>()
-        ) {
-            self.init(
-                verticalSpacingBetweenElements: verticalSpacingBetweenElements,
-                textBlockWidthFraction: titleWidthFraction,
-                highlightingTarget: highlightingTarget,
-                badgeOffset: badgeOffset,
-                badgeSize: badgeSize,
-                enforcesMinimumHeight: enforcesMinimumHeight,
-                content: content,
-                imageOrLabel: imageOrLabel,
-                textStyles: [title, subtitle],
-                detail: detail,
-                badge: badge,
-                accessory: accessory
-            )
-        }
 
         public init(
             verticalSpacingBetweenElements: CGFloat = 8.0,
