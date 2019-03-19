@@ -494,56 +494,6 @@ public extension Component.TitledDescription {
         public let badge: ViewStyleSheet<UIView>
         public let accessory: InteractiveViewStyleSheet<InteractiveView>
 
-        @available(*, deprecated, message: "Please use textBlockWidthFraction.")
-        public var titleWidthFraction: CGFloat? {
-            get { return textBlockWidthFraction }
-            set { textBlockWidthFraction = newValue }
-        }
-
-        @available(*, deprecated, message: "Please use textStyles.")
-        public var title: LabelStyleSheet {
-            get { return textStyles[0] }
-            set { textStyles[0] = newValue }
-        }
-
-        @available(*, deprecated, message: "Please use textStyles.")
-        public var subtitle: LabelStyleSheet {
-            get { return textStyles[1] }
-            set { textStyles[1] = newValue }
-        }
-        @available(*, deprecated, message: "Please use the designated initialiser.")
-        public convenience init(
-            verticalSpacingBetweenElements: CGFloat = 8.0,
-            titleWidthFraction: CGFloat? = nil,
-            highlightingTarget: HighlightingTarget = HighlightingTarget.container,
-            badgeOffset: CGPoint = .zero,
-            badgeSize: CGSize = CGSize(width: 12, height: 12),
-            enforcesMinimumHeight: Bool = true,
-            content: ContentStyleSheet = .init(),
-            imageOrLabel: ImageOrLabelView.StyleSheet = .init(),
-            title: LabelStyleSheet = .init(),
-            subtitle: LabelStyleSheet = .init(font: UIFont.preferredFont(forTextStyle: .footnote),
-                                              textColor: .gray),
-            detail: LabelStyleSheet = .init(textAlignment: .trailing),
-            badge: ViewStyleSheet<UIView> = ViewStyleSheet<UIView>(),
-            accessory: InteractiveViewStyleSheet<InteractiveView> = InteractiveViewStyleSheet<InteractiveView>()
-        ) {
-            self.init(
-                verticalSpacingBetweenElements: verticalSpacingBetweenElements,
-                textBlockWidthFraction: titleWidthFraction,
-                highlightingTarget: highlightingTarget,
-                badgeOffset: badgeOffset,
-                badgeSize: badgeSize,
-                enforcesMinimumHeight: enforcesMinimumHeight,
-                content: content,
-                imageOrLabel: imageOrLabel,
-                textStyles: [title, subtitle],
-                detail: detail,
-                badge: badge,
-                accessory: accessory
-            )
-        }
-
         public init(
             verticalSpacingBetweenElements: CGFloat = 8.0,
             textBlockWidthFraction: CGFloat? = nil,
