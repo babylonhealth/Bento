@@ -2,8 +2,8 @@ import UIKit
 import ReactiveSwift
 import Bento
 
-open class BentoTableView: UITableView {
-    public var formStyle: Layout = .topYAligned {
+open class BoxSizeCachingTableView: SizeCachingTableView {
+    public var formStyle: BentoTableView.Layout = .topYAligned {
         didSet {
             if formStyle != oldValue {
                 setNeedsLayout()
@@ -41,7 +41,7 @@ open class BentoTableView: UITableView {
     private let fadeIn = UIViewPropertyAnimator(duration: 0.15, curve: .easeInOut, animations: nil)
 
     private var isTransitioning: Bool = false
-    private var transitionTargetStyle: Layout!
+    private var transitionTargetStyle: BentoTableView.Layout!
     private var transitionDidComplete: ((_ willReload: Bool) -> Void)? = nil
     private var transitionRemoveAll: (() -> Void)? = nil
 
@@ -74,7 +74,7 @@ open class BentoTableView: UITableView {
     ///   - style: The target form style.
     ///   - completion: The completion callback to invoke when the target form
     ///                 style has been applied.
-    public func transition(to style: Layout, removeAll: @escaping (() -> Void), completion: @escaping (_ willReload: Bool) -> Void) {
+    public func transition(to style: BentoTableView.Layout, removeAll: @escaping (() -> Void), completion: @escaping (_ willReload: Bool) -> Void) {
         let oldStyle = self.formStyle
 
         if style.shouldFade(from: oldStyle) == false && isTransitioning == false {
@@ -207,7 +207,7 @@ open class BentoTableView: UITableView {
     }
 }
 
-extension BentoTableView: MultilineTextInputAware {
+extension BoxSizeCachingTableView: MultilineTextInputAware {
     @objc public func multilineTextInputHeightDidChange(_ sender: Any) {
         UIView.setAnimationsEnabled(false)
         beginUpdates()
@@ -231,7 +231,7 @@ extension BentoTableView: MultilineTextInputAware {
     }
 }
 
-extension BentoTableView {
+extension BoxSizeCachingTableView {
     fileprivate var isEmpty: Bool {
         // Bento may have zero section. Forms have always one section, but the
         // section may contain zero row.
@@ -239,60 +239,3 @@ extension BentoTableView {
             || numberOfSections == 1 && numberOfRows(inSection: 0) == 0
     }
 }
-
-extension BentoTableView {
-    /// Represent how `FormTableView` should place its content against the safe area
-    /// and how it should animate delta changes.
-    ///
-    /// Unless otherwise specified, the fading behavior always applies. That is,
-    /// whenever changes occur and regardless of the target form style, the entirety
-    /// of the content would be faded out, updated, and then faded back in.
-    ///
-    /// For the `topYAligned` style, if the originated and target styles are both
-    /// `topYAligned`, the general container view delta animation applies.
-    /// Otherwise, the aforementioned fading behavior applies.
-    public enum Layout {
-        /// The content bound should align to the top of the safe area.
-        ///
-        /// If the originated and target styles are both `topYAligned`, the general
-        /// container view delta animation applies. Otherwise, the fading behavior
-        /// as mentioned in `FormStyle` applies.
-        ///
-        /// - important: This is the default style for transitions.
-        case topYAligned
-
-        /// The content bound should align to the top of the safe area.
-        ///
-        /// On contrary to `topYAligned`, the fading behavior always applies.
-        case topYAlignedAlwaysFading
-
-        /// The content bound should be vertically aligned to the center of the safe
-        /// area.
-        ///
-        /// The fading behavior always applies for `centerYAligned`.
-        case centerYAligned
-
-        /// The content bound should be vertically aligned to the center of the safe
-        /// area.
-        ///
-        /// The fading behavior applies only when transitioning from or to
-        /// `topYAligned(AlwaysFading)?`.
-        case centerYAlignedMinimumFading
-
-        func shouldFade(from previous: Layout) -> Bool {
-            switch (previous, self) {
-            case (_, .centerYAligned),
-                 (.centerYAligned, .topYAligned),
-                 (.topYAlignedAlwaysFading, _),
-                 (_, .topYAlignedAlwaysFading),
-                 (.centerYAlignedMinimumFading, .topYAligned),
-                 (.topYAligned, .centerYAlignedMinimumFading),
-                 (.centerYAligned, .centerYAlignedMinimumFading):
-                return true
-            case (_, .topYAligned), (_, .centerYAlignedMinimumFading):
-                return false
-            }
-        }
-    }
-}
-

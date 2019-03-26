@@ -10,14 +10,14 @@ open class BoxViewController<ViewModel: BoxViewModel, Renderer: BoxRenderer, App
     private let rendererConfig: Renderer.Config
     private let appearance: Property<Appearance>
     private let (traits, traitObserver) = Signal<UITraitCollection, NoError>.pipe()
-    public let tableView: BentoTableView
+    public let tableView: BoxSizeCachingTableView
 
-    private let topTableView: BentoTableView
+    private let topTableView: BoxSizeCachingTableView
     private lazy var topTableViewHeight = topTableView.heightAnchor
         .constraint(equalToConstant: 0)
         .activated()
 
-    private let bottomTableView: BentoTableView
+    private let bottomTableView: BoxSizeCachingTableView
     private lazy var bottomTableViewHeight = bottomTableView.heightAnchor
         .constraint(equalToConstant: 0)
         .activated()
@@ -49,9 +49,11 @@ open class BoxViewController<ViewModel: BoxViewModel, Renderer: BoxRenderer, App
         self.viewModel = viewModel
         self.rendererConfig = rendererConfig
         self.appearance = appearance
-        self.tableView = BentoTableView(frame: .zero, style: .grouped)
-        self.topTableView = BentoTableView(frame: .zero, style: .grouped)
-        self.bottomTableView = BentoTableView(frame: .zero, style: .grouped)
+
+        let adapterClass = BoxTableViewAdapter<Renderer.SectionID, Renderer.ItemID>.self
+        self.tableView = BoxSizeCachingTableView(frame: .zero, style: .grouped, adapterClass: adapterClass)
+        self.topTableView = BoxSizeCachingTableView(frame: .zero, style: .grouped, adapterClass: adapterClass)
+        self.bottomTableView = BoxSizeCachingTableView(frame: .zero, style: .grouped, adapterClass: adapterClass)
 
         super.init(nibName: nil, bundle: nil)
     }
@@ -167,9 +169,6 @@ open class BoxViewController<ViewModel: BoxViewModel, Renderer: BoxRenderer, App
 
         configureTableView(tableView)
 
-        let adapter = BoxTableViewAdapter<Renderer.SectionID, Renderer.ItemID>(with: tableView)
-        tableView.prepareForBoxRendering(with: adapter)
-
         focusMode
             .throttle(while: hasViewAppeared.negate(), on: UIScheduler())
             .combinePrevious(.never)
@@ -186,13 +185,11 @@ open class BoxViewController<ViewModel: BoxViewModel, Renderer: BoxRenderer, App
     private func setupTableViews() {
         setupTableView()
 
-        func prepare(tableView: BentoTableView) {
+        func prepare(tableView: BoxSizeCachingTableView) {
             configureTableView(tableView).with {
                 $0.separatorStyle = .none
                 $0.isScrollEnabled = false
             }
-            let adapter = BoxTableViewAdapter<Renderer.SectionID, Renderer.ItemID>(with: tableView)
-            tableView.prepareForBoxRendering(with: adapter)
         }
         prepare(tableView: topTableView)
         prepare(tableView: bottomTableView)

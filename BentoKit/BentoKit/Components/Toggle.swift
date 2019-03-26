@@ -2,7 +2,7 @@ import Bento
 import StyleSheets
 
 extension Component {
-    public final class Toggle: AutoRenderable, HeightCustomizing {
+    public final class Toggle: AutoRenderable {
         private let heightComputer: (CGFloat, UIEdgeInsets) -> CGFloat
 
         public let configurator: (View) -> Void

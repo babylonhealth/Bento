@@ -3,7 +3,7 @@ import Bento
 import StyleSheets
 
 extension Component {
-    public final class EmptySpace: Renderable, HeightCustomizing {
+    public final class EmptySpace: Renderable {
         private let height: CGFloat
         private let styleSheet: ViewStyleSheet<UIView>
 
@@ -12,16 +12,17 @@ extension Component {
             self.styleSheet = styleSheet
         }
 
-        public func render(in view: BaseView) {
+        public func render(in view: View) {
             styleSheet.apply(to: view)
+            view.heightConstraint.constant = height
         }
+    }
+}
 
-        public func estimatedHeight(forWidth width: CGFloat, inheritedMargins: UIEdgeInsets) -> CGFloat {
-            return max(height, 1.1)
-        }
-
-        public func height(forWidth width: CGFloat, inheritedMargins: UIEdgeInsets) -> CGFloat {
-            return max(height, 1.1)
-        }
+extension Component.EmptySpace {
+    public final class View: BaseView {
+        internal private(set) lazy var heightConstraint = self.heightAnchor.constraint(equalToConstant: 0.0)
+            .withPriority(.cellRequired)
+            .activated()
     }
 }

@@ -3,7 +3,7 @@ import StyleSheets
 import UIKit
 
 extension Component {
-    public final class Description: AutoRenderable, HeightCustomizing {
+    public final class Description: AutoRenderable {
         public let configurator: (View) -> Void
         public let styleSheet: StyleSheet
         private let heightComputer: (CGFloat, UIEdgeInsets) -> CGFloat

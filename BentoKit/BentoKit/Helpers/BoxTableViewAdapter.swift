@@ -28,7 +28,7 @@ public final class BoxTableViewAdapter<SectionId: Hashable, RowId: Hashable>
         return nil
     }
 
-    public func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+    override public func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         let height = sections[indexPath.section].items[indexPath.row]
             .component(as: HeightCustomizing.self)
             .map { component in
@@ -36,7 +36,7 @@ public final class BoxTableViewAdapter<SectionId: Hashable, RowId: Hashable>
                                         inheritedMargins: tableView.layoutMargins.horizontal)
                     + tableView.separatorHeight
             }
-        return height ?? tableView.rowHeight
+        return height ?? super.tableView(tableView, heightForRowAt: indexPath)
     }
 
     override public func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {

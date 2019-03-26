@@ -14,7 +14,11 @@ struct CollectionViewSectionDiff<SectionID: Hashable, ItemID: Hashable> {
         self.supplements = knownSupplements
     }
 
-    func apply(to collectionView: UICollectionView, updateAdapter: @escaping () -> Void, completion: (() -> Void)? = nil) {
+    func apply(
+        to collectionView: UICollectionView,
+        updateAdapter: @escaping (SectionedChangeset) -> Void,
+        completion: (() -> Void)? = nil
+    ) {
         /// Since we are going to always rebind visible components, there is no point to evaluate
         /// component equation. However, we still force all instances of components to be treated as
         /// unequal, so as to preserve all positional information for in-place updates to visible cells.
@@ -30,7 +34,7 @@ struct CollectionViewSectionDiff<SectionID: Hashable, ItemID: Hashable> {
                 // NOTE: As per docs of `performBatchUpdates`, we should update our data source only within the `update`
                 //       block, since UICollectionView might need to reload itself before proceeding to perform the
                 //       batch update.
-                updateAdapter()
+                updateAdapter(diff)
                 self.performBatchUpdates(with: diff, for: collectionView)
             },
             completion: { _ in completion?() }

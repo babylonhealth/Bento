@@ -3,12 +3,10 @@ import StyleSheets
 import UIKit
 
 extension Component {
-    public final class Button: AutoRenderable, HeightCustomizing {
+    public final class Button: AutoRenderable {
 
         public let configurator: (View) -> Void
         public let styleSheet: StyleSheet
-
-        private let heightComputer: (CGFloat, UIEdgeInsets) -> CGFloat
 
         public init(
             title: String? = nil,
@@ -25,30 +23,7 @@ extension Component {
                 view.didTap = didTap
                 view.interactionBehavior = interactionBehavior
             }
-            self.heightComputer = { width, inheritedMargins in
-                let contentWidth = width
-                    - max(styleSheet.layoutMargins.left, inheritedMargins.left)
-                    - max(styleSheet.layoutMargins.right, inheritedMargins.right)
-                    - styleSheet.button.contentEdgeInsets.horizontalTotal
-
-                let titleHeight = styleSheet.button.height(of: title ?? "", fittingWidth: contentWidth)
-                let imageHeight = styleSheet.button.image(for: .normal)?.size.height ?? 0
-
-                return styleSheet.layoutMargins.verticalTotal
-                    + max(
-                        styleSheet.button.contentEdgeInsets.verticalTotal + max(titleHeight, imageHeight),
-                        styleSheet.enforcesMinimumHeight ? 44.0 : 0.0
-                    )
-            }
             self.styleSheet = styleSheet
-        }
-
-        public func height(forWidth width: CGFloat, inheritedMargins: UIEdgeInsets) -> CGFloat {
-            return heightComputer(width, inheritedMargins)
-        }
-
-        public func estimatedHeight(forWidth width: CGFloat, inheritedMargins: UIEdgeInsets) -> CGFloat {
-            return heightComputer(width, inheritedMargins)
         }
     }
 }
@@ -69,6 +44,7 @@ extension Component.Button {
         private var trailingConstraint: NSLayoutConstraint?
         private var centerXConstraint: NSLayoutConstraint?
 
+        fileprivate let buttonMinHeightConstraint: NSLayoutConstraint
         fileprivate var interactionBehavior: InteractionBehavior = .becomeFirstResponder
 
         fileprivate var buttonType: UIButton.ButtonType = .system {
@@ -110,6 +86,8 @@ extension Component.Button {
         public var didTap: (() -> Void)?
 
         public override init(frame: CGRect) {
+            buttonMinHeightConstraint = button.heightAnchor.constraint(greaterThanOrEqualToConstant: 44.0)
+
             super.init(frame: frame)
 
             button.addTarget(self, action: #selector(buttonPressed), for: .touchUpInside)
@@ -129,7 +107,7 @@ extension Component.Button {
 
             setupHorizontalConstraints()
 
-            button.setContentHuggingPriority(.required, for: .vertical)
+            button.setContentHuggingPriority(.cellRequired - 1, for: .vertical)
 
             activityIndicator
                 .add(to: self)
@@ -199,7 +177,7 @@ public extension Component.Button {
             alignment: Alignment = .center,
             autoRoundCorners: Bool = false,
             buttonType: UIButton.ButtonType = .system
-        ) {
+            ) {
             self.button = button
             self.activityIndicator = activityIndicator
             self.hugsContent = hugsContent
@@ -216,6 +194,7 @@ public extension Component.Button {
             element.hugsContent = hugsContent
             element.alignment = alignment
             element.button.autoRoundCorners = autoRoundCorners
+            element.buttonMinHeightConstraint.isActive = enforcesMinimumHeight
         }
     }
 

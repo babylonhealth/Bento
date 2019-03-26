@@ -16,9 +16,10 @@ extension UICollectionView {
 
         self.delegate = adapter
         self.dataSource = adapter
+        objc_setAssociatedObject(self, AssociatedKey.adapter, adapter, .OBJC_ASSOCIATION_RETAIN)
+
         reloadData()
         layoutIfNeeded()
-        objc_setAssociatedObject(self, AssociatedKey.adapter, adapter, .OBJC_ASSOCIATION_RETAIN)
     }
 
     public func render<SectionID, ItemID>(_ box: Box<SectionID, ItemID>) {
@@ -44,6 +45,13 @@ extension UICollectionView {
 
         prepareForBoxRendering(sectionIdType: SectionID.self, rowIdType: ItemID.self)
         return getAdapter()
+    }
+
+    var adapterStore: AdapterStoreAccessible {
+        let adapter = typeErasedAdapter
+        precondition(adapter != nil, "You must access the adapter store directly only after the adapter has been configured.")
+
+        return typeErasedAdapter as! AdapterStoreAccessible
     }
 
     var typeErasedAdapter: AnyObject? {

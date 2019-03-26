@@ -2,7 +2,7 @@ import Bento
 import StyleSheets
 
 extension Component {
-    public final class ImageOrLabel: AutoRenderable, HeightCustomizing {
+    public final class ImageOrLabel: AutoRenderable {
         public let configurator: (View) -> Void
         public let styleSheet: StyleSheet
         

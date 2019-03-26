@@ -6,14 +6,17 @@ private let emptyReuseIdentifier = "_bento_empty"
 public typealias CollectionViewAdapter<SectionID: Hashable, ItemID: Hashable> = CollectionViewAdapterBase<SectionID, ItemID> & UICollectionViewDataSource & UICollectionViewDelegate
 
 open class CollectionViewAdapterBase<SectionID: Hashable, ItemID: Hashable>
-    : NSObject, FocusEligibilitySourceImplementing {
-    public private(set) var sections: [Section<SectionID, ItemID>] = []
+    : NSObject, AdapterStoreOwner, FocusEligibilitySourceImplementing {
+    public var sections: [Section<SectionID, ItemID>] {
+        return store.sections
+    }
 
+    internal var store: AdapterStore<SectionID, ItemID>
     internal private(set) weak var collectionView: UICollectionView?
     private var knownSupplements: Set<Supplement> = []
 
     public init(with collectionView: UICollectionView) {
-        sections = []
+        store = AdapterStore()
         self.collectionView = collectionView
         super.init()
     }
@@ -23,7 +26,7 @@ open class CollectionViewAdapterBase<SectionID: Hashable, ItemID: Hashable>
 
         if !animated || collectionView.window == nil {
             // Just reload collection view if it's not in the window hierarchy
-            self.sections = sections
+            self.store.update(with: sections, knownSupplements: knownSupplements)
             collectionView.reloadData()
             completion?()
             return
@@ -32,7 +35,13 @@ open class CollectionViewAdapterBase<SectionID: Hashable, ItemID: Hashable>
         let diff = CollectionViewSectionDiff(oldSections: self.sections,
                                              newSections: sections,
                                              knownSupplements: knownSupplements)
-        diff.apply(to: collectionView, updateAdapter: { self.sections = sections }, completion: completion)
+        diff.apply(
+            to: collectionView,
+            updateAdapter: { changeset in
+                self.store.update(with: sections, knownSupplements: self.knownSupplements, changeset: changeset)
+            },
+            completion: completion
+        )
     }
 
     @objc(numberOfSectionsInCollectionView:)
