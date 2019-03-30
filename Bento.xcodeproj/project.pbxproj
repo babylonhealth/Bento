@@ -58,6 +58,8 @@
 		58FC444A207CFBD700DA3614 /* MovieComponentView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 58FC4440207CFBD700DA3614 /* MovieComponentView.xib */; };
 		58FC444D207CFBE200DA3614 /* BookAppointmentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58FC444B207CFBE100DA3614 /* BookAppointmentViewController.swift */; };
 		58FC444E207CFBE200DA3614 /* MoviesListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58FC444C207CFBE200DA3614 /* MoviesListViewController.swift */; };
+		5B02B99322503A370089371A /* AdapterProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B02B99122503A370089371A /* AdapterProtocol.swift */; };
+		5B02B99422503A370089371A /* AdapterStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B02B99222503A370089371A /* AdapterStore.swift */; };
 		61B40919208523F60063DE25 /* FoodListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61B40916208523F50063DE25 /* FoodListViewModel.swift */; };
 		61B4091A208523F60063DE25 /* FoodListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61B40917208523F50063DE25 /* FoodListViewController.swift */; };
 		61B64BB12086561B0092082C /* FoodListRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61B64BB02086561B0092082C /* FoodListRenderer.swift */; };
@@ -65,6 +67,7 @@
 		61B64BB6208745730092082C /* CollectionViewContainerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61B64BB5208745730092082C /* CollectionViewContainerCell.swift */; };
 		65020C322203186400DC8F42 /* NativeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65020C312203186400DC8F42 /* NativeView.swift */; };
 		651E75C0221005E300130866 /* UIKitContainerDiffApplicationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 651E75BF221005E300130866 /* UIKitContainerDiffApplicationTests.swift */; };
+		653D460B2256665000CF3E4C /* AdapterStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 653D460A2256665000CF3E4C /* AdapterStoreTests.swift */; };
 		65496FB8211C323F00511D8A /* TableViewContainerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 587F0717201B355800ACD219 /* TableViewContainerCell.swift */; };
 		65496FB9211C323F00511D8A /* TableViewAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9509BC2762C8B4277B973D8 /* TableViewAdapter.swift */; };
 		65A69EDF218B8892005D90AC /* UICollectionViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65A69EDE218B8891005D90AC /* UICollectionViewExtensions.swift */; };
@@ -183,6 +186,8 @@
 		58FC4440207CFBD700DA3614 /* MovieComponentView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MovieComponentView.xib; sourceTree = "<group>"; };
 		58FC444B207CFBE100DA3614 /* BookAppointmentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookAppointmentViewController.swift; sourceTree = "<group>"; };
 		58FC444C207CFBE200DA3614 /* MoviesListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MoviesListViewController.swift; sourceTree = "<group>"; };
+		5B02B99122503A370089371A /* AdapterProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdapterProtocol.swift; sourceTree = "<group>"; };
+		5B02B99222503A370089371A /* AdapterStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdapterStore.swift; sourceTree = "<group>"; };
 		5B175A6421C0634800590F34 /* ComponentContract.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = ComponentContract.md; sourceTree = "<group>"; };
 		61B40916208523F50063DE25 /* FoodListViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FoodListViewModel.swift; sourceTree = "<group>"; };
 		61B40917208523F50063DE25 /* FoodListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FoodListViewController.swift; sourceTree = "<group>"; };
@@ -191,6 +196,7 @@
 		61B64BB5208745730092082C /* CollectionViewContainerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewContainerCell.swift; sourceTree = "<group>"; };
 		65020C312203186400DC8F42 /* NativeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NativeView.swift; sourceTree = "<group>"; };
 		651E75BF221005E300130866 /* UIKitContainerDiffApplicationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIKitContainerDiffApplicationTests.swift; sourceTree = "<group>"; };
+		653D460A2256665000CF3E4C /* AdapterStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdapterStoreTests.swift; sourceTree = "<group>"; };
 		65A69EDE218B8891005D90AC /* UICollectionViewExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UICollectionViewExtensions.swift; sourceTree = "<group>"; };
 		65A69EE0218B8AB6005D90AC /* CustomCollectionViewAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCollectionViewAdapter.swift; sourceTree = "<group>"; };
 		65BA922D20AF388F004AEF18 /* UITableViewExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITableViewExtensions.swift; sourceTree = "<group>"; };
@@ -432,6 +438,7 @@
 		58FC441E207CF29F00DA3614 /* BentoTests */ = {
 			isa = PBXGroup;
 			children = (
+				653D460A2256665000CF3E4C /* AdapterStoreTests.swift */,
 				9A3EF77F205D866F00D043AC /* AnyRenderableTests.swift */,
 				740921B520ACDDDA00B59F5C /* IfTests.swift */,
 				740921B720ACE5EC00B59F5C /* ConcatenationTests.swift */,
@@ -487,6 +494,8 @@
 		A950945F6360B851C3E87B61 /* Adapters */ = {
 			isa = PBXGroup;
 			children = (
+				5B02B99122503A370089371A /* AdapterProtocol.swift */,
+				5B02B99222503A370089371A /* AdapterStore.swift */,
 				A9509BC2762C8B4277B973D8 /* TableViewAdapter.swift */,
 				5874C80420C9342B004EB5EA /* CollectionViewAdapter.swift */,
 				58D0F12C207F573B00A24E96 /* TableViewAnimation.swift */,
@@ -684,7 +693,7 @@
 				5829D269200FB092001E020D /* AppDelegate.swift in Sources */,
 				04EBE74F222C031B002D38C4 /* Optional+Extension.swift in Sources */,
 				04C9A0842211967300C70E09 /* SignUpViewController.swift in Sources */,
-				61B4091A208523F60063DE25 /* IntroViewController.swift in Sources */,
+				61B4091A208523F60063DE25 /* FoodListViewController.swift in Sources */,
 				61B4091A208523F60063DE25 /* FoodListViewController.swift in Sources */,
 				58FC4449207CFBD700DA3614 /* IconTitleDetailsView.swift in Sources */,
 				044329EA2229096E004EFB29 /* SignUpRenderer.swift in Sources */,
@@ -700,6 +709,7 @@
 			files = (
 				582D9951217E196E00C67B0D /* MenuItemsResponding.swift in Sources */,
 				9AF4786A21205E3100F87E21 /* Supplement.swift in Sources */,
+				5B02B99322503A370089371A /* AdapterProtocol.swift in Sources */,
 				65496FB8211C323F00511D8A /* TableViewContainerCell.swift in Sources */,
 				65496FB9211C323F00511D8A /* TableViewAdapter.swift in Sources */,
 				65E3ECB02113598700869DF3 /* UIKit+BentoCollectionView.swift in Sources */,
@@ -712,6 +722,7 @@
 				65A69EDF218B8892005D90AC /* UICollectionViewExtensions.swift in Sources */,
 				58BA7584201633CC0050D5F1 /* Renderable.swift in Sources */,
 				65020C322203186400DC8F42 /* NativeView.swift in Sources */,
+				5B02B99422503A370089371A /* AdapterStore.swift in Sources */,
 				5857BECA2056F02C0085EB9C /* If.swift in Sources */,
 				A9509FB12CAD89179FAA03B0 /* Box.swift in Sources */,
 				582D9987217F87B100C67B0D /* ComponentLifecycleAware.swift in Sources */,
@@ -740,6 +751,7 @@
 				58FC4427207CF2BB00DA3614 /* AnyRenderableTests.swift in Sources */,
 				58FC4428207CF2BB00DA3614 /* TestId.swift in Sources */,
 				58D27BA721B83B2700DC9600 /* DeletableTests.swift in Sources */,
+				653D460B2256665000CF3E4C /* AdapterStoreTests.swift in Sources */,
 				58FC4429207CF2BB00DA3614 /* TestRenderable.swift in Sources */,
 				5830C5E721F22DDC0029044B /* ComponentLifecycleAware.swift in Sources */,
 				740921B620ACDDDA00B59F5C /* IfTests.swift in Sources */,
