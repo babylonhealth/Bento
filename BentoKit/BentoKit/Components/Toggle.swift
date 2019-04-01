@@ -15,6 +15,7 @@ extension Component {
             isOn: Bool = false,
             isEnabled: Bool = true,
             isRefreshing: Bool = false,
+            horizontalSpacing: CGFloat = 9,
             animateValueChange: Bool = false,
             styleSheet: StyleSheet,
             didChangeValue: ((Bool) -> Void)? = nil
@@ -36,6 +37,7 @@ extension Component {
                 view.imageView.image = image
                 view.imageView.isHidden = (image == nil)
                 view.isRefreshing = isRefreshing
+                view.contentView.spacing = horizontalSpacing
             }
 
             self.heightComputer = { width, inheritedMargins in
