@@ -15,7 +15,6 @@ extension Component {
             isOn: Bool = false,
             isEnabled: Bool = true,
             isRefreshing: Bool = false,
-            horizontalSpacing: CGFloat = 9,
             animateValueChange: Bool = false,
             styleSheet: StyleSheet,
             didChangeValue: ((Bool) -> Void)? = nil
@@ -37,7 +36,6 @@ extension Component {
                 view.imageView.image = image
                 view.imageView.isHidden = (image == nil)
                 view.isRefreshing = isRefreshing
-                view.contentView.spacing = horizontalSpacing
             }
 
             self.heightComputer = { width, inheritedMargins in
@@ -139,14 +137,17 @@ extension Component.Toggle {
 extension Component.Toggle {
     public final class StyleSheet: BaseViewStyleSheet<View> {
         public let text: LabelStyleSheet
+        public let spacing: CGFloat
 
-        public init(text: LabelStyleSheet) {
+        public init(text: LabelStyleSheet, spacing: CGFloat = 9) {
             self.text = text
+            self.spacing = spacing
         }
 
         public override func apply(to view: Component.Toggle.View) {
             super.apply(to: view)
             text.apply(to: view.textLabel)
+            view.contentView.spacing = spacing
         }
     }
 }
