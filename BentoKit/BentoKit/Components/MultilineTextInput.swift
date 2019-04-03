@@ -11,6 +11,13 @@ extension Component {
         public let focusEligibility: FocusEligibility
         public let styleSheet: Component.MultilineTextInput.StyleSheet
 
+        /// Creates Component.MultilineTextInput
+        /// - parameter text: Value of the input which should be presented.
+        /// - parameter placeholder: Placeholder which is displayed when `text` is empty.
+        /// - parameter showsFocusToolbar: Shows/hides inputAccessoryView of the TextView.
+        /// - parameter didChangeText: Closure which notifies of text changes.
+        /// - parameter didFinishEditing: Closure which notifies when user finishes editing.
+        /// - parameter styleSheet: StyleSheet with styling.
         public init(
             text: String,
             placeholder: String,
