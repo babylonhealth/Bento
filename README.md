@@ -18,6 +18,7 @@ In our experience it makes UI-related code easier to build and maintain. Our aim
 - [How does it work?](#how-does-it-work-)
 - [BentoKit & StyleSheets](#bentokit--stylesheets-)
 - [Examples](#examples-)
+- [Additional documentation](#additional-documentation-)
 - [Development installation](#development-installation-)
 - [State of the project](#state-of-the-project-%EF%B8%8F)
 - [Development Resources](#development-resources)
