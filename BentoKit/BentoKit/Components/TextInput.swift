@@ -12,8 +12,8 @@ extension Component {
         /// Creates Component.TextInput
         /// - parameter title: Label of a the text input which describes it (i.e: "E-mail").
         /// - parameter placeholder: Placeholder which is displayed instead of text when text is empty.
-        /// - parameter text: Prefilled value of the TextInput. It can be modifed by user. (i.e: "email@email.com"). Limited to only one line.
-        /// - parameter keyboardType: iOS keyboard type.
+        /// - parameter text: Pre-filled value of the TextInput. It can be modifed by user. (i.e: "email@email.com"). Limited to only one line.
+        /// - parameter keyboardType: UIKit keyboard type.
         /// - parameter isEnabled: Indicates if user can change a text value.
         /// - parameter accessory: Additional icon displayed on the right side.
         /// - parameter textWillChange: Closure which may rejected text changes.

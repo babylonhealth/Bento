@@ -84,7 +84,7 @@ public extension Component {
 
         /// Creates a TitledDescription
         /// - parameter texts: Array of TextValues which are displayed vertically on left side of the row.
-        /// - parameter detail: Description field displayed on the right side to `texts`
+        /// - parameter detail: Description field displayed to the right of `texts`
         /// - parameter image: Usually an image wrapped within `ImageOrLabel` component. Property makes it possible to be loaded async.
         ///                    However, you need to guarantee fixed size across all changes.
         /// - parameter accessory: Accessory which should be displayed near the right edge of the row.

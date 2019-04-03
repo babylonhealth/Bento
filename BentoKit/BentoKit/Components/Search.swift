@@ -9,7 +9,7 @@ extension Component {
         /// Creates Component.Search which representes UISearchBar from iOS.
         /// - parameter placeholder: Text displayed when searchField is empty.
         /// - parameter keyboardType: Type of the keybaord used for editing.
-        /// - parameter didBeginEdition: Notifies when searchBar becomes firstResponder.
+        /// - parameter didBeginEditing: Notifies when searchBar becomes first responder.
         /// - parameter textDidChange: Notifies when text changes.
         /// - parameter showsCancelButton: Shows/hides the cancel button.
         /// - parameter cancelButtonClicked: Notifies that cancel button has been clicked.

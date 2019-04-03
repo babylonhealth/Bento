@@ -8,8 +8,8 @@ extension Component {
 
         /// Creates Component.DatePicker
         /// - parameter date: Date which should be preselected when opening the DatePicker.
-        /// - parameter minDate: Minimal range of possible dates.
-        /// - parameter maxDate: Maximum range of possible dates.
+        /// - parameter minDate: Minimum allowable date.
+        /// - parameter maxDate: Maximum allowable date.
         /// - parameter datePickerMode: Mode of a picker (date, date & time, etc.).
         /// - parameter styleSheet: StyleSheet with styling.
         /// - parameter didPickDate: Closure which is invoked when a date is selected.
