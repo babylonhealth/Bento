@@ -7,6 +7,12 @@ extension Component {
         public let configurator: (View) -> Void
         public let styleSheet: StyleSheet
 
+        /// Creates Component.OptionPicker
+        /// - parameter options: Possible options to pick
+        /// - parameter selected: Option which should be preselected.
+        /// Has to be an element of `options`
+        /// - parameter didPickItem: Closure inovked when user picks an option
+        /// - parameter styleSheet: StyleSheet with styling for the view
         public init<Option: BentoKit.Option>(
             options: [Option],
             selected: Option?,
