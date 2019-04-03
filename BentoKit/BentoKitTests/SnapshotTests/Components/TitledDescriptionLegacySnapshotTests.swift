@@ -7,9 +7,16 @@ final class TitledDescriptionLegacySnapshotTests: SnapshotTestCase {
 
     var styleSheet: Component.TitledDescription.StyleSheet {
         return Component.TitledDescription.StyleSheet(
-            title: LabelStyleSheet(
-                backgroundColor: .blue,
-                font: UIFont.preferredFont(forTextStyle: .body)),
+            textStyles: [
+                LabelStyleSheet(
+                    backgroundColor: .blue,
+                    font: UIFont.preferredFont(forTextStyle: .body)
+                ),
+                LabelStyleSheet(
+                    font: UIFont.preferredFont(forTextStyle: .footnote),
+                    textColor: .gray
+                )
+            ],
             detail: LabelStyleSheet(
                 backgroundColor: .green,
                 font: UIFont.preferredFont(forTextStyle: .body),
@@ -24,9 +31,8 @@ final class TitledDescriptionLegacySnapshotTests: SnapshotTestCase {
 
     func test_has_chevron() {
         let component = Component.TitledDescription(
-            title: "Title",
-            subtitle: "Subtitle",
-            detail: "Detail",
+            texts: ["Title", "Subtitle"].map(TextValue.plain),
+            detail: TextValue.plain("Detail"),
             accessory: .chevron,
             styleSheet: styleSheet
         )
@@ -36,9 +42,8 @@ final class TitledDescriptionLegacySnapshotTests: SnapshotTestCase {
 
     func test_no_chevron() {
         let component = Component.TitledDescription(
-            title: "Title",
-            subtitle: "Subtitle",
-            detail: "Detail",
+            texts: ["Title", "Subtitle"].map(TextValue.plain),
+            detail: TextValue.plain("Detail"),
             accessory: .none,
             styleSheet: styleSheet
         )
@@ -48,9 +53,8 @@ final class TitledDescriptionLegacySnapshotTests: SnapshotTestCase {
 
     func test_is_loading() {
         let component = Component.TitledDescription(
-            title: "Title",
-            subtitle: "Subtitle",
-            detail: "Detail",
+            texts: ["Title", "Subtitle"].map(TextValue.plain),
+            detail: TextValue.plain("Detail"),
             accessory: .activityIndicator,
             didTap: {},
             styleSheet: styleSheet
@@ -61,9 +65,8 @@ final class TitledDescriptionLegacySnapshotTests: SnapshotTestCase {
 
     func test_has_checkmark() {
         let component = Component.TitledDescription(
-            title: "Title",
-            subtitle: "Subtitle",
-            detail: "Detail",
+            texts: ["Title", "Subtitle"].map(TextValue.plain),
+            detail: TextValue.plain("Detail"),
             accessory: .checkmark,
             styleSheet: styleSheet
         )
@@ -73,9 +76,8 @@ final class TitledDescriptionLegacySnapshotTests: SnapshotTestCase {
 
     func test_has_icon() {
         let component = Component.TitledDescription(
-            title: "Title",
-            subtitle: "Subtitle",
-            detail: "Detail",
+            texts: ["Title", "Subtitle"].map(TextValue.plain),
+            detail: TextValue.plain("Detail"),
             accessory: .icon(image(named: "plus")),
             styleSheet: styleSheet
         )
@@ -85,9 +87,8 @@ final class TitledDescriptionLegacySnapshotTests: SnapshotTestCase {
 
     func test_has_image_fixed_size() {
         let component = Component.TitledDescription(
-            title: "Title",
-            subtitle: "Subtitle",
-            detail: "Detail",
+            texts: ["Title", "Subtitle"].map(TextValue.plain),
+            detail: TextValue.plain("Detail"),
             image: Property(value: .image(image(named: "skeleton"))),
             styleSheet: styleSheet
                 .compose(\.imageOrLabel.fixedSize, CGSize(width: 128, height: 128))
@@ -100,9 +101,8 @@ final class TitledDescriptionLegacySnapshotTests: SnapshotTestCase {
 
     func test_has_text_image_placeholder() {
         let component = Component.TitledDescription(
-            title: "Title",
-            subtitle: "Subtitle",
-            detail: "Detail",
+            texts: ["Title", "Subtitle"].map(TextValue.plain),
+            detail: TextValue.plain("Detail"),
             image: Property(value: .text("SJ")),
             styleSheet: styleSheet
                 .compose(\.imageOrLabel.fixedSize, CGSize(width: 64, height: 64))
@@ -118,11 +118,11 @@ final class TitledDescriptionLegacySnapshotTests: SnapshotTestCase {
 
     func test_fixed_title_width() {
         let component = Component.TitledDescription(
-            title: "Title",
-            detail: "Detail",
+            texts: ["Title"].map(TextValue.plain),
+            detail: TextValue.plain("Detail"),
             accessory: .chevron,
             styleSheet: styleSheet
-                .compose(\.titleWidthFraction, 0.3)
+                .compose(\.textBlockWidthFraction, 0.3)
                 .compose(\.detail.textAlignment, .leading)
         )
 

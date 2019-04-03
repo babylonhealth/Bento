@@ -1,7 +1,7 @@
 import Bento
 import StyleSheets
 
-public protocol AutoRenderable: Renderable where View: AnyObject {
+public protocol AutoRenderable: Renderable {
     associatedtype StyleSheet: StyleSheetProtocol
 
     var configurator: (View) -> Void { get }
