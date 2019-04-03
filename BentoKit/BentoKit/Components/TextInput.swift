@@ -9,6 +9,17 @@ extension Component {
         public let styleSheet: StyleSheet
         public let focusEligibility: FocusEligibility
 
+        /// Creates Component.TextInput
+        /// - parameter title: Label of a the text input which describes it (i.e: "E-mail").
+        /// - parameter placeholder: Placeholder which is displayed instead of text when text is empty.
+        /// - parameter text: Prefilled value of the TextInput. It can be modifed by user. (i.e: "email@email.com").
+        /// - parameter keyboardType: iOS keyboard type.
+        /// - parameter isEnabled: Indicates if user can change a text value.
+        /// - parameter accessory: Additional icon displayed on the right side.
+        /// - parameter textWillChange: Closure which may rejected text changes.
+        /// - parameter textDidChange: Closure which notifies about text changes.
+        /// - parameter didTapAccessory: Closure which is invoked when user taps on the accessory.
+        /// - parameter styleSheet: StyleSheet with styling.
         public init(
             title: String? = nil,
             placeholder: String? = nil,
