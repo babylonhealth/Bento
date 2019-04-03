@@ -232,6 +232,9 @@ Movies | CollectionView | SignUp |
 --- | --- | ---
 ![](Resources/example1.gif) | ![](Resources/example2.gif) | ![](Resources/example3.gif) | 
 
+### Additional documentation
+- [Common use cases](./Documentation/common_usecases.md)
+
 ### Development Installation 🛠
 
 If you want to clone the repo for contributing or for running the example app you will need to install its dependencies which are stored as git submodules:
