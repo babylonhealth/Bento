@@ -233,7 +233,7 @@ Movies | CollectionView | SignUp |
 --- | --- | ---
 ![](Resources/example1.gif) | ![](Resources/example2.gif) | ![](Resources/example3.gif) | 
 
-### Additional documentation
+### Additional documentation 📙
 - [Common use cases](./Documentation/common_usecases.md)
 
 ### Development Installation 🛠
