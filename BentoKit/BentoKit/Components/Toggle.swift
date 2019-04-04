@@ -137,14 +137,17 @@ extension Component.Toggle {
 extension Component.Toggle {
     public final class StyleSheet: BaseViewStyleSheet<View> {
         public let text: LabelStyleSheet
+        public let spacing: CGFloat
 
-        public init(text: LabelStyleSheet) {
+        public init(text: LabelStyleSheet, spacing: CGFloat = 9) {
             self.text = text
+            self.spacing = spacing
         }
 
         public override func apply(to view: Component.Toggle.View) {
             super.apply(to: view)
             text.apply(to: view.textLabel)
+            view.contentView.spacing = spacing
         }
     }
 }
