@@ -8,6 +8,7 @@ open class ButtonStyleSheet: ViewStyleSheet<UIButton>, TextBoundComputing {
     public var textFont: UIFont
     public var contentHorizontalAlignment: UIControl.ContentHorizontalAlignment
     public var contentEdgeInsets: UIEdgeInsets
+    public var titleEdgeInsets: UIEdgeInsets
     public var imageEdgeInsets: UIEdgeInsets
     public var textAlignment: TextAlignment = .center
     
@@ -24,6 +25,7 @@ open class ButtonStyleSheet: ViewStyleSheet<UIButton>, TextBoundComputing {
         images: [State : UIImage?] = [:],
         backgroundImages: [State : UIImage?] = [:],
         contentEdgeInsets: UIEdgeInsets = .zero,
+        titleEdgeInsets: UIEdgeInsets = .zero,
         imageEdgeInsets: UIEdgeInsets = .zero,
         numberOfLines: Int = 1,
         lineBreakMode: NSLineBreakMode = .byTruncatingMiddle
@@ -34,6 +36,7 @@ open class ButtonStyleSheet: ViewStyleSheet<UIButton>, TextBoundComputing {
         self.images = images
         self.backgroundImages = backgroundImages
         self.contentEdgeInsets = contentEdgeInsets
+        self.titleEdgeInsets = titleEdgeInsets
         self.imageEdgeInsets = imageEdgeInsets
         self.numberOfLines = numberOfLines
         self.lineBreakMode = lineBreakMode
@@ -64,6 +67,7 @@ open class ButtonStyleSheet: ViewStyleSheet<UIButton>, TextBoundComputing {
             .forEach { button.setBackgroundImage($0.1, for: $0.0) }
         
         button.contentEdgeInsets = contentEdgeInsets
+        button.titleEdgeInsets = titleEdgeInsets
         button.imageEdgeInsets = imageEdgeInsets
     }
     
