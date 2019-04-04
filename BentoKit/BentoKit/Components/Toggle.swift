@@ -8,6 +8,16 @@ extension Component {
         public let configurator: (View) -> Void
         public let styleSheet: StyleSheet
 
+        /// Creates Component.Toggle
+        /// - parameter title: Name/label/title of a row which is displayed on the left side.
+        /// - parameter attributedTitle: The same as `title` but allows for using attributed text.
+        /// - parameter image: Icon displayed on the left side of the row.
+        /// - parameter isOn: Indicates if the toggle shows true or false.
+        /// - parameter isEnabled: Indicates if user can change value of the toggle.
+        /// - parameter isRefreshing: If `true` it displays `UIActivityIndicator` instead of the switch view.
+        /// - parameter animateValueChange: Indicates if should animate setting of the `isOn` value.
+        /// - parameter styleSheet: StyleSheet with styling.
+        /// - parameter didChangeValue: Closure which notifies about true/false change.
         public init(
             title: String,
             attributedTitle: NSAttributedString? = nil,

@@ -1,5 +1,8 @@
 import Bento
 
+/// - Warning: When you use `BoxTableViewAdapter` your `tableView.render(box)` cannot be invoked in `viewWillAppear`. We suggest to call it in
+/// `viewDidAppear`. UIKit changes UITableView's `layoutMargins` in between `viewWillAppear` & `viewDidAppear`. The UITableView's `layoutMargins` is used
+/// in the BoxTableViewAdapter's implementation.
 public final class BoxTableViewAdapter<SectionId: Hashable, RowId: Hashable>
     : TableViewAdapterBase<SectionId, RowId>,
       UITableViewDataSource,

@@ -16,6 +16,8 @@ infix operator |---+: NodeConcatenationPrecedence
 infix operator |---*: NodeConcatenationPrecedence
 infix operator |---?: NodeConcatenationPrecedence
 
+/// Box holds an array of sections which should be displayed on the screen.
+/// Box **doesn't** have a visual representation.
 public struct Box<SectionID: Hashable, ItemID: Hashable> {
     public typealias Section = Bento.Section<SectionID, ItemID>
 

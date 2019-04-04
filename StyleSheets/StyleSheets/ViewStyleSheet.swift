@@ -1,5 +1,9 @@
 import UIKit
 
+/// Basic StyleSheet.
+/// StyleSheets can be used to provide how components should look like.
+/// Component should only takes data which reflects what is rendered.
+/// StyleSheet's job is to provide how component's view should looks like.
 open class ViewStyleSheet<View: UIView>: StyleSheetProtocol {
     
     // MARK: Visual Appearance

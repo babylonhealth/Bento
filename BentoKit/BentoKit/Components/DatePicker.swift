@@ -6,6 +6,13 @@ extension Component {
         public let configurator: (View) -> Void
         public let styleSheet: StyleSheet
 
+        /// Creates Component.DatePicker
+        /// - parameter date: Date which should be preselected when opening the DatePicker.
+        /// - parameter minDate: Minimum allowable date.
+        /// - parameter maxDate: Maximum allowable date.
+        /// - parameter datePickerMode: Mode of a picker (date, date & time, etc.).
+        /// - parameter styleSheet: StyleSheet with styling.
+        /// - parameter didPickDate: Closure which is invoked when a date is selected.
         public init(
             date: Date? = nil,
             minDate: Date? = nil,

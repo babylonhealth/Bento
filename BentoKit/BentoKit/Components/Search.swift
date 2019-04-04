@@ -5,7 +5,15 @@ extension Component {
     public final class Search: AutoRenderable {
         public let configurator: (View) -> Void
         public let styleSheet: StyleSheet
-
+        
+        /// Creates Component.Search which representes UISearchBar from iOS.
+        /// - parameter placeholder: Text displayed when searchField is empty.
+        /// - parameter keyboardType: Type of the keybaord used for editing.
+        /// - parameter didBeginEditing: Notifies when searchBar becomes first responder.
+        /// - parameter textDidChange: Notifies when text changes.
+        /// - parameter showsCancelButton: Shows/hides the cancel button.
+        /// - parameter cancelButtonClicked: Notifies that cancel button has been clicked.
+        /// - parameter styleSheet: StyleSheet with styling.
         public init(
             placeholder: String? = nil,
             keyboardType: UIKeyboardType = .default,

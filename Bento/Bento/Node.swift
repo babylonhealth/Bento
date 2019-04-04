@@ -1,5 +1,8 @@
 import UIKit
 
+/// Node is kept by a Section. Node requires an identifier for diff algorithm.
+/// Node **always has** a visual representation, because a component needs to be provided.
+/// To simplify, you can think of a Node in Bento as equivalent to a cell in UITableView / UICollectionView.
 public struct Node<Identifier: Hashable> {
     public let id: Identifier
     let component: AnyRenderable

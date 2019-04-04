@@ -34,6 +34,18 @@ public extension Component {
             return heightComputer(width, inheritedMargins)
         }
 
+        /// Creates a TitledDescription
+        /// - parameter texts: Array of TextValues which are displayed vertically on left side of the row.
+        /// - parameter detail: Description field displayed to the right of `texts`
+        /// - parameter image: Usually an image wrapped within `ImageOrLabel` component. Property makes it possible to be loaded async.
+        ///                    However, you need to guarantee fixed size across all changes.
+        /// - parameter accessory: Accessory which should be displayed near the right edge of the row.
+        /// - parameter badgeIcon: Badge icon which is displayed in the bottom-right corner of the `image`.
+        /// - parameter inputNodes: Input's component which is displayed when the `TitledDescription` becomes the first responder.
+        /// - parameter didTap: Closure which is invoked when whole row is tapped.
+        /// - parameter didTapAccessory: Closure which is invoked when tapping on the accessory.
+        /// - parameter interactionBehavior: Defines an behaviour when tapped. Usually `.becomeFirstResponder`.
+        /// - parameter styleSheet: StyleSheet how view should be styled (fonts, colors, text alignment)
         public init(
             texts: [TextValue] = [],
             detail: TextValue? = nil,
