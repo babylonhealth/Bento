@@ -1,27 +1,27 @@
 [submodule "Carthage/Checkouts/Nimble"]
 	path = Carthage/Checkouts/Nimble
-	url = https://11caf2b8bbbbbd70c86efdca95cc2c3a355e181c@github.com/Quick/Nimble.git
+	url = https://github.com/Quick/Nimble.git
 [submodule "Carthage/Checkouts/ReactiveFeedback"]
 	path = Carthage/Checkouts/ReactiveFeedback
-	url = https://11caf2b8bbbbbd70c86efdca95cc2c3a355e181c@github.com/Babylonpartners/ReactiveFeedback.git
+	url = https://github.com/Babylonpartners/ReactiveFeedback.git
 [submodule "Carthage/Checkouts/Kingfisher"]
 	path = Carthage/Checkouts/Kingfisher
-	url = https://11caf2b8bbbbbd70c86efdca95cc2c3a355e181c@github.com/onevcat/Kingfisher.git
+	url = https://github.com/onevcat/Kingfisher.git
 [submodule "Carthage/Checkouts/ReactiveCocoa"]
 	path = Carthage/Checkouts/ReactiveCocoa
-	url = https://11caf2b8bbbbbd70c86efdca95cc2c3a355e181c@github.com/ReactiveCocoa/ReactiveCocoa.git
+	url = https://github.com/ReactiveCocoa/ReactiveCocoa.git
 [submodule "Carthage/Checkouts/FlexibleDiff"]
 	path = Carthage/Checkouts/FlexibleDiff
-	url = https://11caf2b8bbbbbd70c86efdca95cc2c3a355e181c@github.com/RACCommunity/FlexibleDiff.git
+	url = https://github.com/RACCommunity/FlexibleDiff.git
 [submodule "Carthage/Checkouts/ReactiveSwift"]
 	path = Carthage/Checkouts/ReactiveSwift
-	url = https://11caf2b8bbbbbd70c86efdca95cc2c3a355e181c@github.com/ReactiveCocoa/ReactiveSwift.git
+	url = https://github.com/ReactiveCocoa/ReactiveSwift.git
 [submodule "Carthage/Checkouts/xcconfigs"]
 	path = Carthage/Checkouts/xcconfigs
-	url = https://11caf2b8bbbbbd70c86efdca95cc2c3a355e181c@github.com/jspahrsummers/xcconfigs.git
+	url = https://github.com/jspahrsummers/xcconfigs.git
 [submodule "Carthage/Checkouts/Result"]
 	path = Carthage/Checkouts/Result
-	url = https://11caf2b8bbbbbd70c86efdca95cc2c3a355e181c@github.com/antitypical/Result.git
+	url = https://github.com/antitypical/Result.git
 [submodule "Carthage/Checkouts/ios-snapshot-test-case"]
 	path = Carthage/Checkouts/ios-snapshot-test-case
-	url = https://11caf2b8bbbbbd70c86efdca95cc2c3a355e181c@github.com/uber/ios-snapshot-test-case.git
+	url = https://github.com/uber/ios-snapshot-test-case.git
