@@ -1,10 +1,20 @@
+/// Existential type for reusable views (cell, header, footer) in `UITableView`, `UICollectionView`, etc.
 protocol BentoReusableView: AnyObject {
-    var containedView: UIView? { get set }
+    /// The main view to which you add your reusable view’s custom content.
+    /// - Note: This is normally system-provided as `self`'s subview.
     var contentView: UIView { get }
+
+    /// `component`-generated view that will be added to `contentView`.
+    /// - Note: Subtype of this instance can conforming to `ViewLifecycleAware` to allow display handling.
+    var containedView: UIView? { get set }
+
+    /// A renderer which generates `containedView`.
+    /// - Note: Underlying type of this instance can conform to `ComponentLifecycleAware` to allow display handling.
     var component: AnyRenderable? { get set }
 }
 
 extension BentoReusableView {
+    /// Updates `component` to either replace `containedView` with a new one or reuse it.
     func bind(_ component: AnyRenderable?) {
         self.component = component
         if let component = component {
@@ -39,7 +49,8 @@ extension BentoReusableView {
 }
 
 extension BentoReusableView where Self: UIView {
-    func containerViewDidChange(from old: UIView?, to new: UIView?) {
+    /// - Note: Call this method when old `containedView` is replaced with new one.
+    func containedViewDidChange(from old: UIView?, to new: UIView?) {
         func add(_ view: UIView) {
             contentView.addSubview(view)
             view.pinToEdges(of: contentView)
