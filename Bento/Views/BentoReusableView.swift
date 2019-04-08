@@ -5,7 +5,7 @@ protocol BentoReusableView: AnyObject {
     var contentView: UIView { get }
 
     /// `component`-generated view that will be added to `contentView`.
-    /// - Note: Subtype of this instance can conforming to `ViewLifecycleAware` to allow display handling.
+    /// - Note: Subtype of this instance can conform to `ViewLifecycleAware` to allow display handling.
     var containedView: UIView? { get set }
 
     /// A renderer which generates `containedView`.
