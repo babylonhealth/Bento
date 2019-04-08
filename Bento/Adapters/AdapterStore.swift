@@ -103,7 +103,7 @@ struct AdapterStore<SectionID: Hashable, ItemID: Hashable> {
             newElement: SectionInfo(),
             whenInserted: { info, index in
                 info.itemSizes = Array(repeating: .unknown, count: sections[index].items.count)
-        }
+            }
         )
 
         // Apply changeset to the old section info for all mutated sections.
