@@ -14,7 +14,7 @@ struct TableViewSectionDiff<SectionId: Hashable, RowId: Hashable> {
         self.animation = animation
     }
 
-    func apply(to tableView: UITableView, updateAdapter: @escaping () -> Void) {
+    func apply(to tableView: UITableView, updateAdapter: @escaping (SectionedChangeset) -> Void) {
         /// Since we are going to always rebind visible components, there is no point to evaluate
         /// component equation. However, we still force all instances of components to be treated as
         /// unequal, so as to preserve all positional information for in-place updates to visible cells.
@@ -32,14 +32,14 @@ struct TableViewSectionDiff<SectionId: Hashable, RowId: Hashable> {
         if #available(iOS 11, *) {
             tableView.performBatchUpdates(
                 {
-                    updateAdapter()
+                    updateAdapter(diff)
                     self.apply(diff: diff, to: tableView)
                 },
                 completion: nil
             )
         } else {
             tableView.beginUpdates()
-            updateAdapter()
+            updateAdapter(diff)
             apply(diff: diff, to: tableView)
             tableView.endUpdates()
         }
