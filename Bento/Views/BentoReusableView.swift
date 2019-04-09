@@ -6,11 +6,15 @@ protocol BentoReusableView: AnyObject {
 
 extension BentoReusableView {
     func bind(_ component: AnyRenderable?) {
+        let oldComponent = self.component
         self.component = component
+
         if let component = component {
             let renderingView: UIView
 
-            if let view = containedView, type(of: view) == component.viewType {
+            if let oldComponent = oldComponent,
+               let view = containedView,
+               oldComponent.reusabilityHintCombiner.isCompatible(with: component.reusabilityHintCombiner) {
                 renderingView = view
             } else {
                 renderingView = component.viewType.generate()

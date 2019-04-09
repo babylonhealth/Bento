@@ -11,12 +11,6 @@ public struct AnyRenderable: Renderable {
         return base.componentType
     }
 
-    internal var fullyQualifiedTypeName: String {
-        /// NOTE: `String.init(reflecting:)` gives the fully qualified type name.
-        //        Tests would catch unexpeced type name printing behavior due to Swift runtime changes.
-        return String(reflecting: componentType)
-    }
-
     private let base: AnyRenderableBoxBase
 
     public init<Base: Renderable>(_ base: Base) {
@@ -29,6 +23,10 @@ public struct AnyRenderable: Renderable {
 
     public func render(in view: UIView) {
         base.render(in: view)
+    }
+
+    public func makeReusabilityHint(using combiner: inout ReusabilityHintCombiner) {
+        base.makeReusabilityHint(using: &combiner)
     }
 
     func cast<T>(to type: T.Type) -> T? {
@@ -88,6 +86,10 @@ class AnyRenderableBox<Base: Renderable>: AnyRenderableBoxBase {
         base.render(in: view as! Base.View)
     }
 
+    override func makeReusabilityHint(using combiner: inout ReusabilityHintCombiner) {
+        base.makeReusabilityHint(using: &combiner)
+    }
+
     override func cast<T>(to type: T.Type) -> T? {
         if let anyRenderable = base as? AnyRenderable {
             return anyRenderable.cast(to: type)
@@ -106,5 +108,6 @@ class AnyRenderableBoxBase {
         return AnyRenderable(self)
     }
     func render(in view: UIView) { fatalError() }
+    func makeReusabilityHint(using combiner: inout ReusabilityHintCombiner) { fatalError() }
     func cast<T>(to type: T.Type) -> T? { fatalError() }
 }

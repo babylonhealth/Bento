@@ -49,7 +49,7 @@ open class TableViewAdapterBase<SectionID: Hashable, ItemID: Hashable>
     @objc(tableView:cellForRowAtIndexPath:)
     open func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let component = node(at: indexPath).component
-        let reuseIdentifier = component.fullyQualifiedTypeName
+        let reuseIdentifier = component.reuseIdentifier
 
         guard let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier) as? TableViewContainerCell else {
             tableView.register(TableViewContainerCell.self, forCellReuseIdentifier: reuseIdentifier)
@@ -233,9 +233,9 @@ open class TableViewAdapterBase<SectionID: Hashable, ItemID: Hashable>
     }
 
     private func render(_ component: AnyRenderable, in tableView: UITableView) -> UIView {
-        guard let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: component.fullyQualifiedTypeName) as? TableViewHeaderFooterView else {
+        guard let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: component.reuseIdentifier) as? TableViewHeaderFooterView else {
             tableView.register(TableViewHeaderFooterView.self,
-                               forHeaderFooterViewReuseIdentifier: component.fullyQualifiedTypeName)
+                               forHeaderFooterViewReuseIdentifier: component.reuseIdentifier)
             return render(component, in: tableView)
         }
         header.bind(component)

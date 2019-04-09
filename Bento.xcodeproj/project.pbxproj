@@ -82,6 +82,8 @@
 		65E3ECAC2113591500869DF3 /* FocusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65E3ECAB2113591500869DF3 /* FocusableView.swift */; };
 		65E3ECAE2113594600869DF3 /* BentoCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65E3ECAD2113594600869DF3 /* BentoCollectionView.swift */; };
 		65E3ECB02113598700869DF3 /* UIKit+BentoCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65E3ECAF2113598700869DF3 /* UIKit+BentoCollectionView.swift */; };
+		65E4D8B8225D0AC100CA7CB3 /* ReusabilityHintCombiner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65E4D8B7225D0AC100CA7CB3 /* ReusabilityHintCombiner.swift */; };
+		65E4D8BA225D11C700CA7CB3 /* ReusabilityHintCombinerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65E4D8B9225D11C700CA7CB3 /* ReusabilityHintCombinerTests.swift */; };
 		740921B620ACDDDA00B59F5C /* IfTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 740921B520ACDDDA00B59F5C /* IfTests.swift */; };
 		740921B820ACE5EC00B59F5C /* ConcatenationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 740921B720ACE5EC00B59F5C /* ConcatenationTests.swift */; };
 		74208FA12083B1F00062CC8D /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 74208FA22083B1F00062CC8D /* Nimble.framework */; };
@@ -209,6 +211,8 @@
 		65E3ECAB2113591500869DF3 /* FocusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FocusableView.swift; sourceTree = "<group>"; };
 		65E3ECAD2113594600869DF3 /* BentoCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BentoCollectionView.swift; sourceTree = "<group>"; };
 		65E3ECAF2113598700869DF3 /* UIKit+BentoCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIKit+BentoCollectionView.swift"; sourceTree = "<group>"; };
+		65E4D8B7225D0AC100CA7CB3 /* ReusabilityHintCombiner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReusabilityHintCombiner.swift; sourceTree = "<group>"; };
+		65E4D8B9225D11C700CA7CB3 /* ReusabilityHintCombinerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReusabilityHintCombinerTests.swift; sourceTree = "<group>"; };
 		740921B520ACDDDA00B59F5C /* IfTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IfTests.swift; sourceTree = "<group>"; };
 		740921B720ACE5EC00B59F5C /* ConcatenationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConcatenationTests.swift; sourceTree = "<group>"; };
 		74208FA22083B1F00062CC8D /* Nimble.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Nimble.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -431,6 +435,7 @@
 				65E3ECA521133C9400869DF3 /* UIKit+CollectionViewFocus.swift */,
 				582D9986217F87B100C67B0D /* ComponentLifecycleAware.swift */,
 				65020C312203186400DC8F42 /* NativeView.swift */,
+				65E4D8B7225D0AC100CA7CB3 /* ReusabilityHintCombiner.swift */,
 			);
 			path = Renderable;
 			sourceTree = "<group>";
@@ -448,6 +453,7 @@
 				5830C5E621F22DDC0029044B /* ComponentLifecycleAware.swift */,
 				651E75BF221005E300130866 /* UIKitContainerDiffApplicationTests.swift */,
 				58FC4421207CF29F00DA3614 /* Info.plist */,
+				65E4D8B9225D11C700CA7CB3 /* ReusabilityHintCombinerTests.swift */,
 			);
 			path = BentoTests;
 			sourceTree = "<group>";
@@ -735,6 +741,7 @@
 				9AF4786C2120CA7500F87E21 /* BentoReusableView.swift in Sources */,
 				61B64BB6208745730092082C /* CollectionViewContainerCell.swift in Sources */,
 				65E3ECA2211317EA00869DF3 /* FocusCoordinator.swift in Sources */,
+				65E4D8B8225D0AC100CA7CB3 /* ReusabilityHintCombiner.swift in Sources */,
 				65E3ECAE2113594600869DF3 /* BentoCollectionView.swift in Sources */,
 				65E3ECAC2113591500869DF3 /* FocusableView.swift in Sources */,
 				A9509880661501C40B50E453 /* TableViewHeaderFooterView.swift in Sources */,
@@ -753,6 +760,7 @@
 				58D27BA721B83B2700DC9600 /* DeletableTests.swift in Sources */,
 				653D460B2256665000CF3E4C /* AdapterStoreTests.swift in Sources */,
 				58FC4429207CF2BB00DA3614 /* TestRenderable.swift in Sources */,
+				65E4D8BA225D11C700CA7CB3 /* ReusabilityHintCombinerTests.swift in Sources */,
 				5830C5E721F22DDC0029044B /* ComponentLifecycleAware.swift in Sources */,
 				740921B620ACDDDA00B59F5C /* IfTests.swift in Sources */,
 				740921B820ACE5EC00B59F5C /* ConcatenationTests.swift in Sources */,
