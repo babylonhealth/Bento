@@ -82,6 +82,7 @@
 		65E3ECAC2113591500869DF3 /* FocusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65E3ECAB2113591500869DF3 /* FocusableView.swift */; };
 		65E3ECAE2113594600869DF3 /* BentoCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65E3ECAD2113594600869DF3 /* BentoCollectionView.swift */; };
 		65E3ECB02113598700869DF3 /* UIKit+BentoCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65E3ECAF2113598700869DF3 /* UIKit+BentoCollectionView.swift */; };
+		65E4D8B6225D009500CA7CB3 /* SizeCachingTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65E4D8B5225D009500CA7CB3 /* SizeCachingTableView.swift */; };
 		740921B620ACDDDA00B59F5C /* IfTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 740921B520ACDDDA00B59F5C /* IfTests.swift */; };
 		740921B820ACE5EC00B59F5C /* ConcatenationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 740921B720ACE5EC00B59F5C /* ConcatenationTests.swift */; };
 		74208FA12083B1F00062CC8D /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 74208FA22083B1F00062CC8D /* Nimble.framework */; };
@@ -209,6 +210,7 @@
 		65E3ECAB2113591500869DF3 /* FocusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FocusableView.swift; sourceTree = "<group>"; };
 		65E3ECAD2113594600869DF3 /* BentoCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BentoCollectionView.swift; sourceTree = "<group>"; };
 		65E3ECAF2113598700869DF3 /* UIKit+BentoCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIKit+BentoCollectionView.swift"; sourceTree = "<group>"; };
+		65E4D8B5225D009500CA7CB3 /* SizeCachingTableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SizeCachingTableView.swift; sourceTree = "<group>"; };
 		740921B520ACDDDA00B59F5C /* IfTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IfTests.swift; sourceTree = "<group>"; };
 		740921B720ACE5EC00B59F5C /* ConcatenationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConcatenationTests.swift; sourceTree = "<group>"; };
 		74208FA22083B1F00062CC8D /* Nimble.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Nimble.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -382,6 +384,7 @@
 		58BA755D2016303B0050D5F1 /* Bento */ = {
 			isa = PBXGroup;
 			children = (
+				65E4D8B4225D009500CA7CB3 /* CollectionViews+Public */,
 				581ED77E2022041C00EC9584 /* Diff */,
 				587F0716201B354900ACD219 /* Views */,
 				58E98E612018898700F78BAE /* Renderable */,
@@ -463,6 +466,14 @@
 				65A69EE0218B8AB6005D90AC /* CustomCollectionViewAdapter.swift */,
 			);
 			path = CollectionViewExample;
+			sourceTree = "<group>";
+		};
+		65E4D8B4225D009500CA7CB3 /* CollectionViews+Public */ = {
+			isa = PBXGroup;
+			children = (
+				65E4D8B5225D009500CA7CB3 /* SizeCachingTableView.swift */,
+			);
+			path = "CollectionViews+Public";
 			sourceTree = "<group>";
 		};
 		7D7D5AFB203495BA731D7A3E /* Frameworks */ = {
@@ -725,6 +736,7 @@
 				5B02B99422503A370089371A /* AdapterStore.swift in Sources */,
 				5857BECA2056F02C0085EB9C /* If.swift in Sources */,
 				A9509FB12CAD89179FAA03B0 /* Box.swift in Sources */,
+				65E4D8B6225D009500CA7CB3 /* SizeCachingTableView.swift in Sources */,
 				582D9987217F87B100C67B0D /* ComponentLifecycleAware.swift in Sources */,
 				65E3ECA621133C9400869DF3 /* UIKit+CollectionViewFocus.swift in Sources */,
 				58467B03202B33F200577C77 /* TableViewSectionDiff.swift in Sources */,
