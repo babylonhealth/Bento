@@ -9,7 +9,7 @@ protocol BentoReusableView: AnyObject {
     var containedView: UIView? { get set }
 
     /// A renderer which generates `containedView`.
-    /// - Note: Underlying type of this instance can conform to `ComponentLifecycleAware` to allow display handling.
+    /// - note: Underlying type of this instance can conform to `ComponentLifecycleAware` to allow display handling.
     var component: AnyRenderable? { get set }
 }
 
