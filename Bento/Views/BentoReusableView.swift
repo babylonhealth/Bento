@@ -14,7 +14,7 @@ extension BentoReusableView {
 
             if let oldComponent = oldComponent,
                let view = containedView,
-               oldComponent.reusabilityHintCombiner.isCompatible(with: component.reusabilityHintCombiner) {
+               oldComponent.reusabilityHint.isCompatible(with: component.reusabilityHint) {
                 renderingView = view
             } else {
                 renderingView = component.viewType.generate()

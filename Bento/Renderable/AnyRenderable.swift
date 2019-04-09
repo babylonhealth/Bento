@@ -25,8 +25,8 @@ public struct AnyRenderable: Renderable {
         base.render(in: view)
     }
 
-    public func makeReusabilityHint(using combiner: inout ReusabilityHintCombiner) {
-        base.makeReusabilityHint(using: &combiner)
+    public func makeReusabilityHint(_ hint: inout ReusabilityHint) {
+        base.makeReusabilityHint(&hint)
     }
 
     func cast<T>(to type: T.Type) -> T? {
@@ -86,8 +86,8 @@ class AnyRenderableBox<Base: Renderable>: AnyRenderableBoxBase {
         base.render(in: view as! Base.View)
     }
 
-    override func makeReusabilityHint(using combiner: inout ReusabilityHintCombiner) {
-        base.makeReusabilityHint(using: &combiner)
+    override func makeReusabilityHint(_ hint: inout ReusabilityHint) {
+        base.makeReusabilityHint(&hint)
     }
 
     override func cast<T>(to type: T.Type) -> T? {
@@ -108,6 +108,6 @@ class AnyRenderableBoxBase {
         return AnyRenderable(self)
     }
     func render(in view: UIView) { fatalError() }
-    func makeReusabilityHint(using combiner: inout ReusabilityHintCombiner) { fatalError() }
+    func makeReusabilityHint(_ hint: inout ReusabilityHint) { fatalError() }
     func cast<T>(to type: T.Type) -> T? { fatalError() }
 }

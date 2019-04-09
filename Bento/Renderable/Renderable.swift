@@ -26,8 +26,8 @@ public protocol Renderable {
     ///         // Logic to recreate the view hierarchy if types and orders of components do not match
     ///     }
     ///
-    ///     func makeReusabilityHint(using combiner: inout ReusabilityHintCombiner) {
-    ///         children.forEach { combiner.combine($0) }
+    ///     func makeReusabilityHint(_ hint: inout ReusabilityHint) {
+    ///         children.forEach { hint.combine($0) }
     ///     }
     /// }
     ///
@@ -51,7 +51,7 @@ public protocol Renderable {
     /// CompositeComponent(children: [C(), B(), A()])
     /// ```
     ///
-    /// - important: The order of `combiner.combine(_:)` matters.
+    /// - important: The order of `ReusabilityHint.combine(_:)` matters.
     ///
     /// - important: Bento always considers the component type for view reusability. So components need not combine
     ///              its own type again.
@@ -60,12 +60,13 @@ public protocol Renderable {
     ///         or dynamic view hierarchies.
     ///
     /// - parameters:
-    ///   - combiner: The combiner to concatenate all relevant information that affects reusability.
-    func makeReusabilityHint(using combiner: inout ReusabilityHintCombiner)
+    ///   - hint: An opaque structure which may be fed with all relevant information of which Bento should take account
+    ///           when considering view reusability.
+    func makeReusabilityHint(_ hint: inout ReusabilityHint)
 }
 
 public extension Renderable {
-    func makeReusabilityHint(using combiner: inout ReusabilityHintCombiner) {}
+    func makeReusabilityHint(_ hint: inout ReusabilityHint) {}
 
     func asAnyRenderable() -> AnyRenderable {
         return AnyRenderable(self)
@@ -99,13 +100,13 @@ internal extension Renderable {
             ?? type(of: self)
     }
 
-    var reusabilityHintCombiner: ReusabilityHintCombiner {
-        var combiner = ReusabilityHintCombiner(root: self)
-        makeReusabilityHint(using: &combiner)
-        return combiner
+    var reusabilityHint: ReusabilityHint {
+        var hint = ReusabilityHint(root: self)
+        makeReusabilityHint(&hint)
+        return hint
     }
 
     var reuseIdentifier: String {
-        return reusabilityHintCombiner.generate()
+        return reusabilityHint.generate()
     }
 }
