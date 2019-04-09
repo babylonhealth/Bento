@@ -49,7 +49,7 @@ extension BentoReusableView {
 }
 
 extension BentoReusableView where Self: UIView {
-    /// - Note: Call this method when old `containedView` is replaced with new one.
+    /// - important: This should be invoked whenever `containedView` is changed.
     func containedViewDidChange(from old: UIView?, to new: UIView?) {
         func add(_ view: UIView) {
             contentView.addSubview(view)
