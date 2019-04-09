@@ -14,7 +14,7 @@ protocol BentoReusableView: AnyObject {
 }
 
 extension BentoReusableView {
-    /// Updates `component` to either replace `containedView` with a new one or reuse it.
+    /// Uses `component` to either replace `containedView` with a new one or reuse it.
     func bind(_ component: AnyRenderable?) {
         self.component = component
         if let component = component {
