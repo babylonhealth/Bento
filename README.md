@@ -244,6 +244,12 @@ If you want to clone the repo for contributing or for running the example app yo
 git submodule update --init --recursive
 ```
 
+Or, if you have Carthage installed, you can use it to do the same thing:
+
+```		
+carthage checkout
+```
+
 ### State of the project 🤷‍♂️
 
 Feature | Status
