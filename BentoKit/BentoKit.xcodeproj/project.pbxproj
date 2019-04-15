@@ -66,6 +66,7 @@
 		5880119E216272C30084EE07 /* Device.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5880119D216272C30084EE07 /* Device.swift */; };
 		588011A02162740C0084EE07 /* FBSnapshotTestCaseExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5880119F2162740C0084EE07 /* FBSnapshotTestCaseExtensions.swift */; };
 		58ADAF72215E602E00B143F5 /* UIImageExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58ADAF71215E602E00B143F5 /* UIImageExtensions.swift */; };
+		5B680792226525FD006AA479 /* HeightCustomizing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B680791226525FD006AA479 /* HeightCustomizing.swift */; };
 		65020C3022030CB000DC8F42 /* InteractionBehavior.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65020C2F22030CB000DC8F42 /* InteractionBehavior.swift */; };
 		7421E0282192D9B70014F631 /* Resources.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7421E0272192D9B70014F631 /* Resources.swift */; };
 		A6113A7E2180CD0100C6DB5A /* FBSnapshotTestCase.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A6113A7D2180CD0100C6DB5A /* FBSnapshotTestCase.framework */; };
@@ -168,6 +169,7 @@
 		588011A121627D520084EE07 /* Result.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Result.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		588011A321627D570084EE07 /* ReactiveSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ReactiveSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		58ADAF71215E602E00B143F5 /* UIImageExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImageExtensions.swift; sourceTree = "<group>"; };
+		5B680791226525FD006AA479 /* HeightCustomizing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HeightCustomizing.swift; path = BentoKit/Protocols/HeightCustomizing.swift; sourceTree = SOURCE_ROOT; };
 		639430F94D2A3AB0B5FBBFF0 /* Pods_BentoKitTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BentoKitTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		65020C2F22030CB000DC8F42 /* InteractionBehavior.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InteractionBehavior.swift; sourceTree = "<group>"; };
 		7421E0272192D9B70014F631 /* Resources.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Resources.swift; sourceTree = "<group>"; };
@@ -303,6 +305,7 @@
 		580B611C215D2F2100A69E87 /* Protocols */ = {
 			isa = PBXGroup;
 			children = (
+				5B680791226525FD006AA479 /* HeightCustomizing.swift */,
 				580B611E215D2F6100A69E87 /* AutoRenderable.swift */,
 			);
 			path = Protocols;
@@ -638,6 +641,7 @@
 				A6EC2DB2218B28AA002B128F /* BoxRenderer.swift in Sources */,
 				580B6139215D2F6800A69E87 /* Description.swift in Sources */,
 				580B6132215D2F6800A69E87 /* EmptySpace.swift in Sources */,
+				5B680792226525FD006AA479 /* HeightCustomizing.swift in Sources */,
 				580B6157215D3BD700A69E87 /* UIEdgeInsetsTests.swift in Sources */,
 				580B615B215D404500A69E87 /* Accessory.swift in Sources */,
 				580B613D215D334600A69E87 /* ListPickerAdapter.swift in Sources */,
