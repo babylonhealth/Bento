@@ -46,8 +46,8 @@ struct AdapterStore<SectionID: Hashable, ItemID: Hashable> {
     init() {}
 
     mutating func size(for supplement: Supplement, inSection section: Int) -> SupplementSizingResult {
-        guard cachesSizeInformation else { return .cachingDisabled }
         guard let component = sections[section].supplements[supplement] else { return .doesNotExist }
+        guard cachesSizeInformation else { return .cachingDisabled }
 
         let knownSize = info[section].supplements[supplement, default: .unknown]
 

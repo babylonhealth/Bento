@@ -8,13 +8,46 @@ typealias TestStore = AdapterStore<Int, Int>
 class AdapterStoreTests: XCTestCase {
     let defaultBoundSize = CGSize(width: 10000, height: 10000)
 
-    func test_should_not_be_enabled_by_default() {
+    func test_should_report_non_existing_supplement_even_if_caching_is_disabled() {
         var store = TestStore()
+
+        store.update(
+            with: [
+                Section(id: 0, items: [Node(id: 0, component: TestComponent(size: .zero))])
+            ],
+            knownSupplements: []
+        )
+
+        expect(store.cachesSizeInformation) == false
+        expect(store.size(for: .header, inSection: 0)) == .doesNotExist
+    }
+
+    func test_should_report_caching_disabled_if_supplement_exists() {
+        var store = TestStore()
+
+        store.update(
+            with: [
+                Section(id: 0, header: TestComponent(size: .zero))
+            ],
+            knownSupplements: []
+        )
+
         expect(store.cachesSizeInformation) == false
         expect(store.size(for: .header, inSection: 0)) == .cachingDisabled
-        expect(store.size(forItemAt: IndexPath(item: 0, section: 0))).to(beNil())
-        expect(store.size(for: .header, inSection: .max)) == .cachingDisabled
-        expect(store.size(forItemAt: IndexPath(item: .max, section: .max))).to(beNil())
+    }
+
+    func test_should_return_nil_for_item_size_if_caching_is_disabled() {
+        var store = TestStore()
+
+        store.update(
+            with: [
+                Section(id: 0, items: [Node(id: 0, component: TestComponent(size: .zero))])
+            ],
+            knownSupplements: []
+        )
+
+        expect(store.cachesSizeInformation) == false
+        expect(store.size(forItemAt: [0, 0])).to(beNil())
     }
 
     func test_supplement_should_return_size() {
