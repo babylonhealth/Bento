@@ -8,7 +8,7 @@ public struct Section<SectionID: Hashable, ItemID: Hashable> {
 
     public let id: SectionID
     public var items: [Item]
-    internal var supplements: [Supplement: AnyRenderable]
+    public var supplements: [Supplement: AnyRenderable]
 
     public init(id: SectionID, items: [Item] = []) {
         self.id = id
@@ -51,26 +51,6 @@ public struct Section<SectionID: Hashable, ItemID: Hashable> {
         var section = self
         section.supplements[supplement] = AnyRenderable(component)
         return section
-    }
-
-    public func has(_ supplement: Supplement) -> Bool {
-        return supplements.keys.contains(supplement)
-    }
-
-    public func component<T>(of supplement: Supplement, as type: T.Type) -> T? {
-        return supplements[supplement]?.cast(to: type)
-    }
-
-    public func componentSize(of supplement: Supplement, fittingWidth width: CGFloat, inheritedMargins: UIEdgeInsets = .zero) -> CGSize? {
-        return supplements[supplement]?.sizeBoundTo(width: width, inheritedMargins: inheritedMargins)
-    }
-
-    public func componentSize(of supplement: Supplement, fittingHeight height: CGFloat, inheritedMargins: UIEdgeInsets = .zero) -> CGSize? {
-        return supplements[supplement]?.sizeBoundTo(height: height, inheritedMargins: inheritedMargins)
-    }
-
-    public func componentSize(of supplement: Supplement, fittingSize size: CGSize, inheritedMargins: UIEdgeInsets = .zero) -> CGSize? {
-        return supplements[supplement]?.sizeBoundTo(size: size, inheritedMargins: inheritedMargins)
     }
 
     public static func |---+ (lhs: Section, rhs: Item) -> Section {

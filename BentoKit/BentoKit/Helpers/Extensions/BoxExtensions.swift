@@ -18,25 +18,31 @@ extension Section {
     }
 
     fileprivate func footerHeightBoundTo(width: CGFloat, inheritedMargins: UIEdgeInsets) -> CGFloat {
-        if let component = component(of: .footer, as: HeightCustomizing.self) {
+        guard let footer = supplements[.footer] else { return 0.0 }
+
+        if let component = footer.cast(to: HeightCustomizing.self) {
             return component.height(forWidth: width, inheritedMargins: inheritedMargins)
         }
-        return componentSize(of: .footer, fittingWidth: width, inheritedMargins: inheritedMargins)?.height ?? 0
+
+        return footer.size(fittingWidth: width, inheritedMargins: inheritedMargins).height
     }
 
     fileprivate func headerHeightBoundTo(width: CGFloat, inheritedMargins: UIEdgeInsets) -> CGFloat {
-        if let component = component(of: .header, as: HeightCustomizing.self) {
+        guard let header = supplements[.header] else { return 0.0 }
+
+        if let component = header.cast(to: HeightCustomizing.self) {
             return component.height(forWidth: width, inheritedMargins: inheritedMargins)
         }
-        return componentSize(of: .header, fittingWidth: width, inheritedMargins: inheritedMargins)?.height ?? 0
+
+        return header.size(fittingWidth: width, inheritedMargins: inheritedMargins).height
     }
 }
 
 extension Node {
     fileprivate func heightBoundTo(width: CGFloat, inheritedMargins: UIEdgeInsets) -> CGFloat {
-        if let component = component(as: HeightCustomizing.self) {
+        if let component = component.cast(to: HeightCustomizing.self) {
             return component.height(forWidth: width, inheritedMargins: inheritedMargins)
         }
-        return sizeBoundTo(width: width).height
+        return component.size(fittingWidth: width, inheritedMargins: inheritedMargins).height
     }
 }

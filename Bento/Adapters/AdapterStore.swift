@@ -140,11 +140,11 @@ enum SizingStrategy {
     func size(of component: AnyRenderable, boundSize: CGSize, layoutMargins: UIEdgeInsets) -> CGSize {
         switch self {
         case .fillHorizontally:
-            return component.sizeBoundTo(width: boundSize.width, inheritedMargins: layoutMargins)
+            return component.size(fittingWidth: boundSize.width, inheritedMargins: layoutMargins)
         case .fillVertically:
-            return component.sizeBoundTo(height: boundSize.height, inheritedMargins: layoutMargins)
+            return component.size(fittingHeight: boundSize.height, inheritedMargins: layoutMargins)
         case .compressed:
-            return component.sizeBoundTo(size: UIView.layoutFittingCompressedSize, inheritedMargins: layoutMargins)
+            return component.size(fittingSize: UIView.layoutFittingCompressedSize, inheritedMargins: layoutMargins)
         }
     }
 }

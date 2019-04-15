@@ -22,7 +22,7 @@ extension FocusEligibilitySourceImplementing {
                 let items = sections[sectionIndex].items
 
                 for itemIndex in startItemIndex ..< items.endIndex {
-                    if let component = items[itemIndex].component(as: Focusable.self),
+                    if let component = items[itemIndex].component.cast(to: Focusable.self),
                        component.focusEligibility.isEligible(skipsPopulatedComponents: skipsPopulatedComponents) {
                         return IndexPath(item: itemIndex, section: sectionIndex)
                     }
@@ -42,7 +42,7 @@ extension FocusEligibilitySourceImplementing {
                 let items = sections[sectionIndex].items
 
                 for itemIndex in (items.startIndex ..< exclusiveNodeUpperBound).reversed() {
-                    if let component = items[itemIndex].component(as: Focusable.self),
+                    if let component = items[itemIndex].component.cast(to: Focusable.self),
                        component.focusEligibility.isEligible(skipsPopulatedComponents: skipsPopulatedComponents) {
                         return IndexPath(item: itemIndex, section: sectionIndex)
                     }

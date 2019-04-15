@@ -5,7 +5,7 @@ import UIKit
 /// To simplify, you can think of a Node in Bento as equivalent to a cell in UITableView / UICollectionView.
 public struct Node<Identifier: Hashable> {
     public let id: Identifier
-    let component: AnyRenderable
+    public let component: AnyRenderable
 
     init(id: Identifier, component: AnyRenderable) {
         self.id = id
@@ -14,22 +14,6 @@ public struct Node<Identifier: Hashable> {
 
     public init<R: Renderable>(id: Identifier, component: R) {
         self.init(id: id, component: AnyRenderable(component))
-    }
-
-    public func component<T>(as type: T.Type) -> T? {
-        return component.cast(to: type)
-    }
-
-    public func sizeBoundTo(width: CGFloat, inheritedMargins: UIEdgeInsets = .zero) -> CGSize {
-        return component.sizeBoundTo(width: width, inheritedMargins: inheritedMargins)
-    }
-
-    public func sizeBoundTo(height: CGFloat, inheritedMargins: UIEdgeInsets = .zero) -> CGSize {
-        return component.sizeBoundTo(height: height, inheritedMargins: inheritedMargins)
-    }
-
-    public func sizeBoundTo(size: CGSize, inheritedMargins: UIEdgeInsets = .zero) -> CGSize {
-        return component.sizeBoundTo(size: size, inheritedMargins: inheritedMargins)
     }
 }
 

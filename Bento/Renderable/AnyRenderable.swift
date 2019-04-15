@@ -31,25 +31,25 @@ public struct AnyRenderable: Renderable {
         base.render(in: view)
     }
 
-    func cast<T>(to type: T.Type) -> T? {
+    public func cast<T>(to type: T.Type) -> T? {
         return base.cast(to: type)
     }
 
-    func sizeBoundTo(width: CGFloat, inheritedMargins: UIEdgeInsets) -> CGSize {
+    public func size(fittingWidth width: CGFloat, inheritedMargins: UIEdgeInsets) -> CGSize {
         return rendered(inheritedMargins: inheritedMargins)
             .systemLayoutSizeFitting(CGSize(width: width, height: UIView.layoutFittingCompressedSize.height),
                                      withHorizontalFittingPriority: .required,
                                      verticalFittingPriority: .defaultLow)
     }
 
-    func sizeBoundTo(height: CGFloat, inheritedMargins: UIEdgeInsets) -> CGSize {
+    public func size(fittingHeight height: CGFloat, inheritedMargins: UIEdgeInsets) -> CGSize {
         return rendered(inheritedMargins: inheritedMargins)
             .systemLayoutSizeFitting(CGSize(width: UIView.layoutFittingCompressedSize.width, height: height),
                                      withHorizontalFittingPriority: .defaultLow,
                                      verticalFittingPriority: .required)
     }
 
-    func sizeBoundTo(size: CGSize, inheritedMargins: UIEdgeInsets) -> CGSize {
+    public func size(fittingSize size: CGSize, inheritedMargins: UIEdgeInsets) -> CGSize {
         return rendered(inheritedMargins: inheritedMargins)
             .systemLayoutSizeFitting(size)
     }

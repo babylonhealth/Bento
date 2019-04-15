@@ -129,7 +129,7 @@ open class TableViewAdapterBase<SectionID: Hashable, ItemID: Hashable>
     @objc(tableView:editActionsForRowAtIndexPath:)
     open func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
         let item = sections[indexPath.section].items[indexPath.row]
-        guard let component = item.component(as: Deletable.self) else {
+        guard let component = item.component.cast(to: Deletable.self) else {
             return nil
         }
 
@@ -144,7 +144,7 @@ open class TableViewAdapterBase<SectionID: Hashable, ItemID: Hashable>
     @objc(tableView:trailingSwipeActionsConfigurationForRowAtIndexPath:)
     open func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let item = sections[indexPath.section].items[indexPath.row]
-        guard let component = item.component(as: Deletable.self) else {
+        guard let component = item.component.cast(to: Deletable.self) else {
             return UISwipeActionsConfiguration(actions: [])
         }
 
@@ -192,7 +192,7 @@ open class TableViewAdapterBase<SectionID: Hashable, ItemID: Hashable>
 
     @objc(tableView:shouldShowMenuForRowAtIndexPath:)
     open func tableView(_ tableView: UITableView, shouldShowMenuForRowAt indexPath: IndexPath) -> Bool {
-        guard let component = sections[indexPath.section].items[indexPath.row].component(as: MenuItemsResponding.self) else {
+        guard let component = sections[indexPath.section].items[indexPath.row].component.cast(to: MenuItemsResponding.self) else {
             return false
         }
         UIMenuController.shared.menuItems = component.menuItems
@@ -201,7 +201,7 @@ open class TableViewAdapterBase<SectionID: Hashable, ItemID: Hashable>
 
     @objc(tableView:canPerformAction:forRowAtIndexPath:withSender:)
     open func tableView(_ tableView: UITableView, canPerformAction action: Selector, forRowAt indexPath: IndexPath, withSender sender: Any?) -> Bool {
-        guard let component = sections[indexPath.section].items[indexPath.row].component(as: MenuItemsResponding.self) else {
+        guard let component = sections[indexPath.section].items[indexPath.row].component.cast(to: MenuItemsResponding.self) else {
             return false
         }
 
@@ -213,7 +213,7 @@ open class TableViewAdapterBase<SectionID: Hashable, ItemID: Hashable>
 
     private func deleteRow(at indexPath: IndexPath, actionPerformed: ((Bool) -> Void)?) {
         let item = sections[indexPath.section].items[indexPath.row]
-        guard let component = item.component(as: Deletable.self) else {
+        guard let component = item.component.cast(to: Deletable.self) else {
             actionPerformed?(false)
             return
         }
