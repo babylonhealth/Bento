@@ -1,14 +1,73 @@
 import UIKit
 
-/// Protocol which every Component needs to conform to.
-/// - View: UIView subtype which is the top level view type of the component.
+/// A type that can be used as a component in a Bento box.
 public protocol Renderable {
+    /// The reusable view type that the component uses for rendering its content.
     associatedtype View: NativeView
 
+    /// Render the content of `self` into `view`.
     func render(in view: View)
+
+    /// Produce a performance hint for Bento to better decide its view reusability strategy.
+    ///
+    /// Note that having a reusability hint **does not imply** that Bento would always only reuse views when the
+    /// reusability hint matches. In other words, you **must still ensure** your composite component view handles type
+    /// mismatches in the view hierarchy correctly and gracefully.
+    ///
+    /// For example, if you have a composite component that has a small but fixed number of combinations of child
+    /// components, you may implement this requirement to improve the performance, which otherwise would involve
+    /// time in recreating views as they are queued to go on screen.
+    ///
+    /// ```swift
+    /// struct CompositeComponent: Renderable {
+    ///     let children: [AnyRenderable]
+    ///
+    ///     func render(in view: View) {
+    ///         // Logic to recreate the view hierarchy if types and orders of components do not match
+    ///     }
+    ///
+    ///     func makeReusabilityHint(_ hint: inout ReusabilityHint) {
+    ///         children.forEach { hint.combine($0) }
+    ///     }
+    /// }
+    ///
+    /// // NOTE: These combinations would all result in different reusability hints.
+    /// //       (Assuming there are three component types `A`, `B`, and `C`.
+    /// CompositeComponent(children: [])
+    /// CompositeComponent(children: [A()])
+    /// CompositeComponent(children: [B()])
+    /// CompositeComponent(children: [C()])
+    /// CompositeComponent(children: [A(), B()])
+    /// CompositeComponent(children: [A(), C()])
+    /// CompositeComponent(children: [B(), A()])
+    /// CompositeComponent(children: [B(), C()])
+    /// CompositeComponent(children: [C(), A()])
+    /// CompositeComponent(children: [C(), B()])
+    /// CompositeComponent(children: [A(), B(), C()])
+    /// CompositeComponent(children: [A(), C(), B()])
+    /// CompositeComponent(children: [B(), A(), C()])
+    /// CompositeComponent(children: [B(), C(), A()])
+    /// CompositeComponent(children: [C(), A(), B()])
+    /// CompositeComponent(children: [C(), B(), A()])
+    /// ```
+    ///
+    /// - important: The order of `ReusabilityHint.combine(_:)` matters.
+    ///
+    /// - important: Bento always considers the component type for view reusability. So components need not combine
+    ///              its own type again.
+    ///
+    /// - note: This is an optional requirement intended for composite components that contain children components
+    ///         or dynamic view hierarchies.
+    ///
+    /// - parameters:
+    ///   - hint: An opaque structure which may be fed with all relevant information of which Bento should take account
+    ///           when considering view reusability.
+    func makeReusabilityHint(_ hint: inout ReusabilityHint)
 }
 
 public extension Renderable {
+    func makeReusabilityHint(_ hint: inout ReusabilityHint) {}
+
     func asAnyRenderable() -> AnyRenderable {
         return AnyRenderable(self)
     }
@@ -32,5 +91,22 @@ public extension Renderable {
             willDisplayItem: willDisplayItem,
             didEndDisplayingItem: didEndDisplayingItem
         ).asAnyRenderable()
+    }
+}
+
+internal extension Renderable {
+    var componentType: Any.Type {
+        return (self as? AnyRenderable)?.componentType
+            ?? type(of: self)
+    }
+
+    var reusabilityHint: ReusabilityHint {
+        var hint = ReusabilityHint(root: self)
+        makeReusabilityHint(&hint)
+        return hint
+    }
+
+    var reuseIdentifier: String {
+        return reusabilityHint.generate()
     }
 }

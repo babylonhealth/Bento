@@ -48,7 +48,7 @@ open class CollectionViewAdapterBase<SectionID: Hashable, ItemID: Hashable>
     @objc(collectionView:cellForItemAtIndexPath:)
     open func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let component = node(at: indexPath).component
-        let reuseIdentifier = component.fullyQualifiedTypeName
+        let reuseIdentifier = component.reuseIdentifier
         collectionView.register(CollectionViewContainerCell.self, forCellWithReuseIdentifier: reuseIdentifier)
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! CollectionViewContainerCell
 
@@ -62,7 +62,7 @@ open class CollectionViewAdapterBase<SectionID: Hashable, ItemID: Hashable>
         knownSupplements.insert(supplement)
 
         let component = sections[indexPath.section].supplements[supplement]
-        let reuseIdentifier = component?.fullyQualifiedTypeName ?? emptyReuseIdentifier
+        let reuseIdentifier = component?.reuseIdentifier ?? emptyReuseIdentifier
 
         collectionView.register(CollectionViewContainerReusableView.self,
                                 forSupplementaryViewOfKind: kind,
