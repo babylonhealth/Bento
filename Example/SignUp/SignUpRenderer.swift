@@ -1,6 +1,5 @@
 import Bento
 import BentoKit
-import StyleSheets
 
 final class SignUpRenderer {
     private let presenter: SignUpPresenter

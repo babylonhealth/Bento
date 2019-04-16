@@ -1,5 +1,4 @@
 import UIKit
-import StyleSheets
 
 public final class InputView: UIView {
     private var state: (AnyBox, UITableView)?

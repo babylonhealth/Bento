@@ -1,4 +1,3 @@
-import StyleSheets
 import UIKit
 
 extension Component {

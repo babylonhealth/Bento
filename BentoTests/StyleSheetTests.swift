@@ -1,4 +1,4 @@
-@testable import StyleSheets
+@testable import Bento
 import UIKit
 import XCTest
 

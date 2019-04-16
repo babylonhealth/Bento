@@ -2,7 +2,6 @@ import UIKit
 import Bento
 import BentoPlaygroundSupport
 import PlaygroundSupport
-import StyleSheets
 
 let component = Component.MultilineTextInput(
     text: "This is UITextView.\nClick me!",

@@ -2,7 +2,6 @@ import UIKit
 import Bento
 @testable import BentoPlaygroundSupport
 import PlaygroundSupport
-import StyleSheets
 
 let styleSheet = Component.Button.StyleSheet(
     button: ButtonStyleSheet(

@@ -1,5 +1,4 @@
 import Bento
-import StyleSheets
 
 final class ActivityComponentSnapshotTests: SnapshotTestCase {
     override func setUp() {

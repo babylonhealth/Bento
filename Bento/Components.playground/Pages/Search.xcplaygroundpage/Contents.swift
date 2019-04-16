@@ -2,7 +2,6 @@ import UIKit
 import Bento
 import BentoPlaygroundSupport
 import PlaygroundSupport
-import StyleSheets
 
 let bundle = Bundle(for: Component.TextInput.self)
 let styleSheet = Component.Search.StyleSheet()

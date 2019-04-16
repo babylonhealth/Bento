@@ -1,5 +1,4 @@
 import Bento
-import StyleSheets
 import UIKit
 
 final class SearchSnapshotTests: SnapshotTestCase {

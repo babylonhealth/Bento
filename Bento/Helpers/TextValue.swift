@@ -1,5 +1,4 @@
 import UIKit
-import StyleSheets
 
 public enum TextValue: ExpressibleByStringLiteral {
     public init(stringLiteral value: String) {

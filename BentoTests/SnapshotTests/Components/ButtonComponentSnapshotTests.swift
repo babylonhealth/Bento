@@ -1,5 +1,4 @@
 import Bento
-import StyleSheets
 @testable import BentoPlaygroundSupport
 import UIKit
 

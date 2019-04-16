@@ -1,4 +1,3 @@
-import StyleSheets
 
 @objc public protocol MultilineTextInputAware where Self: UIView {
     func multilineTextInputHeightDidChange(_ sender: Any)

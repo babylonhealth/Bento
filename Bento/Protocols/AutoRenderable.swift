@@ -1,4 +1,3 @@
-import StyleSheets
 
 public protocol AutoRenderable: Renderable {
     associatedtype StyleSheet: StyleSheetProtocol

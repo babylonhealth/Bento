@@ -1,6 +1,5 @@
 import XCTest
 import Bento
-import StyleSheets
 import ReactiveSwift
 
 final class TitledDescriptionSnapshotTests: SnapshotTestCase {

@@ -1,4 +1,3 @@
-import StyleSheets
 import ReactiveSwift
 import UIKit
 import XCTest

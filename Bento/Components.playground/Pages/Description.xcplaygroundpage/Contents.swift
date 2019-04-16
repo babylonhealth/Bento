@@ -1,7 +1,6 @@
 import Bento
 import BentoPlaygroundSupport
 import PlaygroundSupport
-import StyleSheets
 
 let bundle = Bundle(for: Component.Description.self)
 

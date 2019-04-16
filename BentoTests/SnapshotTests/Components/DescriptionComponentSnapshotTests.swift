@@ -1,6 +1,5 @@
 import XCTest
 import Bento
-import StyleSheets
 
 final class DescriptionComponentSnapshotTests: SnapshotTestCase {
     override func setUp() {

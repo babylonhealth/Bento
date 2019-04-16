@@ -1,5 +1,4 @@
 import XCTest
-import StyleSheets
 import Bento
 
 final class EmptyComponentSnapshotTests: SnapshotTestCase {

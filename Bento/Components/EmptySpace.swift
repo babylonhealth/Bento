@@ -1,5 +1,4 @@
 import UIKit
-import StyleSheets
 
 extension Component {
     public final class EmptySpace: Renderable, HeightCustomizing {

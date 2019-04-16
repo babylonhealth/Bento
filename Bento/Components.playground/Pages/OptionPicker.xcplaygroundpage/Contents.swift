@@ -2,7 +2,6 @@ import UIKit
 import Bento
 import BentoPlaygroundSupport
 import PlaygroundSupport
-import StyleSheets
 
 extension String: Option {
     public var displayName: String {

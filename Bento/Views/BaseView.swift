@@ -1,5 +1,4 @@
 import UIKit
-import StyleSheets
 
 public protocol BaseViewProtocol: AnyObject {
     var enforcesMinimumHeight: Bool { get set }

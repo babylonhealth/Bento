@@ -1,5 +1,4 @@
 import UIKit
-import StyleSheets
 
 public typealias ImageOrLabel = ImageOrLabelView.Content
 

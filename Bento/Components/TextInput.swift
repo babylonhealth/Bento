@@ -1,4 +1,3 @@
-import StyleSheets
 
 extension Component {
     public final class TextInput: AutoRenderable, Focusable {

@@ -20,11 +20,3 @@ extension StyleSheetProtocol {
         return self
     }
 }
-
-extension NSObjectProtocol {
-    func with(_ action: (inout Self) -> Void) -> Self {
-        var object = self
-        action(&object)
-        return object
-    }
-}
