@@ -16,7 +16,7 @@ In our experience it makes UI-related code easier to build and maintain. Our aim
 - [Installation](#installation-)
 - [What's it like?](#whats-it-like-)
 - [How does it work?](#how-does-it-work-)
-- [BentoKit & StyleSheets](#bentokit--stylesheets-)
+- [Componments & StyleSheets](#components--stylesheets-)
 - [Examples](#examples-)
 - [Additional documentation](#additional-documentation-)
 - [Development installation](#development-installation-)
@@ -31,9 +31,6 @@ In our experience it makes UI-related code easier to build and maintain. Our aim
 ```ruby
 target 'MyApp' do
     pod 'Bento'
-    
-    # Optionally, if you want to install BentoKit
-    pod 'BentoKit'
 end
 ```
 
