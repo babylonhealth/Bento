@@ -8,9 +8,6 @@
       location = "group:Carthage/Checkouts/ios-snapshot-test-case/FBSnapshotTestCase.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:Carthage/Checkouts/ReactiveFeedback/ReactiveFeedback.xcodeproj">
-   </FileRef>
-   <FileRef
       location = "group:Carthage/Checkouts/Kingfisher/Kingfisher.xcodeproj">
    </FileRef>
    <FileRef
