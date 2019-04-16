@@ -156,7 +156,6 @@
 		9A4DB3E1212CB3710079D5AE /* ChangesetExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A4DB3E0212CB3710079D5AE /* ChangesetExtensions.swift */; };
 		9AF4786A21205E3100F87E21 /* Supplement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AF4786921205E3100F87E21 /* Supplement.swift */; };
 		9AF4786C2120CA7500F87E21 /* BentoReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AF4786B2120CA7500F87E21 /* BentoReusableView.swift */; };
-		A6C9C8BA2180782500261906 /* Kingfisher.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A6C9C8B82180780E00261906 /* Kingfisher.framework */; };
 		A6C9C8BB2180782500261906 /* ReactiveCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A6C9C8B42180780E00261906 /* ReactiveCocoa.framework */; };
 		A6C9C8BC2180782500261906 /* ReactiveSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A6C9C8B52180780E00261906 /* ReactiveSwift.framework */; };
 		A6C9C8BD2180782500261906 /* Result.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A6C9C8B72180780E00261906 /* Result.framework */; };
@@ -383,7 +382,6 @@
 			files = (
 				04C9A0862211995D00C70E09 /* BentoKit.framework in Frameworks */,
 				A6C9C8BD2180782500261906 /* Result.framework in Frameworks */,
-				A6C9C8BA2180782500261906 /* Kingfisher.framework in Frameworks */,
 				58FC4430207CF3CD00DA3614 /* Bento.framework in Frameworks */,
 				A6C9C8BC2180782500261906 /* ReactiveSwift.framework in Frameworks */,
 				A6C9C8BB2180782500261906 /* ReactiveCocoa.framework in Frameworks */,
