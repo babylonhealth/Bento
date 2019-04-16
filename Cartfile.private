@@ -1,5 +1,4 @@
 # Example app
-github "Babylonpartners/ReactiveFeedback" ~> 0.4
 github "onevcat/Kingfisher" ~> 4.7
 
 # Tests
