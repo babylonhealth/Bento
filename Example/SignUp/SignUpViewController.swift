@@ -3,7 +3,6 @@ import UIKit
 import Bento
 import BentoKit
 
-
 protocol Navigator: class {
     func showAlert(title: String, message: String)
 }

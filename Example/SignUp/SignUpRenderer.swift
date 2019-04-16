@@ -203,3 +203,10 @@ final class SignUpRenderer {
         case signUpButton
     }
 }
+
+extension DateFormatter {
+    convenience init(format: String) {
+        self.init()
+        self.dateFormat = format
+    }
+}

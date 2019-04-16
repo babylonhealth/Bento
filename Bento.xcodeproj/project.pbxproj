@@ -46,7 +46,6 @@
 		58FC442F207CF37700DA3614 /* script in Resources */ = {isa = PBXBuildFile; fileRef = 58FC442E207CF37700DA3614 /* script */; };
 		58FC4430207CF3CD00DA3614 /* Bento.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 58BA755C2016303B0050D5F1 /* Bento.framework */; };
 		58FC4431207CF3CD00DA3614 /* Bento.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 58BA755C2016303B0050D5F1 /* Bento.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		58FC4441207CFBD700DA3614 /* MovieComponentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58FC4437207CFBD600DA3614 /* MovieComponentView.swift */; };
 		58FC4442207CFBD700DA3614 /* LoadingIndicatorView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 58FC4438207CFBD600DA3614 /* LoadingIndicatorView.xib */; };
 		58FC4443207CFBD700DA3614 /* SegmetControlView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 58FC4439207CFBD700DA3614 /* SegmetControlView.xib */; };
 		58FC4444207CFBD700DA3614 /* SegmetControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58FC443A207CFBD700DA3614 /* SegmetControlView.swift */; };
@@ -55,9 +54,6 @@
 		58FC4447207CFBD700DA3614 /* ButtonComponentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58FC443D207CFBD700DA3614 /* ButtonComponentView.swift */; };
 		58FC4448207CFBD700DA3614 /* IconTitleDetailsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 58FC443E207CFBD700DA3614 /* IconTitleDetailsView.xib */; };
 		58FC4449207CFBD700DA3614 /* IconTitleDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58FC443F207CFBD700DA3614 /* IconTitleDetailsView.swift */; };
-		58FC444A207CFBD700DA3614 /* MovieComponentView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 58FC4440207CFBD700DA3614 /* MovieComponentView.xib */; };
-		58FC444D207CFBE200DA3614 /* BookAppointmentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58FC444B207CFBE100DA3614 /* BookAppointmentViewController.swift */; };
-		58FC444E207CFBE200DA3614 /* MoviesListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58FC444C207CFBE200DA3614 /* MoviesListViewController.swift */; };
 		5B02B99322503A370089371A /* AdapterProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B02B99122503A370089371A /* AdapterProtocol.swift */; };
 		5B02B99422503A370089371A /* AdapterStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B02B99222503A370089371A /* AdapterStore.swift */; };
 		61B40919208523F60063DE25 /* FoodListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61B40916208523F50063DE25 /* FoodListViewModel.swift */; };
@@ -77,7 +73,6 @@
 		65E3ECA2211317EA00869DF3 /* FocusCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65E3ECA1211317EA00869DF3 /* FocusCoordinator.swift */; };
 		65E3ECA421133BF700869DF3 /* FocusEligibilitySource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65E3ECA321133BF700869DF3 /* FocusEligibilitySource.swift */; };
 		65E3ECA621133C9400869DF3 /* UIKit+CollectionViewFocus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65E3ECA521133C9400869DF3 /* UIKit+CollectionViewFocus.swift */; };
-		65E3ECA8211340CE00869DF3 /* PersonalDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65E3ECA7211340CE00869DF3 /* PersonalDetailsViewController.swift */; };
 		65E3ECAA2113448200869DF3 /* TextFieldComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65E3ECA92113448200869DF3 /* TextFieldComponent.swift */; };
 		65E3ECAC2113591500869DF3 /* FocusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65E3ECAB2113591500869DF3 /* FocusableView.swift */; };
 		65E3ECAE2113594600869DF3 /* BentoCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65E3ECAD2113594600869DF3 /* BentoCollectionView.swift */; };
@@ -161,7 +156,6 @@
 		9A4DB3E1212CB3710079D5AE /* ChangesetExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A4DB3E0212CB3710079D5AE /* ChangesetExtensions.swift */; };
 		9AF4786A21205E3100F87E21 /* Supplement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AF4786921205E3100F87E21 /* Supplement.swift */; };
 		9AF4786C2120CA7500F87E21 /* BentoReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AF4786B2120CA7500F87E21 /* BentoReusableView.swift */; };
-		A6C9C8B92180781A00261906 /* ReactiveFeedback.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A6C9C8B62180780E00261906 /* ReactiveFeedback.framework */; };
 		A6C9C8BA2180782500261906 /* Kingfisher.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A6C9C8B82180780E00261906 /* Kingfisher.framework */; };
 		A6C9C8BB2180782500261906 /* ReactiveCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A6C9C8B42180780E00261906 /* ReactiveCocoa.framework */; };
 		A6C9C8BC2180782500261906 /* ReactiveSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A6C9C8B52180780E00261906 /* ReactiveSwift.framework */; };
@@ -253,7 +247,6 @@
 		58FC442C207CF2F500DA3614 /* Bento.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Bento.podspec; sourceTree = "<group>"; };
 		58FC442E207CF37700DA3614 /* script */ = {isa = PBXFileReference; lastKnownFileType = folder; path = script; sourceTree = "<group>"; };
 		58FC4435207CF7F100DA3614 /* config.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = config.yml; path = .circleci/config.yml; sourceTree = "<group>"; };
-		58FC4437207CFBD600DA3614 /* MovieComponentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MovieComponentView.swift; sourceTree = "<group>"; };
 		58FC4438207CFBD600DA3614 /* LoadingIndicatorView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoadingIndicatorView.xib; sourceTree = "<group>"; };
 		58FC4439207CFBD700DA3614 /* SegmetControlView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SegmetControlView.xib; sourceTree = "<group>"; };
 		58FC443A207CFBD700DA3614 /* SegmetControlView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SegmetControlView.swift; sourceTree = "<group>"; };
@@ -262,9 +255,6 @@
 		58FC443D207CFBD700DA3614 /* ButtonComponentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ButtonComponentView.swift; sourceTree = "<group>"; };
 		58FC443E207CFBD700DA3614 /* IconTitleDetailsView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IconTitleDetailsView.xib; sourceTree = "<group>"; };
 		58FC443F207CFBD700DA3614 /* IconTitleDetailsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IconTitleDetailsView.swift; sourceTree = "<group>"; };
-		58FC4440207CFBD700DA3614 /* MovieComponentView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MovieComponentView.xib; sourceTree = "<group>"; };
-		58FC444B207CFBE100DA3614 /* BookAppointmentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookAppointmentViewController.swift; sourceTree = "<group>"; };
-		58FC444C207CFBE200DA3614 /* MoviesListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MoviesListViewController.swift; sourceTree = "<group>"; };
 		5B02B99122503A370089371A /* AdapterProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdapterProtocol.swift; sourceTree = "<group>"; };
 		5B02B99222503A370089371A /* AdapterStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdapterStore.swift; sourceTree = "<group>"; };
 		5B175A6421C0634800590F34 /* ComponentContract.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = ComponentContract.md; sourceTree = "<group>"; };
@@ -284,7 +274,6 @@
 		65E3ECA1211317EA00869DF3 /* FocusCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FocusCoordinator.swift; sourceTree = "<group>"; };
 		65E3ECA321133BF700869DF3 /* FocusEligibilitySource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FocusEligibilitySource.swift; sourceTree = "<group>"; };
 		65E3ECA521133C9400869DF3 /* UIKit+CollectionViewFocus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIKit+CollectionViewFocus.swift"; sourceTree = "<group>"; };
-		65E3ECA7211340CE00869DF3 /* PersonalDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersonalDetailsViewController.swift; sourceTree = "<group>"; };
 		65E3ECA92113448200869DF3 /* TextFieldComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldComponent.swift; sourceTree = "<group>"; };
 		65E3ECAB2113591500869DF3 /* FocusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FocusableView.swift; sourceTree = "<group>"; };
 		65E3ECAD2113594600869DF3 /* BentoCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BentoCollectionView.swift; sourceTree = "<group>"; };
@@ -396,7 +385,6 @@
 				A6C9C8BD2180782500261906 /* Result.framework in Frameworks */,
 				A6C9C8BA2180782500261906 /* Kingfisher.framework in Frameworks */,
 				58FC4430207CF3CD00DA3614 /* Bento.framework in Frameworks */,
-				A6C9C8B92180781A00261906 /* ReactiveFeedback.framework in Frameworks */,
 				A6C9C8BC2180782500261906 /* ReactiveSwift.framework in Frameworks */,
 				A6C9C8BB2180782500261906 /* ReactiveCocoa.framework in Frameworks */,
 			);
@@ -483,9 +471,6 @@
 			children = (
 				044329E6222908FC004EFB29 /* SignUp */,
 				588C339622296FCE007C4AB8 /* Basic */,
-				588C339522296FBC007C4AB8 /* Movies */,
-				588C339422296FAD007C4AB8 /* PersonalDetails */,
-				588C339322296F8F007C4AB8 /* BookAppoitment */,
 				61B40915208523CE0063DE25 /* CollectionViewExample */,
 				58E98E542016570800F78BAE /* Cells */,
 				5829D268200FB092001E020D /* AppDelegate.swift */,
@@ -518,30 +503,6 @@
 				7448E80922660FDF0036B2D6 /* Resources.swift */,
 			);
 			path = Views;
-			sourceTree = "<group>";
-		};
-		588C339322296F8F007C4AB8 /* BookAppoitment */ = {
-			isa = PBXGroup;
-			children = (
-				58FC444B207CFBE100DA3614 /* BookAppointmentViewController.swift */,
-			);
-			path = BookAppoitment;
-			sourceTree = "<group>";
-		};
-		588C339422296FAD007C4AB8 /* PersonalDetails */ = {
-			isa = PBXGroup;
-			children = (
-				65E3ECA7211340CE00869DF3 /* PersonalDetailsViewController.swift */,
-			);
-			path = PersonalDetails;
-			sourceTree = "<group>";
-		};
-		588C339522296FBC007C4AB8 /* Movies */ = {
-			isa = PBXGroup;
-			children = (
-				58FC444C207CFBE200DA3614 /* MoviesListViewController.swift */,
-			);
-			path = Movies;
 			sourceTree = "<group>";
 		};
 		588C339622296FCE007C4AB8 /* Basic */ = {
@@ -582,8 +543,6 @@
 				58FC443E207CFBD700DA3614 /* IconTitleDetailsView.xib */,
 				58FC443B207CFBD700DA3614 /* LoadingIndicatorView.swift */,
 				58FC4438207CFBD600DA3614 /* LoadingIndicatorView.xib */,
-				58FC4437207CFBD600DA3614 /* MovieComponentView.swift */,
-				58FC4440207CFBD700DA3614 /* MovieComponentView.xib */,
 				58FC443A207CFBD700DA3614 /* SegmetControlView.swift */,
 				58FC4439207CFBD700DA3614 /* SegmetControlView.xib */,
 				58E98E592016571F00F78BAE /* EmptySpaceCell.swift */,
@@ -995,7 +954,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				58FC4446207CFBD700DA3614 /* ButtonComponentView.xib in Resources */,
-				58FC444A207CFBD700DA3614 /* MovieComponentView.xib in Resources */,
 				58FC442F207CF37700DA3614 /* script in Resources */,
 				5829D273200FB092001E020D /* LaunchScreen.storyboard in Resources */,
 				58FC4443207CFBD700DA3614 /* SegmetControlView.xib in Resources */,
@@ -1043,11 +1001,8 @@
 				584A6F9E20C7E36D006395E8 /* FoodItemComponent.swift in Sources */,
 				5829D26B200FB092001E020D /* ViewController.swift in Sources */,
 				58FC4447207CFBD700DA3614 /* ButtonComponentView.swift in Sources */,
-				58FC4441207CFBD700DA3614 /* MovieComponentView.swift in Sources */,
-				65E3ECA8211340CE00869DF3 /* PersonalDetailsViewController.swift in Sources */,
 				61B40919208523F60063DE25 /* FoodListViewModel.swift in Sources */,
 				65A69EE1218B8AB6005D90AC /* CustomCollectionViewAdapter.swift in Sources */,
-				58FC444D207CFBE200DA3614 /* BookAppointmentViewController.swift in Sources */,
 				65E3ECAA2113448200869DF3 /* TextFieldComponent.swift in Sources */,
 				61B64BB12086561B0092082C /* FoodListRenderer.swift in Sources */,
 				58E98E5D2016571F00F78BAE /* ToggleCell.swift in Sources */,
@@ -1062,7 +1017,6 @@
 				044329EA2229096E004EFB29 /* SignUpRenderer.swift in Sources */,
 				58FC4444207CFBD700DA3614 /* SegmetControlView.swift in Sources */,
 				58E98E602016571F00F78BAE /* IconTextCell.swift in Sources */,
-				58FC444E207CFBE200DA3614 /* MoviesListViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
