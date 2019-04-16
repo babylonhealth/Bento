@@ -14,7 +14,10 @@ open class TableViewAdapterBase<SectionID: Hashable, ItemID: Hashable>
     internal private(set) weak var tableView: UITableView?
     internal var store: AdapterStore<SectionID, ItemID>
 
-    public init(with tableView: UITableView) {
+    // NOTE: Required initializer is necessary for instantiation via metatype to work. In Swift 4.2, it appears that
+    //       there is a compiler type checking hole which allows instantiation via a non-required initializer.
+
+    public required init(with tableView: UITableView) {
         self.store = AdapterStore()
         self.tableView = tableView
         super.init()
