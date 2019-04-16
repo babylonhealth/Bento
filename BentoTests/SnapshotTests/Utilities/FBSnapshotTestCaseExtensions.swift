@@ -1,5 +1,4 @@
 import Bento
-import BentoKit
 import FBSnapshotTestCase
 import UIKit
 

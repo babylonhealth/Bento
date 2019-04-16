@@ -1,4 +1,4 @@
-import BentoKit
+import Bento
 import StyleSheets
 import ReactiveSwift
 import UIKit

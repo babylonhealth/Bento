@@ -1,5 +1,5 @@
 import XCTest
-import BentoKit
+import Bento
 import StyleSheets
 import ReactiveSwift
 
