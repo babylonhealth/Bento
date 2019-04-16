@@ -1,5 +1,3 @@
-import AVFoundation
-import AVKit
 import ReactiveCocoa
 import ReactiveSwift
 import Result

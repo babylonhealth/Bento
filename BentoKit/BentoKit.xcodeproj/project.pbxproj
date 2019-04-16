@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		580B60B3215D2CC100A69E87 /* StyleSheets.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 580B60B2215D2CC100A69E87 /* StyleSheets.framework */; };
 		580B60B5215D2CCB00A69E87 /* Bento.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 580B60B4215D2CCB00A69E87 /* Bento.framework */; };
 		580B6138215D2F6800A69E87 /* TitledDescription.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580B612B215D2F6800A69E87 /* TitledDescription.swift */; };
 		580B6153215D3A0400A69E87 /* ReactiveSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 580B6152215D3A0400A69E87 /* ReactiveSwift.framework */; };
@@ -46,7 +45,6 @@
 
 /* Begin PBXFileReference section */
 		580B60A5215D2C3400A69E87 /* BentoKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = BentoKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		580B60B2215D2CC100A69E87 /* StyleSheets.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = StyleSheets.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		580B60B4215D2CCB00A69E87 /* Bento.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Bento.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		580B612B215D2F6800A69E87 /* TitledDescription.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TitledDescription.swift; sourceTree = "<group>"; };
 		580B6152215D3A0400A69E87 /* ReactiveSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ReactiveSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -90,7 +88,6 @@
 				580B6159215D3F1800A69E87 /* ReactiveCocoa.framework in Frameworks */,
 				580B6153215D3A0400A69E87 /* ReactiveSwift.framework in Frameworks */,
 				580B60B5215D2CCB00A69E87 /* Bento.framework in Frameworks */,
-				580B60B3215D2CC100A69E87 /* StyleSheets.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -157,7 +154,6 @@
 				580B6158215D3F1800A69E87 /* ReactiveCocoa.framework */,
 				580B6152215D3A0400A69E87 /* ReactiveSwift.framework */,
 				580B60B4215D2CCB00A69E87 /* Bento.framework */,
-				580B60B2215D2CC100A69E87 /* StyleSheets.framework */,
 				639430F94D2A3AB0B5FBBFF0 /* Pods_BentoKitTests.framework */,
 			);
 			name = Frameworks;
@@ -326,7 +322,7 @@
 			attributes = {
 				DefaultBuildSystemTypeForWorkspace = Latest;
 				LastSwiftUpdateCheck = 1000;
-				LastUpgradeCheck = 1000;
+				LastUpgradeCheck = 1010;
 				ORGANIZATIONNAME = babylonhealth;
 				TargetAttributes = {
 					580B60A4215D2C3400A69E87 = {
@@ -533,7 +529,6 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
-				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				VALIDATE_PRODUCT = YES;
 				VERSIONING_SYSTEM = "apple-generic";
