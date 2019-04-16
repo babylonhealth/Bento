@@ -166,6 +166,13 @@
 			remoteGlobalIDString = 58BA755B2016303B0050D5F1;
 			remoteInfo = Bento;
 		};
+		7448E85522663EFB0036B2D6 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5829D25D200FB092001E020D /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 7448E816226613B70036B2D6;
+			remoteInfo = BentoPlaygroundSupport;
+		};
 		9AE9565C21890FB1005A8C69 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 5829D25D200FB092001E020D /* Project object */;
@@ -859,6 +866,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				7448E85622663EFB0036B2D6 /* PBXTargetDependency */,
 				9AE9565D21890FB1005A8C69 /* PBXTargetDependency */,
 			);
 			name = BentoTests;
@@ -1138,6 +1146,11 @@
 			isa = PBXTargetDependency;
 			target = 58BA755B2016303B0050D5F1 /* Bento */;
 			targetProxy = 58FC4432207CF3CD00DA3614 /* PBXContainerItemProxy */;
+		};
+		7448E85622663EFB0036B2D6 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 7448E816226613B70036B2D6 /* BentoPlaygroundSupport */;
+			targetProxy = 7448E85522663EFB0036B2D6 /* PBXContainerItemProxy */;
 		};
 		9AE9565D21890FB1005A8C69 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
