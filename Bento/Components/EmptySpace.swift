@@ -27,6 +27,9 @@ extension Component {
 
 extension Component.EmptySpace {
     public final class View: BaseView {
-        lazy var heightConstraint: NSLayoutConstraint = self.heightAnchor.constraint(equalToConstant: 0).activated()
+        lazy var heightConstraint: NSLayoutConstraint = self.heightAnchor
+            .constraint(equalToConstant: 0)
+            .withPriority(.cellRequired)
+            .activated()
     }
 }

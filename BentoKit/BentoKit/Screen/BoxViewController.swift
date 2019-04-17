@@ -76,9 +76,7 @@ open class BoxViewController<ViewModel: BoxViewModel, Renderer: BoxRenderer, App
         if hasSetupBinding.isFalse {
             hasSetupBinding = true
 
-            UIView.performWithoutAnimation {
-                bindViewModel()
-            }
+            bindViewModel()
         }
     }
 
@@ -270,16 +268,21 @@ open class BoxViewController<ViewModel: BoxViewModel, Renderer: BoxRenderer, App
                                 config: rendererConfig)
         }
 
+        var isInitial = true
+
         SignalProducer
             .combineLatest(viewModel.state.producer, renderer.producer)
             .observe(on: UIScheduler())
             .startWithValues { [weak self] state, renderer in
                 guard let `self` = self else { return }
+                defer { isInitial = false }
+
                 renderer.styleSheet.apply(to: self.view)
                 renderer.pinnedToTopBoxStyleSheet.apply(to: self.topTableView)
                 renderer.pinnedToBottomBoxStyleSheet.apply(to: self.bottomTableView)
                 self.render(screen: renderer.render(state: state),
-                            usesSystemSeparator: renderer.configuration.shouldUseSystemSeparators)
+                            usesSystemSeparator: renderer.configuration.shouldUseSystemSeparators,
+                            animated: isInitial.isFalse)
         }
     }
 
@@ -291,7 +294,8 @@ open class BoxViewController<ViewModel: BoxViewModel, Renderer: BoxRenderer, App
 
     private func render(
         screen: Screen<Renderer.SectionID, Renderer.ItemID>,
-        usesSystemSeparator: Bool
+        usesSystemSeparator: Bool,
+        animated: Bool
     ) {
         switch screen.titleItem {
         case let .text(text):
@@ -303,11 +307,13 @@ open class BoxViewController<ViewModel: BoxViewModel, Renderer: BoxRenderer, App
         renderBarItems(reference: \.previousLeftBarItems,
                        new: screen.leftBarItems,
                        setItems: navigationItem.setLeftBarButtonItems(_:animated:),
-                       itemsKeyPath: \.leftBarButtonItems)
+                       itemsKeyPath: \.leftBarButtonItems,
+                       animated: animated)
         renderBarItems(reference: \.previousRightBarItems,
                        new: screen.rightBarItems,
                        setItems: navigationItem.setRightBarButtonItems(_:animated:),
-                       itemsKeyPath: \.rightBarButtonItems)
+                       itemsKeyPath: \.rightBarButtonItems,
+                       animated: animated)
 
         let mainBox = screen.box
 
@@ -319,7 +325,7 @@ open class BoxViewController<ViewModel: BoxViewModel, Renderer: BoxRenderer, App
 
         tableView.separatorStyle = shouldUseSystemSeparators ? .singleLine : .none
 
-        if UIView.areAnimationsEnabled {
+        if animated && UIView.areAnimationsEnabled {
             tableView.transition(to: screen.formStyle, removeAll: self.removeAll) { willReload in
                 self.tableView.render(mainBox, animated: willReload.isFalse)
                 self.topTableView.render(self.topBox, animated: willReload.isFalse)
@@ -358,7 +364,8 @@ open class BoxViewController<ViewModel: BoxViewModel, Renderer: BoxRenderer, App
         reference: ReferenceWritableKeyPath<BoxViewController, [BarButtonItem]>,
         new: [BarButtonItem],
         setItems: ([UIBarButtonItem], Bool) -> Void,
-        itemsKeyPath: KeyPath<UINavigationItem, [UIBarButtonItem]?>
+        itemsKeyPath: KeyPath<UINavigationItem, [UIBarButtonItem]?>,
+        animated: Bool
     ) {
         // Toolbar items should automatically kick the first responder, so that
         // any outstanding user interaction event is emitted before the bar
@@ -381,7 +388,7 @@ open class BoxViewController<ViewModel: BoxViewModel, Renderer: BoxRenderer, App
         if hasContentChanged {
             setItems(
                 new.map { $0.make(willTriggerAction: resignFirstResponder) },
-                true
+                animated
             )
         } else {
             let items = navigationItem[keyPath: itemsKeyPath] ?? []
