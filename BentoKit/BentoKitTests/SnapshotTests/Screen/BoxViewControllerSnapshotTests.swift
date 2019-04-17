@@ -19,7 +19,7 @@ final class BoxViewControllerSnapshotTests: SnapshotTestCase {
                                        rendererConfig: (),
                                        appearance: Property(value: TestAppearance()))
             let nc = UINavigationController(rootViewController: vc)
-            verify(viewController: nc, for: $0)
+            verify(viewController: UINavigationController(rootViewController: vc), for: $0)
         }
     }
 
