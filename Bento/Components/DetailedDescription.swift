@@ -87,7 +87,7 @@ public extension Component {
 
 extension Component.DetailedDescription {
 
-    @objc(TitledDescriptionView)
+    @objc(DetailedDescriptionView)
     public final class View: InteractiveView {
 
         var numberOfLabels: Int = 2 {
