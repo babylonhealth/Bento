@@ -97,7 +97,7 @@ open class TableViewAdapterBase<SectionID: Hashable, ItemID: Hashable>
 
     @objc(tableView:heightForRowAtIndexPath:)
     open func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return store.size(forItemAt: indexPath)?.height
+        return store.size(forItemAt: indexPath).map { $0.height + tableView.separatorHeight }
             ?? tableView.rowHeight
     }
 
@@ -125,7 +125,7 @@ open class TableViewAdapterBase<SectionID: Hashable, ItemID: Hashable>
 
     @objc(tableView:estimatedHeightForRowAtIndexPath:)
     open func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
-        return store.size(forItemAt: indexPath)?.height
+        return store.size(forItemAt: indexPath).map { $0.height + tableView.separatorHeight }
             ?? tableView.estimatedRowHeight
     }
 
@@ -251,3 +251,9 @@ internal final class BentoTableViewAdapter<SectionID: Hashable, ItemID: Hashable
       UITableViewDataSource,
       UITableViewDelegate
 {}
+
+extension UITableView {
+    fileprivate var separatorHeight: CGFloat {
+        return separatorStyle != .none ? 1.0 / contentScaleFactor : 0.0
+    }
+}
