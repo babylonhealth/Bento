@@ -1,12 +1,12 @@
 import UIKit
 
 extension UIView {
-    public func add(to container: UIView) -> Self {
+    func add(to container: UIView) -> Self {
         container.addSubview(self)
         return self
     }
 
-    public func pinEdges(to view: UIView, insets: UIEdgeInsets = .zero) {
+    func pinEdges(to view: UIView, insets: UIEdgeInsets = .zero) {
         translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             topAnchor.constraint(equalTo: view.topAnchor, constant: insets.top),
@@ -16,7 +16,7 @@ extension UIView {
         ])
     }
 
-    public func pinEdges(to layoutGuide: UILayoutGuide,
+    func pinEdges(to layoutGuide: UILayoutGuide,
                   insets: UIEdgeInsets = .zero,
                   topPriority: UILayoutPriority = .required,
                   bottomPriority: UILayoutPriority = .required,
@@ -132,7 +132,7 @@ extension UIView {
     }
 }
 
-public func stack(_ axis: NSLayoutConstraint.Axis,
+func stack(_ axis: NSLayoutConstraint.Axis,
            spacing: CGFloat = 0,
            distribution: UIStackView.Distribution = .fill,
            alignment: UIStackView.Alignment = .fill) -> (_ views: UIView...) -> UIStackView {
@@ -141,7 +141,7 @@ public func stack(_ axis: NSLayoutConstraint.Axis,
     }
 }
 
-public func stack(_ axis: NSLayoutConstraint.Axis,
+func stack(_ axis: NSLayoutConstraint.Axis,
            spacing: CGFloat = 0,
            distribution: UIStackView.Distribution = .fill,
            alignment: UIStackView.Alignment = .fill,

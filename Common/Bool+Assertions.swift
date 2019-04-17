@@ -1,5 +1,5 @@
 extension Bool {
-    public var isFalse: Bool {
+    var isFalse: Bool {
         return !self
     }
 }

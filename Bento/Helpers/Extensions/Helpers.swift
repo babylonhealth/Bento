@@ -31,6 +31,6 @@ internal func search<T>(from leaf: UIView, type: T.Type) -> T? {
     return cell as! T?
 }
 
-func const<T, U, Value>(_ value: Value) -> (_: T, _: U) -> Value {
+internal func const<T, U, Value>(_ value: Value) -> (_: T, _: U) -> Value {
     return { _, _ in value }
 }

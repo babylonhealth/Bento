@@ -2,9 +2,9 @@ import Foundation
 import UIKit
 
 /// Inspired (pretty much copied 😛) by https://github.com/devxoul/Then
-public protocol With {}
+protocol With {}
 
-public extension With where Self: Any {
+extension With where Self: Any {
 
     /// Makes it available to set properties with closures just after initializing and copying the value types.
     ///

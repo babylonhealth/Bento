@@ -1,5 +1,4 @@
 import Bento
-import BentoKit
 
 final class SignUpRenderer {
     private let presenter: SignUpPresenter
@@ -21,8 +20,8 @@ final class SignUpRenderer {
             .compose(\.backgroundColor, .white)
     }
 
-    private var descriptionStyleSheet: Component.TitledDescription.StyleSheet {
-        return Component.TitledDescription.StyleSheet()
+    private var descriptionStyleSheet: Component.DetailedDescription.StyleSheet {
+        return Component.DetailedDescription.StyleSheet()
             .compose(\.backgroundColor, .white)
     }
 
@@ -120,7 +119,7 @@ final class SignUpRenderer {
         let chosenBirthday = state.chosenBirthday.map(SignUpRenderer.dateFormatter.string) ?? ""
         return Node(
             id: RowID.birthday,
-            component: Component.TitledDescription(
+            component: Component.DetailedDescription(
                 texts: [TextValue(stringLiteral: "Birthday")],
                 detail: TextValue(stringLiteral: chosenBirthday),
                 accessory: .none,
@@ -139,7 +138,7 @@ final class SignUpRenderer {
         let selected = state.chosenSecurityQuestion ?? "Choose security question..."
         return Node(
             id: RowID.securityQuestion,
-            component: Component.TitledDescription(
+            component: Component.DetailedDescription(
                 texts: [TextValue(stringLiteral: selected)],
                 accessory: .none,
                 inputNodes: Component.OptionPicker(
