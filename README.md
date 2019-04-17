@@ -16,7 +16,7 @@ In our experience it makes UI-related code easier to build and maintain. Our aim
 - [Installation](#installation-)
 - [What's it like?](#whats-it-like-)
 - [How does it work?](#how-does-it-work-)
-- [BentoKit & StyleSheets](#bentokit--stylesheets-)
+- [Componments & StyleSheets](#components--stylesheets-)
 - [Examples](#examples-)
 - [Additional documentation](#additional-documentation-)
 - [Development installation](#development-installation-)
@@ -31,10 +31,6 @@ In our experience it makes UI-related code easier to build and maintain. Our aim
 ```ruby
 target 'MyApp' do
     pod 'Bento'
-    
-    # Optionally, if you want to install BentoKit & StyleSheets
-    pod 'BentoKit'
-    pod 'StyleSheets'
 end
 ```
 
@@ -199,8 +195,8 @@ let box = Box.empty
 
 `|---?` works in exactly the same way for `Node`.
 
-### BentoKit & StyleSheets 🎨
-BentoKit it's a set of generic components like `TiteledDescription`, `Description`, `TextInput`, `EmptySpace` etc. BentoKit uses StyleSheets to style components.
+### Components & StyleSheets 🎨
+Bento includes set of generic components like ``Description`, `TextInput`, `EmptySpace` etc. Bento uses StyleSheets to style components.
 
 StyleSheets are a way to define **how** particular view should be rendered. Component's job is to provide **what** should be displayed while StyleSheets provide a style **how** it's done. Fonts, colors, alignment should go into StyleSheet. 
 
@@ -212,7 +208,7 @@ let styleSheet = LabelStyleSheet()
     .compose(\.font, UIFont.preferredFont(forTextStyle: .body))
 ```
 
-StyleSheets can be used with BentoKit's components. All you need to do is to use correct stylesheet:
+StyleSheets can be used with Bento's components. All you need to do is to use correct stylesheet:
 
 ```swift
 return .empty
@@ -227,11 +223,9 @@ return .empty
    )
 ```
 
-### Examples 😎
+### Example 😎
 
-Movies | CollectionView | SignUp |
---- | --- | ---
-![](Resources/example1.gif) | ![](Resources/example2.gif) | ![](Resources/example3.gif) | 
+![](Resources/example3.gif) 
 
 ### Additional documentation 📙
 - [Common use cases](./Documentation/common_usecases.md)

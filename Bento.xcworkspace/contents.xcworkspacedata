@@ -8,12 +8,6 @@
       location = "group:Carthage/Checkouts/ios-snapshot-test-case/FBSnapshotTestCase.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:Carthage/Checkouts/ReactiveFeedback/ReactiveFeedback.xcodeproj">
-   </FileRef>
-   <FileRef
-      location = "group:Carthage/Checkouts/Kingfisher/Kingfisher.xcodeproj">
-   </FileRef>
-   <FileRef
       location = "group:Carthage/Checkouts/ReactiveCocoa/ReactiveCocoa.xcodeproj">
    </FileRef>
    <FileRef
@@ -24,9 +18,6 @@
    </FileRef>
    <FileRef
       location = "group:Carthage/Checkouts/FlexibleDiff/FlexibleDiff.xcodeproj">
-   </FileRef>
-   <FileRef
-      location = "group:StyleSheets/StyleSheets.xcodeproj">
    </FileRef>
    <FileRef
       location = "group:Bento.xcodeproj">

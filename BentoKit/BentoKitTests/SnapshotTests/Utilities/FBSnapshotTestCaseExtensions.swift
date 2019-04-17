@@ -27,7 +27,7 @@ extension FBSnapshotTestCase {
         component: R,
         file: StaticString = #file,
         line: UInt = #line
-    ) where R.View: UIView {
+    ) {
         testViewForAllSizes(
             view: self.render(component: component, in: UITableView(frame: .zero, style: .plain)),
             file: file,
@@ -58,7 +58,7 @@ extension FBSnapshotTestCase {
         }
     }
 
-    private func render<R: Renderable>(component: R, in tableView: UITableView) -> UITableView where R.View: UIView {
+    private func render<R: Renderable>(component: R, in tableView: UITableView) -> UITableView {
         let box = Box<Int, Int>.empty
             |-+ Section(id: 0)
             |---+ Node(id: 0, component: component)

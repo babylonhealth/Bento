@@ -1,9 +1,14 @@
 import Bento
-import StyleSheets
 import ReactiveSwift
 import ReactiveCocoa
 
 private let maxImageWidth: CGFloat = 100
+
+public extension Reactive where Base: ImageOrLabelView {
+    public var content: BindingTarget<ImageOrLabelView.Content> {
+        return self[\.content]
+    }
+}
 
 public extension Component {
     /// `TitledDescription` supports a horizontal layout comprising:
@@ -39,7 +44,7 @@ public extension Component {
         public init(
             texts: [TextValue] = [],
             detail: TextValue? = nil,
-            image: Property<BentoKit.ImageOrLabel>? = nil,
+            image: Property<Bento.ImageOrLabel>? = nil,
             accessory: Accessory = .chevron,
             badgeIcon: UIImage? = nil,
             inputNodes: CustomInput? = nil,
