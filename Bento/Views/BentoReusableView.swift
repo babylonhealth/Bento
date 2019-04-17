@@ -28,7 +28,7 @@ extension BentoReusableView {
             .cast(to: ComponentLifecycleAware.self)?
             .willDisplayItem()
 
-        containedView?.enumerateAllViews { view in
+        containedView?.enumerateAllViewsAndSelf { view in
             (view as? ViewLifecycleAware)?.willDisplayView()
         }
     }
@@ -38,7 +38,7 @@ extension BentoReusableView {
             .cast(to: ComponentLifecycleAware.self)?
             .didEndDisplayingItem()
 
-        containedView?.enumerateAllViews { view in
+        containedView?.enumerateAllViewsAndSelf { view in
             (view as? ViewLifecycleAware)?.didEndDisplayingView()
         }
     }
@@ -74,11 +74,11 @@ extension BentoReusableView where Self: UIView {
 }
 
 fileprivate extension UIView {
-    func enumerateAllViews(_ action: (UIView) -> Void) {
+    func enumerateAllViewsAndSelf(_ action: (UIView) -> Void) {
         action(self)
 
         for view in subviews {
-            view.enumerateAllViews(action)
+            view.enumerateAllViewsAndSelf(action)
         }
     }
 }
