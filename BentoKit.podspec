@@ -19,6 +19,6 @@ Pod::Spec.new do |s|
   s.swift_version = "4.2"
 # Switch back to use the master spec when we release 0.4.
   s.dependency "Bento"
-  s.dependency "ReactiveSwift", "~> 4.0.0"
-  s.dependency "ReactiveCocoa", "~> 8.0.2"
+  s.dependency "ReactiveSwift", "~> 5.0.0"
+  s.dependency "ReactiveCocoa", "~> 9.0.0"
 end
