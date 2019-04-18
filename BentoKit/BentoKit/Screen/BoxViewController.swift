@@ -330,22 +330,11 @@ open class BoxViewController<ViewModel: BoxViewModel, Renderer: BoxRenderer, App
                 self.tableView.render(mainBox, animated: willReload.isFalse)
                 self.topTableView.render(self.topBox, animated: willReload.isFalse)
                 self.bottomTableView.render(self.bottomBox, animated: willReload.isFalse)
-                // Trigger a second layout pass so as to let complex components
-                // with ambiguous height to be sized correctly.
-                self.tableView.beginUpdates()
-                self.tableView.endUpdates()
             }
         } else {
             tableView.formStyle = screen.formStyle
             tableView.render(mainBox, animated: false)
             tableView.layoutIfNeeded()
-
-            UIView.performWithoutAnimation {
-                // Trigger a second layout pass so as to let complex components
-                // with ambiguous height to be sized correctly.
-                self.tableView.beginUpdates()
-                self.tableView.endUpdates()
-            }
 
             topTableView.render(topBox, animated: false)
             bottomTableView.render(bottomBox, animated: false)
