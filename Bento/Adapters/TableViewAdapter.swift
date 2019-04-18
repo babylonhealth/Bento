@@ -75,7 +75,7 @@ open class TableViewAdapterBase<SectionID: Hashable, ItemID: Hashable>
 
     @objc open func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         switch store.size(for: .header, inSection: section) {
-        case .cachingDisabled:
+        case .noCachedResult:
             return tableView.sectionHeaderHeight
         case .doesNotExist:
             return .leastNonzeroMagnitude
@@ -86,7 +86,7 @@ open class TableViewAdapterBase<SectionID: Hashable, ItemID: Hashable>
 
     @objc open func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         switch store.size(for: .footer, inSection: section) {
-        case .cachingDisabled:
+        case .noCachedResult:
             return tableView.sectionFooterHeight
         case .doesNotExist:
             return .leastNonzeroMagnitude
@@ -102,8 +102,8 @@ open class TableViewAdapterBase<SectionID: Hashable, ItemID: Hashable>
     }
 
     @objc open func tableView(_ tableView: UITableView, estimatedHeightForHeaderInSection section: Int) -> CGFloat {
-        switch store.size(for: .header, inSection: section) {
-        case .cachingDisabled:
+        switch store.size(for: .header, inSection: section, allowEstimation: true) {
+        case .noCachedResult:
             return tableView.estimatedSectionHeaderHeight
         case .doesNotExist:
             return .leastNonzeroMagnitude
@@ -113,8 +113,8 @@ open class TableViewAdapterBase<SectionID: Hashable, ItemID: Hashable>
     }
 
     @objc open func tableView(_ tableView: UITableView, estimatedHeightForFooterInSection section: Int) -> CGFloat {
-        switch store.size(for: .footer, inSection: section) {
-        case .cachingDisabled:
+        switch store.size(for: .footer, inSection: section, allowEstimation: true) {
+        case .noCachedResult:
             return tableView.estimatedSectionFooterHeight
         case .doesNotExist:
             return .leastNonzeroMagnitude
@@ -125,7 +125,8 @@ open class TableViewAdapterBase<SectionID: Hashable, ItemID: Hashable>
 
     @objc(tableView:estimatedHeightForRowAtIndexPath:)
     open func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
-        return store.size(forItemAt: indexPath).map { $0.height + tableView.separatorHeight }
+        return store.size(forItemAt: indexPath, allowEstimation: true)
+            .map { $0.height + tableView.separatorHeight }
             ?? tableView.estimatedRowHeight
     }
 

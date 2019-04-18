@@ -33,7 +33,7 @@ class AdapterStoreTests: XCTestCase {
         )
 
         expect(store.cachesSizeInformation) == false
-        expect(store.size(for: .header, inSection: 0)) == .cachingDisabled
+        expect(store.size(for: .header, inSection: 0)) == .noCachedResult
     }
 
     func test_should_return_nil_for_item_size_if_caching_is_disabled() {
@@ -50,7 +50,7 @@ class AdapterStoreTests: XCTestCase {
         expect(store.size(forItemAt: [0, 0])).to(beNil())
     }
 
-    func test_supplement_should_return_size() {
+    func test_supplement_should_return_size_no_changeset() {
         var store = TestStore()
         store.cachesSizeInformation = true
         store.boundSize = defaultBoundSize
@@ -67,10 +67,13 @@ class AdapterStoreTests: XCTestCase {
             knownSupplements: [.header]
         )
 
+        // NOTE: Since there is no changeset, the store would simply wipe out all cached information, instead of trying
+        //       to shuffle existing information to their up-to-date location.
+        expect(store.size(for: .header, inSection: 0, allowEstimation: true)) == .noCachedResult
         expect(store.size(for: .header, inSection: 0)) == .size(CGSize(width: 456, height: 456))
     }
 
-    func test_item_should_return_size() {
+    func test_item_should_return_size_no_changeset() {
         var store = TestStore()
         store.cachesSizeInformation = true
         store.boundSize = defaultBoundSize
@@ -87,6 +90,9 @@ class AdapterStoreTests: XCTestCase {
             knownSupplements: []
         )
 
+        // NOTE: Since there is no changeset, the store would simply wipe out all cached information, instead of trying
+        //       to shuffle existing information to their up-to-date location.
+        expect(store.size(forItemAt: [0, 0], allowEstimation: true)).to(beNil())
         expect(store.size(forItemAt: [0, 0])) == CGSize(width: 456, height: 456)
     }
 
@@ -99,6 +105,7 @@ class AdapterStoreTests: XCTestCase {
         assert(&store, matches: makeStubA())
 
         store.update(with: makeStubB(), knownSupplements: [])
+        assertNoCachedSize(&store, useEstimation: true)
         assert(&store, matches: makeStubB())
     }
 
@@ -111,6 +118,7 @@ class AdapterStoreTests: XCTestCase {
         assert(&store, matches: makeStubB())
 
         store.update(with: makeStubA(), knownSupplements: [])
+        assertNoCachedSize(&store, useEstimation: true)
         assert(&store, matches: makeStubA())
     }
 
@@ -123,6 +131,7 @@ class AdapterStoreTests: XCTestCase {
         assert(&store, matches: makeStubA())
 
         store.update(with: makeStubB(), knownSupplements: [], changeset: stubChangesetAToB())
+        assert(&store, useEstimation: true, matches: makeStubBWithEstimatedSizesFromStubA())
         assert(&store, matches: makeStubB())
     }
 
@@ -135,6 +144,7 @@ class AdapterStoreTests: XCTestCase {
         assert(&store, matches: makeStubB())
 
         store.update(with: makeStubA(), knownSupplements: [], changeset: stubChangesetBToA())
+        assert(&store, useEstimation: true, matches: makeStubAWithEstimatedSizesFromStubB())
         assert(&store, matches: makeStubA())
     }
 
@@ -147,6 +157,7 @@ class AdapterStoreTests: XCTestCase {
         assert(&store, matches: makeStubC())
 
         store.update(with: makeStubD(), knownSupplements: [], changeset: stubChangesetCAndD())
+        assert(&store, useEstimation: true, matches: makeStubDWithEstimatedSizesFromStubC())
         assert(&store, matches: makeStubD())
     }
 
@@ -159,6 +170,7 @@ class AdapterStoreTests: XCTestCase {
         assert(&store, matches: makeStubD())
 
         store.update(with: makeStubC(), knownSupplements: [], changeset: stubChangesetCAndD())
+        assert(&store, useEstimation: true, matches: makeStubCWithEstimatedSizesFromStubD())
         assert(&store, matches: makeStubC())
     }
 
@@ -175,6 +187,7 @@ class AdapterStoreTests: XCTestCase {
         expect(store.size(forItemAt: [0, 0])) == CGSize(width: 5000, height: 5000)
 
         store.boundSize = CGSize(width: 1, height: 1)
+        expect(store.size(forItemAt: [0, 0], allowEstimation: true)) == CGSize(width: 5000, height: 5000)
         expect(store.size(forItemAt: [0, 0])) == CGSize(width: 1, height: 5000)
     }
 
@@ -231,6 +244,32 @@ class AdapterStoreTests: XCTestCase {
                 Node(id: 3, component:
                     TestComponent(size: CGSize(width: 432, height: 432)
                 ))
+            ])
+        ]
+    }
+
+    private func makeStubAWithEstimatedSizesFromStubB() -> [Section<Int, Int>] {
+        return [
+            Section(id: 0, items: [
+                Node(id: 0, component: NoSizePlaceholder()),
+                Node(id: 1, component: NoSizePlaceholder())
+            ]),
+            Section(id: 1, items: [
+                Node(id: 2, component: NoSizePlaceholder()),
+                Node(id: 3, component:
+                    TestComponent(size: CGSize(width: 432, height: 432))
+                ),
+                Node(id: 4, component: NoSizePlaceholder())
+            ])
+        ]
+    }
+
+    private func makeStubBWithEstimatedSizesFromStubA() -> [Section<Int, Int>] {
+        return [
+            Section(id: 1, items: [
+                Node(id: 3, component:
+                    TestComponent(size: CGSize(width: 901, height: 901))
+                )
             ])
         ]
     }
@@ -325,10 +364,70 @@ class AdapterStoreTests: XCTestCase {
             ]
         )
     }
+
+    private func makeStubCWithEstimatedSizesFromStubD() -> [Section<Int, Int>] {
+        return [
+            Section(id: 0, items: [
+                Node(id: 0, component:
+                    TestComponent(size: CGSize(width: 123, height: 123)
+                ))
+            ]),
+            Section(id: 50, items: [
+                Node(id: 50, component:
+                    TestComponent(size: CGSize(width: 1000, height: 1000)
+                ))
+            ]),
+            Section(id: 100, items: [
+                Node(id: 100, component:
+                    TestComponent(size: CGSize(width: 789, height: 789)
+                ))
+            ])
+        ]
+    }
+
+
+    private func makeStubDWithEstimatedSizesFromStubC() -> [Section<Int, Int>] {
+        return [
+            Section(id: 100, items: [
+                Node(id: 100, component:
+                    TestComponent(size: CGSize(width: 789, height: 789)
+                ))
+            ]),
+            Section(id: 50, items: [
+                Node(id: 50, component:
+                    TestComponent(size: CGSize(width: 456, height: 456)
+                ))
+            ]),
+            Section(id: 0, items: [
+                Node(id: 0, component:
+                    TestComponent(size: CGSize(width: 123, height: 123)
+                ))
+            ])
+        ]
+    }
+}
+
+
+private func assertNoCachedSize(
+    _ pointer: UnsafeMutablePointer<TestStore>,
+    useEstimation: Bool = false,
+    file: FileString = #file,
+    line: UInt = #line
+) {
+    for sectionOffset in pointer.pointee.sections.indices {
+        for itemOffset in pointer.pointee.sections[sectionOffset].items.indices {
+            expect(
+                pointer.pointee.size(forItemAt: [sectionOffset, itemOffset], allowEstimation: useEstimation),
+                file: file,
+                line: line
+            ).to(beNil())
+        }
+    }
 }
 
 private func assert(
     _ pointer: UnsafeMutablePointer<TestStore>,
+    useEstimation: Bool = false,
     matches stub: [Section<Int, Int>],
     file: FileString = #file,
     line: UInt = #line
@@ -336,12 +435,18 @@ private func assert(
     for (sectionOffset, section) in stub.enumerated() {
         for (itemOffset, item) in section.items.enumerated() {
             expect(
-                pointer.pointee.size(forItemAt: [sectionOffset, itemOffset]),
+                pointer.pointee.size(forItemAt: [sectionOffset, itemOffset], allowEstimation: useEstimation),
                 file: file,
                 line: line
-            ) == item.component(as: TestComponent.self)?.size
+            ).to(
+                (item.component(as: TestComponent.self)?.size).map(equal) ?? beNil()
+            )
         }
     }
+}
+
+struct NoSizePlaceholder: Renderable {
+    func render(in view: UIView) {}
 }
 
 struct TestComponent: Renderable {
