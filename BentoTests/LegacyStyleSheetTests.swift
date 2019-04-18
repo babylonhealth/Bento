@@ -2,7 +2,7 @@
 import UIKit
 import XCTest
 
-class StyleSheetTests: XCTestCase {
+class LegacyStyleSheetTests: XCTestCase {
     func test_view_style_sheet() {
         let view = UIView()
         let styleSheet = ViewStyleSheet()

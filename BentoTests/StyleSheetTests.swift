@@ -1,15 +1,16 @@
 import XCTest
 import UIKit
-@testable import StyleSheets
+import Nimble
+@testable import Bento
 
 class StyleSheetTests: XCTestCase {
     func test_application() {
         var view = View()
 
         let inverse = stub1.apply(to: &view)
-        XCTAssert(view.banana == "🍌")
-        XCTAssert(view.orange == "🍊")
-        XCTAssert(view.apple == "🍎")
+        expect(view.banana) == "🍌"
+        expect(view.orange) == "🍊"
+        expect(view.apple) == "🍎"
 
         let expectedInverse = StyleSheet<View>().with {
             // NOTE: The order should be reversed with regard to `stub1`.
@@ -17,68 +18,68 @@ class StyleSheetTests: XCTestCase {
             $0.set(\.orange, "orange")
             $0.set(\.banana, "banana")
         }
-        XCTAssert(inverse == expectedInverse)
+        expect(inverse) == expectedInverse
 
         inverse.apply(to: &view)
 
-        XCTAssert(view.banana == "banana")
-        XCTAssert(view.orange == "orange")
-        XCTAssert(view.apple == "apple")
+        expect(view.banana) == "banana"
+        expect(view.orange) == "orange"
+        expect(view.apple) == "apple"
     }
 
     func test_subscript_nilClearsRecordOfNonOptionalProperty() {
         var styleSheet = StyleSheet<View>()
 
         styleSheet.set(\.banana, "banana")
-        XCTAssert(styleSheet.value(for: \.banana) == "banana")
+        expect(styleSheet.value(for: \.banana)) == "banana"
 
         styleSheet.removeValue(for: \.banana)
-        XCTAssert(styleSheet.value(for: \.banana) == nil)
+        expect(styleSheet.value(for: \.banana)).to(beNil())
     }
 
     func test_subscript_nilPopulatesRecordOfOptionalProperty() {
         var styleSheet = StyleSheet<View>()
 
         styleSheet.set(\.inbox, "banana")
-        XCTAssert(styleSheet.value(for: \.inbox) == "banana")
+        expect(styleSheet.value(for: \.inbox)) == "banana"
 
         styleSheet.set(\.inbox, nil)
-        XCTAssert(styleSheet.value(for: \.inbox) == .some(.none))
+        expect(styleSheet.value(for: \.inbox)) == .some(.none)
 
         styleSheet.removeValue(for: \.inbox)
-        XCTAssert(styleSheet.value(for: \.inbox) == nil)
+        expect(styleSheet.value(for: \.inbox)).to(beNil())
     }
 
     func test_equality_emptyInstanceIsEqual() {
-        XCTAssert(StyleSheet<View>() == StyleSheet<View>())
+        expect(StyleSheet<View>()) == StyleSheet<View>()
     }
 
     func test_equality_sameInstanceIsEqual() {
-        XCTAssert(stub1 == stub1)
+        expect(stub1) == stub1
     }
 
     func test_equality_immutableCopiesAreEqual() {
         let localStub = stub1
-        XCTAssert(localStub == stub1)
-        XCTAssert(stub1 == localStub)
+        expect(localStub) == stub1
+        expect(stub1) == localStub
     }
 
     func test_equality_addingNewEntryMakesItUnequal() {
         let changed = stub1.setting(\.eggplant, "🍆")
-        XCTAssert(changed != stub1)
-        XCTAssert(stub1 != changed)
+        expect(changed) != stub1
+        expect(stub1) != changed
     }
 
     func test_equality_removingExistingEntryMakesItUnequal() {
         let changed = stub1.with { $0.removeValue(for: \.banana) }
-        XCTAssert(changed != stub1)
-        XCTAssert(stub1 != changed)
+        expect(changed) != stub1
+        expect(stub1) != changed
     }
 
     func test_equality_changingExistingEntryMakesItUnequal() {
         let changed = stub1.setting(\.orange, "🥕🍊🧡")
-        XCTAssert(changed != stub1)
-        XCTAssert(stub1 != changed)
+        expect(changed) != stub1
+        expect(stub1) != changed
     }
 
     func test_equality_repopulatingTheSameValuesShouldBeEqual() {
@@ -88,7 +89,7 @@ class StyleSheetTests: XCTestCase {
             $0.removeValue(for: \.apple)
         }
 
-        XCTAssert(changed != stub1)
+        expect(changed) != stub1
 
         let changed2 = changed.with {
             $0.set(\.banana, "🍌")
@@ -96,7 +97,25 @@ class StyleSheetTests: XCTestCase {
             $0.set(\.apple, "🍎")
         }
 
-        XCTAssert(changed2 == stub1)
+        expect(changed2) == stub1
+    }
+
+    func test_application_same_keypath_set_repeatedly_with_different_values() {
+        var styleSheet = StyleSheet<View>()
+
+        styleSheet.set(\.banana, "banana")
+        styleSheet.set(\.banana, "not banana")
+        styleSheet.set(\.banana, "probably banana")
+        expect(styleSheet.value(for: \.banana)) == "probably banana"
+
+        var view = View()
+        let snapshot = styleSheet.apply(to: &view)
+        expect(view.banana) == "probably banana"
+        expect(snapshot.value(for: \.banana)) == "banana"
+
+        let snapshot2 = snapshot.apply(to: &view)
+        expect(view.banana) == "banana"
+        expect(styleSheet) == snapshot2
     }
 
     func test_application_partially_overlapping_keyPaths_1() {
@@ -109,18 +128,18 @@ class StyleSheetTests: XCTestCase {
         }
 
         let inverse = original.apply(to: &view)
-        XCTAssert(view.nested == View.Nested(red: "🔴", orange: "🔶"))
+        expect(view.nested) == View.Nested(red: "🔴", orange: "🔶")
 
         let expectedInverse = StyleSheet<View>().with {
             $0.set(\.nested.orange, "$O")
             $0.set(\.nested.red, "$R")
             $0.set(\.nested, View.Nested(red: "red", orange: "orange"))
         }
-        XCTAssert(inverse == expectedInverse)
+        expect(inverse) == expectedInverse
 
         inverse.apply(to: &view)
 
-        XCTAssert(view.nested == View.Nested(red: "red", orange: "orange"))
+        expect(view.nested) == View.Nested(red: "red", orange: "orange")
     }
 
     func test_application_partially_overlapping_keyPaths_2() {
@@ -133,18 +152,18 @@ class StyleSheetTests: XCTestCase {
         }
 
         let inverse = original.apply(to: &view)
-        XCTAssert(view.nested == View.Nested(red: "$R", orange: "$O"))
+        expect(view.nested) == View.Nested(red: "$R", orange: "$O")
 
         let expectedInverse = StyleSheet<View>().with {
             $0.set(\.nested, View.Nested(red: "🔴", orange: "🔶"))
             $0.set(\.nested.orange, "orange")
             $0.set(\.nested.red, "red")
         }
-        XCTAssert(inverse == expectedInverse)
+        expect(inverse) == expectedInverse
 
         inverse.apply(to: &view)
 
-        XCTAssert(view.nested == View.Nested(red: "red", orange: "orange"))
+        expect(view.nested) == View.Nested(red: "red", orange: "orange")
     }
 }
 

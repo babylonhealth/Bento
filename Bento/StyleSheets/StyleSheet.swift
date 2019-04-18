@@ -35,8 +35,12 @@ public struct StyleSheet<View>: Equatable {
 
     public mutating func set<Value: Equatable>(_ keyPath: WritableKeyPath<View, Value>, _ newValue: Value) {
         let key = EntryKey(keyPath)
+        let hasInserted = entries.keys.contains(key)
         entries[key] = newValue
-        orderedKeys.append(key)
+
+        if hasInserted.isFalse {
+            orderedKeys.append(key)
+        }
     }
 
     public mutating func removeValue<Value: Equatable>(for keyPath: WritableKeyPath<View, Value>) {
