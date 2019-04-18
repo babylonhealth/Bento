@@ -19,5 +19,5 @@ Pod::Spec.new do |s|
   s.exclude_files    = 'Bento/Components.playground/**/*'
   s.swift_version    = "4.2"
 
-  s.dependency "FlexibleDiff", "= 0.0.7"
+  s.dependency "FlexibleDiff", "= 0.0.8"
 end
