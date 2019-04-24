@@ -25,11 +25,6 @@ final class SignUpRenderer {
             .compose(\.backgroundColor, .white)
     }
 
-    private var transparentDescriptionStyleSheet: Component.DetailedDescription.StyleSheet {
-        return Component.DetailedDescription.StyleSheet()
-            .compose(\.backgroundColor, .clear)
-    }
-
     func createBox(from state: SignUpPresenter.State) -> Box<SectionID, RowID> {
         return Box.empty
             |-+ section(id: .credential, text: "Credential")
@@ -124,7 +119,7 @@ final class SignUpRenderer {
                 texts: [.plain("Gender")],
                 detail: .plain(gender ?? "Choose"),
                 accessory: .none,
-                styleSheet: transparentDescriptionStyleSheet
+                styleSheet: descriptionStyleSheet
             ).customInput(
                 Component.OptionPicker(
                     options: Gender.allGenders,

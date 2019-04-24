@@ -4,28 +4,25 @@ struct CustomInputComponent<Base: Renderable>: Renderable, Focusable {
     let customInput: CustomInput
     let focusEligibility: FocusEligibility
     let highlightColor: UIColor?
-    let backgroundColor: UIColor
     let base: Base
 
     init(
         source: Base,
         customInput: CustomInput,
         contentStatus: FocusEligibility.ContentStatus,
-        highlightColor: UIColor?,
-        backgroundColor: UIColor
+        highlightColor: UIColor?
     ) {
         self.customInput = customInput
         self.highlightColor = highlightColor
-        self.backgroundColor = backgroundColor
         self.base = source
         self.focusEligibility = .eligible(contentStatus)
     }
 
     func render(in view: ComponentView) {
         view.inputNodes = customInput
-        view.backgroundColor = backgroundColor
         view.highlightingGesture.didTap = .manual
         view.highlightingGesture.highlightColor = highlightColor
+        view.highlightingGesture.stylingView = view.containedView
 
         base.render(in: view.containedView)
     }
