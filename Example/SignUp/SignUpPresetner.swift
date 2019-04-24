@@ -50,6 +50,10 @@ final class SignUpPresenter {
         navigator?.showAlert(title: "Did sign up", message: "\(state)")
     }
 
+    func didChangeGender(to gender: String) {
+        state.gender = gender
+    }
+
     private func renderState() {
         view?.render(state)
     }
@@ -73,6 +77,7 @@ final class SignUpPresenter {
                 updateSignUpButtonVisibility()
             }
         }
+        var gender: String?
         var isPasswordRevealed = false
         var isSecurityQuestionsSectionVisible = false
         var chosenSecurityQuestion: String? {

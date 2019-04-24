@@ -25,11 +25,17 @@ final class SignUpRenderer {
             .compose(\.backgroundColor, .white)
     }
 
+    private var transparentDescriptionStyleSheet: Component.DetailedDescription.StyleSheet {
+        return Component.DetailedDescription.StyleSheet()
+            .compose(\.backgroundColor, .clear)
+    }
+
     func createBox(from state: SignUpPresenter.State) -> Box<SectionID, RowID> {
         return Box.empty
             |-+ section(id: .credential, text: "Credential")
             |---+ email()
             |---* passwordComponents(state)
+            |---+ gender(state.gender)
             |-? .iff(state.isSecurityQuestionsSectionVisible) {
                 self.section(id: .securityQuestion, text: "Security question")
                     |---+ self.securityQuestion(state)
@@ -44,7 +50,7 @@ final class SignUpRenderer {
             |-? .iff(state.isSignUpButtonVisible) {
                 self.section(id: .signUpAction)
                     |---+ self.signUpButton(state)
-        }
+            }
     }
 
     private func section(id: SectionID, text: String? = nil) -> Section<SectionID, RowID> {
@@ -112,6 +118,23 @@ final class SignUpRenderer {
         ]
     }
 
+    private func gender(_ gender: String?) -> Node<RowID> {
+        return Node(id: .gender, component:
+            Component.DetailedDescription(
+                texts: [.plain("Gender")],
+                detail: .plain(gender ?? "Choose"),
+                accessory: .none,
+                styleSheet: transparentDescriptionStyleSheet
+            ).customInput(
+                Component.OptionPicker(
+                    options: Gender.allGenders,
+                    selected: gender.map(Gender.init(displayName:)),
+                    didPickItem: { self.presenter.didChangeGender(to: $0.displayName) }
+                )
+            )
+        )
+    }
+
     private static let dateFormatter = DateFormatter(format: "dd MMMM yyyy")
     private func birthday(_ state: SignUpPresenter.State) -> Node<RowID> {
         let yearsInSeconds: TimeInterval = 31556952
@@ -123,13 +146,14 @@ final class SignUpRenderer {
                 texts: [TextValue(stringLiteral: "Birthday")],
                 detail: TextValue(stringLiteral: chosenBirthday),
                 accessory: .none,
-                inputNodes: Component.DatePicker(
+                styleSheet: descriptionStyleSheet
+            ).customInput(
+                Component.DatePicker(
                     date: state.chosenBirthday ?? eighteenYearsAgo,
                     datePickerMode: .date,
                     styleSheet: Component.DatePicker.StyleSheet(),
                     didPickDate: self.presenter.didChooseBirthday
-                ),
-                styleSheet: descriptionStyleSheet
+                )
             )
         )
     }
@@ -141,7 +165,9 @@ final class SignUpRenderer {
             component: Component.DetailedDescription(
                 texts: [TextValue(stringLiteral: selected)],
                 accessory: .none,
-                inputNodes: Component.OptionPicker(
+                styleSheet: descriptionStyleSheet
+            ).customInput(
+                Component.OptionPicker(
                     options: [
                         "In what city were you born?",
                         "What street did you grow up on?",
@@ -150,8 +176,7 @@ final class SignUpRenderer {
                     selected: selected,
                     didPickItem: self.presenter.didChooseSecurityQuestion,
                     styleSheet: Component.OptionPicker.StyleSheet()
-                ),
-                styleSheet: descriptionStyleSheet
+                )
             )
         )
     }
@@ -208,4 +233,14 @@ extension DateFormatter {
         self.init()
         self.dateFormat = format
     }
+}
+
+struct Gender: Bento.Option {
+    let displayName: String
+
+    static var allGenders: [Gender] = [
+        Gender(displayName: "Male"),
+        Gender(displayName: "Female"),
+        Gender(displayName: "Unspecified")
+    ]
 }

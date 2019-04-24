@@ -33,4 +33,19 @@ public extension Renderable {
             didEndDisplayingItem: didEndDisplayingItem
         ).asAnyRenderable()
     }
+
+    func customInput(
+        _ input: CustomInput,
+        contentStatus: FocusEligibility.ContentStatus = .empty,
+        highlightColor: UIColor? = UIColor(red: 239/255.0, green: 239/255.0, blue: 244/255.0, alpha: 1),
+        backgroundColor: UIColor = .white
+    ) -> AnyRenderable {
+        return CustomInputComponent(
+            source: self,
+            customInput: input,
+            contentStatus: contentStatus,
+            highlightColor: highlightColor,
+            backgroundColor: backgroundColor
+        ).asAnyRenderable()
+    }
 }
