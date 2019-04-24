@@ -66,6 +66,7 @@
 		65496FB8211C323F00511D8A /* TableViewContainerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 587F0717201B355800ACD219 /* TableViewContainerCell.swift */; };
 		65496FB9211C323F00511D8A /* TableViewAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9509BC2762C8B4277B973D8 /* TableViewAdapter.swift */; };
 		65570424222E88A500EEE8EC /* RequiringPreSizingLayoutPass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65570423222E88A500EEE8EC /* RequiringPreSizingLayoutPass.swift */; };
+		65836F932270A9B60043F587 /* CustomInputComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65836F922270A9B60043F587 /* CustomInputComponent.swift */; };
 		65A69EDF218B8892005D90AC /* UICollectionViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65A69EDE218B8891005D90AC /* UICollectionViewExtensions.swift */; };
 		65A69EE1218B8AB6005D90AC /* CustomCollectionViewAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65A69EE0218B8AB6005D90AC /* CustomCollectionViewAdapter.swift */; };
 		65BA922E20AF388F004AEF18 /* UITableViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65BA922D20AF388F004AEF18 /* UITableViewExtensions.swift */; };
@@ -269,6 +270,7 @@
 		651E75BF221005E300130866 /* UIKitContainerDiffApplicationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIKitContainerDiffApplicationTests.swift; sourceTree = "<group>"; };
 		653D460A2256665000CF3E4C /* AdapterStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdapterStoreTests.swift; sourceTree = "<group>"; };
 		65570423222E88A500EEE8EC /* RequiringPreSizingLayoutPass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequiringPreSizingLayoutPass.swift; sourceTree = "<group>"; };
+		65836F922270A9B60043F587 /* CustomInputComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomInputComponent.swift; sourceTree = "<group>"; };
 		65A69EDE218B8891005D90AC /* UICollectionViewExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UICollectionViewExtensions.swift; sourceTree = "<group>"; };
 		65A69EE0218B8AB6005D90AC /* CustomCollectionViewAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCollectionViewAdapter.swift; sourceTree = "<group>"; };
 		65BA922D20AF388F004AEF18 /* UITableViewExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITableViewExtensions.swift; sourceTree = "<group>"; };
@@ -574,6 +576,7 @@
 				65E3ECA521133C9400869DF3 /* UIKit+CollectionViewFocus.swift */,
 				582D9986217F87B100C67B0D /* ComponentLifecycleAware.swift */,
 				65020C312203186400DC8F42 /* NativeView.swift */,
+				65836F922270A9B60043F587 /* CustomInputComponent.swift */,
 			);
 			path = Renderable;
 			sourceTree = "<group>";
@@ -1097,6 +1100,7 @@
 				7448E80722660E920036B2D6 /* InputNodes.swift in Sources */,
 				7448E80822660E920036B2D6 /* AnyBox.swift in Sources */,
 				7448E868226642820036B2D6 /* ViewStyleSheet.swift in Sources */,
+				65836F932270A9B60043F587 /* CustomInputComponent.swift in Sources */,
 				587A341F2100A09B00B25CCA /* Deletable.swift in Sources */,
 				5874C80520C9342B004EB5EA /* CollectionViewAdapter.swift in Sources */,
 				5874C80720C93445004EB5EA /* CollectionViewContainerReusableView.swift in Sources */,
