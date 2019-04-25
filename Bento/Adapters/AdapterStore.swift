@@ -16,7 +16,7 @@ struct AdapterStore<SectionID: Hashable, ItemID: Hashable> {
     var cachesSizeInformation: Bool = false {
         didSet {
             if cachesSizeInformation && info.isEmpty {
-                resetCachedInfo()
+                invalidateCachedInfo()
             } else {
                 info = []
             }
@@ -26,7 +26,7 @@ struct AdapterStore<SectionID: Hashable, ItemID: Hashable> {
     var boundSize: CGSize = .unknown {
         didSet {
             if cachesSizeInformation && oldValue != boundSize {
-                resetCachedInfo()
+                invalidateCachedInfo()
             }
         }
     }
@@ -34,7 +34,7 @@ struct AdapterStore<SectionID: Hashable, ItemID: Hashable> {
     var layoutMargins: UIEdgeInsets = .zero {
         didSet {
             if cachesSizeInformation && oldValue != layoutMargins {
-                resetCachedInfo()
+                invalidateCachedInfo()
             }
         }
     }
@@ -45,42 +45,48 @@ struct AdapterStore<SectionID: Hashable, ItemID: Hashable> {
 
     init() {}
 
-    mutating func size(for supplement: Supplement, inSection section: Int) -> SupplementSizingResult {
+    mutating func size(for supplement: Supplement, inSection section: Int, allowEstimation: Bool = false) -> SupplementSizingResult {
         guard let component = sections[section].supplements[supplement] else { return .doesNotExist }
-        guard cachesSizeInformation else { return .cachingDisabled }
+        guard cachesSizeInformation else { return .noCachedResult }
 
-        let knownSize = info[section].supplements[supplement, default: .unknown]
+        let knownSize = info[section].supplements[supplement, default: .invalidated(nil)]
+            .size(allowEstimation: allowEstimation)
 
-        if knownSize == .unknown {
+        if let knownSize = knownSize {
+            return .size(knownSize)
+        } else if allowEstimation {
+            return .noCachedResult
+        } else {
             let size = sizingStrategy.size(
                 of: component,
                 boundSize: boundSize,
                 layoutMargins: layoutMargins
             )
 
-            info[section].supplements[supplement] = size
+            info[section].supplements[supplement] = .sized(size)
             return .size(size)
-        } else {
-            return .size(knownSize)
         }
     }
 
-    mutating func size(forItemAt indexPath: IndexPath) -> CGSize? {
+    mutating func size(forItemAt indexPath: IndexPath, allowEstimation: Bool = false) -> CGSize? {
         guard cachesSizeInformation else { return nil }
 
-        let knownSize = info[indexPath.section].itemSizes[indexPath.item]
+        let knownSize = info[indexPath.section].items[indexPath.item]
+            .size(allowEstimation: allowEstimation)
 
-        if knownSize == .unknown {
+        if let knownSize = knownSize {
+            return knownSize
+        } else if allowEstimation {
+            return nil
+        } else {
             let size = sizingStrategy.size(
                 of: sections[indexPath.section].items[indexPath.item].component,
                 boundSize: boundSize,
                 layoutMargins: layoutMargins
             )
 
-            info[indexPath.section].itemSizes[indexPath.item] = size
+            info[indexPath.section].items[indexPath.item] = .sized(size)
             return size
-        } else {
-            return knownSize
         }
     }
 
@@ -102,7 +108,7 @@ struct AdapterStore<SectionID: Hashable, ItemID: Hashable> {
             changeset.sections,
             newElement: SectionInfo(),
             whenInserted: { info, index in
-                info.itemSizes = Array(repeating: .unknown, count: sections[index].items.count)
+                info.items = Array(repeating: .invalidated(nil), count: sections[index].items.count)
             }
         )
 
@@ -112,23 +118,34 @@ struct AdapterStore<SectionID: Hashable, ItemID: Hashable> {
 
             // NOTE: When layout equivalence is implemented, we need to update this to avoid not invalidating entries
             //       when layout is declared not to have changed.
-            info[index].supplements = [:]
+            info[index].supplements = info[index].supplements.mapValues { $0.with { $0.invalidate() } }
 
             info[index].apply(mutatedSection.changeset)
+        }
+    }
+
+    mutating func invalidateCachedInfo() {
+        for sectionIndex in info.indices {
+            info[sectionIndex].supplements = info[sectionIndex].supplements
+                .mapValues { $0.with { $0.invalidate() } }
+
+            for itemIndex in info[sectionIndex].items.indices {
+                info[sectionIndex].items[itemIndex].invalidate()
+            }
         }
     }
 
     mutating func resetCachedInfo() {
         info = Array(repeating: SectionInfo(), count: sections.count)
         for index in info.indices {
-            info[index].itemSizes = Array(repeating: .unknown, count: sections[index].items.count)
+            info[index].items = Array(repeating: .invalidated(nil), count: sections[index].items.count)
         }
     }
 }
 
 enum SupplementSizingResult: Equatable {
     case doesNotExist
-    case cachingDisabled
+    case noCachedResult
     case size(CGSize)
 }
 
@@ -150,20 +167,45 @@ enum SizingStrategy {
 }
 
 private struct SectionInfo {
-    var supplements: [Supplement: CGSize] = [:]
-    var itemSizes: [CGSize] = []
+    var supplements: [Supplement: Item] = [:]
+    var items: [Item] = []
 
     init() {}
 
     mutating func apply(_ changeset: Changeset) {
-        itemSizes.applyIgnoringMutation(changeset, newElement: .unknown, whenInserted: { _, _ in })
+        items.applyIgnoringMutation(changeset, newElement: .invalidated(nil), whenInserted: { _, _ in })
 
         for index in changeset.mutations {
-            itemSizes[index] = .unknown
+            items[index].invalidate()
         }
 
         for move in changeset.moves where move.isMutated {
-            itemSizes[move.destination] = .unknown
+            items[move.destination].invalidate()
+        }
+    }
+}
+
+internal enum Item: With {
+    case sized(CGSize)
+    case invalidated(CGSize?)
+
+    func size(allowEstimation: Bool) -> CGSize? {
+        switch (allowEstimation, self) {
+        case let (_, .sized(size)):
+            return size
+        case let (true, .invalidated(size?)):
+            return size
+        case (true, .invalidated(nil)), (false, .invalidated):
+            return nil
+        }
+    }
+
+    mutating func invalidate() {
+        switch self {
+        case let .sized(size):
+            self = .invalidated(size)
+        case .invalidated:
+            break
         }
     }
 }

@@ -66,6 +66,7 @@
 		65496FB8211C323F00511D8A /* TableViewContainerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 587F0717201B355800ACD219 /* TableViewContainerCell.swift */; };
 		65496FB9211C323F00511D8A /* TableViewAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9509BC2762C8B4277B973D8 /* TableViewAdapter.swift */; };
 		65570424222E88A500EEE8EC /* RequiringPreSizingLayoutPass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65570423222E88A500EEE8EC /* RequiringPreSizingLayoutPass.swift */; };
+		65836F8322706F030043F587 /* AdapterStoreItemTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65836F8222706F030043F587 /* AdapterStoreItemTests.swift */; };
 		65836F932270A9B60043F587 /* CustomInputComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65836F922270A9B60043F587 /* CustomInputComponent.swift */; };
 		65A69EDF218B8892005D90AC /* UICollectionViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65A69EDE218B8891005D90AC /* UICollectionViewExtensions.swift */; };
 		65A69EE1218B8AB6005D90AC /* CustomCollectionViewAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65A69EE0218B8AB6005D90AC /* CustomCollectionViewAdapter.swift */; };
@@ -270,6 +271,7 @@
 		651E75BF221005E300130866 /* UIKitContainerDiffApplicationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIKitContainerDiffApplicationTests.swift; sourceTree = "<group>"; };
 		653D460A2256665000CF3E4C /* AdapterStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdapterStoreTests.swift; sourceTree = "<group>"; };
 		65570423222E88A500EEE8EC /* RequiringPreSizingLayoutPass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequiringPreSizingLayoutPass.swift; sourceTree = "<group>"; };
+		65836F8222706F030043F587 /* AdapterStoreItemTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdapterStoreItemTests.swift; sourceTree = "<group>"; };
 		65836F922270A9B60043F587 /* CustomInputComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomInputComponent.swift; sourceTree = "<group>"; };
 		65A69EDE218B8891005D90AC /* UICollectionViewExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UICollectionViewExtensions.swift; sourceTree = "<group>"; };
 		65A69EE0218B8AB6005D90AC /* CustomCollectionViewAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCollectionViewAdapter.swift; sourceTree = "<group>"; };
@@ -586,6 +588,7 @@
 			children = (
 				7448E82A2266212B0036B2D6 /* SnapshotTests */,
 				653D460A2256665000CF3E4C /* AdapterStoreTests.swift */,
+				65836F8222706F030043F587 /* AdapterStoreItemTests.swift */,
 				7448E8722266429D0036B2D6 /* StyleSheetTests.swift */,
 				9A3EF77F205D866F00D043AC /* AnyRenderableTests.swift */,
 				740921B520ACDDDA00B59F5C /* IfTests.swift */,
@@ -1142,6 +1145,7 @@
 				58FC4428207CF2BB00DA3614 /* TestId.swift in Sources */,
 				7448E8462266220C0036B2D6 /* EmptySpaceComponentSnapshotTests.swift in Sources */,
 				7448E8732266429D0036B2D6 /* StyleSheetTests.swift in Sources */,
+				65836F8322706F030043F587 /* AdapterStoreItemTests.swift in Sources */,
 				58D27BA721B83B2700DC9600 /* DeletableTests.swift in Sources */,
 				7448E8452266220C0036B2D6 /* ToggleSnapshotTests.swift in Sources */,
 				653D460B2256665000CF3E4C /* AdapterStoreTests.swift in Sources */,
