@@ -12,10 +12,9 @@ public extension Component {
     /// While `DetailedDescription` supports asynchronous loading for its image
     /// view, you are obligated to ensure a consistent fixed size across all
     /// changes.
-    public final class DetailedDescription: AutoRenderable, Focusable {
+    public final class DetailedDescription: AutoRenderable {
         public typealias Accessory = AccessoryView.Accessory
 
-        public let focusEligibility: FocusEligibility
         public let configurator: (View) -> Void
         public let styleSheet: StyleSheet
 
@@ -26,7 +25,6 @@ public extension Component {
         ///                    However, you need to guarantee fixed size across all changes.
         /// - parameter accessory: Accessory which should be displayed near the right edge of the row.
         /// - parameter badgeIcon: Badge icon which is displayed in the bottom-right corner of the `image`.
-        /// - parameter inputNodes: Input's component which is displayed when the `DetailedDescription` becomes the first responder.
         /// - parameter didTap: Closure which is invoked when whole row is tapped.
         /// - parameter didTapAccessory: Closure which is invoked when tapping on the accessory.
         /// - parameter interactionBehavior: Defines an behaviour when tapped. Usually `.becomeFirstResponder`.
@@ -37,12 +35,11 @@ public extension Component {
             image: Bento.ImageOrLabel? = nil,
             accessory: Accessory = .chevron,
             badgeIcon: UIImage? = nil,
-            inputNodes: CustomInput? = nil,
             didTap: (() -> Void)? = nil,
             didTapAccessory: (() -> Void)? = nil,
             interactionBehavior: InteractionBehavior = .becomeFirstResponder,
             styleSheet: StyleSheet = .init()
-            ) {
+        ) {
             self.configurator = { view in
                 view.labels.forEach { $0.isHidden = true }
                 zip(view.labels, texts).forEach { label, text in
@@ -65,21 +62,11 @@ public extension Component {
                 view.badgeView.imageView.image = badgeIcon
                 view.badgeView.isHidden = badgeIcon == nil
 
-                view.inputNodes = inputNodes
                 view.highlightingGesture.interactionBehavior = interactionBehavior
-                view.highlightingGesture.didTap = inputNodes != nil
-                    ? .manual
-                    : didTap.map(HighlightingGesture.TapAction.resign)
+                view.highlightingGesture.didTap = didTap.map(HighlightingGesture.TapAction.resign)
                 view.highlightingGesture.didRebindView()
             }
 
-            switch inputNodes {
-            case .none:
-                self.focusEligibility = .ineligible
-            case .some:
-                let isPopulated = detail.map { $0.isEmpty == false } ?? false
-                self.focusEligibility = .eligible(isPopulated ? .populated : .empty)
-            }
             self.styleSheet = styleSheet
         }
     }
@@ -94,18 +81,6 @@ extension Component.DetailedDescription {
             didSet {
                 guard numberOfLabels != oldValue else { return }
                 processChangeInLabelCount()
-            }
-        }
-
-        var inputNodes: CustomInput? {
-            didSet {
-                guard isFirstResponder else { return }
-                if let nodes = inputNodes {
-                    customInputView?.update(nodes)
-                    reloadInputViews()
-                } else {
-                    _ = resignFirstResponder()
-                }
             }
         }
 
@@ -162,8 +137,6 @@ extension Component.DetailedDescription {
         fileprivate let accessoryView = AccessoryView()
 
         fileprivate var labels: [UILabel]
-        fileprivate var customInputView: InputView?
-        fileprivate var focusToolbar: FocusToolbar?
 
         fileprivate lazy var badgeCenterYOffset = badgeView.centerYAnchor
             .constraint(equalTo: imageOrLabelView.bottomAnchor)
@@ -181,57 +154,6 @@ extension Component.DetailedDescription {
         }
 
         private var textBlockWidthConstraint: NSLayoutConstraint?
-    }
-}
-
-extension Component.DetailedDescription.View {
-
-    public override var inputView: UIView? {
-        return customInputView
-    }
-
-    public override var inputAccessoryView: UIView? {
-        return focusToolbar
-    }
-
-    public override func becomeFirstResponder() -> Bool {
-        if let nodes = inputNodes {
-            customInputView = InputView()
-            focusToolbar = FocusToolbar(view: self)
-            customInputView!.update(nodes)
-        }
-
-        if super.becomeFirstResponder() {
-            highlightingGesture.isHighlighted = true
-            NotificationCenter.default.addObserver(
-                self,
-                selector: #selector(keyboardDidDisappear),
-                name: UIResponder.keyboardDidHideNotification,
-                object: nil
-            )
-            return true
-        }
-
-        customInputView = nil
-        focusToolbar = nil
-        return false
-    }
-
-    public override func resignFirstResponder() -> Bool {
-        highlightingGesture.isHighlighted = false
-        return super.resignFirstResponder()
-    }
-}
-
-extension Component.DetailedDescription.View: FocusableView {
-
-    public func focus() {
-        _ = becomeFirstResponder()
-    }
-
-    private func neighboringFocusEligibilityDidChange() {
-        focusToolbar?.updateFocusEligibility(with: self)
-        reloadInputViews()
     }
 }
 
@@ -268,18 +190,6 @@ fileprivate extension Component.DetailedDescription.View {
 }
 
 private extension Component.DetailedDescription.View {
-
-    @objc func keyboardDidDisappear() {
-        if isFirstResponder { _ = resignFirstResponder() }
-        customInputView = nil
-        focusToolbar = nil
-        NotificationCenter.default.removeObserver(
-            self,
-            name: UIResponder.keyboardDidHideNotification,
-            object: nil
-        )
-    }
-
     func textBlockWidthFractionDidChange() {
         textBlockWidthConstraint?.isActive = false
         textBlockWidthConstraint = nil
