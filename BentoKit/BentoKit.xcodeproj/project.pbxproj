@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		580B60B5215D2CCB00A69E87 /* Bento.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 580B60B4215D2CCB00A69E87 /* Bento.framework */; };
-		580B6138215D2F6800A69E87 /* TitledDescription.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580B612B215D2F6800A69E87 /* TitledDescription.swift */; };
 		580B6153215D3A0400A69E87 /* ReactiveSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 580B6152215D3A0400A69E87 /* ReactiveSwift.framework */; };
 		580B6159215D3F1800A69E87 /* ReactiveCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 580B6158215D3F1800A69E87 /* ReactiveCocoa.framework */; };
 		580B6165215E3C1D00A69E87 /* NodeConstruction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580B6162215E3C1C00A69E87 /* NodeConstruction.swift */; };
@@ -51,7 +50,6 @@
 /* Begin PBXFileReference section */
 		580B60A5215D2C3400A69E87 /* BentoKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = BentoKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		580B60B4215D2CCB00A69E87 /* Bento.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Bento.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		580B612B215D2F6800A69E87 /* TitledDescription.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TitledDescription.swift; sourceTree = "<group>"; };
 		580B6152215D3A0400A69E87 /* ReactiveSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ReactiveSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		580B6158215D3F1800A69E87 /* ReactiveCocoa.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ReactiveCocoa.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		580B6162215E3C1C00A69E87 /* NodeConstruction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NodeConstruction.swift; sourceTree = "<group>"; };
@@ -138,7 +136,6 @@
 		580B60A7215D2C3400A69E87 /* BentoKit */ = {
 			isa = PBXGroup;
 			children = (
-				580B60B0215D2C9C00A69E87 /* Components */,
 				A6EC2DA8218B28AA002B128F /* Screen */,
 				580B613E215D339600A69E87 /* Views */,
 				580B613B215D2F7000A69E87 /* Helpers */,
@@ -146,14 +143,6 @@
 				580B6187215E584100A69E87 /* Resources */,
 			);
 			path = BentoKit;
-			sourceTree = "<group>";
-		};
-		580B60B0215D2C9C00A69E87 /* Components */ = {
-			isa = PBXGroup;
-			children = (
-				580B612B215D2F6800A69E87 /* TitledDescription.swift */,
-			);
-			path = Components;
 			sourceTree = "<group>";
 		};
 		580B60B1215D2CC100A69E87 /* Frameworks */ = {
@@ -404,7 +393,6 @@
 			files = (
 				A6EC2DAF218B28AA002B128F /* Screen.swift in Sources */,
 				74CECF3B22675C2E00EC6927 /* With.swift in Sources */,
-				580B6138215D2F6800A69E87 /* TitledDescription.swift in Sources */,
 				A6EC2DAE218B28AA002B128F /* BoxAppearance.swift in Sources */,
 				A6EC2DB9218B2912002B128F /* UIViewAnimationOptions+Curve.swift in Sources */,
 				A6EC2DB1218B28AA002B128F /* BoxViewController.swift in Sources */,
