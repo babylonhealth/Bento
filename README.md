@@ -13,14 +13,32 @@ In our experience it makes UI-related code easier to build and maintain. Our aim
 
 ## Content 📋
 
+- [Installation](#installation-)
 - [What's it like?](#whats-it-like-)
 - [How does it work?](#how-does-it-work-)
+- [Componments & StyleSheets](#components--stylesheets-)
 - [Examples](#examples-)
-- [Installation](#installation-)
+- [Additional documentation](#additional-documentation-)
 - [Development installation](#development-installation-)
 - [State of the project](#state-of-the-project-%EF%B8%8F)
 - [Development Resources](#development-resources)
 - [Contributing](#contributing-%EF%B8%8F)
+
+### Installation 💾
+
+* Cocoapods
+
+```ruby
+target 'MyApp' do
+    pod 'Bento'
+end
+```
+
+* Carthage
+
+```
+github "Babylonpartners/Bento"
+```
 
 ### What's it like? 🧐
 
@@ -28,14 +46,12 @@ When building a `Box`, all you need to care about are `Sections`s and `Node`s.
 
 ```swift
 let box = Box<SectionId, RowId>.empty
-                |-+ Section(id: SectionId.user,
-                            header: EmptySpaceComponent(height: 24, color: .clear))
-                |---+ RowId.user <> IconTitleDetailsComponent(icon: image, title: patient.name)
-                |-+ Section(id: SectionId.consultantDate,
-                            header: EmptySpaceComponent(height: 24, color: .clear))
-                |---+ RowId.loading <> LoadingIndicatorComponent(isLoading: true)
+            |-+ Section(id: SectionId.user,header: EmptySpaceComponent(height: 24, color: .clear))
+            |---+ Node(id: RowID.user, component: IconTitleDetailsComponent(icon: image, title: patient.name))
+            |-+ Section(id: SectionId.consultantDate, header: EmptySpaceComponent(height: 24, color: .clear))
+            |---+ Node(id: RowID.loading, component: LoadingIndicatorComponent(isLoading: true))
 
-tableView.render(box)
+        tableView.render(box)
 ```
 
 ### How does it work? 🤔
@@ -44,7 +60,7 @@ tableView.render(box)
 
 Bento automatically performs the data source and delegate setup upon the very first time `UITableView` or `UICollectionView` is asked to render a Bento `Box`.
 
-In other words, for Bento to work, it cannot be overriden with your own data source and delegate. If you wish to respond to delegate messages which Bento does not support as a feature, you may consider supplying a custom adapter using `prepareForBoxRendering(_:)`.
+In other words, for Bento to work, it cannot be overridden with your own data source and delegate. If you wish to respond to delegate messages which Bento does not support as a feature, you may consider supplying a custom adapter using `prepareForBoxRendering(_:)`.
 
 | Collection View | Adapter Base Class | Required Protocol Conformances |
 | ---- | ---- | ---- |
@@ -53,7 +69,7 @@ In other words, for Bento to work, it cannot be overriden with your own data sou
 
 #### Box 📦
 
-`Box ` is a fundamental component of the library, essentially a virtual representation of the `UITableView` content. It has two generic parameters - `SectionId` and `RowId` - which are unique identifiers for  `Section<SectionId, RowId>` and `Node<RowId>`, used by the [diffing engine](https://github.com/RACCommunity/FlexibleDiff) to perform animated changes of the `UITableView` content.
+`Box ` is a fundamental component of the library, essentially a virtual representation of the `UITableView` content. It has two generic parameters - `SectionId` and `RowId` - which are unique identifiers for  `Section<SectionId, RowId>` and `Node<RowId>`, used by the [diffing engine](https://github.com/RACCommunity/FlexibleDiff) to perform animated changes of the `UITableView` content. Box is just a container for an array of sections.
 
 #### Sections and Nodes 🏗
 
@@ -134,28 +150,26 @@ precedencegroup SectionConcatenationPrecedence {
     higherThan: AdditionPrecedence
 }
 
-infix operator <>: ComposingPrecedence
 infix operator |-+: SectionConcatenationPrecedence
 infix operator |-?: SectionConcatenationPrecedence
 infix operator |---+: NodeConcatenationPrecedence
 infix operator |---?: NodeConcatenationPrecedence
 
-let bento = Box.empty // 3
-	|-+ Section() // 2
-	|---+ RowId.id <> Component() // 1
+let bento = Box.empty
+	|-+ Section(id: SectionID.first) // 2
+	|---+ Node(id: RowID.someId, Component()) // 1
 ```
 
 As you might have noticed:
-* `<>` has `ComposingPrecedence`;
+* `|-+` has `SectionConcatenationPrecedence`;
 * `|---+` has `NodeConcatenationPrecedence`
 
-`<> / NodeConcatenationPrecedence` is higher than `|-+ / SectionConcatenationPrecedence`, meaning Nodes will be computed first. 
+`NodeConcatenationPrecedence` is higher than `|-+ / SectionConcatenationPrecedence`, meaning Nodes will be computed first. 
 
 The order of the expression above is:
 
-1. `RowId.id <> Component()` => `Node`
-2. `Section() |---+ Node()` => `Section`
-3. `Box() |-+ Section()` => `Box`
+1. `Section() |---+ Node()` => `Section`
+2. `Box() |-+ Section()` => `Box`
 
 #### Conditional operators ❓
 
@@ -174,33 +188,47 @@ let box = Box.empty
 ```
 ```swift
 let box = Box.empty
-    |-? .some(anOptional) { theOptional in  // <-- the value of anOptional unwrapped
+    |-? anOptional.map { unwrappedOptional in  // <-- the value of anOptional unwrapped
         Section()  // <-- Section only added if `anOptional` is not `nil`
     }
 ```
 
-`|---?` works in exactly the same way for `Node`s
+`|---?` works in exactly the same way for `Node`.
 
-### Examples 😎
+### Components & StyleSheets 🎨
+Bento includes set of generic components like ``Description`, `TextInput`, `EmptySpace` etc. Bento uses StyleSheets to style components.
 
-Sections | Appointment | Movies
---- | --- | ---
-![](Resources/example1.gif) | ![](Resources/example2.gif) | ![](Resources/example3.gif)
+StyleSheets are a way to define **how** particular view should be rendered. Component's job is to provide **what** should be displayed while StyleSheets provide a style **how** it's done. Fonts, colors, alignment should go into StyleSheet. 
 
-### Installation 💾
+StyleSheets support KeyPaths for easier composition.
 
-* Cocoapods
-
-```ruby
-target 'MyApp' do
-    pod 'Bento'
-end
+```swift
+let styleSheet = LabelStyleSheet()
+    .compose(\.numberOfLines, 3)
+    .compose(\.font, UIFont.preferredFont(forTextStyle: .body))
 ```
-* Carthage
 
+StyleSheets can be used with Bento's components. All you need to do is to use correct stylesheet:
+
+```swift
+return .empty
+  |-+ Section(id: .first)
+  |---+ Node(
+         id: .componentId,
+         component: Component.Description(
+             text: "Text",
+             styleSheet: Component.Description.StyleSheet()
+                 .compose(\.text.font, UIFont.preferredFont(forTextStyle: .body))
+         )
+   )
 ```
-github "Babylonpartners/Bento"
-```
+
+### Example 😎
+
+![](Resources/example3.gif) 
+
+### Additional documentation 📙
+- [Common use cases](./Documentation/common_usecases.md)
 
 ### Development Installation 🛠
 
@@ -212,7 +240,7 @@ git submodule update --init --recursive
 
 Or, if you have Carthage installed, you can use it to do the same thing:
 
-```
+```		
 carthage checkout
 ```
 

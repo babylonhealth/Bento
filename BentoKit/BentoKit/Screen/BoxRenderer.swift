@@ -1,5 +1,4 @@
 import Bento
-import StyleSheets
 import Foundation
 
 public typealias EmptyConfig = Void

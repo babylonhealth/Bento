@@ -10,14 +10,14 @@ open class BoxViewController<ViewModel: BoxViewModel, Renderer: BoxRenderer, App
     private let rendererConfig: Renderer.Config
     private let appearance: Property<Appearance>
     private let (traits, traitObserver) = Signal<UITraitCollection, NoError>.pipe()
-    public let tableView: BentoTableView
+    public let tableView: BoxSizeCachingTableView
 
-    private let topTableView: BentoTableView
+    private let topTableView: BoxSizeCachingTableView
     private lazy var topTableViewHeight = topTableView.heightAnchor
         .constraint(equalToConstant: 0)
         .activated()
 
-    private let bottomTableView: BentoTableView
+    private let bottomTableView: BoxSizeCachingTableView
     private lazy var bottomTableViewHeight = bottomTableView.heightAnchor
         .constraint(equalToConstant: 0)
         .activated()
@@ -49,9 +49,11 @@ open class BoxViewController<ViewModel: BoxViewModel, Renderer: BoxRenderer, App
         self.viewModel = viewModel
         self.rendererConfig = rendererConfig
         self.appearance = appearance
-        self.tableView = BentoTableView(frame: .zero, style: .grouped)
-        self.topTableView = BentoTableView(frame: .zero, style: .grouped)
-        self.bottomTableView = BentoTableView(frame: .zero, style: .grouped)
+
+        let adapterClass = BoxTableViewAdapter<Renderer.SectionID, Renderer.ItemID>.self
+        self.tableView = BoxSizeCachingTableView(frame: .zero, style: .grouped, adapterClass: adapterClass)
+        self.topTableView = BoxSizeCachingTableView(frame: .zero, style: .grouped, adapterClass: adapterClass)
+        self.bottomTableView = BoxSizeCachingTableView(frame: .zero, style: .grouped, adapterClass: adapterClass)
 
         super.init(nibName: nil, bundle: nil)
     }
@@ -74,9 +76,7 @@ open class BoxViewController<ViewModel: BoxViewModel, Renderer: BoxRenderer, App
         if hasSetupBinding.isFalse {
             hasSetupBinding = true
 
-            UIView.performWithoutAnimation {
-                bindViewModel()
-            }
+            bindViewModel()
         }
     }
 
@@ -167,9 +167,6 @@ open class BoxViewController<ViewModel: BoxViewModel, Renderer: BoxRenderer, App
 
         configureTableView(tableView)
 
-        let adapter = BoxTableViewAdapter<Renderer.SectionID, Renderer.ItemID>(with: tableView)
-        tableView.prepareForBoxRendering(with: adapter)
-
         focusMode
             .throttle(while: hasViewAppeared.negate(), on: UIScheduler())
             .combinePrevious(.never)
@@ -186,13 +183,11 @@ open class BoxViewController<ViewModel: BoxViewModel, Renderer: BoxRenderer, App
     private func setupTableViews() {
         setupTableView()
 
-        func prepare(tableView: BentoTableView) {
+        func prepare(tableView: BoxSizeCachingTableView) {
             configureTableView(tableView).with {
                 $0.separatorStyle = .none
                 $0.isScrollEnabled = false
             }
-            let adapter = BoxTableViewAdapter<Renderer.SectionID, Renderer.ItemID>(with: tableView)
-            tableView.prepareForBoxRendering(with: adapter)
         }
         prepare(tableView: topTableView)
         prepare(tableView: bottomTableView)
@@ -273,16 +268,21 @@ open class BoxViewController<ViewModel: BoxViewModel, Renderer: BoxRenderer, App
                                 config: rendererConfig)
         }
 
+        var isInitial = true
+
         SignalProducer
             .combineLatest(viewModel.state.producer, renderer.producer)
             .observe(on: UIScheduler())
             .startWithValues { [weak self] state, renderer in
                 guard let `self` = self else { return }
+                defer { isInitial = false }
+
                 renderer.styleSheet.apply(to: self.view)
                 renderer.pinnedToTopBoxStyleSheet.apply(to: self.topTableView)
                 renderer.pinnedToBottomBoxStyleSheet.apply(to: self.bottomTableView)
                 self.render(screen: renderer.render(state: state),
-                            usesSystemSeparator: renderer.configuration.shouldUseSystemSeparators)
+                            usesSystemSeparator: renderer.configuration.shouldUseSystemSeparators,
+                            animated: isInitial.isFalse)
         }
     }
 
@@ -294,7 +294,8 @@ open class BoxViewController<ViewModel: BoxViewModel, Renderer: BoxRenderer, App
 
     private func render(
         screen: Screen<Renderer.SectionID, Renderer.ItemID>,
-        usesSystemSeparator: Bool
+        usesSystemSeparator: Bool,
+        animated: Bool
     ) {
         switch screen.titleItem {
         case let .text(text):
@@ -306,11 +307,13 @@ open class BoxViewController<ViewModel: BoxViewModel, Renderer: BoxRenderer, App
         renderBarItems(reference: \.previousLeftBarItems,
                        new: screen.leftBarItems,
                        setItems: navigationItem.setLeftBarButtonItems(_:animated:),
-                       itemsKeyPath: \.leftBarButtonItems)
+                       itemsKeyPath: \.leftBarButtonItems,
+                       animated: animated)
         renderBarItems(reference: \.previousRightBarItems,
                        new: screen.rightBarItems,
                        setItems: navigationItem.setRightBarButtonItems(_:animated:),
-                       itemsKeyPath: \.rightBarButtonItems)
+                       itemsKeyPath: \.rightBarButtonItems,
+                       animated: animated)
 
         let mainBox = screen.box
 
@@ -322,27 +325,16 @@ open class BoxViewController<ViewModel: BoxViewModel, Renderer: BoxRenderer, App
 
         tableView.separatorStyle = shouldUseSystemSeparators ? .singleLine : .none
 
-        if UIView.areAnimationsEnabled {
+        if animated && UIView.areAnimationsEnabled {
             tableView.transition(to: screen.formStyle, removeAll: self.removeAll) { willReload in
                 self.tableView.render(mainBox, animated: willReload.isFalse)
                 self.topTableView.render(self.topBox, animated: willReload.isFalse)
                 self.bottomTableView.render(self.bottomBox, animated: willReload.isFalse)
-                // Trigger a second layout pass so as to let complex components
-                // with ambiguous height to be sized correctly.
-                self.tableView.beginUpdates()
-                self.tableView.endUpdates()
             }
         } else {
             tableView.formStyle = screen.formStyle
             tableView.render(mainBox, animated: false)
             tableView.layoutIfNeeded()
-
-            UIView.performWithoutAnimation {
-                // Trigger a second layout pass so as to let complex components
-                // with ambiguous height to be sized correctly.
-                self.tableView.beginUpdates()
-                self.tableView.endUpdates()
-            }
 
             topTableView.render(topBox, animated: false)
             bottomTableView.render(bottomBox, animated: false)
@@ -361,7 +353,8 @@ open class BoxViewController<ViewModel: BoxViewModel, Renderer: BoxRenderer, App
         reference: ReferenceWritableKeyPath<BoxViewController, [BarButtonItem]>,
         new: [BarButtonItem],
         setItems: ([UIBarButtonItem], Bool) -> Void,
-        itemsKeyPath: KeyPath<UINavigationItem, [UIBarButtonItem]?>
+        itemsKeyPath: KeyPath<UINavigationItem, [UIBarButtonItem]?>,
+        animated: Bool
     ) {
         // Toolbar items should automatically kick the first responder, so that
         // any outstanding user interaction event is emitted before the bar
@@ -384,7 +377,7 @@ open class BoxViewController<ViewModel: BoxViewModel, Renderer: BoxRenderer, App
         if hasContentChanged {
             setItems(
                 new.map { $0.make(willTriggerAction: resignFirstResponder) },
-                true
+                animated
             )
         } else {
             let items = navigationItem[keyPath: itemsKeyPath] ?? []

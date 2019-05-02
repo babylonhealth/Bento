@@ -1,5 +1,8 @@
 import UIKit
 
+/// Node is kept by a Section. Node requires an identifier for diff algorithm.
+/// Node **always has** a visual representation, because a component needs to be provided.
+/// To simplify, you can think of a Node in Bento as equivalent to a cell in UITableView / UICollectionView.
 public struct Node<Identifier: Hashable> {
     public let id: Identifier
     let component: AnyRenderable
@@ -28,10 +31,6 @@ public struct Node<Identifier: Hashable> {
     public func sizeBoundTo(size: CGSize, inheritedMargins: UIEdgeInsets = .zero) -> CGSize {
         return component.sizeBoundTo(size: size, inheritedMargins: inheritedMargins)
     }
-}
-
-public func <> <RowId, R: Renderable>(id: RowId, component: R) -> Node<RowId> {
-    return Node(id: id, component: component)
 }
 
 public func |---+<Identifier>(lhs: Node<Identifier>, rhs: Node<Identifier>) -> [Node<Identifier>] {

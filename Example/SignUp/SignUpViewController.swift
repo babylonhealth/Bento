@@ -1,8 +1,6 @@
 import Foundation
 import UIKit
 import Bento
-import BentoKit
-import StyleSheets
 
 protocol Navigator: class {
     func showAlert(title: String, message: String)
@@ -57,6 +55,6 @@ final class SignUpViewController: UIViewController, SignUpView, Navigator {
     }
 }
 
-extension String: BentoKit.Option {
+extension String: Bento.Option {
     public var displayName: String { return self }
 }

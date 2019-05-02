@@ -1,9 +1,14 @@
 import Bento
-import StyleSheets
 import ReactiveSwift
 import ReactiveCocoa
 
 private let maxImageWidth: CGFloat = 100
+
+public extension Reactive where Base: ImageOrLabelView {
+    public var content: BindingTarget<ImageOrLabelView.Content> {
+        return self[\.content]
+    }
+}
 
 public extension Component {
     /// `TitledDescription` supports a horizontal layout comprising:
@@ -17,75 +22,29 @@ public extension Component {
     /// While `TitledDescription` supports asynchronous loading for its image
     /// view, you are obligated to ensure a consistent fixed size across all
     /// changes.
-    public final class TitledDescription: AutoRenderable, HeightCustomizing, Focusable {
+    public final class TitledDescription: AutoRenderable, Focusable {
         public typealias Accessory = AccessoryView.Accessory
 
         public let focusEligibility: FocusEligibility
         public let configurator: (View) -> Void
         public let styleSheet: StyleSheet
 
-        public func estimatedHeight(forWidth width: CGFloat,
-                                    inheritedMargins: UIEdgeInsets) -> CGFloat {
-            return heightComputer(width, inheritedMargins)
-        }
-
-        public func height(forWidth width: CGFloat,
-                           inheritedMargins: UIEdgeInsets) -> CGFloat {
-            return heightComputer(width, inheritedMargins)
-        }
-
-        @available(*, deprecated, message: "Please use the designated initialiser.")
-        public convenience init(
-            title: String,
-            attributedText: NSAttributedString? = nil,
-            subtitle: String? = nil,
-            detail: String? = nil,
-            image: Property<BentoKit.ImageOrLabel>? = nil,
-            accessory: Accessory = .chevron,
-            badgeIcon: UIImage? = nil,
-            inputNodes: CustomInput? = nil,
-            didTap: Optional<() -> Void> = nil,
-            didTapAccessory: Optional<() -> Void> = nil,
-            styleSheet: StyleSheet = .init()
-        ) {
-            let titleText: TextValue
-            if let attributedText = attributedText {
-                titleText = .rich(attributedText)
-            } else {
-                titleText = .plain(title)
-            }
-
-            let texts: [TextValue]
-            if let subtitle = subtitle {
-                texts = [titleText, .plain(subtitle)]
-            } else {
-                texts = [titleText]
-            }
-
-            let detailText: TextValue?
-            if let detail = detail {
-                detailText = TextValue.plain(detail)
-            } else {
-                detailText = nil
-            }
-
-            self.init(
-                texts: texts,
-                detail: detailText,
-                image: image,
-                accessory: accessory,
-                badgeIcon: badgeIcon,
-                inputNodes: inputNodes,
-                didTap: didTap,
-                didTapAccessory: didTapAccessory,
-                styleSheet: styleSheet
-            )
-        }
-
+        /// Creates a TitledDescription
+        /// - parameter texts: Array of TextValues which are displayed vertically on left side of the row.
+        /// - parameter detail: Description field displayed to the right of `texts`
+        /// - parameter image: Usually an image wrapped within `ImageOrLabel` component. Property makes it possible to be loaded async.
+        ///                    However, you need to guarantee fixed size across all changes.
+        /// - parameter accessory: Accessory which should be displayed near the right edge of the row.
+        /// - parameter badgeIcon: Badge icon which is displayed in the bottom-right corner of the `image`.
+        /// - parameter inputNodes: Input's component which is displayed when the `TitledDescription` becomes the first responder.
+        /// - parameter didTap: Closure which is invoked when whole row is tapped.
+        /// - parameter didTapAccessory: Closure which is invoked when tapping on the accessory.
+        /// - parameter interactionBehavior: Defines an behaviour when tapped. Usually `.becomeFirstResponder`.
+        /// - parameter styleSheet: StyleSheet how view should be styled (fonts, colors, text alignment)
         public init(
             texts: [TextValue] = [],
             detail: TextValue? = nil,
-            image: Property<BentoKit.ImageOrLabel>? = nil,
+            image: Property<Bento.ImageOrLabel>? = nil,
             accessory: Accessory = .chevron,
             badgeIcon: UIImage? = nil,
             inputNodes: CustomInput? = nil,
@@ -122,14 +81,6 @@ public extension Component {
                 view.highlightingGesture.didRebindView()
             }
 
-            self.heightComputer = TitledDescription.heightComputer(
-                styleSheet: styleSheet,
-                image: image,
-                texts: texts,
-                detail: detail,
-                accessory: accessory
-            )
-
             switch inputNodes {
             case .none:
                 self.focusEligibility = .ineligible
@@ -139,118 +90,6 @@ public extension Component {
             }
             self.styleSheet = styleSheet
         }
-
-        private let heightComputer: (CGFloat, UIEdgeInsets) -> CGFloat
-    }
-}
-
-private extension Component.TitledDescription {
-
-    static func heightComputer(
-        styleSheet: StyleSheet,
-        image: Property<ImageOrLabel>?,
-        texts: [TextValue],
-        detail: TextValue?,
-        accessory: Accessory
-    ) -> (CGFloat, UIEdgeInsets) -> CGFloat {
-        return { width, inheritedMargins in
-            guard width > 0 else { return 0 }
-
-            let xSpacing = styleSheet.content.spacing
-            let verticalMargins = styleSheet.layoutMargins.verticalTotal
-                + (styleSheet.content.isLayoutMarginsRelativeArrangement
-                    ? styleSheet.content.layoutMargins.verticalTotal
-                    : 0)
-
-            let detailWidth = detail?.width(using: styleSheet.detail) ?? 0
-            let detailHeight = detail?.height(using: styleSheet.detail,
-                                              fittingWidth: detailWidth) ?? 0
-
-            let detailWidthPlusSpacing: CGFloat
-            if detail != nil && detailWidth > 0 {
-                detailWidthPlusSpacing = detailWidth + xSpacing
-            } else {
-                detailWidthPlusSpacing = 0
-            }
-
-            let accessorySize: CGSize
-            if case let .custom(view) = accessory {
-                view.layoutIfNeeded()
-                accessorySize = view.frame.size
-            } else {
-                accessorySize = CGSize(width: 24, height: 24)
-            }
-            let availableWidthForLabelBlock: CGFloat
-            if let textBlockWidthFraction = styleSheet.textBlockWidthFraction {
-                availableWidthForLabelBlock = (
-                    width
-                        - max(styleSheet.layoutMargins.left, inheritedMargins.left)
-                        - max(styleSheet.layoutMargins.right, inheritedMargins.right)
-                    ) * textBlockWidthFraction
-            } else {
-                availableWidthForLabelBlock = width
-                    - max(styleSheet.layoutMargins.left, inheritedMargins.left)
-                    - max(styleSheet.layoutMargins.right, inheritedMargins.right)
-                    - (styleSheet.content.isLayoutMarginsRelativeArrangement
-                        ? styleSheet.content.layoutMargins.horizontalTotal
-                        : 0)
-                    - imageWidthPlusSpacing(measuring: image, styleSheet: styleSheet)
-                    - detailWidthPlusSpacing
-                    - (accessory != .none ? accessorySize.width + xSpacing : 0)
-            }
-
-            assert(availableWidthForLabelBlock > 0,
-                   "availableWidthForLabelBlock (\(availableWidthForLabelBlock)) ≤ 0")
-
-            let textHeights = texts
-                .enumerated()
-                .filter { $0.element.isNotEmpty }
-                .map { entry -> CGFloat in
-                    let (index, text) = entry
-                    return text.height(using: styleSheet.textStyles[index],
-                                       fittingWidth: availableWidthForLabelBlock)
-            }
-
-            let textHeightsPlusSpacing = textHeights.reduce(0, +) +
-                CGFloat(max(0, textHeights.count - 1)) * styleSheet.verticalSpacingBetweenElements
-
-            return max(
-                verticalMargins + max(
-                    textHeightsPlusSpacing,
-                    styleSheet.imageOrLabel.fixedSize?.height ?? 0,
-                    detailHeight,
-                    accessorySize.height
-                ),
-                styleSheet.enforcesMinimumHeight ? 44 : 0
-            )
-        }
-    }
-
-    static func imageWidthPlusSpacing(measuring image: Property<ImageOrLabel>?,
-                                      styleSheet: StyleSheet) -> CGFloat {
-        let width: CGFloat
-
-        if let size = styleSheet.imageOrLabel.fixedSize {
-            width = size.width
-        } else {
-            switch image?.value {
-            case let .image(image)?:
-                width = image.size.width
-                    + styleSheet.imageOrLabel.layoutMargins.left
-                    + styleSheet.imageOrLabel.layoutMargins.right
-            case let .text(text)?:
-                width = (text as NSString)
-                    .size(withAttributes: [.font: styleSheet.imageOrLabel.label.font])
-                    .width
-                    .rounded(.up)
-            case .none?:
-                width = 0
-            case nil:
-                return 0
-            }
-        }
-
-        return min(width, maxImageWidth) + styleSheet.content.spacing
     }
 }
 
@@ -408,6 +247,8 @@ extension Component.TitledDescription.View: FocusableView {
     }
 }
 
+extension Component.TitledDescription.View: PreSizingLayoutPassRequiring {}
+
 fileprivate extension Component.TitledDescription.View {
 
     final class BadgeView: UIView {
@@ -541,56 +382,6 @@ public extension Component.TitledDescription {
         public let detail: LabelStyleSheet
         public let badge: ViewStyleSheet<UIView>
         public let accessory: InteractiveViewStyleSheet<InteractiveView>
-
-        @available(*, deprecated, message: "Please use textBlockWidthFraction.")
-        public var titleWidthFraction: CGFloat? {
-            get { return textBlockWidthFraction }
-            set { textBlockWidthFraction = newValue }
-        }
-
-        @available(*, deprecated, message: "Please use textStyles.")
-        public var title: LabelStyleSheet {
-            get { return textStyles[0] }
-            set { textStyles[0] = newValue }
-        }
-
-        @available(*, deprecated, message: "Please use textStyles.")
-        public var subtitle: LabelStyleSheet {
-            get { return textStyles[1] }
-            set { textStyles[1] = newValue }
-        }
-        @available(*, deprecated, message: "Please use the designated initialiser.")
-        public convenience init(
-            verticalSpacingBetweenElements: CGFloat = 8.0,
-            titleWidthFraction: CGFloat? = nil,
-            highlightingTarget: HighlightingTarget = HighlightingTarget.container,
-            badgeOffset: CGPoint = .zero,
-            badgeSize: CGSize = CGSize(width: 12, height: 12),
-            enforcesMinimumHeight: Bool = true,
-            content: ContentStyleSheet = .init(),
-            imageOrLabel: ImageOrLabelView.StyleSheet = .init(),
-            title: LabelStyleSheet = .init(),
-            subtitle: LabelStyleSheet = .init(font: UIFont.preferredFont(forTextStyle: .footnote),
-                                              textColor: .gray),
-            detail: LabelStyleSheet = .init(textAlignment: .trailing),
-            badge: ViewStyleSheet<UIView> = ViewStyleSheet<UIView>(),
-            accessory: InteractiveViewStyleSheet<InteractiveView> = InteractiveViewStyleSheet<InteractiveView>()
-        ) {
-            self.init(
-                verticalSpacingBetweenElements: verticalSpacingBetweenElements,
-                textBlockWidthFraction: titleWidthFraction,
-                highlightingTarget: highlightingTarget,
-                badgeOffset: badgeOffset,
-                badgeSize: badgeSize,
-                enforcesMinimumHeight: enforcesMinimumHeight,
-                content: content,
-                imageOrLabel: imageOrLabel,
-                textStyles: [title, subtitle],
-                detail: detail,
-                badge: badge,
-                accessory: accessory
-            )
-        }
 
         public init(
             verticalSpacingBetweenElements: CGFloat = 8.0,

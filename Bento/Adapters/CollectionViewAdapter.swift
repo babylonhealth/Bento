@@ -12,7 +12,10 @@ open class CollectionViewAdapterBase<SectionID: Hashable, ItemID: Hashable>
     internal private(set) weak var collectionView: UICollectionView?
     private var knownSupplements: Set<Supplement> = []
 
-    public init(with collectionView: UICollectionView) {
+    // NOTE: Required initializer is necessary for instantiation via metatype to work. In Swift 4.2, it appears that
+    //       there is a compiler type checking hole which allows instantiation via a non-required initializer.
+
+    public required init(with collectionView: UICollectionView) {
         sections = []
         self.collectionView = collectionView
         super.init()

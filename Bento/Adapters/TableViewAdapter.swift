@@ -3,13 +3,22 @@ import FlexibleDiff
 
 public typealias TableViewAdapter<SectionID: Hashable, ItemID: Hashable> = TableViewAdapterBase<SectionID, ItemID> & UITableViewDataSource & UITableViewDelegate
 
-open class TableViewAdapterBase<SectionID: Hashable, ItemID: Hashable>
-    : NSObject, FocusEligibilitySourceImplementing {
-    public private(set) var sections: [Section<SectionID, ItemID>] = []
-    internal private(set) weak var tableView: UITableView?
+private let knownSupplements: Set<Supplement> = [.header, .footer]
 
-    public init(with tableView: UITableView) {
-        self.sections = []
+open class TableViewAdapterBase<SectionID: Hashable, ItemID: Hashable>
+    : NSObject, AdapterStoreOwner, FocusEligibilitySourceImplementing {
+    public var sections: [Section<SectionID, ItemID>] {
+        return store.sections
+    }
+
+    internal private(set) weak var tableView: UITableView?
+    internal var store: AdapterStore<SectionID, ItemID>
+
+    // NOTE: Required initializer is necessary for instantiation via metatype to work. In Swift 4.2, it appears that
+    //       there is a compiler type checking hole which allows instantiation via a non-required initializer.
+
+    public required init(with tableView: UITableView) {
+        self.store = AdapterStore()
         self.tableView = tableView
         super.init()
     }
@@ -21,11 +30,13 @@ open class TableViewAdapterBase<SectionID: Hashable, ItemID: Hashable>
         let diff = TableViewSectionDiff(oldSections: self.sections,
                                         newSections: sections,
                                         animation: animation)
-        diff.apply(to: tableView, updateAdapter: { self.sections = sections })
+        diff.apply(to: tableView, updateAdapter: { changeset in
+            self.store.update(with: sections, knownSupplements: knownSupplements, changeset: changeset)
+        })
     }
 
     func update(sections: [Section<SectionID, ItemID>]) {
-        self.sections = sections
+        store.update(with: sections, knownSupplements: knownSupplements, changeset: nil)
         tableView?.reloadData()
     }
 
@@ -63,11 +74,60 @@ open class TableViewAdapterBase<SectionID: Hashable, ItemID: Hashable>
     }
 
     @objc open func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return sections[section].supplements.keys.contains(.header) ? UITableView.automaticDimension : .leastNonzeroMagnitude
+        switch store.size(for: .header, inSection: section) {
+        case .noCachedResult:
+            return tableView.sectionHeaderHeight
+        case .doesNotExist:
+            return .leastNonzeroMagnitude
+        case let .size(size):
+            return size.height
+        }
     }
 
     @objc open func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        return sections[section].supplements.keys.contains(.footer) ? UITableView.automaticDimension : .leastNonzeroMagnitude
+        switch store.size(for: .footer, inSection: section) {
+        case .noCachedResult:
+            return tableView.sectionFooterHeight
+        case .doesNotExist:
+            return .leastNonzeroMagnitude
+        case let .size(size):
+            return size.height
+        }
+    }
+
+    @objc(tableView:heightForRowAtIndexPath:)
+    open func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return store.size(forItemAt: indexPath).map { $0.height + tableView.separatorHeight }
+            ?? tableView.rowHeight
+    }
+
+    @objc open func tableView(_ tableView: UITableView, estimatedHeightForHeaderInSection section: Int) -> CGFloat {
+        switch store.size(for: .header, inSection: section, allowEstimation: true) {
+        case .noCachedResult:
+            return tableView.estimatedSectionHeaderHeight
+        case .doesNotExist:
+            return .leastNonzeroMagnitude
+        case let .size(size):
+            return size.height
+        }
+    }
+
+    @objc open func tableView(_ tableView: UITableView, estimatedHeightForFooterInSection section: Int) -> CGFloat {
+        switch store.size(for: .footer, inSection: section, allowEstimation: true) {
+        case .noCachedResult:
+            return tableView.estimatedSectionFooterHeight
+        case .doesNotExist:
+            return .leastNonzeroMagnitude
+        case let .size(size):
+            return size.height
+        }
+    }
+
+    @objc(tableView:estimatedHeightForRowAtIndexPath:)
+    open func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+        return store.size(forItemAt: indexPath, allowEstimation: true)
+            .map { $0.height + tableView.separatorHeight }
+            ?? tableView.estimatedRowHeight
     }
 
     @objc(tableView:editActionsForRowAtIndexPath:)
@@ -162,12 +222,11 @@ open class TableViewAdapterBase<SectionID: Hashable, ItemID: Hashable>
             return
         }
 
-        sections[indexPath.section].items.remove(at: indexPath.row)
-
         CATransaction.begin()
         CATransaction.setCompletionBlock {
             component.delete()
         }
+        store.removeItem(at: indexPath)
         tableView?.deleteRows(at: [indexPath], with: .left)
         actionPerformed?(true)
         CATransaction.commit()
@@ -193,3 +252,9 @@ internal final class BentoTableViewAdapter<SectionID: Hashable, ItemID: Hashable
       UITableViewDataSource,
       UITableViewDelegate
 {}
+
+extension UITableView {
+    fileprivate var separatorHeight: CGFloat {
+        return separatorStyle != .none ? 1.0 / contentScaleFactor : 0.0
+    }
+}

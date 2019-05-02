@@ -3,7 +3,7 @@ version: 2
 jobs:
   build-and-test:
     macos:
-      xcode: "10.0.0"
+      xcode: "10.2.0"
 
     working_directory: /Users/distiller/project
 
@@ -11,10 +11,9 @@ jobs:
       - checkout
       - run: git submodule sync --recursive
       - run: git submodule update --init --recursive
-      - run: script/test iphonesimulator "platform=iOS Simulator,name=iPhone 6,OS=12.0" Bento
-      - run: script/test iphonesimulator "platform=iOS Simulator,name=iPhone 6,OS=12.0" BentoKit
-      - run: script/test iphonesimulator "platform=iOS Simulator,name=iPhone 6,OS=12.0" StyleSheets
-      - run: script/test iphonesimulator "platform=iOS Simulator,name=iPhone 6,OS=12.0" BentoExample build
+      - run: script/test iphonesimulator "platform=iOS Simulator,name=iPhone 6,OS=12.2" Bento
+      - run: script/test iphonesimulator "platform=iOS Simulator,name=iPhone 6,OS=12.2" BentoKit
+      - run: script/test iphonesimulator "platform=iOS Simulator,name=iPhone 6,OS=12.2" BentoExample build
 
 workflows:
   version: 2
