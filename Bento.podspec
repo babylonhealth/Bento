@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
   s.name             = "Bento"
-  s.version          = "0.3"
+  s.version          = "0.4"
   s.summary          = "Component based abstraction on top of UITableView and UICollectionView"
 
   s.description      = <<-DESC

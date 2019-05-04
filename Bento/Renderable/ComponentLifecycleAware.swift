@@ -1,4 +1,4 @@
-protocol ComponentLifecycleAware {
+public protocol ComponentLifecycleAware {
     func willDisplayItem()
     func didEndDisplayingItem()
 }

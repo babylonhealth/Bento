@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
   s.name          = "BentoKit"
-  s.version       = "0.3"
+  s.version       = "0.4"
   s.summary       = "Common components and toolbox for building component based interfaces. Built on top of Bento."
 
   s.description   = <<-DESC
