@@ -1,7 +1,3 @@
-public protocol ScreenLifecycleObserving {
-    func send(_ event: ScreenLifecycleEvent)
-}
-
 public enum ScreenLifecycleEvent: Equatable {
     /// The screen has been loaded, but is not yet part of a view hierarchy.
     case didLoad
