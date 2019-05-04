@@ -24,22 +24,22 @@ extension BentoReusableView {
     }
 
     func willDisplayView() {
-        component?
-            .cast(to: ComponentLifecycleAware.self)?
-            .willDisplayItem()
+        if let containedView = containedView {
+            component?.willDisplay(containedView)
 
-        containedView?.enumerateAllViewsAndSelf { view in
-            (view as? ViewLifecycleAware)?.willDisplayView()
+            containedView.enumerateAllViewsAndSelf { view in
+                (view as? ViewLifecycleAware)?.willDisplayView()
+            }
         }
     }
 
     func didEndDisplayingView() {
-        component?
-            .cast(to: ComponentLifecycleAware.self)?
-            .didEndDisplayingItem()
+        if let containedView = containedView {
+            component?.didEndDisplaying(containedView)
 
-        containedView?.enumerateAllViewsAndSelf { view in
-            (view as? ViewLifecycleAware)?.didEndDisplayingView()
+            containedView.enumerateAllViewsAndSelf { view in
+                (view as? ViewLifecycleAware)?.didEndDisplayingView()
+            }
         }
     }
 }

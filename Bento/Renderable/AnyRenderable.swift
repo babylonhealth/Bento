@@ -31,6 +31,14 @@ public struct AnyRenderable: Renderable {
         base.render(in: view)
     }
 
+    public func willDisplay(_ view: UIView) {
+        base.willDisplay(view)
+    }
+
+    public func didEndDisplaying(_ view: UIView) {
+        base.didEndDisplaying(view)
+    }
+
     func cast<T>(to type: T.Type) -> T? {
         return base.cast(to: type)
     }
@@ -98,6 +106,14 @@ class AnyRenderableBox<Base: Renderable>: AnyRenderableBoxBase {
         }
         return base as? T
     }
+
+    override func willDisplay(_ view: UIView) {
+        base.willDisplay(view as! Base.View)
+    }
+
+    override func didEndDisplaying(_ view: UIView) {
+        base.didEndDisplaying(view as! Base.View)
+    }
 }
 
 class AnyRenderableBoxBase {
@@ -111,4 +127,6 @@ class AnyRenderableBoxBase {
     }
     func render(in view: UIView) { fatalError() }
     func cast<T>(to type: T.Type) -> T? { fatalError() }
+    func willDisplay(_ view: UIView) { fatalError() }
+    func didEndDisplaying(_ view: UIView) { fatalError() }
 }

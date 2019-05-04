@@ -1,15 +1,10 @@
-public protocol ComponentLifecycleAware {
-    func willDisplayItem()
-    func didEndDisplayingItem()
-}
-
+@available(*, deprecated, message:"Implement the component lifecycle methods instead.")
 public protocol ViewLifecycleAware {
     func willDisplayView()
     func didEndDisplayingView()
 }
 
-final class LifecycleComponent<Base: Renderable>: AnyRenderableBox<Base>, ComponentLifecycleAware {
-    private let source: AnyRenderableBox<Base>
+final class LifecycleComponent<Base: Renderable>: AnyRenderableBox<Base> {
     private let _willDisplayItem: (() -> Void)?
     private let _didEndDisplayingItem: (() -> Void)?
 
@@ -18,24 +13,22 @@ final class LifecycleComponent<Base: Renderable>: AnyRenderableBox<Base>, Compon
         willDisplayItem: (() -> Void)?,
         didEndDisplayingItem: (() -> Void)?
     ) {
-        self.source = AnyRenderableBox(source)
         self._willDisplayItem = willDisplayItem
         self._didEndDisplayingItem = didEndDisplayingItem
         super.init(source)
     }
 
-    override func cast<T>(to type: T.Type) -> T? {
-        if type == ComponentLifecycleAware.self {
-            return self as? T
-        }
-        return source.cast(to: type)
-    }
+    // NOTE: ⚠️ WARNING
+    // These callbacks should not provide users direct access to the view hierarchy, as per the Bento Component
+    // Contract.
 
-    func willDisplayItem() {
+    override func willDisplay(_ view: UIView) {
+        super.willDisplay(view)
         _willDisplayItem?()
     }
 
-    func didEndDisplayingItem() {
+    override func didEndDisplaying(_ view: UIView) {
+        super.didEndDisplaying(view)
         _didEndDisplayingItem?()
     }
 }

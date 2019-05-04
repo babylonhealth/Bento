@@ -46,11 +46,4 @@ final class ComponentLifecycleAwareTests: XCTestCase {
 
         expect(called) == true
     }
-
-    func test_componend_is_lifeCycleAware_when_composed_with_other() {
-        let component = DummyComponent().on()
-            .deletable(deleteActionText: "", didDelete: {})
-
-        expect(component.cast(to: ComponentLifecycleAware.self)).toNot(beNil())
-    }
 }
