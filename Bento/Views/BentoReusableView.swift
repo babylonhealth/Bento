@@ -24,19 +24,14 @@ extension BentoReusableView {
     }
 
     func willDisplayView() {
-        component?
-            .cast(to: ComponentLifecycleAware.self)?
-            .willDisplayItem()
-
+        component?.willDisplay()
         containedView?.enumerateAllViewsAndSelf { view in
             (view as? ViewLifecycleAware)?.willDisplayView()
         }
     }
 
     func didEndDisplayingView() {
-        component?
-            .cast(to: ComponentLifecycleAware.self)?
-            .didEndDisplayingItem()
+        component?.didEndDisplaying()
 
         containedView?.enumerateAllViewsAndSelf { view in
             (view as? ViewLifecycleAware)?.didEndDisplayingView()

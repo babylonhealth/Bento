@@ -6,12 +6,18 @@ public protocol Renderable {
     associatedtype View: NativeView
 
     func render(in view: View)
+
+    func willDisplay()
+    func didEndDisplaying()
 }
 
 public extension Renderable {
     func asAnyRenderable() -> AnyRenderable {
         return AnyRenderable(self)
     }
+
+    func willDisplay() {}
+    func didEndDisplaying() {}
 
     func deletable(
         deleteActionText: String,
