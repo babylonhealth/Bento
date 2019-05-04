@@ -8,8 +8,17 @@ public protocol ViewLifecycleAware {
     func didEndDisplayingView()
 }
 
+extension Renderable {
+    public func on(willDisplayItem: (() -> Void)? = nil, didEndDisplayingItem: (() -> Void)? = nil) -> AnyRenderable {
+        return LifecycleComponent(
+            source: self,
+            willDisplayItem: willDisplayItem,
+            didEndDisplayingItem: didEndDisplayingItem
+        ).asAnyRenderable()
+    }
+}
+
 final class LifecycleComponent<Base: Renderable>: AnyRenderableBox<Base>, ComponentLifecycleAware {
-    private let source: AnyRenderableBox<Base>
     private let _willDisplayItem: (() -> Void)?
     private let _didEndDisplayingItem: (() -> Void)?
 
@@ -18,7 +27,6 @@ final class LifecycleComponent<Base: Renderable>: AnyRenderableBox<Base>, Compon
         willDisplayItem: (() -> Void)?,
         didEndDisplayingItem: (() -> Void)?
     ) {
-        self.source = AnyRenderableBox(source)
         self._willDisplayItem = willDisplayItem
         self._didEndDisplayingItem = didEndDisplayingItem
         super.init(source)
@@ -28,7 +36,7 @@ final class LifecycleComponent<Base: Renderable>: AnyRenderableBox<Base>, Compon
         if type == ComponentLifecycleAware.self {
             return self as? T
         }
-        return source.cast(to: type)
+        return super.cast(to: type)
     }
 
     func willDisplayItem() {

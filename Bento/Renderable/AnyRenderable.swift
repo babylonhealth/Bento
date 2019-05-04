@@ -98,6 +98,14 @@ class AnyRenderableBox<Base: Renderable>: AnyRenderableBoxBase {
         }
         return base as? T
     }
+
+    override func didMount(to view: UIView, storage: ViewStorage) {
+        base.didMount(to: view as! Base.View, storage: storage)
+    }
+
+    override func willUnmount(from view: UIView, storage: ViewStorage) {
+        base.willUnmount(from: view as! Base.View, storage: storage)
+    }
 }
 
 class AnyRenderableBoxBase {
@@ -111,4 +119,6 @@ class AnyRenderableBoxBase {
     }
     func render(in view: UIView) { fatalError() }
     func cast<T>(to type: T.Type) -> T? { fatalError() }
+    func didMount(to view: UIView, storage: ViewStorage) { fatalError() }
+    func willUnmount(from view: UIView, storage: ViewStorage) { fatalError() }
 }

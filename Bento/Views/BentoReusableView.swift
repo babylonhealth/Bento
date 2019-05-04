@@ -1,16 +1,44 @@
-protocol BentoReusableView: AnyObject {
-    var containedView: UIView? { get set }
-    var contentView: UIView { get }
+protocol BentoReusableView: NativeView {
+    var containedView: NativeView? { get set }
+    var contentView: NativeView { get }
     var component: AnyRenderable? { get set }
+    var storage: [StorageKey: Any] { get set }
+}
+
+struct StorageKey: Hashable {
+    let component: Any.Type
+    let identifier: ObjectIdentifier
+
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(ObjectIdentifier(component))
+        hasher.combine(identifier)
+    }
+
+    static func == (lhs: StorageKey, rhs: StorageKey) -> Bool {
+        return lhs.component == rhs.component && lhs.identifier == rhs.identifier
+    }
 }
 
 extension BentoReusableView {
     func bind(_ component: AnyRenderable?) {
+        let oldComponent = component
+
+        // Notify the old component, and clear the view storage.
+        oldComponent.zip(with: containedView) {
+            $0.willUnmount(
+                from: $1,
+                storage: ViewStorage(componentType: $0.componentType, view: self)
+            )
+        }
+        storage = [:]
+
+        // Set the new component.
         self.component = component
+
         if let component = component {
             let renderingView: UIView
 
-            if let view = containedView, type(of: view) == component.viewType {
+            if let view = containedView, oldComponent?.componentType == component.componentType {
                 renderingView = view
             } else {
                 renderingView = component.viewType.generate()
@@ -18,6 +46,10 @@ extension BentoReusableView {
             }
 
             component.render(in: renderingView)
+            component.didMount(
+                to: renderingView,
+                storage: ViewStorage(componentType: component.componentType, view: self)
+            )
         } else {
             containedView = nil
         }

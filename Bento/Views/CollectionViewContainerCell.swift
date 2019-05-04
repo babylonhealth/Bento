@@ -8,6 +8,7 @@ final class CollectionViewContainerCell: UICollectionViewCell {
     }
 
     var component: AnyRenderable?
+    var storage: [StorageKey : Any] = [:]
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -17,6 +18,10 @@ final class CollectionViewContainerCell: UICollectionViewCell {
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    deinit {
+        bind(nil)
     }
 
     override func responds(to aSelector: Selector!) -> Bool {

@@ -8,6 +8,7 @@ final class TableViewContainerCell: UITableViewCell {
     }
 
     var component: AnyRenderable?
+    var storage: [StorageKey : Any] = [:]
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -19,6 +20,10 @@ final class TableViewContainerCell: UITableViewCell {
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         selectionStyle = .none
+    }
+
+    deinit {
+        bind(nil)
     }
 
     override func responds(to aSelector: Selector!) -> Bool {
