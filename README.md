@@ -22,6 +22,7 @@ In our experience it makes UI-related code easier to build and maintain. Our aim
 - [Development installation](#development-installation-)
 - [State of the project](#state-of-the-project-%EF%B8%8F)
 - [Development Resources](#development-resources)
+  - [Bento Component Contract](Documentation/ComponentContract.md)
 - [Contributing](#contributing-%EF%B8%8F)
 
 ### Installation 💾
@@ -254,7 +255,7 @@ Carthage Support | ✅
 Free functions as alternative to the operators | ❌
 
 ### Development Resources
-- [Bento Component Contract](Bento/Diff/ComponentContract.md)
+- [Bento Component Contract](Documentation/ComponentContract.md)
 
   Define requirements that must be complied by the components from Bento, and best practices for developing a custom component.
 
