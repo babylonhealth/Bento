@@ -20,6 +20,7 @@
 		58801195216271DB0084EE07 /* TitledDescriptionLegacySnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5880118A216271DA0084EE07 /* TitledDescriptionLegacySnapshotTests.swift */; };
 		5880119E216272C30084EE07 /* Device.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5880119D216272C30084EE07 /* Device.swift */; };
 		588011A02162740C0084EE07 /* FBSnapshotTestCaseExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5880119F2162740C0084EE07 /* FBSnapshotTestCaseExtensions.swift */; };
+		6548A8EB21EC5D8100F35AF4 /* ScreenLifecycleEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6548A8EA21EC5D8100F35AF4 /* ScreenLifecycleEvent.swift */; };
 		65E4D8B3225D006300CA7CB3 /* BoxSizeCachingTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65E4D8B2225D006300CA7CB3 /* BoxSizeCachingTableView.swift */; };
 		74CECF3722675C2E00EC6927 /* Bool+Assertions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74CECF3222675C2D00EC6927 /* Bool+Assertions.swift */; };
 		74CECF3822675C2E00EC6927 /* NSLayoutConstraintExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74CECF3322675C2E00EC6927 /* NSLayoutConstraintExtensions.swift */; };
@@ -69,6 +70,7 @@
 		588011A121627D520084EE07 /* Result.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Result.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		588011A321627D570084EE07 /* ReactiveSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ReactiveSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		639430F94D2A3AB0B5FBBFF0 /* Pods_BentoKitTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BentoKitTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		6548A8EA21EC5D8100F35AF4 /* ScreenLifecycleEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenLifecycleEvent.swift; sourceTree = "<group>"; };
 		65E4D8B2225D006300CA7CB3 /* BoxSizeCachingTableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BoxSizeCachingTableView.swift; sourceTree = "<group>"; };
 		7468960822675DDD00363024 /* BentoKit.podspec */ = {isa = PBXFileReference; lastKnownFileType = text; name = BentoKit.podspec; path = ../BentoKit.podspec; sourceTree = "<group>"; };
 		74CECF3222675C2D00EC6927 /* Bool+Assertions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Bool+Assertions.swift"; path = "../../Common/Bool+Assertions.swift"; sourceTree = "<group>"; };
@@ -278,6 +280,7 @@
 				A6EC2DAB218B28AA002B128F /* BoxViewModel.swift */,
 				A6EC2DAC218B28AA002B128F /* BoxViewController.swift */,
 				A6EC2DAD218B28AA002B128F /* BoxRenderer.swift */,
+				6548A8EA21EC5D8100F35AF4 /* ScreenLifecycleEvent.swift */,
 			);
 			path = Screen;
 			sourceTree = "<group>";
@@ -418,6 +421,7 @@
 				A6EC2DB0218B28AA002B128F /* BoxViewModel.swift in Sources */,
 				74CECF3722675C2E00EC6927 /* Bool+Assertions.swift in Sources */,
 				A6EC2DB2218B28AA002B128F /* BoxRenderer.swift in Sources */,
+				6548A8EB21EC5D8100F35AF4 /* ScreenLifecycleEvent.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
