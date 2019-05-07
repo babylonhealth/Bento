@@ -266,6 +266,10 @@ Contributions are very welcome and highly appreciated! ❤️ Here's how to do i
 - If you have a feature request you can create an issue with a `Feature request` label;
 - If you found a bug feel free to create an issue with a `bug` label or open a PR with a fix.
 
+#### BentoKit
+`BentoKit` is deprecated and will be removed from this repo soon.
+Content of `BentoKit` has been merged into `Bento`.
+
 #### Image attributions
 
 [Coffee](https://pixabay.com/en/coffee-beans-coffee-beans-caffeine-3457587/)
