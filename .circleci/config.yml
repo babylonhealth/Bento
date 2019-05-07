@@ -12,7 +12,6 @@ jobs:
       - run: git submodule sync --recursive
       - run: git submodule update --init --recursive
       - run: script/test iphonesimulator "platform=iOS Simulator,name=iPhone 6,OS=12.2" Bento
-      - run: script/test iphonesimulator "platform=iOS Simulator,name=iPhone 6,OS=12.2" BentoKit
       - run: script/test iphonesimulator "platform=iOS Simulator,name=iPhone 6,OS=12.2" BentoExample build
 
 workflows:
