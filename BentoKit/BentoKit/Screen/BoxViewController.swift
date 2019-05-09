@@ -7,8 +7,8 @@ import UIKit
 open class BoxViewController<ViewModel: BoxViewModel, Renderer: BoxRenderer, Appearance>
 : UIViewController where ViewModel.State == Renderer.State, ViewModel.Action == Renderer.Action, Renderer.Appearance == Appearance {
     public let viewModel: ViewModel
-    private let rendererConfig: Renderer.Config
-    private let appearance: Property<Appearance>
+    public let rendererConfig: Renderer.Config
+    public let appearance: Property<Appearance>
     private let (traits, traitObserver) = Signal<UITraitCollection, NoError>.pipe()
     public let tableView: BoxSizeCachingTableView
 
