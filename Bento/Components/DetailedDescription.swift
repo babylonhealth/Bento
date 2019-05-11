@@ -231,31 +231,15 @@ private extension Component.DetailedDescription.View {
 }
 
 public extension Component.DetailedDescription {
-    public final class ContentStyleSheet: ViewStyleSheet<BaseStackView> {
+    public final class ContentStyleSheet: BaseStackViewStyleSheet<BaseStackView> {
         public typealias Alignment = UIStackView.Alignment
-
-        public var spacing: CGFloat
-        public var alignment: Alignment
-        public var isLayoutMarginsRelativeArrangement: Bool
 
         public init(
             spacing: CGFloat = 16,
             alignment: Alignment = .center,
             isLayoutMarginsRelativeArrangement: Bool = false
-            ) {
-            self.spacing = spacing
-            self.alignment = alignment
-            self.isLayoutMarginsRelativeArrangement = isLayoutMarginsRelativeArrangement
-        }
-
-        public override func apply(to element: BaseStackView) {
-            super.apply(to: element)
-            element.spacing = spacing
-            element.alignment = alignment
-            element.isLayoutMarginsRelativeArrangement = isLayoutMarginsRelativeArrangement
-            element.cornerRadius = cornerRadius
-            element.borderColor = borderColor?.cgColor
-            element.borderWidth = borderWidth
+        ) {
+            super.init(axis: .horizontal, spacing: spacing, distribution: .fill, alignment: alignment)
         }
     }
 

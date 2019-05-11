@@ -165,6 +165,7 @@
 		9AF4786A21205E3100F87E21 /* Supplement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AF4786921205E3100F87E21 /* Supplement.swift */; };
 		9AF4786C2120CA7500F87E21 /* BentoReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AF4786B2120CA7500F87E21 /* BentoReusableView.swift */; };
 		A6C9C8BD2180782500261906 /* Result.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A6C9C8B72180780E00261906 /* Result.framework */; };
+		A6CF5B712286DB4900ACAA9C /* BaseStackViewStyleSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6CF5B6F2286D9E400ACAA9C /* BaseStackViewStyleSheet.swift */; };
 		A9509880661501C40B50E453 /* TableViewHeaderFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A950970749997A21E1BF7777 /* TableViewHeaderFooterView.swift */; };
 		A9509C4FC3664040FF3649CD /* Node.swift in Sources */ = {isa = PBXBuildFile; fileRef = A95093DB10046D731018127D /* Node.swift */; };
 		A9509FB12CAD89179FAA03B0 /* Box.swift in Sources */ = {isa = PBXBuildFile; fileRef = A950967CC717BBF3B02B766D /* Box.swift */; };
@@ -384,6 +385,7 @@
 		A6C9C8B62180780E00261906 /* ReactiveFeedback.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ReactiveFeedback.framework; path = "../../../Library/Developer/Xcode/DerivedData/Bento-eondxvvtkrzdzbecwbypokilnrrj/Build/Products/Debug-iphoneos/ReactiveFeedback.framework"; sourceTree = "<group>"; };
 		A6C9C8B72180780E00261906 /* Result.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Result.framework; path = "../../../Library/Developer/Xcode/DerivedData/Bento-eondxvvtkrzdzbecwbypokilnrrj/Build/Products/Debug-iphoneos/Result.framework"; sourceTree = "<group>"; };
 		A6C9C8B82180780E00261906 /* Kingfisher.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Kingfisher.framework; path = "../../../Library/Developer/Xcode/DerivedData/Bento-eondxvvtkrzdzbecwbypokilnrrj/Build/Products/Debug-iphoneos/Kingfisher.framework"; sourceTree = "<group>"; };
+		A6CF5B6F2286D9E400ACAA9C /* BaseStackViewStyleSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseStackViewStyleSheet.swift; sourceTree = "<group>"; };
 		A95093DB10046D731018127D /* Node.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Node.swift; sourceTree = "<group>"; };
 		A950967CC717BBF3B02B766D /* Box.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Box.swift; sourceTree = "<group>"; };
 		A950970749997A21E1BF7777 /* TableViewHeaderFooterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewHeaderFooterView.swift; sourceTree = "<group>"; };
@@ -747,6 +749,7 @@
 				7448E85C2266427F0036B2D6 /* StyleSheet.swift */,
 				5B2CA2A822692E460046D712 /* StyleSheetProtocol.swift */,
 				7448E85E2266427F0036B2D6 /* ActivityIndicatorStyleSheet.swift */,
+				A6CF5B6F2286D9E400ACAA9C /* BaseStackViewStyleSheet.swift */,
 				7448E860226642800036B2D6 /* ButtonStyleSheet.swift */,
 				7448E863226642810036B2D6 /* ImageViewStyleSheet.swift */,
 				7448E85F226642800036B2D6 /* LabelStyleSheet.swift */,
@@ -1119,6 +1122,7 @@
 				7448E7E622660B260036B2D6 /* AutoRenderable.swift in Sources */,
 				7448E866226642820036B2D6 /* TextBoundComputing.swift in Sources */,
 				74CECF2E22675BD300EC6927 /* UIViewExtensions.swift in Sources */,
+				A6CF5B712286DB4900ACAA9C /* BaseStackViewStyleSheet.swift in Sources */,
 				9AF4786C2120CA7500F87E21 /* BentoReusableView.swift in Sources */,
 				7448E7E522660B210036B2D6 /* HeightCustomizing.swift in Sources */,
 				7448E865226642820036B2D6 /* SearchBarStyleSheet.swift in Sources */,
