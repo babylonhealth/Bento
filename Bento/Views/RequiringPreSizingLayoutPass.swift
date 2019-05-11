@@ -37,7 +37,7 @@ extension UIView {
 
     func triggerPresizingLayoutPassIfNeeded(forTargetSize size: CGSize) {
         if needsPresizingLayoutPass {
-            bounds.size = size
+            bounds.size.width = size.width
             layoutIfNeeded()
         }
     }
