@@ -37,6 +37,12 @@ extension UIView {
 
     func triggerPresizingLayoutPassIfNeeded(forTargetSize size: CGSize) {
         if needsPresizingLayoutPass {
+            // NOTE: the target size passed in always has a height of zero
+            // when called from `systemLayoutSizeFitting(_ targetSize: CGSize)`
+            // All we care about is the width. Setting the height to zero
+            // would make the cell render with zero height first then animate
+            // up to the correct height on every render pass.
+            // `layoutIfNeeded()` will take of setting the correct height.
             bounds.size.width = size.width
             layoutIfNeeded()
         }
