@@ -333,27 +333,45 @@ private extension Component.TitledDescription.View {
 }
 
 public extension Component.TitledDescription {
-    public final class ContentStyleSheet: ViewStyleSheet<BaseStackView> {
+    public final class ContentStyleSheet: StackViewStyleSheet<BaseStackView> {
         public typealias Alignment = UIStackView.Alignment
 
-        public var spacing: CGFloat
-        public var alignment: Alignment
-        public var isLayoutMarginsRelativeArrangement: Bool
+        public var backgroundColor: UIColor?
+        public var borderColor: UIColor?
+        public var cornerRadius: CGFloat
+        public var borderWidth: CGFloat
 
         public init(
             spacing: CGFloat = 16,
             alignment: Alignment = .center,
+            clipsToBounds: Bool = false,
+            backgroundColor: UIColor? = nil,
+            borderColor: UIColor? = nil,
+            cornerRadius: CGFloat = 0.0,
+            borderWidth: CGFloat = 0.0,
             isLayoutMarginsRelativeArrangement: Bool = false
-            ) {
-            self.spacing = spacing
-            self.alignment = alignment
-            self.isLayoutMarginsRelativeArrangement = isLayoutMarginsRelativeArrangement
+        ) {
+            self.backgroundColor = backgroundColor
+            self.borderColor = borderColor
+            self.cornerRadius = cornerRadius
+            self.borderWidth = borderWidth
+
+            super.init(
+                axis: .horizontal,
+                spacing: spacing,
+                distribution: .fill,
+                alignment: alignment,
+                isLayoutMarginsRelativeArrangement: isLayoutMarginsRelativeArrangement,
+                clipsToBounds: clipsToBounds
+            )
         }
 
-        public override func apply(to element: BaseStackView) {
+        public func apply(to element: BaseStackView) {
             super.apply(to: element)
             element.spacing = spacing
             element.alignment = alignment
+            element.clipsToBounds = clipsToBounds
+            element.backgroundColor = backgroundColor
             element.isLayoutMarginsRelativeArrangement = isLayoutMarginsRelativeArrangement
             element.cornerRadius = cornerRadius
             element.borderColor = borderColor?.cgColor
