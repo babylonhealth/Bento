@@ -1,4 +1,4 @@
-/// Existential type for reusable views (cell, header, footer) in `UITableView`, `UICollectionView`, etc.
+/// Protocol for reusable views (cell, header, footer) in `UITableView`, `UICollectionView`, etc.
 protocol BentoReusableView: AnyObject {
     /// The view to which `containedView` should be added.
     /// - Note: This is normally system-provided as `self`'s subview.
