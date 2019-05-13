@@ -4,7 +4,9 @@ protocol BentoReusableView: AnyObject {
     /// - Note: This is normally system-provided as `self`'s subview.
     var contentView: UIView { get }
 
-    /// `component`-generated view that will be added to `contentView`.
+    /// The component root view that is currently added in `contentView`.
+    /// If the existing view is no longer compatible with the newly set `component`,
+    /// a new compatible view should be instantiated to replace it.
     /// - Note: Subtype of this instance can conform to `ViewLifecycleAware` to allow display handling.
     var containedView: UIView? { get set }
 
