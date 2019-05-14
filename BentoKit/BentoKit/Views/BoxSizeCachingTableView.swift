@@ -226,7 +226,7 @@ extension BoxSizeCachingTableView: MultilineTextInputAware {
 
         UIView.setAnimationsEnabled(false)
         beginUpdates()
-        adapterStore.invalidateSize(at: indexPath)
+        sizeInvalidator.invalidateSize(at: indexPath)
         endUpdates()
         UIView.setAnimationsEnabled(true)
 
