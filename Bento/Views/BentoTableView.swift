@@ -207,11 +207,6 @@ open class BentoTableView: UITableView {
 
 extension BentoTableView: MultilineTextInputAware {
     @objc public func multilineTextInputHeightDidChange(_ sender: Any) {
-        UIView.setAnimationsEnabled(false)
-        beginUpdates()
-        endUpdates()
-        UIView.setAnimationsEnabled(true)
-
         func searchCellContainer(of view: UIView) -> UITableViewCell? {
             if let cell = view as? UITableViewCell {
                 return cell
@@ -224,6 +219,12 @@ extension BentoTableView: MultilineTextInputAware {
             let containingCell = searchCellContainer(of: view),
             let indexPath = indexPath(for: containingCell)
             else { return }
+
+        UIView.setAnimationsEnabled(false)
+        beginUpdates()
+        adapterStore.invalidateSize(at: indexPath)
+        endUpdates()
+        UIView.setAnimationsEnabled(true)
 
         self.scrollToRow(at: indexPath, at: .bottom, animated: false)
     }

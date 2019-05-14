@@ -3,6 +3,7 @@ internal protocol AdapterStoreAccessible: AnyObject {
     var layoutMargins: UIEdgeInsets { get set }
     var boundSize: CGSize { get set }
     var cachesSizeInformation: Bool { get set }
+    func invalidateSize(at indexPath: IndexPath)
 }
 
 /// Provide a default implementation for all adapter store owners.
@@ -27,5 +28,9 @@ extension AdapterStoreOwner {
     var cachesSizeInformation: Bool {
         get { return store.cachesSizeInformation }
         set { store.cachesSizeInformation = newValue }
+    }
+
+    func invalidateSize(at indexPath: IndexPath) {
+        store.invalidateSize(at: indexPath)
     }
 }

@@ -191,6 +191,28 @@ class AdapterStoreTests: XCTestCase {
         expect(store.size(forItemAt: [0, 0])) == CGSize(width: 1, height: 5000)
     }
 
+    func test_should_invalidate_cached_size() {
+        var store = TestStore()
+        store.cachesSizeInformation = true
+        store.boundSize = defaultBoundSize
+
+        let component = TestComponent(size: CGSize(width: 5000, height: 5000))
+
+        store.update(
+            with: [
+                Section(id: 0, items: [Node(id: 0, component: component)])
+            ],
+            knownSupplements: []
+        )
+
+        expect(store.size(forItemAt: [0, 0])) == CGSize(width: 5000, height: 5000)
+
+        component.size = CGSize(width: 1000, height: 1000)
+        store.invalidateSize(at: [0, 0])
+        expect(store.size(forItemAt: [0, 0], allowEstimation: true)) == CGSize(width: 5000, height: 5000)
+        expect(store.size(forItemAt: [0, 0])) == CGSize(width: 1000, height: 1000)
+    }
+
     private func makeSingleSectionWithSingleItem(value: CGFloat) -> [Section<Int, Int>] {
         return [
             Section(
@@ -449,8 +471,8 @@ struct NoSizePlaceholder: Renderable {
     func render(in view: UIView) {}
 }
 
-struct TestComponent: Renderable {
-    let size: CGSize
+final class TestComponent: Renderable {
+    var size: CGSize
 
     init(size: CGSize) {
         self.size = size
