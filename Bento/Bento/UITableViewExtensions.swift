@@ -56,11 +56,15 @@ extension UITableView {
         return getAdapter()
     }
 
-    var adapterStore: AdapterStoreAccessible {
+    internal var adapterStore: AdapterStoreAccessible {
         let adapter = typeErasedAdapter
         precondition(adapter != nil, "You must access the adapter store directly only after the adapter has been configured.")
 
         return typeErasedAdapter as! AdapterStoreAccessible
+    }
+
+    public var sizeInvalidator: SizeInvalidationSupporting {
+        return adapterStore as SizeInvalidationSupporting
     }
 
     var typeErasedAdapter: AnyObject? {
