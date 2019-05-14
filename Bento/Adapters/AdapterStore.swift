@@ -135,6 +135,10 @@ struct AdapterStore<SectionID: Hashable, ItemID: Hashable> {
         }
     }
 
+    mutating func invalidateSize(at indexPath: IndexPath) {
+        info[indexPath.section].items[indexPath.row].invalidate()
+    }
+
     mutating func resetCachedInfo() {
         info = Array(repeating: SectionInfo(), count: sections.count)
         for index in info.indices {
