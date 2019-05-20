@@ -39,6 +39,12 @@ final class CollectionViewContainerCell: UICollectionViewCell {
 
         return component
     }
+
+    override func prepareForReuse() {
+        super.prepareForReuse()
+
+        bind(nil)
+    }
 }
 
 extension CollectionViewContainerCell: BentoReusableView {}

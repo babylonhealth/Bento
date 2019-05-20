@@ -42,6 +42,12 @@ final class TableViewHeaderFooterView: UITableViewHeaderFooterView {
         return component
     }
 
+    override func prepareForReuse() {
+        super.prepareForReuse()
+
+        bind(nil)
+    }
+
     override func systemLayoutSizeFitting(
         _ targetSize: CGSize,
         withHorizontalFittingPriority horizontalFittingPriority: UILayoutPriority,

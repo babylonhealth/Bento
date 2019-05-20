@@ -41,6 +41,14 @@ public struct AnyRenderable: Renderable {
         base.render(in: view)
     }
 
+    public func didMount(to view: UIView, storage: ViewStorage) {
+        base.didMount(to: view, storage: storage)
+    }
+
+    public func willUnmount(from view: UIView, storage: ViewStorage) {
+        base.willUnmount(from: view, storage: storage)
+    }
+
     func cast<T>(to type: T.Type) -> T? {
         return base.cast(to: type)
     }

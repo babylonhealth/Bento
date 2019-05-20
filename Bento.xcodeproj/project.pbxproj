@@ -19,7 +19,7 @@
 		5829D273200FB092001E020D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5829D271200FB092001E020D /* LaunchScreen.storyboard */; };
 		582D9951217E196E00C67B0D /* MenuItemsResponding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 582D9950217E196E00C67B0D /* MenuItemsResponding.swift */; };
 		582D9987217F87B100C67B0D /* ComponentLifecycleAware.swift in Sources */ = {isa = PBXBuildFile; fileRef = 582D9986217F87B100C67B0D /* ComponentLifecycleAware.swift */; };
-		5830C5E721F22DDC0029044B /* ComponentLifecycleAware.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5830C5E621F22DDC0029044B /* ComponentLifecycleAware.swift */; };
+		5830C5E721F22DDC0029044B /* ComponentLifecycleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5830C5E621F22DDC0029044B /* ComponentLifecycleTests.swift */; };
 		58467B03202B33F200577C77 /* TableViewSectionDiff.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58467B02202B33F200577C77 /* TableViewSectionDiff.swift */; };
 		584A6F9E20C7E36D006395E8 /* FoodItemComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 584A6F9D20C7E36D006395E8 /* FoodItemComponent.swift */; };
 		584A6FA020C7E470006395E8 /* FoodItemView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 584A6F9F20C7E470006395E8 /* FoodItemView.xib */; };
@@ -226,7 +226,7 @@
 		5829D274200FB092001E020D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		582D9950217E196E00C67B0D /* MenuItemsResponding.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuItemsResponding.swift; sourceTree = "<group>"; };
 		582D9986217F87B100C67B0D /* ComponentLifecycleAware.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComponentLifecycleAware.swift; sourceTree = "<group>"; };
-		5830C5E621F22DDC0029044B /* ComponentLifecycleAware.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComponentLifecycleAware.swift; sourceTree = "<group>"; };
+		5830C5E621F22DDC0029044B /* ComponentLifecycleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComponentLifecycleTests.swift; sourceTree = "<group>"; };
 		58467B02202B33F200577C77 /* TableViewSectionDiff.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewSectionDiff.swift; sourceTree = "<group>"; };
 		584A6F9D20C7E36D006395E8 /* FoodItemComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodItemComponent.swift; sourceTree = "<group>"; };
 		584A6F9F20C7E470006395E8 /* FoodItemView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FoodItemView.xib; sourceTree = "<group>"; };
@@ -517,6 +517,7 @@
 				7448E8262266194F0036B2D6 /* BentoTableView.swift */,
 				65570423222E88A500EEE8EC /* RequiringPreSizingLayoutPass.swift */,
 				7448E80922660FDF0036B2D6 /* Resources.swift */,
+				A950945F6360B851C3E87B61 /* Adapters */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -539,7 +540,6 @@
 				7448E7C5226609F70036B2D6 /* Components */,
 				587F0716201B354900ACD219 /* Views */,
 				7448E8572266425F0036B2D6 /* StyleSheets */,
-				A950945F6360B851C3E87B61 /* Adapters */,
 				7448E7E422660AB40036B2D6 /* Protocols */,
 				65E4D8B4225D009500CA7CB3 /* CollectionViews+Public */,
 				7448E7F222660CD60036B2D6 /* Helpers */,
@@ -604,7 +604,7 @@
 				9A784700205EB5E000FA597E /* TestRenderable.swift */,
 				9A784702205EB61D00FA597E /* TestId.swift */,
 				58D27BA621B83B2700DC9600 /* DeletableTests.swift */,
-				5830C5E621F22DDC0029044B /* ComponentLifecycleAware.swift */,
+				5830C5E621F22DDC0029044B /* ComponentLifecycleTests.swift */,
 				651E75BF221005E300130866 /* UIKitContainerDiffApplicationTests.swift */,
 				5B6807932266818F006AA479 /* SizeCachingTableViewTests.swift */,
 				58FC4421207CF29F00DA3614 /* Info.plist */,
@@ -1176,7 +1176,7 @@
 				58FC4429207CF2BB00DA3614 /* TestRenderable.swift in Sources */,
 				7448E8492266220C0036B2D6 /* ButtonComponentSnapshotTests.swift in Sources */,
 				7448E835226621BF0036B2D6 /* FBSnapshotTestCaseExtensions.swift in Sources */,
-				5830C5E721F22DDC0029044B /* ComponentLifecycleAware.swift in Sources */,
+				5830C5E721F22DDC0029044B /* ComponentLifecycleTests.swift in Sources */,
 				7468960C2267629E00363024 /* DetailedDescriptionSnapshotTests.swift in Sources */,
 				7448E8472266220C0036B2D6 /* DescriptionComponentSnapshotTests.swift in Sources */,
 				7448E8412266220C0036B2D6 /* SearchSnapshotTests.swift in Sources */,

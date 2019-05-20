@@ -21,7 +21,7 @@ struct StorageKey: Hashable {
 
 extension BentoReusableView {
     func bind(_ component: AnyRenderable?) {
-        let oldComponent = component
+        let oldComponent = self.component
 
         // Notify the old component, and clear the view storage.
         oldComponent.zip(with: containedView) {
