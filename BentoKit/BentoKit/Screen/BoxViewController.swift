@@ -7,8 +7,8 @@ import UIKit
 open class BoxViewController<ViewModel: BoxViewModel, Renderer: BoxRenderer, Appearance>
 : UIViewController where ViewModel.State == Renderer.State, ViewModel.Action == Renderer.Action, Renderer.Appearance == Appearance {
     public let viewModel: ViewModel
-    private let rendererConfig: Renderer.Config
-    private let appearance: Property<Appearance>
+    public let rendererConfig: Renderer.Config
+    public let appearance: Property<Appearance>
     private let (traits, traitObserver) = Signal<UITraitCollection, NoError>.pipe()
     public let tableView: BoxSizeCachingTableView
 
@@ -42,6 +42,18 @@ open class BoxViewController<ViewModel: BoxViewModel, Renderer: BoxRenderer, App
         }
     }
 
+    private var isPresentedInitially: Bool {
+        return (parent != nil && isMovingToParent)
+            || (presentingViewController != nil && isBeingPresented)
+            || (parent == nil && presentingViewController == nil)
+    }
+
+    private var isRemovedPermanently: Bool {
+        return (parent != nil && isMovingFromParent)
+            || (presentingViewController != nil && isBeingDismissed)
+            || (parent == nil && presentingViewController == nil)
+    }
+
     public init(viewModel: ViewModel,
                 renderer: Renderer.Type,
                 rendererConfig: Renderer.Config,
@@ -66,6 +78,8 @@ open class BoxViewController<ViewModel: BoxViewModel, Renderer: BoxRenderer, App
         super.viewDidLoad()
         setupTableViews()
         setupLayout()
+
+        viewModel.send(.didLoad)
     }
 
     open override func viewWillAppear(_ animated: Bool) {
@@ -78,11 +92,15 @@ open class BoxViewController<ViewModel: BoxViewModel, Renderer: BoxRenderer, App
 
             bindViewModel()
         }
+
+        viewModel.send(.willAppear(isPresentedInitially: isPresentedInitially))
     }
 
     open override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         hasViewAppeared.value = true
+
+        viewModel.send(.didAppear(isPresentedInitially: isPresentedInitially))
 
         keyboardChangeDisposable = NotificationCenter.default.reactive
             .keyboard(.willChangeFrame)
@@ -117,11 +135,16 @@ open class BoxViewController<ViewModel: BoxViewModel, Renderer: BoxRenderer, App
     open override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         hasViewAppeared.value = false
+
+        viewModel.send(.willDisappear(isRemovedPermanently: isRemovedPermanently))
+
     }
 
     open override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         keyboardChangeDisposable?.dispose()
+
+        viewModel.send(.didDisappear(isRemovedPermanently: isRemovedPermanently))
     }
 
     open override func viewDidLayoutSubviews() {

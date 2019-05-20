@@ -1,5 +1,15 @@
 import UIKit
 
+public protocol AnyRenderableConvertible {
+    func asAnyRenderable() -> AnyRenderable
+}
+
+public extension AnyRenderableConvertible where Self: Renderable {
+    func asAnyRenderable() -> AnyRenderable {
+        return AnyRenderable(self)
+    }
+}
+
 public struct AnyRenderable: Renderable {
     /// The runtime view type of the wrapped `Renderable`.
     public var viewType: NativeView.Type {
@@ -78,6 +88,10 @@ public struct AnyRenderable: Renderable {
 
         return view
     }
+    
+    public func asAnyRenderable() -> AnyRenderable {
+        return self
+    }
 }
 
 class AnyRenderableBox<Base: Renderable>: AnyRenderableBoxBase {
@@ -121,12 +135,15 @@ class AnyRenderableBoxBase {
     var componentType: Any.Type { fatalError() }
 
     init() {}
-
-    func asAnyRenderable() -> AnyRenderable {
-        return AnyRenderable(self)
-    }
+    
     func render(in view: UIView) { fatalError() }
     func cast<T>(to type: T.Type) -> T? { fatalError() }
     func willDisplay(_ view: UIView) { fatalError() }
     func didEndDisplaying(_ view: UIView) { fatalError() }
+}
+
+extension AnyRenderableBox: AnyRenderableConvertible {
+    func asAnyRenderable() -> AnyRenderable {
+        return AnyRenderable(self)
+    }
 }

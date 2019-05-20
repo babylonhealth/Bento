@@ -2,7 +2,7 @@ import UIKit
 
 /// Protocol which every Component needs to conform to.
 /// - View: UIView subtype which is the top level view type of the component.
-public protocol Renderable {
+public protocol Renderable: AnyRenderableConvertible {
     associatedtype View: NativeView
 
     func render(in view: View)
