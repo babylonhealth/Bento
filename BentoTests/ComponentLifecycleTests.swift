@@ -46,13 +46,6 @@ final class ComponentLifecycleTests: XCTestCase {
         expect(called) == true
     }
 
-    func test_component_is_lifeCycleAware_when_composed_with_other() {
-        let component = DummyComponent().on()
-            .deletable(deleteActionText: "", didDelete: {})
-
-        expect(component.cast(to: ComponentLifecycleAware.self)).toNot(beNil())
-    }
-
     func test_didMount_willUnmount() {
         let tester = MountEventTester()
         let tableView = UITableView(frame: CGRect(x: 0, y: 0, width: 320, height: 100))

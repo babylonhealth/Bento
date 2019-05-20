@@ -49,6 +49,14 @@ public struct AnyRenderable: Renderable {
         base.willUnmount(from: view, storage: storage)
     }
 
+    public func willDisplay(_ view: UIView) {
+        base.willDisplay(view)
+    }
+
+    public func didEndDisplaying(_ view: UIView) {
+        base.didEndDisplaying(view)
+    }
+
     func cast<T>(to type: T.Type) -> T? {
         return base.cast(to: type)
     }
@@ -128,6 +136,14 @@ class AnyRenderableBox<Base: Renderable>: AnyRenderableBoxBase {
     override func willUnmount(from view: UIView, storage: ViewStorage) {
         base.willUnmount(from: view as! Base.View, storage: storage)
     }
+
+    override func willDisplay(_ view: UIView) {
+        base.willDisplay(view as! Base.View)
+    }
+
+    override func didEndDisplaying(_ view: UIView) {
+        base.didEndDisplaying(view as! Base.View)
+    }
 }
 
 class AnyRenderableBoxBase {
@@ -140,6 +156,8 @@ class AnyRenderableBoxBase {
     func cast<T>(to type: T.Type) -> T? { fatalError() }
     func didMount(to view: UIView, storage: ViewStorage) { fatalError() }
     func willUnmount(from view: UIView, storage: ViewStorage) { fatalError() }
+    func willDisplay(_ view: UIView) { fatalError() }
+    func didEndDisplaying(_ view: UIView) { fatalError() }
 }
 
 extension AnyRenderableBox: AnyRenderableConvertible {

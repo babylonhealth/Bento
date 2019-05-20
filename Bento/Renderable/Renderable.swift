@@ -31,6 +31,9 @@ public protocol Renderable: AnyRenderableConvertible {
     ///   - view: The host native view the component is to be unmounted from.
     ///   - storage: The view storage with additional dynamic data from `didMount(to:storage:)`.
     func willUnmount(from view: View, storage: ViewStorage)
+
+    func willDisplay(_ view: View)
+    func didEndDisplaying(_ view: View)
 }
 
 extension Renderable {
@@ -38,6 +41,8 @@ extension Renderable {
         return AnyRenderable(self)
     }
 
+    public func willDisplay(_ view: View) {}
+    public func didEndDisplaying(_ view: View) {}
     public func didMount(to view: View, storage: ViewStorage) {}
     public func willUnmount(from view: View, storage: ViewStorage) {}
 }
