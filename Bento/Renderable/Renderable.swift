@@ -6,9 +6,19 @@ public protocol Renderable: AnyRenderableConvertible {
     associatedtype View: NativeView
 
     func render(in view: View)
+
+    func willDisplay(_ view: View)
+    func didEndDisplaying(_ view: View)
 }
 
 public extension Renderable {
+    func asAnyRenderable() -> AnyRenderable {
+        return AnyRenderable(self)
+    }
+
+    func willDisplay(_ view: View) {}
+    func didEndDisplaying(_ view: View) {}
+
     func deletable(
         deleteActionText: String,
         backgroundColor: UIColor? = nil,
