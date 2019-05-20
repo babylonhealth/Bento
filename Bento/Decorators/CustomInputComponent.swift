@@ -11,7 +11,7 @@ extension Renderable {
             customInput: input,
             contentStatus: contentStatus,
             highlightColor: highlightColor
-            ).asAnyRenderable()
+        ).asAnyRenderable()
     }
 }
 
