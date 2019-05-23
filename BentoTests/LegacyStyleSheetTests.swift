@@ -79,14 +79,8 @@ class LegacyStyleSheetTests: XCTestCase {
         let stackView = UIStackView()
         let styleSheet = StackViewStyleSheet(axis: .vertical, spacing: 8, distribution: .fill, alignment: .fill)
         testStyleSheet(styleSheet, in: stackView, exemptions: [
-            "cornerRadius",
-            "masksToBounds",
-            "borderColor",
-            "borderWidth",
-            "shadowColor",
-            "shadowRadius",
-            "shadowOffset",
-            "shadowOpacity"
+            "isLayoutMarginsRelativeArrangement",
+            "isBaselineRelativeArrangement"
         ])
     }
 
