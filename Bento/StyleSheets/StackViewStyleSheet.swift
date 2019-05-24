@@ -1,5 +1,11 @@
 import UIKit
 
+/// A stylesheet which can configure any instance of `UIStackView`.
+///
+/// `UIStackView` is a nonrendering subclass of `UIView` and because of that we cannot inherit from `ViewStyleSheet` due
+/// the majority of the properties of a view cannot be applied to a stack view. This stylsheet focus in managing all the
+/// configuration characteristic of any `UIStackView` which goes from the `axis` to `distribution` but also includes
+/// some more general properties like `layoutMargins` and `clipToBounds`.
 open class StackViewStyleSheet<View: UIStackView>: StyleSheetProtocol {
     public var axis: NSLayoutConstraint.Axis
     public var spacing: CGFloat
