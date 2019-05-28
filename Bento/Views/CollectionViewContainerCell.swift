@@ -21,7 +21,7 @@ final class CollectionViewContainerCell: UICollectionViewCell {
     }
 
     deinit {
-        bind(nil)
+        unbindIfNeeded()
     }
 
     override func responds(to aSelector: Selector!) -> Bool {
@@ -43,7 +43,7 @@ final class CollectionViewContainerCell: UICollectionViewCell {
     override func prepareForReuse() {
         super.prepareForReuse()
 
-        bind(nil)
+        unbindIfNeeded()
     }
 }
 

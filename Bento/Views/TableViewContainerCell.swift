@@ -23,7 +23,7 @@ final class TableViewContainerCell: UITableViewCell {
     }
 
     deinit {
-        bind(nil)
+        unbindIfNeeded()
     }
 
     override func responds(to aSelector: Selector!) -> Bool {
@@ -45,7 +45,7 @@ final class TableViewContainerCell: UITableViewCell {
     override func prepareForReuse() {
         super.prepareForReuse()
 
-        bind(nil)
+        unbindIfNeeded()
     }
 
     override func systemLayoutSizeFitting(

@@ -20,11 +20,37 @@ struct StorageKey: Hashable {
 }
 
 extension BentoReusableView {
-    func bind(_ component: AnyRenderable?) {
-        let oldComponent = self.component
+    func bind(_ component: AnyRenderable) {
+        // NOTE: Unbind without removing view.
+        let oldComponent = unbindIfNeeded(removesView: false)
 
+        // Set the new component.
+        self.component = component
+
+        let renderingView: UIView
+
+        if let view = containedView, oldComponent?.componentType == component.componentType {
+            renderingView = view
+        } else {
+            renderingView = component.viewType.generate()
+            containedView = renderingView
+        }
+
+        component.render(in: renderingView)
+        component.didMount(
+            to: renderingView,
+            storage: ViewStorage(componentType: component.componentType, view: self)
+        )
+    }
+
+    func unbindIfNeeded() {
+        unbindIfNeeded(removesView: true)
+    }
+
+    @discardableResult
+    private func unbindIfNeeded(removesView: Bool) -> AnyRenderable? {
         // Notify the old component, and clear the view storage.
-        oldComponent.zip(with: containedView) {
+        component.zip(with: containedView) {
             $0.willUnmount(
                 from: $1,
                 storage: ViewStorage(componentType: $0.componentType, view: self)
@@ -32,27 +58,14 @@ extension BentoReusableView {
         }
         storage = [:]
 
-        // Set the new component.
-        self.component = component
+        let component = self.component
+        self.component = nil
 
-        if let component = component {
-            let renderingView: UIView
-
-            if let view = containedView, oldComponent?.componentType == component.componentType {
-                renderingView = view
-            } else {
-                renderingView = component.viewType.generate()
-                containedView = renderingView
-            }
-
-            component.render(in: renderingView)
-            component.didMount(
-                to: renderingView,
-                storage: ViewStorage(componentType: component.componentType, view: self)
-            )
-        } else {
-            containedView = nil
+        if removesView {
+            self.containedView = nil
         }
+
+        return component
     }
 
     func willDisplayView() {

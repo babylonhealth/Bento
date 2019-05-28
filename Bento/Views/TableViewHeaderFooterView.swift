@@ -23,7 +23,7 @@ final class TableViewHeaderFooterView: UITableViewHeaderFooterView {
     }
 
     deinit {
-        bind(nil)
+        unbindIfNeeded()
     }
 
     override func responds(to aSelector: Selector!) -> Bool {
@@ -45,7 +45,7 @@ final class TableViewHeaderFooterView: UITableViewHeaderFooterView {
     override func prepareForReuse() {
         super.prepareForReuse()
 
-        bind(nil)
+        unbindIfNeeded()
     }
 
     override func systemLayoutSizeFitting(

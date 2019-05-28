@@ -50,8 +50,14 @@ struct CollectionViewSectionDiff<SectionID: Hashable, ItemID: Hashable> {
                 if let indexPaths = groups[source] {
                     for indexPath in indexPaths {
                         let view = collectionView.supplementaryView(forElementKind: elementKind, at: indexPath)
-                        let component = newSections[destination].supplements[supplement]
-                        (view as? BentoReusableView)?.bind(component)
+
+                        if let view = view as? BentoReusableView {
+                            if let component = newSections[destination].supplements[supplement] {
+                                view.bind(component)
+                            } else {
+                                view.unbindIfNeeded()
+                            }
+                        }
                     }
                 }
             }

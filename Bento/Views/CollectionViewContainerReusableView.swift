@@ -24,7 +24,7 @@ final class CollectionViewContainerReusableView: UICollectionReusableView {
     }
 
     deinit {
-        bind(nil)
+        unbindIfNeeded()
     }
 
     override func responds(to aSelector: Selector!) -> Bool {
@@ -46,7 +46,7 @@ final class CollectionViewContainerReusableView: UICollectionReusableView {
     override func prepareForReuse() {
         super.prepareForReuse()
 
-        bind(nil)
+        unbindIfNeeded()
     }
 }
 
