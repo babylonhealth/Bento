@@ -4,6 +4,16 @@ public protocol ViewLifecycleAware {
     func didEndDisplayingView()
 }
 
+extension Renderable {
+    public func on(willDisplayItem: (() -> Void)? = nil, didEndDisplayingItem: (() -> Void)? = nil) -> AnyRenderable {
+        return LifecycleComponent(
+            source: self,
+            willDisplayItem: willDisplayItem,
+            didEndDisplayingItem: didEndDisplayingItem
+        ).asAnyRenderable()
+    }
+}
+
 final class LifecycleComponent<Base: Renderable>: AnyRenderableBox<Base> {
     private let _willDisplayItem: (() -> Void)?
     private let _didEndDisplayingItem: (() -> Void)?

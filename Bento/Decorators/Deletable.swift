@@ -1,5 +1,20 @@
 import UIKit
 
+extension Renderable {
+    public func deletable(
+        deleteActionText: String,
+        backgroundColor: UIColor? = nil,
+        didDelete: @escaping () -> Void
+    ) -> AnyRenderable {
+        return DeletableComponent(
+            source: self,
+            deleteActionText: deleteActionText,
+            backgroundColor: backgroundColor,
+            didDelete: didDelete
+        ).asAnyRenderable()
+    }
+}
+
 protocol Deletable {
     var deleteActionText: String { get }
     var backgroundColor: UIColor? { get }
@@ -10,7 +25,6 @@ protocol Deletable {
 final class DeletableComponent<Base: Renderable>: AnyRenderableBox<Base>, Deletable {
     let deleteActionText: String
     let backgroundColor: UIColor?
-    private let source: AnyRenderableBox<Base>
     private let didDelete: () -> Void
 
     init(
@@ -21,7 +35,6 @@ final class DeletableComponent<Base: Renderable>: AnyRenderableBox<Base>, Deleta
     ) {
         self.deleteActionText = deleteActionText
         self.backgroundColor = backgroundColor
-        self.source = AnyRenderableBox<Base>(source)
         self.didDelete = didDelete
         super.init(source)
     }
@@ -30,7 +43,7 @@ final class DeletableComponent<Base: Renderable>: AnyRenderableBox<Base>, Deleta
         if type == Deletable.self {
             return self as? T
         }
-        return source.cast(to: type)
+        return super.cast(to: type)
     }
 
     func delete() {

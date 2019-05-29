@@ -8,6 +8,7 @@ final class TableViewHeaderFooterView: UITableViewHeaderFooterView {
     }
 
     var component: AnyRenderable?
+    var storage: [StorageKey : Any] = [:]
 
     override init(reuseIdentifier: String?) {
         super.init(reuseIdentifier: reuseIdentifier)
@@ -19,6 +20,10 @@ final class TableViewHeaderFooterView: UITableViewHeaderFooterView {
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    deinit {
+        unbindIfNeeded()
     }
 
     override func responds(to aSelector: Selector!) -> Bool {
@@ -35,6 +40,12 @@ final class TableViewHeaderFooterView: UITableViewHeaderFooterView {
         }
 
         return component
+    }
+
+    override func prepareForReuse() {
+        super.prepareForReuse()
+
+        unbindIfNeeded()
     }
 
     override func systemLayoutSizeFitting(

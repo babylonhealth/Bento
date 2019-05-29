@@ -77,7 +77,12 @@ open class CollectionViewAdapterBase<SectionID: Hashable, ItemID: Hashable>
             for: indexPath
         ) as! CollectionViewContainerReusableView
 
-        view.bind(component)
+        if let component = component {
+            view.bind(component)
+        } else {
+            view.unbindIfNeeded()
+        }
+
         return view
     }
 
