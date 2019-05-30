@@ -35,3 +35,11 @@ public struct Box<SectionID: Hashable, ItemID: Hashable> {
         return Box(sections: lhs.sections + [rhs])
     }
 }
+
+extension Box: CustomDebugStringConvertible {
+    public var debugDescription: String {
+        return "*** Bento: Box start" + sections.map {
+            "\n" + $0.debugDescription
+        }.joined() + "\n"
+    }
+}

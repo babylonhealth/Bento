@@ -40,3 +40,9 @@ public func |---+<Identifier>(lhs: Node<Identifier>, rhs: Node<Identifier>) -> [
 public func |---+<Identifier>(lhs: [Node<Identifier>], rhs: Node<Identifier>) -> [Node<Identifier>] {
     return lhs + [rhs]
 }
+
+extension Node: CustomDebugStringConvertible {
+    public var debugDescription: String {
+        return "\n*** Bento:----\(self.id)-(\(self.component.componentType))"
+    }
+}
