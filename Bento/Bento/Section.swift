@@ -95,11 +95,11 @@ extension Section: CustomDebugStringConvertible {
                 supplementType = name
             }
 
-            return "(\(supplementType): \(value.componentType))"
-        }.joined(separator: "-")
+            return "\(supplementType) = \(value.componentType);"
+        }.joined(separator: " ")
 
 
-        return "*** Bento:--\(self.id)\(supplementsString.isEmpty ? "" : "-")\(supplementsString)" + items.map {
+        return "🍱 <\(self.id); \(supplementsString)" + items.map {
             $0.debugDescription
         }.joined()
     }

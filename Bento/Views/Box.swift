@@ -38,8 +38,8 @@ public struct Box<SectionID: Hashable, ItemID: Hashable> {
 
 extension Box: CustomDebugStringConvertible {
     public var debugDescription: String {
-        return "*** Bento: Box start" + sections.map {
+        return "🍱 *** Bento: Box start" + sections.map {
             "\n" + $0.debugDescription
-        }.joined() + "\n"
+        }.joined() + "\n🍱 *** Bento: Box end\n"
     }
 }
