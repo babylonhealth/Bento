@@ -1,20 +1,23 @@
-protocol BentoReusableView: NativeView {
-    var containedView: NativeView? { get set }
-    var contentView: NativeView { get }
-    var component: AnyRenderable? { get set }
+public protocol ViewStorageOwner: NativeView {
     var storage: [StorageKey: Any] { get set }
 }
 
-struct StorageKey: Hashable {
+protocol BentoReusableView: ViewStorageOwner {
+    var containedView: NativeView? { get set }
+    var contentView: NativeView { get }
+    var component: AnyRenderable? { get set }
+}
+
+public struct StorageKey: Hashable {
     let component: Any.Type
     let identifier: ObjectIdentifier
 
-    func hash(into hasher: inout Hasher) {
+    public func hash(into hasher: inout Hasher) {
         hasher.combine(ObjectIdentifier(component))
         hasher.combine(identifier)
     }
 
-    static func == (lhs: StorageKey, rhs: StorageKey) -> Bool {
+    public static func == (lhs: StorageKey, rhs: StorageKey) -> Bool {
         return lhs.component == rhs.component && lhs.identifier == rhs.identifier
     }
 }
