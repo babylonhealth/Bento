@@ -35,7 +35,7 @@ public struct Section<SectionID: Hashable, ItemID: Hashable> {
                             .footer: AnyRenderable(footer)]
     }
 
-    internal init(id: SectionID, items: [Item], supplements: [Supplement: AnyRenderable]) {
+    public init(id: SectionID, items: [Item], supplements: [Supplement: AnyRenderable]) {
         self.id = id
         self.items = items
         self.supplements = supplements
