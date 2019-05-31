@@ -9,6 +9,7 @@ final class TableViewHeaderFooterView: UITableViewHeaderFooterView {
 
     var component: AnyRenderable?
     var storage: [StorageKey : Any] = [:]
+    var isDisplaying: Bool = false
 
     override init(reuseIdentifier: String?) {
         super.init(reuseIdentifier: reuseIdentifier)

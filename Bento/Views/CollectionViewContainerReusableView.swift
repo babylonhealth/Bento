@@ -13,6 +13,7 @@ final class CollectionViewContainerReusableView: UICollectionReusableView {
 
     var component: AnyRenderable?
     var storage: [StorageKey : Any] = [:]
+    var isDisplaying: Bool = false
 
     override init(frame: CGRect) {
         super.init(frame: frame)

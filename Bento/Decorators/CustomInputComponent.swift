@@ -15,13 +15,13 @@ extension Renderable {
     }
 }
 
-struct CustomInputComponent<Base: Renderable>: Renderable, Focusable {
+struct CustomInputComponent: Renderable, Focusable {
     let customInput: CustomInput
     let focusEligibility: FocusEligibility
     let highlightColor: UIColor?
-    let base: Base
+    let base: AnyRenderable
 
-    init(
+    init<Base: Renderable>(
         source: Base,
         customInput: CustomInput,
         contentStatus: FocusEligibility.ContentStatus,
@@ -29,7 +29,7 @@ struct CustomInputComponent<Base: Renderable>: Renderable, Focusable {
     ) {
         self.customInput = customInput
         self.highlightColor = highlightColor
-        self.base = source
+        self.base = AnyRenderable(source)
         self.focusEligibility = .eligible(contentStatus)
     }
 
@@ -39,7 +39,15 @@ struct CustomInputComponent<Base: Renderable>: Renderable, Focusable {
         view.highlightingGesture.highlightColor = highlightColor
         view.highlightingGesture.stylingView = view.containedView
 
-        base.render(in: view.containedView)
+        view.bind(base)
+    }
+
+    func willDisplay(_ view: CustomInputComponent.ComponentView) {
+        view.isDisplaying = true
+    }
+
+    func didEndDisplaying(_ view: CustomInputComponent.ComponentView) {
+        view.isDisplaying = false
     }
 }
 
@@ -59,12 +67,21 @@ extension CustomInputComponent {
 
         var customInputView: InputView?
         var focusToolbar: FocusToolbar?
-        let containedView = Base.View.generate() as! Base.View
+        var component: AnyRenderable?
+
+        var containedView: UIView?
+        var storage: [StorageKey : Any] = [:]
+
+        var isDisplaying: Bool = false {
+            didSet {
+                if oldValue != isDisplaying {
+                    visibilityDidChange()
+                }
+            }
+        }
 
         override init(frame: CGRect) {
             super.init(frame: frame)
-
-            containedView.add(to: self).pinEdges(to: self)
         }
 
         @available(*, unavailable)
@@ -117,6 +134,16 @@ extension CustomInputComponent {
             reloadInputViews()
         }
 
+        private func visibilityDidChange() {
+            guard let view = containedView else { return }
+
+            if isDisplaying {
+                component?.willDisplay(view)
+            } else {
+                component?.didEndDisplaying(view)
+            }
+        }
+
         @objc func keyboardDidDisappear() {
             if isFirstResponder { _ = resignFirstResponder() }
             customInputView = nil
@@ -128,4 +155,8 @@ extension CustomInputComponent {
             )
         }
     }
+}
+
+extension CustomInputComponent.ComponentView: BentoReusableView {
+    var contentView: UIView { return self }
 }
