@@ -39,7 +39,7 @@ struct CustomInputComponent: Renderable, Focusable {
         view.highlightingGesture.highlightColor = highlightColor
         view.highlightingGesture.stylingView = view.containedView
 
-        view.renderContent(base)
+        view.bind(base)
     }
 
     func willDisplay(_ view: CustomInputComponent.ComponentView) {
@@ -52,7 +52,7 @@ struct CustomInputComponent: Renderable, Focusable {
 }
 
 extension CustomInputComponent {
-    final class ComponentView: InteractiveView, FocusableView, ViewStorageOwner {
+    final class ComponentView: InteractiveView, FocusableView {
         var inputNodes: CustomInput? {
             didSet {
                 guard isFirstResponder else { return }
@@ -67,9 +67,11 @@ extension CustomInputComponent {
 
         var customInputView: InputView?
         var focusToolbar: FocusToolbar?
-        var containedComponent: AnyRenderable?
+        var component: AnyRenderable?
+
         var containedView: UIView?
         var storage: [StorageKey : Any] = [:]
+
         var isDisplaying: Bool = false {
             didSet {
                 if oldValue != isDisplaying {
@@ -127,34 +129,6 @@ extension CustomInputComponent {
             _ = becomeFirstResponder()
         }
 
-        fileprivate func renderContent(_ component: AnyRenderable) {
-            if containedComponent?.componentType == component.componentType,
-               let view = containedView,
-               type(of: view) == component.viewType {
-                component.render(in: view)
-                return
-            }
-
-            if let view = containedView, let oldComponent = containedComponent {
-                if isDisplaying {
-                    oldComponent.didEndDisplaying(view)
-                }
-
-                oldComponent.willUnmount(from: view, storage: ViewStorage(componentType: oldComponent.componentType, view: self))
-                view.removeFromSuperview()
-            }
-
-            containedView = component.viewType.generate().with {
-                $0.add(to: self).pinEdges(to: self)
-                component.didMount(to: $0, storage: ViewStorage(componentType: component.componentType, view: self))
-                component.render(in: $0)
-
-                if isDisplaying {
-                    component.willDisplay($0)
-                }
-            }
-        }
-
         private func neighboringFocusEligibilityDidChange() {
             focusToolbar?.updateFocusEligibility(with: self)
             reloadInputViews()
@@ -164,9 +138,9 @@ extension CustomInputComponent {
             guard let view = containedView else { return }
 
             if isDisplaying {
-                containedComponent?.willDisplay(view)
+                component?.willDisplay(view)
             } else {
-                containedComponent?.didEndDisplaying(view)
+                component?.didEndDisplaying(view)
             }
         }
 
@@ -181,4 +155,8 @@ extension CustomInputComponent {
             )
         }
     }
+}
+
+extension CustomInputComponent.ComponentView: BentoReusableView {
+    var contentView: UIView { return self }
 }

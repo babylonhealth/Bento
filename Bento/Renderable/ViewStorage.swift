@@ -1,8 +1,8 @@
 public struct ViewStorage {
     internal let componentType: Any.Type
-    internal let view: ViewStorageOwner
+    internal let view: BentoReusableView
 
-    internal init(componentType: Any.Type, view: ViewStorageOwner) {
+    internal init(componentType: Any.Type, view: BentoReusableView) {
         self.componentType = componentType
         self.view = view
     }

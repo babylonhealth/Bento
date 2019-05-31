@@ -1,11 +1,9 @@
-public protocol ViewStorageOwner: NativeView {
-    var storage: [StorageKey: Any] { get set }
-}
-
-protocol BentoReusableView: ViewStorageOwner {
+protocol BentoReusableView: NativeView {
     var containedView: NativeView? { get set }
     var contentView: NativeView { get }
     var component: AnyRenderable? { get set }
+    var storage: [StorageKey: Any] { get set }
+    var isDisplaying: Bool { get set }
 }
 
 public struct StorageKey: Hashable {
@@ -44,6 +42,10 @@ extension BentoReusableView {
             to: renderingView,
             storage: ViewStorage(componentType: component.componentType, view: self)
         )
+
+        if isDisplaying {
+            component.willDisplay(renderingView)
+        }
     }
 
     func unbindIfNeeded() {
@@ -54,6 +56,10 @@ extension BentoReusableView {
     private func unbindIfNeeded(removesView: Bool) -> AnyRenderable? {
         // Notify the old component, and clear the view storage.
         component.zip(with: containedView) {
+            if isDisplaying {
+                $0.didEndDisplaying($1)
+            }
+
             $0.willUnmount(
                 from: $1,
                 storage: ViewStorage(componentType: $0.componentType, view: self)
@@ -72,6 +78,8 @@ extension BentoReusableView {
     }
 
     func willDisplayView() {
+        isDisplaying = true
+
         if let containedView = containedView {
             component?.willDisplay(containedView)
 
@@ -82,6 +90,8 @@ extension BentoReusableView {
     }
 
     func didEndDisplayingView() {
+        isDisplaying = false
+
         if let containedView = containedView {
             component?.didEndDisplaying(containedView)
 
