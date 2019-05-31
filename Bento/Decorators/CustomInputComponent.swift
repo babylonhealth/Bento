@@ -69,7 +69,12 @@ extension CustomInputComponent {
         var focusToolbar: FocusToolbar?
         var component: AnyRenderable?
 
-        var containedView: UIView?
+        var containedView: UIView? {
+            didSet {
+                containerViewDidChange(from: oldValue, to: containedView)
+            }
+        }
+        
         var storage: [StorageKey : Any] = [:]
 
         var isDisplaying: Bool = false {
