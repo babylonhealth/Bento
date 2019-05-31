@@ -3,7 +3,7 @@ import Bento
 final class CustomInputSnapshotTests: SnapshotTestCase {
     override func setUp() {
         super.setUp()
-        self.recordMode = true
+        self.recordMode = false
     }
 
     func test_component_with_customInput_visible() {
@@ -12,15 +12,14 @@ final class CustomInputSnapshotTests: SnapshotTestCase {
             placeholder: "Placeholder",
             text: nil,
             styleSheet: Component.TextInput.StyleSheet()
+        ).customInput(Component.DatePicker(
+                date: Date(),
+                minDate: Date(),
+                calendar: Calendar.current,
+                datePickerMode: .date,
+                styleSheet: Component.DatePicker.StyleSheet()
+            )
         )
-//            .customInput(Component.DatePicker(
-//                date: Date(),
-//                minDate: Date(),
-//                calendar: Calendar.current,
-//                datePickerMode: .date,
-//                styleSheet: Component.DatePicker.StyleSheet()
-//            )
-//        )
 
         verifyComponentForAllSizes(component: component)
     }
