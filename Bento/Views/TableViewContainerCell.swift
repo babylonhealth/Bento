@@ -8,6 +8,8 @@ final class TableViewContainerCell: UITableViewCell {
     }
 
     var component: AnyRenderable?
+    var storage: [StorageKey : Any] = [:]
+    var isDisplaying: Bool = false
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -19,6 +21,10 @@ final class TableViewContainerCell: UITableViewCell {
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         selectionStyle = .none
+    }
+
+    deinit {
+        unbindIfNeeded()
     }
 
     override func responds(to aSelector: Selector!) -> Bool {
@@ -35,6 +41,12 @@ final class TableViewContainerCell: UITableViewCell {
         }
 
         return component
+    }
+
+    override func prepareForReuse() {
+        super.prepareForReuse()
+
+        unbindIfNeeded()
     }
 
     override func systemLayoutSizeFitting(

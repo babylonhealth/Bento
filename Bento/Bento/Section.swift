@@ -35,7 +35,7 @@ public struct Section<SectionID: Hashable, ItemID: Hashable> {
                             .footer: AnyRenderable(footer)]
     }
 
-    internal init(id: SectionID, items: [Item], supplements: [Supplement: AnyRenderable]) {
+    public init(id: SectionID, items: [Item], supplements: [Supplement: AnyRenderable]) {
         self.id = id
         self.items = items
         self.supplements = supplements
@@ -79,5 +79,28 @@ public struct Section<SectionID: Hashable, ItemID: Hashable> {
 
     public static func |---* (lhs: Section, rhs: [Item]) -> Section {
         return Section(id: lhs.id, items: lhs.items + rhs, supplements: lhs.supplements)
+    }
+}
+
+extension Section: CustomDebugStringConvertible {
+    public var debugDescription: String {
+        let supplementsString = supplements.map { key, value -> String in
+            let supplementType: String
+            switch key {
+            case .header:
+                supplementType = "header"
+            case .footer:
+                supplementType = "footer"
+            case let .custom(name):
+                supplementType = name
+            }
+
+            return "\(supplementType) = \(value.componentType);"
+        }.joined(separator: " ")
+
+
+        return "🍱 <\(self.id); \(supplementsString)" + items.map {
+            $0.debugDescription
+        }.joined()
     }
 }

@@ -49,14 +49,20 @@ struct TableViewSectionDiff<SectionId: Hashable, RowId: Hashable> {
         let visibleSections = tableView.visibleSections
 
         for (source, destination) in diff.sections.positionsOfMutations(amongVisible: visibleSections) {
-            if let headerView = tableView.headerView(forSection: source) {
-               let component = newSections[destination].supplements[.header]
-                (headerView as? BentoReusableView)?.bind(component)
+            if let headerView = tableView.headerView(forSection: source) as? BentoReusableView {
+                if let component = newSections[destination].supplements[.header] {
+                    headerView.bind(component)
+                } else {
+                    headerView.unbindIfNeeded()
+                }
             }
 
-            if let footerView = tableView.footerView(forSection: source) {
-               let component = newSections[destination].supplements[.footer]
-                (footerView as? BentoReusableView)?.bind(component)
+            if let footerView = tableView.footerView(forSection: source) as? BentoReusableView {
+                if let component = newSections[destination].supplements[.footer] {
+                    footerView.bind(component)
+                } else {
+                    footerView.unbindIfNeeded()
+                }
             }
         }
 

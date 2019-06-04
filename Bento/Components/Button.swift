@@ -182,7 +182,7 @@ extension Component.Button {
 }
 
 public extension Component.Button {
-    public final class StyleSheet: InteractiveViewStyleSheet<View> {
+    final class StyleSheet: InteractiveViewStyleSheet<View> {
         public let button: ButtonStyleSheet
         public let activityIndicator: ActivityIndicatorStyleSheet
         public var hugsContent: Bool
@@ -217,7 +217,7 @@ public extension Component.Button {
         }
     }
 
-    public enum Alignment {
+    enum Alignment {
         case leading
         case trailing
         case center
