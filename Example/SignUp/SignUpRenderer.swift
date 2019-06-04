@@ -30,7 +30,10 @@ final class SignUpRenderer {
             |-+ section(id: .credential, text: "Credential")
             |---+ email()
             |---* passwordComponents(state)
-            |---+ gender(state.gender)
+            |---+ Node(id: .space, component: EmptySpaceComponent(spec: EmptySpaceComponent.Spec(height: 300, color: .clear)))
+            |---+ Node(id: .space, component: IconTextComponent(title: "(Scroll down)"))
+            |---+ Node(id: .space, component: EmptySpaceComponent(spec: EmptySpaceComponent.Spec(height: 300, color: .clear)))
+            |---+ gender(state)
             |-? .iff(state.isSecurityQuestionsSectionVisible) {
                 self.section(id: .securityQuestion, text: "Security question")
                     |---+ self.securityQuestion(state)
@@ -113,19 +116,34 @@ final class SignUpRenderer {
         ]
     }
 
-    private func gender(_ gender: String?) -> Node<RowID> {
+    private func gender(_ state: SignUpPresenter.State) -> Node<RowID> {
         return Node(id: .gender, component:
             Component.DetailedDescription(
                 texts: [.plain("Gender")],
-                detail: .plain(gender ?? "Choose"),
-                accessory: .none,
+                detail: .plain(state.gender ?? "Choose"),
+                accessory: {
+                    switch state.pickerState {
+                    case .idle:
+                        return .chevron
+                    case .loading:
+                        return .activityIndicator
+                    case .showingPicker:
+                        return .none
+                    }
+                }(),
+                didTap: { [presenter] in
+                    presenter.didTapGender()
+                },
+                interactionBehavior: [],
                 styleSheet: descriptionStyleSheet
             ).customInput(
                 Component.OptionPicker(
                     options: Gender.allGenders,
-                    selected: gender.map(Gender.init(displayName:)),
+                    selected: state.gender.map(Gender.init(displayName:)),
                     didPickItem: { self.presenter.didChangeGender(to: $0.displayName) }
-                )
+                ),
+                focusEligibility: .ineligible,
+                focusesOnFirstDisplay: state.pickerState == .showingPicker
             )
         )
     }
@@ -208,6 +226,7 @@ final class SignUpRenderer {
         case securityQuestion
         case info
         case signUpAction
+        case space
     }
 
     enum RowID {

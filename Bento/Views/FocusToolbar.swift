@@ -6,7 +6,7 @@ public final class FocusToolbar: UIToolbar {
     private let doneButton: UIBarButtonItem
     private var view: (UIView & FocusableView)?
 
-    public init(view: UIView & FocusableView) {
+    public init(view: UIView & FocusableView, isFocusEnabled: Bool = true) {
         backwardButton = UIBarButtonItem(
             image: UIImage(named: "arrow_down", in: Resources.bundle, compatibleWith: nil)!,
             style: .plain,
@@ -31,12 +31,16 @@ public final class FocusToolbar: UIToolbar {
         forwardButton.action = #selector(forwardButtonPressed)
         doneButton.target = self
         doneButton.action = #selector(doneButtonPressed)
-        let items = [
-            forwardButton,
-            backwardButton,
+
+        var items = [UIBarButtonItem]()
+        if isFocusEnabled {
+            items.append(contentsOf: [forwardButton, backwardButton])
+        }
+        items.append(contentsOf: [
             UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil),
             doneButton
-        ]
+        ])
+
         setItems(items, animated: false)
         updateFocusEligibility(with: view)
     }
