@@ -25,7 +25,7 @@ final class TableViewContainerCell: UITableViewCell {
 
     deinit {
         // Using removesView: false to avoid crash described in CNSMR-1748
-        // (containedView.didSet will otherwise trigger AutoLayout from withing deinit and crash)
+        // (containedView.didSet will otherwise trigger AutoLayout from within deinit and crash)
         unbindIfNeeded(removesView: false)
     }
 
