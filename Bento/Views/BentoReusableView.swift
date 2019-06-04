@@ -53,7 +53,7 @@ extension BentoReusableView {
     }
 
     @discardableResult
-    private func unbindIfNeeded(removesView: Bool) -> AnyRenderable? {
+    func unbindIfNeeded(removesView: Bool) -> AnyRenderable? {
         // Notify the old component, and clear the view storage.
         component.zip(with: containedView) {
             if isDisplaying {
