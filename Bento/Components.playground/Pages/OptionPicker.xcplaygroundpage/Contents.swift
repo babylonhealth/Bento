@@ -3,12 +3,6 @@ import Bento
 import BentoPlaygroundSupport
 import PlaygroundSupport
 
-extension String: Option {
-    public var displayName: String {
-        return self
-    }
-}
-
 let component = Component.OptionPicker(
     options: [
         "🇬🇧",
