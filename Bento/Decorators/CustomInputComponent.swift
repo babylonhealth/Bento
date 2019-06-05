@@ -1,24 +1,43 @@
 import UIKit
 
 extension Renderable {
+    /// Sets up `customInput` to prepare for presention when user taps `self`.
     public func customInput(
         _ input: CustomInput,
-        focusEligibility: FocusEligibility = .eligible(.empty),
-        highlightColor: UIColor? = UIColor(red: 239/255.0, green: 239/255.0, blue: 244/255.0, alpha: 1),
-        focusesOnFirstDisplay: Bool = false
+        contentStatus: FocusEligibility.ContentStatus = .empty,
+        highlightColor: UIColor? = UIColor(red: 239/255.0, green: 239/255.0, blue: 244/255.0, alpha: 1)
     ) -> AnyRenderable {
         return CustomInputComponent(
             source: self,
             customInput: input,
-            focusEligibility: focusEligibility,
+            focusEligibility: .eligible(contentStatus),
             highlightColor: highlightColor,
-            focusesOnFirstDisplay: focusesOnFirstDisplay
+            focusesOnFirstDisplay: false
+        ).asAnyRenderable()
+    }
+
+    /// Sets up `customInput` to prepare for presention when user taps `self`,
+    /// and also presents it immediately when `state` is `.some`.
+    ///
+    /// - important: This method is useful when `customInput` needs to be displayed asynchronously after state change.
+    /// - note: Due to asynchronous presentation, `focusEligibility` is not supported.
+    public func customInputImmediately<State>(
+        when state: State?,
+        input: (State) -> CustomInput,
+        highlightColor: UIColor? = UIColor(red: 239/255.0, green: 239/255.0, blue: 244/255.0, alpha: 1)
+    ) -> AnyRenderable {
+        return CustomInputComponent(
+            source: self,
+            customInput: state.map(input),
+            focusEligibility: .ineligible,
+            highlightColor: highlightColor,
+            focusesOnFirstDisplay: state != nil
         ).asAnyRenderable()
     }
 }
 
 struct CustomInputComponent: Renderable, Focusable {
-    let customInput: CustomInput
+    let customInput: CustomInput?
     let focusEligibility: FocusEligibility
     let highlightColor: UIColor?
     let focusesOnFirstDisplay: Bool
@@ -27,7 +46,7 @@ struct CustomInputComponent: Renderable, Focusable {
 
     init<Base: Renderable>(
         source: Base,
-        customInput: CustomInput,
+        customInput: CustomInput?,
         focusEligibility: FocusEligibility,
         highlightColor: UIColor?,
         focusesOnFirstDisplay: Bool

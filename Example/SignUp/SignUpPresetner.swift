@@ -55,7 +55,8 @@ final class SignUpPresenter {
         state.pickerState = .loading
 
         DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: {
-            self.state.pickerState = .showingPicker
+            let serverResponse = Gender.allGenders  // NOTE: assuming this is server response
+            self.state.pickerState = .showingPicker(serverResponse)
         })
     }
 
@@ -156,5 +157,10 @@ final class SignUpPresenter {
 enum GenderPickerState {
     case idle
     case loading
-    case showingPicker
+    case showingPicker([Gender])
+
+    var showingPicker: [Gender]? {
+        guard case let .showingPicker(value) = self else { return nil }
+        return value
+    }
 }

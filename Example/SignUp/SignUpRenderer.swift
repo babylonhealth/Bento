@@ -136,14 +136,15 @@ final class SignUpRenderer {
                 },
                 interactionBehavior: [],
                 styleSheet: descriptionStyleSheet
-            ).customInput(
-                Component.OptionPicker(
-                    options: Gender.allGenders,
-                    selected: state.gender.map(Gender.init(displayName:)),
-                    didPickItem: { self.presenter.didChangeGender(to: $0.displayName) }
-                ),
-                focusEligibility: .ineligible,
-                focusesOnFirstDisplay: state.pickerState == .showingPicker
+            ).customInputImmediately(
+                when: state.pickerState.showingPicker,
+                input: { genders in
+                    Component.OptionPicker(
+                        options: genders,
+                        selected: state.gender.map(Gender.init(displayName:)),
+                        didPickItem: { self.presenter.didChangeGender(to: $0.displayName) }
+                    )
+                }
             )
         )
     }
