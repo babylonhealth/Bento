@@ -54,7 +54,3 @@ final class SignUpViewController: UIViewController, SignUpView, Navigator {
         tableView.render(box)
     }
 }
-
-extension String: Bento.Option {
-    public var displayName: String { return self }
-}
