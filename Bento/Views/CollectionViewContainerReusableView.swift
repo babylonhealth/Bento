@@ -25,7 +25,9 @@ final class CollectionViewContainerReusableView: UICollectionReusableView {
     }
 
     deinit {
-        unbindIfNeeded()
+        // Using removesView: false to avoid crash described in CNSMR-1748
+        // (containedView.didSet will otherwise trigger AutoLayout from within deinit and crash)
+        unbindIfNeeded(removesView: false)
     }
 
     override func responds(to aSelector: Selector!) -> Bool {
