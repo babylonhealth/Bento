@@ -215,6 +215,10 @@ open class TableViewAdapterBase<SectionID: Hashable, ItemID: Hashable>
     @objc(tableView:performAction:forRowAtIndexPath:withSender:)
     open func tableView(_ tableView: UITableView, performAction action: Selector, forRowAt indexPath: IndexPath, withSender sender: Any?) {}
 
+    public func invalidateSize(at indexPath: IndexPath) {
+        store.invalidateSize(at: indexPath)
+    }
+
     private func deleteRow(at indexPath: IndexPath, actionPerformed: ((Bool) -> Void)?) {
         let item = sections[indexPath.section].items[indexPath.row]
         guard let component = item.component(as: Deletable.self) else {

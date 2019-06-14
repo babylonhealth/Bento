@@ -33,8 +33,4 @@ extension AdapterStoreOwner {
         get { return store.cachesSizeInformation }
         set { store.cachesSizeInformation = newValue }
     }
-
-    public func invalidateSize(at indexPath: IndexPath) {
-        store.invalidateSize(at: indexPath)
-    }
 }
