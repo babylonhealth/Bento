@@ -8,6 +8,8 @@ final class TableViewContainerCell: UITableViewCell {
     }
 
     var component: AnyRenderable?
+    var storage: [StorageKey : Any] = [:]
+    var isDisplaying: Bool = false
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -19,6 +21,12 @@ final class TableViewContainerCell: UITableViewCell {
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         selectionStyle = .none
+    }
+
+    deinit {
+        // Using removesView: false to avoid crash described in CNSMR-1748
+        // (containedView.didSet will otherwise trigger AutoLayout from within deinit and crash)
+        unbindIfNeeded(removesView: false)
     }
 
     override func responds(to aSelector: Selector!) -> Bool {
@@ -35,6 +43,12 @@ final class TableViewContainerCell: UITableViewCell {
         }
 
         return component
+    }
+
+    override func prepareForReuse() {
+        super.prepareForReuse()
+
+        unbindIfNeeded()
     }
 
     override func systemLayoutSizeFitting(

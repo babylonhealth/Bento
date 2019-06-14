@@ -12,7 +12,7 @@ public extension Component {
     /// While `DetailedDescription` supports asynchronous loading for its image
     /// view, you are obligated to ensure a consistent fixed size across all
     /// changes.
-    public final class DetailedDescription: AutoRenderable {
+    final class DetailedDescription: AutoRenderable {
         public typealias Accessory = AccessoryView.Accessory
 
         public let configurator: (View) -> Void
@@ -231,35 +231,19 @@ private extension Component.DetailedDescription.View {
 }
 
 public extension Component.DetailedDescription {
-    public final class ContentStyleSheet: ViewStyleSheet<BaseStackView> {
+    final class ContentStyleSheet: BaseStackViewStyleSheet<BaseStackView> {
         public typealias Alignment = UIStackView.Alignment
-
-        public var spacing: CGFloat
-        public var alignment: Alignment
-        public var isLayoutMarginsRelativeArrangement: Bool
 
         public init(
             spacing: CGFloat = 16,
             alignment: Alignment = .center,
             isLayoutMarginsRelativeArrangement: Bool = false
-            ) {
-            self.spacing = spacing
-            self.alignment = alignment
-            self.isLayoutMarginsRelativeArrangement = isLayoutMarginsRelativeArrangement
-        }
-
-        public override func apply(to element: BaseStackView) {
-            super.apply(to: element)
-            element.spacing = spacing
-            element.alignment = alignment
-            element.isLayoutMarginsRelativeArrangement = isLayoutMarginsRelativeArrangement
-            element.cornerRadius = cornerRadius
-            element.borderColor = borderColor?.cgColor
-            element.borderWidth = borderWidth
+        ) {
+            super.init(axis: .horizontal, spacing: spacing, distribution: .fill, alignment: alignment)
         }
     }
 
-    public final class StyleSheet: InteractiveViewStyleSheet<View> {
+    final class StyleSheet: InteractiveViewStyleSheet<View> {
 
         public enum HighlightingTarget {
             case container

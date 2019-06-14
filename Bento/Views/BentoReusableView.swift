@@ -1,45 +1,103 @@
-protocol BentoReusableView: AnyObject {
-    var containedView: UIView? { get set }
-    var contentView: UIView { get }
+protocol BentoReusableView: NativeView {
+    var containedView: NativeView? { get set }
+    var contentView: NativeView { get }
     var component: AnyRenderable? { get set }
+    var storage: [StorageKey: Any] { get set }
+    var isDisplaying: Bool { get set }
+}
+
+public struct StorageKey: Hashable {
+    let component: Any.Type
+    let identifier: ObjectIdentifier
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(ObjectIdentifier(component))
+        hasher.combine(identifier)
+    }
+
+    public static func == (lhs: StorageKey, rhs: StorageKey) -> Bool {
+        return lhs.component == rhs.component && lhs.identifier == rhs.identifier
+    }
 }
 
 extension BentoReusableView {
-    func bind(_ component: AnyRenderable?) {
+    func bind(_ component: AnyRenderable) {
+        // NOTE: Unbind without removing view.
+        let oldComponent = unbindIfNeeded(removesView: false)
+
+        // Set the new component.
         self.component = component
-        if let component = component {
-            let renderingView: UIView
 
-            if let view = containedView, type(of: view) == component.viewType {
-                renderingView = view
-            } else {
-                renderingView = component.viewType.generate()
-                containedView = renderingView
-            }
+        let renderingView: UIView
 
-            component.render(in: renderingView)
+        if let view = containedView, oldComponent?.componentType == component.componentType {
+            renderingView = view
         } else {
-            containedView = nil
+            renderingView = component.viewType.generate()
+            containedView = renderingView
+        }
+
+        component.render(in: renderingView)
+        component.didMount(
+            to: renderingView,
+            storage: ViewStorage(componentType: component.componentType, view: self)
+        )
+
+        if isDisplaying {
+            component.willDisplay(renderingView)
         }
     }
 
-    func willDisplayView() {
-        component?
-            .cast(to: ComponentLifecycleAware.self)?
-            .willDisplayItem()
+    func unbindIfNeeded() {
+        unbindIfNeeded(removesView: true)
+    }
 
-        containedView?.enumerateAllViewsAndSelf { view in
-            (view as? ViewLifecycleAware)?.willDisplayView()
+    @discardableResult
+    func unbindIfNeeded(removesView: Bool) -> AnyRenderable? {
+        // Notify the old component, and clear the view storage.
+        component.zip(with: containedView) {
+            if isDisplaying {
+                $0.didEndDisplaying($1)
+            }
+
+            $0.willUnmount(
+                from: $1,
+                storage: ViewStorage(componentType: $0.componentType, view: self)
+            )
+        }
+        storage = [:]
+
+        let component = self.component
+        self.component = nil
+
+        if removesView {
+            self.containedView = nil
+        }
+
+        return component
+    }
+
+    func willDisplayView() {
+        isDisplaying = true
+
+        if let containedView = containedView {
+            component?.willDisplay(containedView)
+
+            containedView.enumerateAllViewsAndSelf { view in
+                (view as? ViewLifecycleAware)?.willDisplayView()
+            }
         }
     }
 
     func didEndDisplayingView() {
-        component?
-            .cast(to: ComponentLifecycleAware.self)?
-            .didEndDisplayingItem()
+        isDisplaying = false
 
-        containedView?.enumerateAllViewsAndSelf { view in
-            (view as? ViewLifecycleAware)?.didEndDisplayingView()
+        if let containedView = containedView {
+            component?.didEndDisplaying(containedView)
+
+            containedView.enumerateAllViewsAndSelf { view in
+                (view as? ViewLifecycleAware)?.didEndDisplayingView()
+            }
         }
     }
 }

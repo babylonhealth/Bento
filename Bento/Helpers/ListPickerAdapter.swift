@@ -4,6 +4,12 @@ public protocol Option: Equatable {
     var displayName: String { get }
 }
 
+extension String: Option {
+    public var displayName: String {
+        return self
+    }
+}
+
 public final class ListPickerAdapter<Option: Bento.Option>: NSObject, UIPickerViewDataSource, UIPickerViewDelegate {
     public var items: [Option] = []
 

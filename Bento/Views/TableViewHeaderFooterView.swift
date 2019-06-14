@@ -8,6 +8,8 @@ final class TableViewHeaderFooterView: UITableViewHeaderFooterView {
     }
 
     var component: AnyRenderable?
+    var storage: [StorageKey : Any] = [:]
+    var isDisplaying: Bool = false
 
     override init(reuseIdentifier: String?) {
         super.init(reuseIdentifier: reuseIdentifier)
@@ -19,6 +21,12 @@ final class TableViewHeaderFooterView: UITableViewHeaderFooterView {
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    deinit {
+        // Using removesView: false to avoid crash described in CNSMR-1748
+        // (containedView.didSet will otherwise trigger AutoLayout from within deinit and crash)
+        unbindIfNeeded(removesView: false)
     }
 
     override func responds(to aSelector: Selector!) -> Bool {
@@ -35,6 +43,12 @@ final class TableViewHeaderFooterView: UITableViewHeaderFooterView {
         }
 
         return component
+    }
+
+    override func prepareForReuse() {
+        super.prepareForReuse()
+
+        unbindIfNeeded()
     }
 
     override func systemLayoutSizeFitting(

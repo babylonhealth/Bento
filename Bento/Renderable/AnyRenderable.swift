@@ -1,5 +1,15 @@
 import UIKit
 
+public protocol AnyRenderableConvertible {
+    func asAnyRenderable() -> AnyRenderable
+}
+
+public extension AnyRenderableConvertible where Self: Renderable {
+    func asAnyRenderable() -> AnyRenderable {
+        return AnyRenderable(self)
+    }
+}
+
 public struct AnyRenderable: Renderable {
     /// The runtime view type of the wrapped `Renderable`.
     public var viewType: NativeView.Type {
@@ -29,6 +39,22 @@ public struct AnyRenderable: Renderable {
 
     public func render(in view: UIView) {
         base.render(in: view)
+    }
+
+    public func didMount(to view: UIView, storage: ViewStorage) {
+        base.didMount(to: view, storage: storage)
+    }
+
+    public func willUnmount(from view: UIView, storage: ViewStorage) {
+        base.willUnmount(from: view, storage: storage)
+    }
+
+    public func willDisplay(_ view: UIView) {
+        base.willDisplay(view)
+    }
+
+    public func didEndDisplaying(_ view: UIView) {
+        base.didEndDisplaying(view)
     }
 
     func cast<T>(to type: T.Type) -> T? {
@@ -70,6 +96,10 @@ public struct AnyRenderable: Renderable {
 
         return view
     }
+    
+    public func asAnyRenderable() -> AnyRenderable {
+        return self
+    }
 }
 
 class AnyRenderableBox<Base: Renderable>: AnyRenderableBoxBase {
@@ -98,6 +128,22 @@ class AnyRenderableBox<Base: Renderable>: AnyRenderableBoxBase {
         }
         return base as? T
     }
+
+    override func didMount(to view: UIView, storage: ViewStorage) {
+        base.didMount(to: view as! Base.View, storage: storage)
+    }
+
+    override func willUnmount(from view: UIView, storage: ViewStorage) {
+        base.willUnmount(from: view as! Base.View, storage: storage)
+    }
+
+    override func willDisplay(_ view: UIView) {
+        base.willDisplay(view as! Base.View)
+    }
+
+    override func didEndDisplaying(_ view: UIView) {
+        base.didEndDisplaying(view as! Base.View)
+    }
 }
 
 class AnyRenderableBoxBase {
@@ -105,10 +151,17 @@ class AnyRenderableBoxBase {
     var componentType: Any.Type { fatalError() }
 
     init() {}
+    
+    func render(in view: UIView) { fatalError() }
+    func cast<T>(to type: T.Type) -> T? { fatalError() }
+    func didMount(to view: UIView, storage: ViewStorage) { fatalError() }
+    func willUnmount(from view: UIView, storage: ViewStorage) { fatalError() }
+    func willDisplay(_ view: UIView) { fatalError() }
+    func didEndDisplaying(_ view: UIView) { fatalError() }
+}
 
+extension AnyRenderableBox: AnyRenderableConvertible {
     func asAnyRenderable() -> AnyRenderable {
         return AnyRenderable(self)
     }
-    func render(in view: UIView) { fatalError() }
-    func cast<T>(to type: T.Type) -> T? { fatalError() }
 }

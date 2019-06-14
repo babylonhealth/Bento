@@ -20,10 +20,3 @@ final class OptionPickerSnapshotTests: SnapshotTestCase {
         verifyComponentForAllSizes(component: component)
     }
 }
-
-extension String: Option {
-    public var displayName: String {
-        return self
-    }
-}
-

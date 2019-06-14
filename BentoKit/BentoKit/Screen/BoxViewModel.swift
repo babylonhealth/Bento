@@ -8,4 +8,9 @@ public protocol BoxViewModel: AnyObject {
     var state: Property<State>  { get }
 
     func send(action: Action)
+    func send(_ event: ScreenLifecycleEvent)
+}
+
+extension BoxViewModel {
+    public func send(_ event: ScreenLifecycleEvent) {}
 }
