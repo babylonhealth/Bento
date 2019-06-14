@@ -136,8 +136,8 @@ final class SignUpRenderer {
                 },
                 interactionBehavior: [],
                 styleSheet: descriptionStyleSheet
-            ).customInputImmediately(
-                when: state.pickerState.showingPicker,
+            ).customInput(
+                immediatelyWhen: state.pickerState.showingPicker,
                 input: { genders in
                     Component.OptionPicker(
                         options: genders,

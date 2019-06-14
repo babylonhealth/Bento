@@ -21,8 +21,8 @@ extension Renderable {
     ///
     /// - important: This method is useful when `customInput` needs to be displayed asynchronously after state change.
     /// - note: Due to asynchronous presentation, `focusEligibility` is not supported.
-    public func customInputImmediately<State>(
-        when state: State?,
+    public func customInput<State>(
+        immediatelyWhen state: State?,
         input: (State) -> CustomInput,
         highlightColor: UIColor? = UIColor(red: 239/255.0, green: 239/255.0, blue: 244/255.0, alpha: 1)
     ) -> AnyRenderable {
