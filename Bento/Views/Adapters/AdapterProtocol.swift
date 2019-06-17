@@ -1,8 +1,13 @@
+public protocol SizeInvalidationSupporting: AnyObject {
+    func invalidateSize(at indexPath: IndexPath)
+}
+
 /// Provide generic parameter agnostic access to the adapter.
-internal protocol AdapterStoreAccessible: AnyObject {
+internal protocol AdapterStoreAccessible: SizeInvalidationSupporting {
     var layoutMargins: UIEdgeInsets { get set }
     var boundSize: CGSize { get set }
     var cachesSizeInformation: Bool { get set }
+    func invalidateSize(at indexPath: IndexPath)
 }
 
 /// Provide a default implementation for all adapter store owners.
