@@ -17,21 +17,20 @@ extension Renderable {
     }
 
     /// Sets up `customInput` to prepare for presention when user taps `self`,
-    /// and also presents it immediately when `state` is `.some`.
+    /// and also automatically presents it immediately when `input` is `.some`.
     ///
     /// - important: This method is useful when `customInput` needs to be displayed asynchronously after state change.
     /// - note: Due to asynchronous presentation, `focusEligibility` is not supported.
-    public func customInput<State>(
-        immediatelyWhen state: State?,
-        input: (State) -> CustomInput,
+    public func autodisplayingCustomInput(
+        _ input: CustomInput?,
         highlightColor: UIColor? = UIColor(red: 239/255.0, green: 239/255.0, blue: 244/255.0, alpha: 1)
     ) -> AnyRenderable {
         return CustomInputComponent(
             source: self,
-            customInput: state.map(input),
+            customInput: input,
             focusEligibility: .ineligible,
             highlightColor: highlightColor,
-            focusesOnFirstDisplay: state != nil
+            focusesOnFirstDisplay: input != nil
         ).asAnyRenderable()
     }
 }
