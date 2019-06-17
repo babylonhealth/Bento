@@ -50,16 +50,6 @@ final class SignUpPresenter {
         navigator?.showAlert(title: "Did sign up", message: "\(state)")
     }
 
-    /// - note: Simulates asynchronous picker presentation
-    func didTapGender() {
-        state.pickerState = .loading
-
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: {
-            let serverResponse = Gender.allGenders  // NOTE: assuming this is server response
-            self.state.pickerState = .showingPicker(serverResponse)
-        })
-    }
-
     func didChangeGender(to gender: String) {
         state.gender = gender
     }
@@ -111,7 +101,6 @@ final class SignUpPresenter {
             }
         }
 
-        var pickerState: GenderPickerState = .idle
 
         var isSignUpButtonEnabled: Bool {
             return allFieldsAreFilledIn()
@@ -150,17 +139,5 @@ final class SignUpPresenter {
         private func dontHideIfAlreadyShown(_ condition: Bool) -> Bool {
             return !condition
         }
-    }
-}
-
-/// Async gender picker state.
-enum GenderPickerState {
-    case idle
-    case loading
-    case showingPicker([Gender])
-
-    var showingPicker: [Gender]? {
-        guard case let .showingPicker(value) = self else { return nil }
-        return value
     }
 }

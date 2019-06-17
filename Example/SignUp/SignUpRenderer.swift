@@ -30,10 +30,7 @@ final class SignUpRenderer {
             |-+ section(id: .credential, text: "Credential")
             |---+ email()
             |---* passwordComponents(state)
-            |---+ Node(id: .space, component: EmptySpaceComponent(spec: EmptySpaceComponent.Spec(height: 300, color: .clear)))
-            |---+ Node(id: .space, component: IconTextComponent(title: "(Scroll down)"))
-            |---+ Node(id: .space, component: EmptySpaceComponent(spec: EmptySpaceComponent.Spec(height: 300, color: .clear)))
-            |---+ gender(state)
+            |---+ gender(state.gender)
             |-? .iff(state.isSecurityQuestionsSectionVisible) {
                 self.section(id: .securityQuestion, text: "Security question")
                     |---+ self.securityQuestion(state)
@@ -116,36 +113,19 @@ final class SignUpRenderer {
         ]
     }
 
-    private func gender(_ state: SignUpPresenter.State) -> Node<RowID> {
+    private func gender(_ gender: String?) -> Node<RowID> {
         return Node(id: .gender, component:
             Component.DetailedDescription(
                 texts: [.plain("Gender")],
-                detail: .plain(state.gender ?? "Choose"),
-                accessory: {
-                    switch state.pickerState {
-                    case .idle:
-                        return .chevron
-                    case .loading:
-                        return .activityIndicator
-                    case .showingPicker:
-                        return .none
-                    }
-                }(),
-                didTap: { [presenter] in
-                    presenter.didTapGender()
-                },
-                interactionBehavior: [],
+                detail: .plain(gender ?? "Choose"),
+                accessory: .none,
                 styleSheet: descriptionStyleSheet
-            ).autodisplayingCustomInput(
-                state.pickerState.showingPicker.map { genders in
-                    Component.OptionPicker(
-                        options: genders,
-                        selected: state.gender.map(Gender.init(displayName:)),
-                        didPickItem: {
-                            self.presenter.didChangeGender(to: $0.displayName)
-                        }
-                    )
-                }
+            ).customInput(
+                Component.OptionPicker(
+                    options: Gender.allGenders,
+                    selected: gender.map(Gender.init(displayName:)),
+                    didPickItem: { self.presenter.didChangeGender(to: $0.displayName) }
+                )
             )
         )
     }
@@ -228,7 +208,6 @@ final class SignUpRenderer {
         case securityQuestion
         case info
         case signUpAction
-        case space
     }
 
     enum RowID {
