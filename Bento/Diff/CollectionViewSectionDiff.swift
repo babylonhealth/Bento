@@ -90,9 +90,8 @@ extension UICollectionView {
     }
 
     func moveSections(_ moves: [Changeset.Move]) {
-        for move in moves {
-            moveSection(move.source, toSection: move.destination)
-        }
+        deleteSections(IndexSet(moves.map { $0.source } ))
+        insertSections(IndexSet(moves.map { $0.destination }))
     }
 
     func perform(moves: [Move]) {
