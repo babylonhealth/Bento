@@ -4,7 +4,7 @@ import UIKit.UIGestureRecognizerSubclass
 public final class HighlightingGesture: UIGestureRecognizer {
     public enum TapAction {
         /// Resign as first responder immediately after tap, and evaluate the
-        /// given action. Backgorund would be reset to the normal color.
+        /// given action. Background would be reset to the normal color.
         case resign(action: () -> Void)
 
         /// Unhighlighting would happen manually at a later point. Background
